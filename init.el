@@ -1204,6 +1204,6 @@ searches all buffers."
 
 (eval-after-load "magit"
   '(if (eq system-type 'windows-nt)
-       (setq magit-git-executable "C:\\msysgit\\msysgit\\bin\\git.exe")))
+       (setq magit-git-executable (executable-find "git"))))
 
 (message "initialization complete")
