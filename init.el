@@ -79,7 +79,7 @@
 (add-load-path vendor-dir)
 (add-load-path (concat vendor-dir "emacs-w3m"))
 (add-load-path (concat vendor-dir "bbdb"))
-(add-load-path (concat vendor-dir "auto-complete-1.3"))
+(add-load-path (concat vendor-dir "auto-complete"))
 (add-load-path (concat vendor-dir "gnus/lisp"))
 
 (unless (require-try 'diminish)
@@ -1178,7 +1178,7 @@ completion buffers."
   (ac-config-default)
   (add-to-list 'ac-modes 'message-mode)
   (add-to-list 'ac-modes 'cython-mode)
-  (add-to-list 'ac-dictionary-directories (concat dotfiles-dir "vendor/auto-complete-1.3/dict")))
+  (add-to-list 'ac-dictionary-directories (concat dotfiles-dir "vendor/auto-complete/dict")))
 
 
 (require 'grep)
