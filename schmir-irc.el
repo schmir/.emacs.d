@@ -8,7 +8,7 @@
       rcirc-fill-flag nil)
 
 (set-face-foreground 'rcirc-nick-in-message "green" nil)
-
+(set-face-foreground 'rcirc-timestamp "grey50" nil)
 ; Always keep the prompt at the bottom of the buffer
 (add-hook 'rcirc-mode-hook
 	  '(lambda ()
