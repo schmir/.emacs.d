@@ -548,16 +548,25 @@ completion buffers."
   ;; (local-set-key (kbd "=") 'schmir-python-smart-equal)
   (local-set-key [(tab)] 'smart-tab)
 
+  (let ((use-flymake 't)
+	(use-ropemacs 't))
+    (if (file-remote-p (buffer-file-name))
+	(setq use-flymake nil
+	      use-ropemacs nil))
+    (if (eq system-type 'windows-nt)
+	(setq use-ropemacs nil))   ;; it's too slow on windows
 
-  (if (or (file-remote-p (buffer-file-name))
-	  (eq system-type 'windows-nt))
-      (ropemacs-mode 0)
+    (if use-ropemacs
+	(progn
+	  (ac-ropemacs-require)
+	  (if ac-ropemacs-loaded
+	      (progn
+		(setq ac-sources (append (list 'ac-source-ropemacs) ac-sources))
+		(ropemacs-mode 1)
+		(setq ropemacs-enable-autoimport t)))))
 
-    (ac-ropemacs-require)
-    (setq ac-sources (append (list 'ac-source-ropemacs) ac-sources))
-    (flymake-mode 1)
-    (ropemacs-mode 1)
-    (setq ropemacs-enable-autoimport t))
+    (if use-flymake
+	(flymake-mode 1)))
 
   ;; (add-hook 'pre-abbrev-expand-hook 'schmir-change-abbrev nil t)
   )
