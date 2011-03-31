@@ -780,6 +780,11 @@ completion buffers."
 (global-set-key (kbd "M-\"") 'comment-dwim)
 (global-set-key [f11] 'visit-gnus)
 
+(eval-after-load "rcirc"
+  '(progn
+    (message "loading schmir-irc")
+    (require 'schmir-irc)))
+
 (defun my-irc-next-active()
   (interactive)
   (if (fboundp 'rcirc-next-active-buffer)
