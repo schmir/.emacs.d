@@ -1,0 +1,3 @@
+[submodule "vendor/gnus"]
+	path = vendor/gnus
+	url = http://git.gnus.org/gnus.git
