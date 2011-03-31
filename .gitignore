@@ -13,3 +13,9 @@
 .DS_Store
 .ropeproject
 ID
+
+/auto-save-list/*
+/history
+/emacs-places
+/exec-abbrev-cmd.el
+/loaddefs.el
