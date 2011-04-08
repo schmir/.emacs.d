@@ -10,9 +10,14 @@
 (set-face-foreground 'rcirc-nick-in-message "green" nil)
 (set-face-foreground 'rcirc-timestamp "grey50" nil)
 ; Always keep the prompt at the bottom of the buffer
+
+(defun setup-rcirc-mode()
+  (interactive)
+  (set (make-local-variable 'scroll-margin) 0)
+  (set (make-local-variable 'scroll-conservatively) 8192))
+
 (add-hook 'rcirc-mode-hook
-	  '(lambda ()
-	     (set (make-local-variable 'scroll-conservatively) 8192)))
+	  'setup-rcirc-mode)
 
 ;; ; Wrap long lines according to the width of the window
 ;; ; does not work in daemon mode
