@@ -854,7 +854,7 @@ completion buffers."
 ;; "funky stuff" ;; proceed with caution
 
 (global-set-key (kbd "C-z") 'undo)
-(when (require-try 'redo)
+(when (require-try 'redo+)
   (global-set-key (kbd "C-S-z") 'redo))
 
 
