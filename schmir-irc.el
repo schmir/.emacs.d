@@ -70,4 +70,16 @@
       rcirc-log-filename-function 'my-rcirc-log-filename-function)
 
 
+(defun my-mark-join (process sender response target text)
+  ;; process=systemexit.de sender=schmir response=PRIVMSG target=&bitlbee text=bla
+  ;; (message "rcirc process=%s sender=%s response=%s target=%s text=%s" process sender response target text)
+  (if (and (string= target "&bitlbee")
+	   (or (string= response "JOIN") (string= response "QUIT")))
+      (progn
+	;; (message "rcirc process=%s sender=%s response=%s target=%s text=%s" process sender response target text)
+	(message "%s %s" response sender)
+	(rcirc-record-activity (current-buffer)))))
+
+(add-hook 'rcirc-print-hooks 'my-mark-join)
+
 (provide 'schmir-irc)
