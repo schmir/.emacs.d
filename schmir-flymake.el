@@ -1,56 +1,62 @@
+;; next function from: https://github.com/purcell/emacs.d/blob/master/site-lisp/flymake-ruby/flymake-ruby.el
+;; Not provided by flymake itself, curiously
+(defun flymake-create-temp-in-system-tempdir (filename prefix)
+  (let ((tmpfile (make-temp-file (or prefix "flymake-") nil (concat "." (file-name-extension (or (buffer-name) ""))))))
+    ;; (message "using %s" tmpfile)
+    tmpfile))
+
+(defun flymake-erlang-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		     'flymake-create-temp-inplace))
+	 (local-file (file-relative-name
+		      temp-file
+		      (file-name-directory buffer-file-name))))
+    (list "eflymake" (list local-file))))
+
+
+(defun flymake-pyflakes-init()
+  (list "pyflakes"
+	(list (flymake-init-create-temp-buffer-copy 'flymake-create-temp-in-system-tempdir))))
+
+
+(defun flymake-lua-init ()
+  "Invoke luac with '-p' to get syntax checking"
+  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+		       'flymake-create-temp-inplace))
+	 (local-file  (file-relative-name
+		       temp-file
+		       (file-name-directory buffer-file-name))))
+    (list "luac" (list "-p" local-file))))
+
+
 (eval-after-load "flymake"
   '(progn
      (global-set-key (quote [f6]) (quote flymake-goto-next-error))
+
      (defun flymake-report-fatal-status (status warning)
        "Display a warning and switch flymake mode off."
        (message "Flymake: %s" warning)
        (flymake-log 0 "buffer %s fatal status %s, warning %s"
 		    (buffer-name) status warning))
-     
-     (defun flymake-erlang-init ()
-       (let* ((temp-file (flymake-init-create-temp-buffer-copy
-			  'flymake-create-temp-inplace))
-	      (local-file (file-relative-name
-			   temp-file
-			   (file-name-directory buffer-file-name))))
-	 (list "eflymake" (list local-file))))
+
      (if (executable-find "eflymake")
 	 (add-to-list 'flymake-allowed-file-name-masks
 		      '("\\.erl\\'" flymake-erlang-init))
        (run-at-time 2 nil (lambda () (message "WARNING: eflymake not found. cannot enable flymake for erlang"))))
 
      
-     (defun flymake-pyflakes-init ()
-       (let* ((temp-file (flymake-init-create-temp-buffer-copy
-			  'flymake-create-temp-inplace))
-	      (local-file (file-relative-name
-			   temp-file
-			   (file-name-directory buffer-file-name))))
-	 (list "pyflakes" (list local-file))))
      (if (executable-find "pyflakes")
 	 (add-to-list 'flymake-allowed-file-name-masks
 		      '("\\.py\\'" flymake-pyflakes-init))
        (run-at-time 2 nil (lambda() (message "WARNING: pyflakes not found. cannot enable flymake for python"))))
 
-     (defun flymake-lua-init ()
-       "Invoke luac with '-p' to get syntax checking"
-       (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-			    'flymake-create-temp-inplace))
-	      (local-file  (file-relative-name
-			    temp-file
-			    (file-name-directory buffer-file-name))))
-	 (list "luac" (list "-p" local-file))))
 
      (push '("\\.lua\\'" flymake-lua-init) flymake-allowed-file-name-masks)
      (push '("^.*luac[0-9.]*\\(.exe\\)?: *\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 2 3 nil 4)
 	   flymake-err-line-patterns)
 
+     (setq flymake-no-changes-timeout 4.0)))
 
-
-
-     
-     (setq flymake-no-changes-timeout 4.0)
-     ))
 ;;flymake-ler(file line type text &optional full-file)
 (defun show-fly-err-at-point ()
   "If the cursor is sitting on a flymake error, display the
