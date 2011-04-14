@@ -21,12 +21,8 @@
 
 (defun flymake-lua-init ()
   "Invoke luac with '-p' to get syntax checking"
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
-	 (local-file  (file-relative-name
-		       temp-file
-		       (file-name-directory buffer-file-name))))
-    (list "luac" (list "-p" local-file))))
+  (list "luac"
+	(list "-p" (flymake-init-create-temp-buffer-copy 'flymake-create-temp-in-system-tempdir))))
 
 
 (eval-after-load "flymake"
