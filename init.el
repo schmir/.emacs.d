@@ -1177,9 +1177,8 @@ completion buffers."
 
 
 
-
+(setq exec-abbrev-cmd-file "~/.emacs.d/exec-abbrev-cmd.dat")
 (when (require-try 'exec-abbrev-cmd)
-  (setq exec-abbrev-cmd-file "~/.emacs.d/exec-abbrev-cmd.dat")
   (exec-abbrev-cmd-mode 1)
   (global-set-key (kbd "M-x") 'exec-abbrev-cmd))
 
