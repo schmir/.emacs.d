@@ -49,6 +49,7 @@
      1 font-lock-function-name-face))
   "Additional font lock keywords for Cython mode.")
 
+;;;###autoload
 (define-derived-mode cython-mode python-mode "Cython"
   "Major mode for Cython development, derived from Python mode.
 
