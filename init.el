@@ -270,8 +270,8 @@
 	display-time-24hr-format t
 	inhibit-startup-message t)
 
-  (setq scroll-margin 4
-	scroll-conservatively 4
+  (setq scroll-margin 2
+	scroll-conservatively 2
 	scroll-preserve-screen-position 1)
 
   (require-try 'smooth-scrolling)
