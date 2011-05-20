@@ -56,8 +56,8 @@
 \\{cython-mode-map}"
   (setcar font-lock-defaults
           (append python-font-lock-keywords cython-font-lock-keywords))
-  (set (make-local-variable 'compile-command)
-       (concat "cython -a " buffer-file-name))
+  ;; (set (make-local-variable 'compile-command)
+  ;;      (concat "cython -a " buffer-file-name))
   (add-to-list (make-local-variable 'compilation-finish-functions)
                'cython-compilation-finish)
 )
