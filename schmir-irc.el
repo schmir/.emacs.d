@@ -84,7 +84,9 @@
 
 (defun my-rcirc-remove-color-control-characters(&rest ignore)
   (interactive)
-  (replace-regexp "\C-c[0-9][0-9]\\(,[0-9][0-9]\\)?\\|[\C-o|\C-b]" ""))
+
+  (while (re-search-forward "\C-c[0-9][0-9]\\(,[0-9][0-9]\\)?\\|[\C-o|\C-b]" nil t)
+    (replace-match "" nil nil)))
 
 (add-to-list 'rcirc-markup-text-functions 'my-rcirc-remove-color-control-characters)
 
