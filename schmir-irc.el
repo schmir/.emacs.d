@@ -82,4 +82,14 @@
 
 (add-hook 'rcirc-print-hooks 'my-mark-join)
 
+(defun my-rcirc-remove-color-control-characters(&rest ignore)
+  (interactive)
+  (replace-regexp "\C-c[0-9][0-9]\\(,[0-9][0-9]\\)?\\|[\C-o|\C-b]" ""))
+
+(add-to-list 'rcirc-markup-text-functions 'my-rcirc-remove-color-control-characters)
+
+;; 2011-05-31 16:55 <CIA-41> 03haypo 07roundup * 10#7978/SocketServer doesn't handle syscall interruption: Using signalfd() (require Linux 2.6.22+), specified signals ... * 14http://bugs.python.org/issue7978
+;; 2011-05-31 16:55 <CIA-41> 03haypo 07roundup * 10#7978/SocketServer doesn't handle syscall interruption: I think that #12224 is a duplicate of this issue. * 14http://bugs.python.org/issue7978
+
+
 (provide 'schmir-irc)
