@@ -794,7 +794,8 @@ completion buffers."
 
 (global-set-key (kbd "C-x C-r") 'find-alternative-file-with-sudo)
 
-(global-unset-key (kbd "C-x C-c"))
+;; (global-unset-key (kbd "C-x C-c"))
+(global-set-key (kbd "C-x C-c") 'save-buffers-kill-terminal)
 
 (global-set-key (kbd "M-:") 'align-regexp)
 (global-set-key (kbd "M-b") 'save-buffers-kill-terminal)
