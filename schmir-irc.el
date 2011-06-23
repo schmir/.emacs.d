@@ -30,7 +30,8 @@
   "Kill all buffers that use major-mode mode."
   (interactive)
   (save-excursion
-    (let((count 0))
+    (let((count 0)
+	 (kill-buffer-query-functions nil))
       (dolist(buffer (buffer-list))
 	(set-buffer buffer)
 	(when (equal major-mode mode)
