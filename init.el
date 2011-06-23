@@ -362,6 +362,24 @@
 
 (schmir-basic-setup)
 
+(require 'eproject)
+(define-project-type generic-hg (generic) (look-for ".hg/00changelog.i")
+  :irrelevant-files ("^[.]" "^[#]" ".hg/"))
+
+(defun examine-project ()
+  (interactive)
+  (message "examine project %s" (eproject-root))
+  (if (file-exists-p (concat (eproject-root) "SConstruct"))
+      (setq compile-command (concat "cd " (eproject-root) "; scons")))
+  (if (file-exists-p (concat (eproject-root) "Makefile"))
+      (setq compile-command "make")))
+
+
+(add-hook 'generic-git-project-file-visit-hook 'examine-project)
+(add-hook 'generic-hg-project-file-visit-hook 'examine-project)
+
+
+
 (defun flymake-elisp-init ()
   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
@@ -526,6 +544,7 @@ completion buffers."
      (list
       (cons "\\<\\(lambda\\)\\>" 'lambda))))
 
+  (eproject-maybe-turn-on)   ;; make sure the eproject-hook has run
 
   (add-hook 'find-file-hooks (lambda() (maybe-untabify)) 'nil 1)
   (setq py-smart-indentation 1
@@ -564,6 +583,12 @@ completion buffers."
 	      (progn
 		(setq ac-sources (append (list 'ac-source-ropemacs) ac-sources))
 		(ropemacs-mode 1)
+		(let* ((root			(or eproject-root (concat home-dir "/")))
+		       (rope-project-root	(concat root ".ropeproject")))
+		      (unless (file-exists-p rope-project-root)
+			(make-directory rope-project-root))
+		      (rope-open-project root))
+
 		(setq ropemacs-enable-autoimport t)))))
 
     (if use-flymake
