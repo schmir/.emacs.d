@@ -393,6 +393,14 @@
   ;; (add-hook 'emacs-lisp-mode-hook 'flymake-mode)
 )
 
+(defun schmir-setup-c-mode-common ()
+  (local-set-key [(tab)] 'smart-tab)
+  (highlight-symbol-mode 1)
+  (setq indent-tabs-mode nil
+	c-hungry-delete-key t)
+  (make-local-variable 'local-write-file-hooks))
+
+
 (defun schmir-c-setup ()
   (require 'cc-vars)
   ;; *.h files are C++
@@ -400,16 +408,7 @@
   (add-to-list 'c-default-style '(c-mode . "linux"))
   (add-to-list 'c-default-style '(c++-mode . "linux"))
   (add-hook 'c-mode-common-hook
-	    '(lambda()
-	       (local-set-key [(tab)] 'smart-tab)
-	       (highlight-symbol-mode 1)
-	       (make-local-variable 'local-write-file-hooks)
-	       ;; (message "************ c-mode-common-hook")
-	       ;; (setq local-write-file-hooks 'delete-trailing-whitespace)
-	       ;;             (c-set-style "linux")
-	       ;;           (setq show-trailing-whitespace t)
-					;           (local-set-key (quote [f10]) (quote imenu))
-	       ))
+	    'schmir-setup-c-mode-common)
   (c-add-style
    "python-new"
    '((indent-tabs-mode . nil)
@@ -418,6 +417,8 @@
      (c-offsets-alist  . ((substatement-open . 0)
 			  (inextern-lang . 0)
 			  (arglist-intro . +)
+			  (case-label . +)
+			  (innamespace . 0)
 			  (knr-argdecl-intro . +)))
      (c-hanging-braces-alist . ((brace-list-open)
 				(brace-list-intro)
@@ -425,9 +426,7 @@
 				(brace-entry-open)
 				(substatement-open after)
 				(block-close . c-snug-do-while)))
-     (c-block-comment-prefix . "* "))
-   )
-)
+     (c-block-comment-prefix . "* "))))
 
 ;; Change backup behavior to save in a directory, not in a miscellany
 ;; of files all over the place.
@@ -546,7 +545,7 @@ completion buffers."
 
   (eproject-maybe-turn-on)   ;; make sure the eproject-hook has run
 
-  (add-hook 'find-file-hooks (lambda() (maybe-untabify)) 'nil 1)
+  (add-hook 'find-file-hooks 'maybe-untabify 'nil 1)
   (setq py-smart-indentation 1
 	indent-tabs-mode nil)
   (modify-syntax-entry ?_ "w") ;; make _ part of words.
