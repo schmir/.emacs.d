@@ -405,8 +405,8 @@
   (require 'cc-vars)
   ;; *.h files are C++
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  (add-to-list 'c-default-style '(c-mode . "linux"))
-  (add-to-list 'c-default-style '(c++-mode . "linux"))
+  (add-to-list 'c-default-style '(c-mode . "python-new"))
+  (add-to-list 'c-default-style '(c++-mode . "python-new"))
   (add-hook 'c-mode-common-hook
 	    'schmir-setup-c-mode-common)
   (c-add-style
