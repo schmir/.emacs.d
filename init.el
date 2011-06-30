@@ -112,6 +112,11 @@
 	(if (y-or-n-p "Buffer contains tabs. Replace with spaces? ")
 	    (untabify-buffer)))))
 
+(defadvice save-buffers-kill-emacs (around emacs-die-hard activate)
+  "really???"
+  (if (string= "kill emacs" (read-from-minibuffer "to quit emacs type: 'kill emacs':"))
+      ad-do-it))
+
 
 (defadvice python-shift-left (around no-deactivate-mark activate)
   "keep region active"
