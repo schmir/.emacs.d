@@ -827,7 +827,7 @@ completion buffers."
 	  (if (eq escreen-current-screen-number irc-screen-number)
 	      (progn
 		(escreen-goto-last-screen)
-		(escreen-get-active-screen-numbers)))))
+		(escreen-get-active-screen-numbers-with-emphasis)))))
     (escreen-create-screen)
     (setq irc-screen-number escreen-current-screen-number)
     ;; as i don't do this by default in escreen-create-screen
