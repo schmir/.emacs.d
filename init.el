@@ -818,7 +818,20 @@ completion buffers."
 (defun my-irc-next-active()
   (interactive)
   (if (fboundp 'rcirc-next-active-buffer)
-      (rcirc-next-active-buffer nil)
+      (progn
+	(if rcirc-activity
+	    (progn
+	      (escreen-goto-screen irc-screen-number)
+	      (rcirc-next-active-buffer nil)
+		(escreen-get-active-screen-numbers-with-emphasis))
+	  (if (eq escreen-current-screen-number irc-screen-number)
+	      (progn
+		(escreen-goto-last-screen)
+		(escreen-get-active-screen-numbers)))))
+    (escreen-create-screen)
+    (setq irc-screen-number escreen-current-screen-number)
+    ;; as i don't do this by default in escreen-create-screen
+    (delete-other-windows)
     (my-irc)))
 
 (global-set-key [f12] 'my-irc-next-active)
@@ -1138,7 +1151,9 @@ completion buffers."
 	(escreen-goto-last-screen)
       (escreen-goto-screen gnus-screen-number)
       (switch-to-buffer "*Group*")
-      (gnus-group-get-new-news))))
+      (gnus-group-get-new-news)))
+  (escreen-get-active-screen-numbers-with-emphasis))
+
 
 ;; quit gnus properly instead of leaving auto-save files around
 (defadvice save-buffers-kill-emacs (before quit-gnus (&rest args) activate)
