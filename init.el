@@ -812,12 +812,20 @@ completion buffers."
     (message "loading schmir-irc")
     (require 'schmir-irc)))
 
+
+(setq irc-screen-number nil)
 (defun my-irc-next-active()
   (interactive)
   (if (fboundp 'rcirc-next-active-buffer)
       (progn
 	(if rcirc-activity
 	    (progn
+	      (if (not irc-screen-number)
+		  (progn
+		    (escreen-create-screen)
+		    (setq irc-screen-number escreen-current-screen-number)
+		    ;; as i don't do this by default in escreen-create-screen
+		    (delete-other-windows)))
 	      (escreen-goto-screen irc-screen-number)
 	      (rcirc-next-active-buffer nil)
 		(escreen-get-active-screen-numbers-with-emphasis))
@@ -1129,11 +1137,12 @@ completion buffers."
 	      (local-set-key (kbd "Q") 'gnus-group-exit)))
   (global-set-key [f11] 'my-switch-to-gnus))
 
-
+(setq gnus-screen-number nil)
 (defun my-switch-to-gnus()
   (interactive)
   (if (or (not (fboundp 'gnus-alive-p))
-	  (not (gnus-alive-p)))
+	  (not (gnus-alive-p))
+	  (not gnus-screen-number))
       (progn
 	(escreen-create-screen)
 	(setq gnus-screen-number escreen-current-screen-number)

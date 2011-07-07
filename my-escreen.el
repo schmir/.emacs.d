@@ -1,5 +1,7 @@
 ;; 
 (require 'escreen)
+(add-to-list 'escreen-frame-local-variables 'gnus-screen-number)
+(add-to-list 'escreen-frame-local-variables 'irc-screen-number)
 (escreen-install)
 
 ;; add C-\ l to list screens with emphase for current one
