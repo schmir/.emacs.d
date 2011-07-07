@@ -757,8 +757,6 @@ completion buffers."
 	 :on-hit (lambda (p) (message (car p))))
 	))
 
-(if (fboundp 'define-buffer-visitor)
-    (define-buffer-visitor visit-gnus "*Group*" #'gnus))
 
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 
@@ -808,7 +806,6 @@ completion buffers."
 
 (global-set-key (quote [S-return]) 'open-line-below)
 (global-set-key (kbd "M-\"") 'comment-dwim)
-(global-set-key [f11] 'visit-gnus)
 
 (eval-after-load "rcirc"
   '(progn
