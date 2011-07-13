@@ -114,7 +114,9 @@
 
 (defadvice save-buffers-kill-emacs (around emacs-die-hard activate)
   "really???"
-  (if (string= "kill emacs" (read-from-minibuffer "to quit emacs type: 'kill emacs':"))
+  (if (or
+       (not server-process)
+       (string= "kill emacs" (read-from-minibuffer "to quit emacs type: 'kill emacs':")))
       ad-do-it))
 
 
