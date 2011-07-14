@@ -816,29 +816,34 @@ completion buffers."
 
 
 (setq irc-screen-number nil)
+(defun goto-irc-screen ()
+  (interactive)
+  (if (not irc-screen-number)
+      (progn
+	(escreen-create-screen)
+	(setq irc-screen-number escreen-current-screen-number)
+	;; as i don't do this by default in escreen-create-screen
+	(delete-other-windows))
+    (escreen-goto-screen irc-screen-number)))
+
+(defun toggle-irc-screen ()
+  (interactive)
+  (if (eq irc-screen-number escreen-current-screen-number)
+      (escreen-goto-last-screen)
+    (goto-irc-screen))
+  (escreen-get-active-screen-numbers-with-emphasis))
+
 (defun my-irc-next-active()
   (interactive)
   (if (fboundp 'rcirc-next-active-buffer)
       (progn
 	(if rcirc-activity
 	    (progn
-	      (if (not irc-screen-number)
-		  (progn
-		    (escreen-create-screen)
-		    (setq irc-screen-number escreen-current-screen-number)
-		    ;; as i don't do this by default in escreen-create-screen
-		    (delete-other-windows)))
-	      (escreen-goto-screen irc-screen-number)
+	      (goto-irc-screen)
 	      (rcirc-next-active-buffer nil)
-		(escreen-get-active-screen-numbers-with-emphasis))
-	  (if (eq escreen-current-screen-number irc-screen-number)
-	      (progn
-		(escreen-goto-last-screen)
-		(escreen-get-active-screen-numbers-with-emphasis)))))
-    (escreen-create-screen)
-    (setq irc-screen-number escreen-current-screen-number)
-    ;; as i don't do this by default in escreen-create-screen
-    (delete-other-windows)
+	      (escreen-get-active-screen-numbers-with-emphasis))
+	  (toggle-irc-screen)))
+    (goto-irc-screen)
     (my-irc)))
 
 (global-set-key [f12] 'my-irc-next-active)
