@@ -842,7 +842,13 @@ completion buffers."
 	      (goto-irc-screen)
 	      (rcirc-next-active-buffer nil)
 	      (escreen-get-active-screen-numbers-with-emphasis))
-	  (toggle-irc-screen)))
+	  (if (or
+	       (eq irc-screen-number escreen-current-screen-number)
+	       (if (eq last-command 'my-irc-next-active)
+		   t
+		 (message "press key again in order to return to irc screen")
+		 nil))
+	      (toggle-irc-screen))))
     (goto-irc-screen)
     (my-irc)))
 
