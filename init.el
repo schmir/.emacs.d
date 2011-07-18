@@ -232,9 +232,6 @@
 
   (setq dired-recursive-deletes 'always)
   (diminish 'hi-lock-mode)
-  (when (require-try 'dot-mode)
-    (diminish 'dot-mode)
-    (add-hook 'find-file-hooks 'dot-mode-on))
 
   (mouse-wheel-mode 1)
   (auto-image-file-mode 1)
@@ -747,17 +744,6 @@ completion buffers."
 ;; (swapchars "8" "*")
 ;; (swapchars "9" "(")
 
-;; Project Root setup
-(require-try 'project-root)
-(setq project-roots
-      '(
-	("hg project"
-	 :root-contains-files (".hg")
-	 :on-hit (lambda (p) (message (car p))))
-	("git project"
-	 :root-contains-files (".git")
-	 :on-hit (lambda (p) (message (car p))))
-	))
 
 
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
