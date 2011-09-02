@@ -365,6 +365,8 @@
 
 
 (schmir-basic-setup)
+(require 'evimodeline)
+(add-hook 'find-file-hook 'evimodeline-find-file-hook)
 
 (require 'eproject)
 (define-project-type generic-hg (generic) (look-for ".hg/00changelog.i")
