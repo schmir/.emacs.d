@@ -215,7 +215,9 @@
   (recentf-mode t)
   (setq recentf-max-saved-items 200)
 
-
+  (require 'which-func)
+  (add-to-list 'which-func-modes 'org-mode)
+  (which-func-mode 1)
 
   ;; higlight changes in documents
   (global-highlight-changes-mode t)
