@@ -167,6 +167,9 @@
   (schmir-setup-bm))
 
 
+(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
+(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode))
+			      auto-mode-alist))
 
 
 (when (require-try 'schmir-fun)
