@@ -10,7 +10,7 @@
 (setq my-private-file "~/.private.el")
 (setq generated-autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq home-dir (getenv "HOME"))
-
+(setq custom-theme-directory (concat dotfiles-dir "themes/"))
 (setq gnus-init-file (concat home-dir "/.gnus-init.el"))
 
 (if (file-exists-p custom-file)
