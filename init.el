@@ -13,6 +13,8 @@
 (setq custom-theme-directory (concat dotfiles-dir "themes/"))
 (setq gnus-init-file (concat home-dir "/.gnus-init.el"))
 
+(load-theme 'sinburn t)
+
 (if (file-exists-p custom-file)
     (load custom-file))
 
@@ -243,7 +245,7 @@
   (global-cwarn-mode 1)
 
   (global-hl-line-mode 1)   ;; highlight line where cursor is
-  (set-face-background 'hl-line "#eeeeee")
+  ;; (set-face-background 'hl-line "#eeeeee")
 
   (column-number-mode 1)
   (show-paren-mode 1)

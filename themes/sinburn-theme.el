@@ -112,7 +112,7 @@
     '(highlight ((t (:weight bold :underline t))))
     '(hover-highlight ((t (:underline t :foreground "#f8f893"))))
     '(match ((t (:weight bold))))
-    `(menu ((t (:background "#1e2320"))))
+    `(menu ((t (:background "#696969"))))
     `(mode-line-inactive ((t (:background ,sinburn-green-4 :foreground "#88b090"
 			       :box (:color "#2e3330" :line-width 2)))))
     '(mouse ((t (:inherit sinburn-foreground))))
@@ -523,7 +523,7 @@
     '(rcirc-bright-nick ((t (:foreground "white" :inherit rcirc-other-nick))))
     '(rcirc-dim-nick ((t (:inherit font-lock-comment))))
     '(rcirc-nick-in-message ((t (:inherit bold))))
-    '(rcirc-server ((t (:inherit font-lock-comment))))
+    '(rcirc-server ((t (:height 0.85 :inherit font-lock-comment))))
     '(rcirc-server-prefix ((t (:inherit font-lock-comment-delimiter))))
     '(rcirc-timestamp ((t (:inherit font-lock-comment))))
     '(rcirc-prompt ((t (:inherit 'sinburn-primary-1))))
