@@ -6,6 +6,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(gnus-signature ((t (:slant italic :height 0.85))))
  '(my-title-face ((t (:background "gray10"))))
  '(quack-threesemi-semi-face ((((class color) (background light)) (:background "#c0ffff"))))
  '(semantic-decoration-on-unknown-includes ((((class color) (background light)) (:underline t))) t)
