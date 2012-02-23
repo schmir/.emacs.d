@@ -456,7 +456,7 @@
 ;; get rid of yes-or-no questions - y or n is enough
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(defface completion-setup-directory-face  '((t (:foreground "Blue")))
+(defface completion-setup-directory-face  '((t (:foreground "dark orange")))
   "Face to use for directories."
   :group 'color-file-completion)
 
