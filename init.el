@@ -209,7 +209,8 @@
   (auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
   (global-font-lock-mode t)
 
-  (setq org-replace-disputed-keys t)
+  (setq org-replace-disputed-keys t
+	org-startup-truncated nil)
   (setq magit-omit-untracked-dir-contents t)
   (setq gist-view-gist t)
   (put 'narrow-to-region 'disabled nil)
@@ -1081,6 +1082,7 @@ completion buffers."
 (add-hook 'c++-mode-hook 'my-nice-comment-slash)
 (add-hook 'sh-mode-hook 'my-nice-comment-hash-mark)
 (add-hook 'text-mode-hook 'my-control-l)
+(add-hook 'conf-mode-hook 'my-nice-comment-hash-mark)
 
 ;;; mail
 ;; (setq message-send-mail-function 'smtpmail-send-it
@@ -1284,5 +1286,16 @@ searches all buffers."
 (eval-after-load "magit"
   '(if (eq system-type 'windows-nt)
        (setq magit-git-executable (executable-find "git"))))
+
+(defun sort-words (reverse beg end)
+  "Sort words in region alphabetically, in REVERSE if negative.
+    Prefixed with negative \\[universal-argument], sorts in reverse.
+
+    The variable `sort-fold-case' determines whether alphabetic case
+    affects the sort order.
+
+    See `sort-regexp-fields'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 
 (message "initialization complete")
