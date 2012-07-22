@@ -24,6 +24,39 @@
 (if (file-exists-p generated-autoload-file)
     (load-file generated-autoload-file))
 
+
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
+(defvar prelude-packages
+  '(clojure-mode paredit bm boxquote key-chord lua-mode magit diminish
+		 highlight-symbol framemove rainbow-mode
+		 whole-line-or-region python-pep8 smex ssh-config-mode
+		 textile-mode yaml-mode elscreen quack auto-complete
+		 escreen smart-tab redo+ gist w3m php-mode
+		 pkgbuild-mode markdown-mode textile-mode)
+  "A list of packages to ensure are installed at launch.")
+
+(defun prelude-packages-installed-p ()
+  (loop for p in prelude-packages
+	when (not (package-installed-p p)) do (return nil)
+	finally (return t)))
+
+(unless (prelude-packages-installed-p)
+  ;; check for new packages (package versions)
+  (message "%s" "Emacs is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " done.")
+  ;; install the missing packages
+  (dolist (p prelude-packages)
+    (when (not (package-installed-p p))
+      (package-install p))))
+
+
 ;; autoloads
 (autoload 'ac-ropemacs-setup "auto-complete-python" "setup autocomplete with ropemacs" t)
 (autoload 'rst-mode "rst" "mode for editing reStructuredText documents" t)
@@ -650,8 +683,12 @@ completion buffers."
 	       (local-set-key [(tab)] 'smart-tab)
 	       (highlight-symbol-mode 1)))
 
+  (add-to-list 'auto-mode-alist
+	       '("\\.md$\\|\\.markdown$" . markdown-mode))
 
 
+  (add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
+  (add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
 
   (add-to-list 'auto-mode-alist '("\\PKGBUILD$\\|\\.sh$" . sh-mode))
   (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
