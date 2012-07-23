@@ -1290,7 +1290,7 @@ completion buffers."
 (add-hook 'find-file-hook 'sm-try-smerge t)
 
 
-(setq python-pep8-options '("--repeat" "--ignore="))
+(setq python-pep8-options '("--repeat"))
 (require 'help-mode)
 (when (require-try 'auto-complete-config)
   (ac-config-default)
