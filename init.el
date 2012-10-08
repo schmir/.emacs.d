@@ -316,7 +316,8 @@
 	inhibit-startup-message t)
 
   (setq scroll-margin 2
-	scroll-conservatively 2
+	scroll-step 0
+	scroll-conservatively 10000
 	scroll-preserve-screen-position 1)
 
   (require-try 'smooth-scrolling)
