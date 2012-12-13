@@ -610,12 +610,21 @@ completion buffers."
   (local-set-key (kbd "M-]") 'python-mark-block)
   (local-set-key (kbd "C-h n") 'schmir-pyhelp)
   ;; (local-set-key (kbd ",") 'schmir-python-smart-comma)
-  (if (fboundp 'py-shift-region-left)
-      (progn
-	(local-set-key [C-S-right] 'py-shift-region-right)
-	(local-set-key [C-S-left] 'py-shift-region-left))
-    (local-set-key [C-S-left]  'python-shift-left)
-    (local-set-key [C-S-right] 'python-shift-right))
+
+  (local-set-key [C-S-left]  '(lambda()
+				(interactive)
+				(shift-region -4)))
+  (local-set-key [C-S-right] '(lambda()
+				(interactive)
+				(shift-region 4)))
+
+
+  ;; (if (fboundp 'py-shift-region-left)
+  ;;     (progn
+  ;;	(local-set-key [C-S-right] 'py-shift-region-right)
+  ;;	(local-set-key [C-S-left] 'py-shift-region-left))
+  ;;   (local-set-key [C-S-left]  'python-shift-left)
+  ;;   (local-set-key [C-S-right] 'python-shift-right))
 
   ;; (local-set-key (kbd "=") 'schmir-python-smart-equal)
   (local-set-key [(tab)] 'smart-tab)
