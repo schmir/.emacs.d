@@ -64,6 +64,11 @@
 (autoload 'php-mode "php-mode" "PHP editing mode." t)
 (autoload 'gid "id-utils" t)
 (autoload 'pymacs-load "pymacs" nil t)
+(autoload 'sgml-quote "sgml-mode"
+  "Quote SGML text in region START ... END.
+Only &, < and > are quoted, the rest is left untouched.
+With prefix argument UNQUOTEP, unquote the region." t)
+(defalias 'html-quote 'sgml-quote)
 
 (autoload 'git-grep "git-grep" "Run git grep" t)
 (defalias 'gg 'git-grep)
