@@ -38,7 +38,7 @@
 		 whole-line-or-region python-pep8 smex ssh-config-mode
 		 textile-mode yaml-mode elscreen quack auto-complete
 		 escreen smart-tab redo+ gist w3m php-mode
-		 pkgbuild-mode markdown-mode textile-mode)
+		 pkgbuild-mode markdown-mode textile-mode nrepl)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
