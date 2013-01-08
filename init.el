@@ -277,7 +277,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
 
   (setq dired-recursive-deletes 'always)
-  (diminish 'hi-lock-mode)
 
   (mouse-wheel-mode 1)
   (auto-image-file-mode 1)
