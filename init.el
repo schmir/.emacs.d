@@ -247,8 +247,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
   (global-font-lock-mode t)
 
-  (setq org-replace-disputed-keys t
-	org-startup-truncated nil)
   (setq magit-omit-untracked-dir-contents t)
   (setq gist-view-gist t)
   (put 'narrow-to-region 'disabled nil)
@@ -517,6 +515,17 @@ completion buffers."
 
 (add-hook 'completion-list-mode-hook 'completion-setup-directory-face)
 
+(defun schmir-setup-org-mode()
+  ;; Make windmove work in org-mode:
+
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right))
+
+(add-hook 'org-mode-hook 'schmir-setup-org-mode)
+(setq org-replace-disputed-keys t
+      org-startup-truncated nil)
 
 
 (defun schmir-setup-ido ()
