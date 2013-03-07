@@ -37,7 +37,7 @@
 		 highlight-symbol framemove rainbow-mode
 		 whole-line-or-region python-pep8 smex ssh-config-mode
 		 textile-mode yaml-mode elscreen quack auto-complete
-		 escreen smart-tab redo+ gist w3m php-mode
+		 escreen smart-tab gist w3m php-mode
 		 pkgbuild-mode markdown-mode textile-mode nrepl)
   "A list of packages to ensure are installed at launch.")
 
@@ -973,8 +973,8 @@ completion buffers."
 ;; "funky stuff" ;; proceed with caution
 
 (global-set-key (kbd "C-z") 'undo)
-(when (require-try 'redo+)
-  (global-set-key (kbd "C-S-z") 'redo))
+;; (when (require-try 'redo+)
+;;   (global-set-key (kbd "C-S-z") 'redo))
 
 
 (setq my-key-pairs
