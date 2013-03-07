@@ -1346,8 +1346,24 @@ searches all buffers."
 (global-set-key [f7] 'search-all-buffers)
 
 (eval-after-load "magit"
-  '(if (eq system-type 'windows-nt)
-       (setq magit-git-executable (executable-find "git"))))
+  '(progn
+     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+     (if (eq system-type 'windows-nt)
+       (setq magit-git-executable (executable-find "git")))))
+;; full screen magit-status
+
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defun magit-quit-session ()
+  "Restores the previous window configuration and kills the magit buffer"
+  (interactive)
+  (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+
+
 
 (defun sort-words (reverse beg end)
   "Sort words in region alphabetically, in REVERSE if negative.
