@@ -530,6 +530,20 @@ completion buffers."
 
 (defun schmir-setup-ido ()
   (require 'ido)
+
+  (add-hook
+   'ido-setup-hook
+   (lambda ()
+     ;; Go straight home
+     (define-key ido-file-completion-map
+       (kbd "~")
+       (lambda ()
+	 (interactive)
+	 (if (looking-back "/")
+	     (insert "~/")
+	   (call-interactively 'self-insert-command))))))
+
+
   (setq ido-execute-command-cache nil)
 
   ;; (add-hook 'ido-setup-hook
