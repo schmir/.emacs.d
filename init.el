@@ -1041,8 +1041,8 @@ completion buffers."
 
 (when (require-try 'repeatable)
   (repeatable-command-advice next-buffer)
-  (repeatable-command-advice exchange-point-and-mark)
-  (repeatable-command-advice undo))
+  (repeatable-command-advice exchange-point-and-mark))
+  ;; (repeatable-command-advice undo))
 
 
 
