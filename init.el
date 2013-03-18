@@ -34,7 +34,7 @@
 
 (defvar prelude-packages
   '(clojure-mode paredit bm boxquote key-chord lua-mode magit diminish
-		 highlight-symbol framemove rainbow-mode
+		 highlight-symbol framemove rainbow-mode jedi
 		 whole-line-or-region python-pep8 smex ssh-config-mode
 		 textile-mode yaml-mode elscreen quack auto-complete
 		 escreen smart-tab gist w3m php-mode
@@ -618,6 +618,7 @@ completion buffers."
      (list
       (cons "\\<\\(lambda\\)\\>" 'lambda))))
 
+  (jedi:setup)
   (eproject-maybe-turn-on)   ;; make sure the eproject-hook has run
 
   (add-hook 'find-file-hooks 'maybe-untabify 'nil 1)
@@ -659,20 +660,20 @@ completion buffers."
     (if (eq system-type 'windows-nt)
 	(setq use-ropemacs nil))   ;; it's too slow on windows
 
-    (if use-ropemacs
-	(progn
-	  (ac-ropemacs-require)
-	  (if ac-ropemacs-loaded
-	      (progn
-		(setq ac-sources (append (list 'ac-source-ropemacs) ac-sources))
-		(ropemacs-mode 1)
-		(let* ((root			(or eproject-root (concat home-dir "/")))
-		       (rope-project-root	(concat root ".ropeproject")))
-		      (unless (file-exists-p rope-project-root)
-			(make-directory rope-project-root))
-		      (rope-open-project root))
+    ;; (if use-ropemacs
+    ;;	(progn
+    ;;	  (ac-ropemacs-require)
+    ;;	  (if ac-ropemacs-loaded
+    ;;	      (progn
+    ;;		(setq ac-sources (append (list 'ac-source-ropemacs) ac-sources))
+    ;;		(ropemacs-mode 1)
+    ;;		(let* ((root			(or eproject-root (concat home-dir "/")))
+    ;;		       (rope-project-root	(concat root ".ropeproject")))
+    ;;		      (unless (file-exists-p rope-project-root)
+    ;;			(make-directory rope-project-root))
+    ;;		      (rope-open-project root))
 
-		(setq ropemacs-enable-autoimport t)))))
+    ;;		(setq ropemacs-enable-autoimport t)))))
 
     (if use-flymake
 	(flymake-mode 1)))
