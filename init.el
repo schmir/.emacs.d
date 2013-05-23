@@ -1391,4 +1391,17 @@ searches all buffers."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 
+(defun my-gnus-summary-view-html-alternative-in-mozilla ()
+      "Display the HTML part of the current multipart/alternative MIME message
+    in mozilla."
+      (interactive)
+      (save-current-buffer
+	(gnus-summary-show-article)
+	(set-buffer gnus-article-buffer)
+	(let ((file (make-temp-file "html-message-" nil ".html"))
+	      (handle (nth 3 (assq 1 gnus-article-mime-handle-alist))))
+	  (mm-save-part-to-file handle file)
+	  (browse-url-firefox (concat "file://" file)))))
+
+
 (message "initialization complete")
