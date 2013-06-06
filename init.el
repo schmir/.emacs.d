@@ -38,7 +38,8 @@
 		 whole-line-or-region python-pep8 smex ssh-config-mode
 		 textile-mode yaml-mode elscreen quack auto-complete
 		 escreen smart-tab gist w3m php-mode
-		 pkgbuild-mode markdown-mode textile-mode nrepl deft)
+		 pkgbuild-mode markdown-mode textile-mode nrepl deft
+		 rainbow-delimiters)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
@@ -242,6 +243,7 @@ With prefix argument UNQUOTEP, unquote the region." t)
 	(savehist-mode 1) ;; keep track of minibuffer commands
 	(size-indication-mode 1) ;; show file size
 	))
+  (global-rainbow-delimiters-mode 1)
   (global-auto-revert-mode 1) ;; re-read buffers from disk unless they're `dirty'
   (display-time-mode 1)
   (auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
