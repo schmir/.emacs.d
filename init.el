@@ -42,6 +42,9 @@
 		 rainbow-delimiters)
   "A list of packages to ensure are installed at launch.")
 
+;; fix indentation of cond expressions
+(put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
+
 (defun prelude-packages-installed-p ()
   (loop for p in prelude-packages
 	when (not (package-installed-p p)) do (return nil)
