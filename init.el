@@ -33,7 +33,7 @@
 (package-initialize)
 
 (defvar prelude-packages
-  '(clojure-mode paredit bm boxquote key-chord lua-mode magit diminish
+  '(clojure-mode clojure-cheatsheet paredit bm boxquote key-chord lua-mode magit diminish
 		 highlight-symbol framemove rainbow-mode jedi
 		 whole-line-or-region python-pep8 smex ssh-config-mode
 		 textile-mode yaml-mode elscreen quack auto-complete
