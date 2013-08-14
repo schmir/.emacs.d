@@ -713,6 +713,11 @@ completion buffers."
       (add-to-list 'auto-mode-alist '("\\.\\(pyx\\|pxi\\|pxd\\)$" . cython-mode))))
 
 
+(defun schmir-clojure-hook ()
+  (highlight-symbol-mode 1))
+
+(add-hook 'clojure-mode-hook 'schmir-clojure-hook)
+
 (defun schmir-misc-setup()
   (autoload 'fm-start "fm" "follow mode for compilation like buffers")
 
