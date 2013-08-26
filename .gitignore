@@ -19,3 +19,5 @@ ID
 /emacs-places
 /exec-abbrev-cmd.el
 /loaddefs.el
+/eshell/history
+/eshell/lastdir
