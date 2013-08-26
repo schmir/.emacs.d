@@ -592,34 +592,13 @@ completion buffers."
 	       (local-set-key [(tab)] 'smart-tab)
 	       (highlight-symbol-mode 1)
 	       (setq lua-indent-level 4)
-	       (flymake-mode)))
-)
+	       (flymake-mode))))
 
-(defun schmir-erlang-setup ()
-  (add-load-path "/usr/lib/erlang/lib/tools-2.6.4/emacs/")
-
-  (setq erlang-root-dir (concat home-dir "/local/lib/erlang"))
-  (setq exec-path (cons (concat home-dir "/local/bin/") exec-path))
-
-  (when (require-try 'erlang-start)
-
-    (when (require-try 'distel)
-      (distel-setup))
-
-    (setq inferior-erlang-machine-options '("-sname" "emacs"))
-    (add-hook 'erlang-mode-hook
-	      '(lambda()
-		 (local-set-key [(tab)] 'smart-tab)
-		 (highlight-symbol-mode 1)
-		 (flymake-mode))))
-)
 
 (defun schmir-setup-modes()
   (schmir-lua-setup)
-  (schmir-erlang-setup)
   (schmir-c-setup)
   (schmir-misc-setup)
-  (schmir-erlang-setup)
   (schmir-elisp-setup)
   (require-try 'schmir-flymake))
 
@@ -640,7 +619,7 @@ completion buffers."
 
 (if (fboundp 'schmir-hl-fixme)
     (mapc 'schmir-hl-fixme
-	  '(erlang-mode python-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode)))
+	  '(python-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode)))
 
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 
