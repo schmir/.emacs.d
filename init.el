@@ -1094,42 +1094,7 @@ completion buffers."
 
 (global-set-key (quote [8711 100]) (quote dedicate-window))
 
-;;; escreen/gnus interaction
-(when (require-try 'my-escreen)
-  (defadvice gnus-group-exit (after remove-screen (&rest args) activate)
-    (escreen-kill-screen)
-    (setq gnus-screen-number nil))
-
-  ;; i'm in the habit of quitting when i don't really need to
-  (add-hook 'gnus-group-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "q") 'escreen-goto-last-screen)
-	      (local-set-key (kbd "Q") 'gnus-group-exit)))
-  (global-set-key [f11] 'my-switch-to-gnus))
-
-(setq gnus-screen-number nil)
-(defun my-switch-to-gnus()
-  (interactive)
-  (if (or (not (fboundp 'gnus-alive-p))
-	  (not (gnus-alive-p))
-	  (not gnus-screen-number))
-      (progn
-	(escreen-create-screen)
-	(setq gnus-screen-number escreen-current-screen-number)
-	;; as i don't do this by default in escreen-create-screen
-	(delete-other-windows)
-	(gnus))
-
-    ;; if we're not in a gnus buffer, just switch to our gnus screen, thus
-    ;; returning us to where we were previously. otherwise determine what we
-    ;; should switch to
-    (if (eq escreen-current-screen-number gnus-screen-number)
-	(escreen-goto-last-screen)
-      (escreen-goto-screen gnus-screen-number)
-      (switch-to-buffer "*Group*")
-      (gnus-group-get-new-news)))
-  (escreen-get-active-screen-numbers-with-emphasis))
-
+(require 'setup-escreen)
 
 ;; quit gnus properly instead of leaving auto-save files around
 (defadvice save-buffers-kill-emacs (before quit-gnus (&rest args) activate)
