@@ -275,15 +275,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 
 
 
-(defun flymake-elisp-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name))))
-    (list "elisplint" (list local-file))))
-
-
 (defun schmir-setup-c-mode-common ()
   (local-set-key [(tab)] 'smart-tab)
   (highlight-symbol-mode 1)
