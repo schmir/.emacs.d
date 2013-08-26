@@ -39,7 +39,7 @@
 		 textile-mode yaml-mode elscreen quack auto-complete
 		 escreen smart-tab gist w3m php-mode
 		 pkgbuild-mode markdown-mode textile-mode nrepl deft
-		 rainbow-delimiters)
+		 rainbow-delimiters shell-pop)
   "A list of packages to ensure are installed at launch.")
 
 ;; fix indentation of cond expressions
@@ -131,6 +131,9 @@ With prefix argument UNQUOTEP, unquote the region." t)
 (add-load-path (concat vendor-dir "bbdb"))
 (add-load-path (concat vendor-dir "auto-complete"))
 (add-load-path (concat vendor-dir "gnus/lisp"))
+
+(require 'shell-pop)
+(global-set-key (kbd "C-t") 'shell-pop)
 
 (unless (require-try 'diminish)
   (defun diminish (mode)
