@@ -433,45 +433,9 @@ completion buffers."
       org-startup-truncated nil)
 
 
-(defun schmir-setup-ido ()
-  (require 'ido)
 
-  (add-hook
-   'ido-setup-hook
-   (lambda ()
-     ;; Go straight home
-     (define-key ido-file-completion-map
-       (kbd "~")
-       (lambda ()
-	 (interactive)
-	 (if (looking-back "/")
-	     (insert "~/")
-	   (call-interactively 'self-insert-command))))))
+(require 'setup-ido)
 
-
-  (setq ido-execute-command-cache nil)
-
-  ;; (add-hook 'ido-setup-hook
-  ;; 	    (lambda ()
-  ;; 	      (setq ido-enable-flex-matching t)
-  ;; 	      ;;(global-set-key "\M-x" 'ido-execute-command)
-  ;; 	      ))
-
-  (ido-mode t)  ; use 'buffer rather than t to use only buffer switching
-  (ido-everywhere t)
-
-  (add-to-list 'ido-ignore-buffers "\\.ido\\.last")
-
-  (setq ido-enable-flex-matching t
-	ido-use-filename-at-point nil
-	ido-use-virtual-buffers t
-	ido-auto-merge-work-directories-length 0
-	ido-max-window-height 10
-	ido-max-file-prompt-width 1400
-	ido-max-prospects 32
-	ido-max-directory-size 300000))
-
-(schmir-setup-ido)
 
 (defun schmir-setup-hippie-expand ()
   (require 'hippie-exp)
@@ -608,7 +572,6 @@ completion buffers."
 
 
 (setq smart-tab-using-hippie-expand 't)
-(global-set-key (kbd "M-[") 'ido-goto-symbol)
 
 
 (global-set-key [(control f1)] 'highlight-symbol-at-point)
