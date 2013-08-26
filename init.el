@@ -15,9 +15,6 @@
 (require 'setup-gnus)
 
 ;; autoloads
-(autoload 'rst-mode "rst" "mode for editing reStructuredText documents" t)
-(autoload 'flymake-mode "flymake" "flymake mode" t)
-(autoload 'php-mode "php-mode" "PHP editing mode." t)
 (autoload 'gid "id-utils" t)
 (autoload 'sgml-quote "sgml-mode"
   "Quote SGML text in region START ... END.
@@ -27,21 +24,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 
 (autoload 'git-grep "git-grep" "Run git grep" t)
 (defalias 'gg 'git-grep)
-
-;;; compat methods
-
-
-
-;; emacs 24 doesn't have this anymore
-(defun make-local-hook (hook)
-  (if (local-variable-p hook)
-      nil
-    (or (boundp hook) (set hook nil))
-    (make-local-variable hook)
-    (set hook (list t)))
-  hook)
-(make-obsolete 'make-local-hook "not necessary any more." "21.1")
-
 
 (defun schmir-loaddefs ()
   (interactive)
@@ -561,10 +543,6 @@ completion buffers."
 
 (global-set-key [f5] 'git-grep)
 
-(global-set-key (kbd "\e\el") 'goto-line)
-(global-set-key (kbd "\e\ea") 'mark-whole-buffer)
-(global-set-key (kbd "\e\em") 'manual-entry)
-(global-set-key (kbd "\e\es") 'm-shell-command)
 
 (when (require-try 'compile-dwim)
   (global-set-key (quote [f9]) 'compile-dwim)
@@ -739,9 +717,6 @@ completion buffers."
 (require 'setup-print)
 (put 'downcase-region 'disabled nil)
 
-;;; scheme
-(setq quack-pretty-lambda-p 't)
-(require-try 'quack)
 
 ;;; nice comment highlighting
 (defconst my-title-face 'my-title-face)

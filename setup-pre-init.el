@@ -24,4 +24,18 @@
 (if (file-exists-p generated-autoload-file)
     (load-file generated-autoload-file))
 
+;;; compat methods
+
+
+
+;; emacs 24 doesn't have this anymore
+(defun make-local-hook (hook)
+  (if (local-variable-p hook)
+      nil
+    (or (boundp hook) (set hook nil))
+    (make-local-variable hook)
+    (set hook (list t)))
+  hook)
+(make-obsolete 'make-local-hook "not necessary any more." "21.1")
+
 (provide 'setup-pre-init)
