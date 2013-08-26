@@ -38,4 +38,20 @@
   hook)
 (make-obsolete 'make-local-hook "not necessary any more." "21.1")
 
+(defun schmir-loaddefs ()
+  (interactive)
+  (message "generating %s" generated-autoload-file)
+  (update-directory-autoloads dotfiles-dir vendor-dir))
+
+(if (not (file-exists-p generated-autoload-file))
+      (schmir-loaddefs))
+(load-file generated-autoload-file)
+
+
+(defun schmir-recompile ()
+  (interactive)
+  (byte-recompile-directory vendor-dir 0))
+
+
+
 (provide 'setup-pre-init)
