@@ -33,7 +33,7 @@
 (package-initialize)
 
 (defvar prelude-packages
-  '(clojure-mode clojure-cheatsheet paredit bm boxquote key-chord lua-mode magit diminish
+  '(clojure-mode clojure-cheatsheet paredit bm boxquote key-chord lua-mode magit git-messenger diminish
 		 highlight-symbol framemove rainbow-mode jedi
 		 whole-line-or-region python-pep8 smex ssh-config-mode
 		 textile-mode yaml-mode elscreen quack auto-complete
@@ -176,6 +176,10 @@ With prefix argument UNQUOTEP, unquote the region." t)
     (if (search-forward "\t" nil t)
 	(if (y-or-n-p "Buffer contains tabs. Replace with spaces? ")
 	    (untabify-buffer)))))
+
+;; git-messenger
+(setq git-messenger:show-detail t)
+(global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
 
 ;; somehow later magit version close the frame
 ;; see https://github.com/magit/magit/issues/771
