@@ -1,6 +1,19 @@
 (unless (require-try 'python-mode)
   (require 'python))
 
+(defun untabify-buffer ()
+  (interactive)
+  (save-excursion
+    (untabify (point-min) (point-max))))
+
+
+(defun maybe-untabify ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (if (search-forward "\t" nil t)
+	(if (y-or-n-p "Buffer contains tabs. Replace with spaces? ")
+	    (untabify-buffer)))))
 
 (defun schmir-python-hook ()
   (interactive)
