@@ -437,26 +437,7 @@ completion buffers."
 (require 'setup-ido)
 
 
-(defun schmir-setup-hippie-expand ()
-  (require 'hippie-exp)
-  (defun try-complete-abbrev (old)
-    (if (expand-abbrev) t nil))
 
-  (setq hippie-expand-try-functions-list
-	'(try-complete-abbrev
-	  try-expand-dabbrev-visible
-	  try-expand-dabbrev
-	  try-expand-dabbrev-all-buffers
-	  try-expand-dabbrev-from-kill
-	  try-complete-file-name-partially
-	  try-complete-file-name
-	  try-expand-all-abbrevs
-	  try-expand-list
-	  try-expand-line
-	  try-complete-lisp-symbol-partially
-	  try-complete-lisp-symbol)))
-
-(schmir-setup-hippie-expand)
 (defun schmir-change-abbrev (&optional args)
   (setq local-abbrev-table
 	(if (python-in-string/comment)
@@ -573,7 +554,6 @@ completion buffers."
 
 (setq smart-tab-using-hippie-expand 't)
 
-
 (global-set-key [(control f1)] 'highlight-symbol-at-point)
 (global-set-key [f1] 'highlight-symbol-next)
 (global-set-key [(shift f1)] 'highlight-symbol-prev)
@@ -592,7 +572,6 @@ completion buffers."
 
 
 (global-set-key (quote [S-iso-lefttab]) 'tab-to-tab-stop)
-(global-set-key (quote [C-tab]) 'hippie-expand)
 ;; (global-set-key "" (quote comment-region))
 
 (global-set-key (kbd "C-o") 'delete-blank-lines)
@@ -920,12 +899,7 @@ completion buffers."
 
 (setq python-pep8-options '("--repeat"))
 (require 'help-mode)
-(when (require-try 'auto-complete-config)
-  (ac-config-default)
-  (add-to-list 'ac-modes 'message-mode)
-  (add-to-list 'ac-modes 'cython-mode)
-  (add-to-list 'ac-dictionary-directories (concat dotfiles-dir "vendor/auto-complete/dict")))
-
+(require 'setup-completion)
 
 (require 'grep)
 (setq search-all-buffers-ignored-files '(".bbdb" ".newsrc-dribble"))
