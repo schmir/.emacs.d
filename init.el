@@ -177,6 +177,12 @@ With prefix argument UNQUOTEP, unquote the region." t)
 	(if (y-or-n-p "Buffer contains tabs. Replace with spaces? ")
 	    (untabify-buffer)))))
 
+;; somehow later magit version close the frame
+;; see https://github.com/magit/magit/issues/771
+(defadvice git-commit-commit (around no-kill-frame activate)
+  (flet ((delete-frame (&optional FRAME FORCE) ()))
+    ad-do-it))
+
 (defadvice save-buffers-kill-emacs (around emacs-die-hard activate)
   "really???"
   (if (or
