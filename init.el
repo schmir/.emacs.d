@@ -642,22 +642,6 @@ completion buffers."
     (mapc 'schmir-hl-fixme
 	  '(erlang-mode python-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode)))
 
-
-;; (define-key compilation-mode-map "q" 'kill-this-buffer)
-
-;; (swapchars "0" ")")
-;; (swapchars "1" "!")
-;; (swapchars "2" "@")
-;; (swapchars "3" "#")
-;; (swapchars "4" "$")
-;; (swapchars "5" "%")
-;; (swapchars "6" "^")
-;; (swapchars "7" "&")
-;; (swapchars "8" "*")
-;; (swapchars "9" "(")
-
-
-
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 
 (setq smart-tab-using-hippie-expand 't)
@@ -758,20 +742,6 @@ completion buffers."
 (when (require-try 'misc-cmds)
   (define-key ctl-x-map [home] 'mark-buffer-before-point)
   (define-key ctl-x-map [end]  'mark-buffer-after-point))
-
-;;  Suggested key bindings:
-;;
-;;   (define-key ctl-x-map [home] 'mark-buffer-before-point)
-;;   (define-key ctl-x-map [end]  'mark-buffer-after-point)
-;;   (define-key ctl-x-map "w"    'region-to-file)
-;;   (global-set-key [C-S-f1]     'region-to-buffer)
-;;   (global-set-key [C-S-backspace] 'region-to-file)
-;;   (global-set-key [home]       'backward-line-text)
-;;   (substitute-key-definition   'kill-buffer
-;;                                'kill-buffer-and-its-windows global-map)
-;;   (substitute-key-definition   'move-beginning-of-line 'beginning-of-line+ global-map)
-;;   (substitute-key-definition   'end-of-line 'end-of-line+ global-map)
-;;   (substitute-key-definition   'recenter 'recenter-top-bottom global-map)
 
 ;; http://www.emacswiki.org/emacs-ru/WholeLineOrRegion
 ;; This minor mode allows functions to operate on the current line if
