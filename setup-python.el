@@ -1,5 +1,4 @@
-(unless (require-try 'python-mode)
-  (require 'python))
+(require 'python)
 
 (defun untabify-buffer ()
   (interactive)

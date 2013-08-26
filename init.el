@@ -1,4 +1,10 @@
 ;; -*- mode: emacs-lisp; coding: utf-8 -*-
+
+(if (fboundp 'menu-bar-mode)
+    (menu-bar-mode 1))
+(if (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+
 (require 'cl)
 
 (setq dotfiles-dir
@@ -10,6 +16,7 @@
 (load-theme 'sinburn t)
 
 (require 'setup-package)
+(require 'schmir-fun)
 (require 'setup-clojure)
 (require 'setup-magit)
 (require 'setup-gnus)
@@ -73,8 +80,7 @@ With prefix argument UNQUOTEP, unquote the region." t)
 			      auto-mode-alist))
 
 
-(when (require-try 'schmir-fun)
-  (schmir-maybe-server))
+(schmir-maybe-server)
 
 
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
@@ -96,13 +102,8 @@ With prefix argument UNQUOTEP, unquote the region." t)
 
 (defun schmir-basic-setup ()
   (interactive)
-  (tool-bar-mode -1)
-  (menu-bar-mode 1)
-  (if (>= emacs-major-version 22)
-      (progn
-	(savehist-mode 1) ;; keep track of minibuffer commands
-	(size-indication-mode 1) ;; show file size
-	))
+  (savehist-mode 1) ;; keep track of minibuffer commands
+  (size-indication-mode 1) ;; show file size
   (global-rainbow-delimiters-mode 1)
   (global-auto-revert-mode 1) ;; re-read buffers from disk unless they're `dirty'
   (display-time-mode 1)
@@ -142,7 +143,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (global-cwarn-mode 1)
 
   (global-hl-line-mode 1)   ;; highlight line where cursor is
-  ;; (set-face-background 'hl-line "#eeeeee")
 
   (column-number-mode 1)
   (show-paren-mode 1)
@@ -150,10 +150,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (setq mark-even-if-inactive t)
   (transient-mark-mode 1)
 
-  (setq cua-enable-cua-keys nil)
-  (setq cua-highlight-region-shift-only t) ;; no transient mark mode
-  (setq cua-toggle-set-mark nil) ;; original set-mark behavior, i.e. no transient-mark-mode
-  ;; (cua-mode t)
 
   ;; Drive out the mouse when it's too near to the cursor.
   (mouse-avoidance-mode 'exile)
@@ -161,17 +157,12 @@ With prefix argument UNQUOTEP, unquote the region." t)
 	mouse-avoidance-nudge-dist 20
 	mouse-avoidance-nudge-var 5)
 
-
-
-
   ;; show pathnames for buffers with same name
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'reverse
 	uniquify-separator "/"
 	uniquify-after-kill-buffer-p t ; rename after killing uniquified
 	uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
-
-
 
   (setq visible-bell 1
 	require-final-newline t
@@ -226,11 +217,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   ;; automatically chmod +x when the file has shebang "#!"
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-  ;; (add-hook 'server-switch-hook
-  ;;               (lambda nil
-  ;;                 (let ((server-buf (current-buffer)))
-  ;;                   (bury-buffer)
-  ;;                   (switch-to-buffer-other-frame server-buf))))
   (add-hook 'server-done-hook 'delete-frame)
 
 
@@ -248,8 +234,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (eval-after-load "multi-term"
     '(progn
        (multi-term-keystroke-setup)))
-
-  ;; (clrhash tramp-cache-data)
 
   (when (require-try 'tramp)
     (add-to-list 'tramp-default-method-alist
@@ -299,10 +283,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
                        (file-name-directory buffer-file-name))))
     (list "elisplint" (list local-file))))
 
-(defun schmir-elisp-setup ()
-  ;; (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
-  ;; (add-hook 'emacs-lisp-mode-hook 'flymake-mode)
-)
 
 (defun schmir-setup-c-mode-common ()
   (local-set-key [(tab)] 'smart-tab)
@@ -422,13 +402,6 @@ completion buffers."
 (defun schmir-misc-setup()
   (autoload 'fm-start "fm" "follow mode for compilation like buffers")
 
-  ;; (add-hook 'occur-mode-hook 'fm-start)
-  ;; (add-hook 'compilation-mode-hook 'fm-start)
-
-  ;; (require 'yaoddmuse)
-  ;; (add-to-list 'yaoddmuse-wikis '("mine" "http://systemexit.de/w/wiki.cgi" utf-8 "uihnscuskc=1;"))
-  ;; (setq yaoddmuse-default-wiki "mine")
-
   (add-hook 'emacs-lisp-mode-hook
 	    '(lambda()
 	       (local-set-key [(tab)] 'smart-tab)
@@ -485,7 +458,6 @@ completion buffers."
   (schmir-lua-setup)
   (schmir-c-setup)
   (schmir-misc-setup)
-  (schmir-elisp-setup)
   (require-try 'schmir-flymake))
 
 (require 'setup-python)
@@ -496,8 +468,6 @@ completion buffers."
   (select-frame frame)
   (if (window-system frame)
       (progn
-	;; (set-background-color "#003344")
-	;; (set-foreground-color "white")
 	(set-cursor-color "red"))))
 
 (add-hook 'after-make-frame-functions 'schmir-setup-frame)
@@ -615,8 +585,6 @@ completion buffers."
 ;; "funky stuff" ;; proceed with caution
 
 (global-set-key (kbd "C-z") 'undo)
-;; (when (require-try 'redo+)
-;;   (global-set-key (kbd "C-S-z") 'redo))
 
 
 
@@ -635,13 +603,10 @@ completion buffers."
   (global-set-key (quote [home]) 'my-home)
   (global-set-key (quote [end]) 'my-end))
 
-;; (local-set-key "." 'electric-dot-and-dash-dot)
-;; (local-set-key ",," 'electric-dot-and-dash-dash)
 
 (when (require-try 'repeatable)
   (repeatable-command-advice next-buffer)
   (repeatable-command-advice exchange-point-and-mark))
-  ;; (repeatable-command-advice undo))
 
 
 
@@ -732,7 +697,6 @@ completion buffers."
   (font-lock-add-keywords nil (my-generate-highlight-keywords "")))
 
 (add-hook 'emacs-lisp-mode-hook 'my-nice-comment-semicolon)
-;; (add-hook 'scheme-mode-hook 'my-nice-comment-semicolon)
 (add-hook 'python-mode-hook 'my-nice-comment-hash-mark)
 (add-hook 'c-mode-hook 'my-nice-comment-slash)
 (add-hook 'c++-mode-hook 'my-nice-comment-slash)
