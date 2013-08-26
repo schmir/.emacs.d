@@ -22,6 +22,8 @@
       ido-max-window-height 10
       ido-max-file-prompt-width 1400
       ido-max-prospects 32
-      ido-max-directory-size 300000))
+      ido-max-directory-size 300000)
+
+(global-set-key (kbd "M-[") 'ido-goto-symbol)
 
 (provide 'setup-ido)
