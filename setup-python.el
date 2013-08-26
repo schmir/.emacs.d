@@ -56,5 +56,7 @@
 (if (fboundp 'cython-mode)
     (add-to-list 'auto-mode-alist '("\\.\\(pyx\\|pxi\\|pxd\\)$" . cython-mode)))
 
+(setq python-pep8-options '("--repeat"))
+
 (provide 'setup-python)
 

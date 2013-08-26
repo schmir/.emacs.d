@@ -897,7 +897,6 @@ completion buffers."
 (add-hook 'find-file-hook 'sm-try-smerge t)
 
 
-(setq python-pep8-options '("--repeat"))
 (require 'help-mode)
 (require 'setup-completion)
 
