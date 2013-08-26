@@ -594,52 +594,6 @@ completion buffers."
       (insert "=")
     (smart-operator-insert "=")))
 
-(defun schmir-python-hook ()
-  (interactive)
-  (when (require-try 'unicode-symbols)
-    (substitute-patterns-with-unicode
-     (list
-      (cons "\\<\\(lambda\\)\\>" 'lambda))))
-
-  (jedi:setup)
-  (eproject-maybe-turn-on)   ;; make sure the eproject-hook has run
-
-  (add-hook 'find-file-hooks 'maybe-untabify 'nil 1)
-  (setq py-smart-indentation 1
-	indent-tabs-mode nil)
-  (modify-syntax-entry ?_ "w") ;; make _ part of words.
-
-  (highlight-symbol-mode 1)
-
-  ;;(highlight-phrase "[Ss]elf" (quote bold))
-  (local-set-key (kbd "RET") 'newline-and-indent)
-  (local-set-key (kbd "M-]") 'python-mark-block)
-  (local-set-key (kbd "C-h n") 'schmir-pyhelp)
-  ;; (local-set-key (kbd ",") 'schmir-python-smart-comma)
-
-  (local-set-key [C-S-left]  '(lambda()
-				(interactive)
-				(shift-region -4)))
-  (local-set-key [C-S-right] '(lambda()
-				(interactive)
-				(shift-region 4)))
-
-
-  ;; (if (fboundp 'py-shift-region-left)
-  ;;     (progn
-  ;;	(local-set-key [C-S-right] 'py-shift-region-right)
-  ;;	(local-set-key [C-S-left] 'py-shift-region-left))
-  ;;   (local-set-key [C-S-left]  'python-shift-left)
-  ;;   (local-set-key [C-S-right] 'python-shift-right))
-
-  ;; (local-set-key (kbd "=") 'schmir-python-smart-equal)
-  (local-set-key [(tab)] 'smart-tab)
-
-  (if (not (file-remote-p (buffer-file-name)))
-      (flymake-mode 1))
-
-  ;; (add-hook 'pre-abbrev-expand-hook 'schmir-change-abbrev nil t)
-  )
 
 
 (defun schmir-misc-setup()
