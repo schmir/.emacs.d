@@ -181,6 +181,12 @@ With prefix argument UNQUOTEP, unquote the region." t)
 (setq git-messenger:show-detail t)
 (global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
 
+(defun magit-commit-mode-init ()
+  (when (looking-at "\n")
+    (open-line 1)))
+
+(add-hook 'git-commit-mode-hook 'magit-commit-mode-init)
+
 ;; somehow later magit version close the frame
 ;; see https://github.com/magit/magit/issues/771
 (defadvice git-commit-commit (around no-kill-frame activate)
