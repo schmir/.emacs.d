@@ -13,7 +13,7 @@
 .DS_Store
 .ropeproject
 ID
-
+/elpa/
 /auto-save-list/*
 /history
 /emacs-places
