@@ -37,28 +37,9 @@
     (load-file generated-autoload-file))
 
 
-;; fix indentation of cond expressions
-(put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
-
-(setq nrepl-init-code
-"(do
-    (set! *print-length* 150)
-    (set! *print-level* 20)
-    (use 'clojure.pprint)
-    (use 'clojure.reflect))
-")
-
-(defun schmir-setup-nrepl ()
-  (interactive)
-  (insert nrepl-init-code)
-  (nrepl-return))
-(add-hook 'nrepl-connected-hook 'schmir-setup-nrepl)
-
-(setq nrepl-hide-special-buffers t)
-(setq nrepl-popup-stacktraces-in-repl t)
-(setq nrepl-history-file "~/.emacs.d/nrepl-history")
 
 (require 'setup-package)
+(require 'setup-clojure)
 
 ;; autoloads
 (autoload 'ac-ropemacs-setup "auto-complete-python" "setup autocomplete with ropemacs" t)
@@ -721,10 +702,6 @@ completion buffers."
       (add-to-list 'auto-mode-alist '("\\.\\(pyx\\|pxi\\|pxd\\)$" . cython-mode))))
 
 
-(defun schmir-clojure-hook ()
-  (highlight-symbol-mode 1))
-
-(add-hook 'clojure-mode-hook 'schmir-clojure-hook)
 
 (defun schmir-misc-setup()
   (autoload 'fm-start "fm" "follow mode for compilation like buffers")
