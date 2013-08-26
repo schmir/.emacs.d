@@ -1015,10 +1015,6 @@ completion buffers."
 (setq message-sendmail-envelope-from 'header)
 
 (put 'set-goal-column 'disabled nil)
-(define-prefix-command 'nabla-map)
-(global-set-key '[8711] 'nabla-map)
-(define-key nabla-map (kbd "a") 'execute-extended-command)
-(define-key nabla-map (kbd "x") 'exchange-point-and-mark)
 
 
 (define-key global-map (kbd "C-M-<left>") 'shrink-window-horizontally)
@@ -1046,7 +1042,6 @@ completion buffers."
 	     (if dedicated "no longer " "")
 	     (buffer-name))))
 
-(global-set-key (quote [8711 100]) (quote dedicate-window))
 
 (require 'setup-escreen)
 
