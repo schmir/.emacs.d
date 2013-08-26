@@ -40,6 +40,7 @@
 
 (require 'setup-package)
 (require 'setup-clojure)
+(require 'setup-magit)
 
 ;; autoloads
 (autoload 'ac-ropemacs-setup "auto-complete-python" "setup autocomplete with ropemacs" t)
@@ -133,17 +134,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 (setq git-messenger:show-detail t)
 (global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
 
-(defun magit-commit-mode-init ()
-  (when (looking-at "\n")
-    (open-line 1)))
-
-(add-hook 'git-commit-mode-hook 'magit-commit-mode-init)
-
-;; somehow later magit version close the frame
-;; see https://github.com/magit/magit/issues/771
-(defadvice git-commit-commit (around no-kill-frame activate)
-  (flet ((delete-frame (&optional FRAME FORCE) ()))
-    ad-do-it))
 
 (defadvice save-buffers-kill-emacs (around emacs-die-hard activate)
   "really???"
@@ -241,7 +231,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
   (global-font-lock-mode t)
 
-  (setq magit-omit-untracked-dir-contents t)
   (setq gist-view-gist t)
   (put 'narrow-to-region 'disabled nil)
   (setq line-move-visual nil) ;; what did they think ?
@@ -1354,24 +1343,6 @@ searches all buffers."
    regexp))
 
 (global-set-key [f7] 'search-all-buffers)
-
-(eval-after-load "magit"
-  '(progn
-     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-     (if (eq system-type 'windows-nt)
-       (setq magit-git-executable (executable-find "git")))))
-;; full screen magit-status
-
-(defadvice magit-status (around magit-fullscreen activate)
-  (window-configuration-to-register :magit-fullscreen)
-  ad-do-it
-  (delete-other-windows))
-
-(defun magit-quit-session ()
-  "Restores the previous window configuration and kills the magit buffer"
-  (interactive)
-  (kill-buffer)
-  (jump-to-register :magit-fullscreen))
 
 
 
