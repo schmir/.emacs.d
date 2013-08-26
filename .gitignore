@@ -22,3 +22,7 @@ ID
 /eshell/history
 /eshell/lastdir
 /*-old/
+/nrepl-history
+/tramp
+/*.dat
+[#]*[#]
