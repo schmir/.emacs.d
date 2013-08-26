@@ -15,12 +15,10 @@
 (require 'setup-gnus)
 
 ;; autoloads
-(autoload 'ac-ropemacs-setup "auto-complete-python" "setup autocomplete with ropemacs" t)
 (autoload 'rst-mode "rst" "mode for editing reStructuredText documents" t)
 (autoload 'flymake-mode "flymake" "flymake mode" t)
 (autoload 'php-mode "php-mode" "PHP editing mode." t)
 (autoload 'gid "id-utils" t)
-(autoload 'pymacs-load "pymacs" nil t)
 (autoload 'sgml-quote "sgml-mode"
   "Quote SGML text in region START ... END.
 Only &, < and > are quoted, the rest is left untouched.
@@ -32,20 +30,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 
 ;;; compat methods
 
-;; avoids having to modify this file when i use emacs somewhere where i don't
-;; have particular extensions
-(defun require-try (&rest args)
-  "require symbols, load-library strings, fail silently if some aren't
-   available"
-  (let (lib)
-    (condition-case err
-	(mapc (lambda (e)
-		(setq lib e)
-		(cond
-		 ((stringp e) (load-library e))
-		 ((symbolp e) (require e)))) args)
-      (file-error
-       (progn (message "Couldn't load extension: %s: %S" lib err) nil)))))
 
 
 ;; emacs 24 doesn't have this anymore

@@ -30,4 +30,20 @@
     (when (not (package-installed-p p))
       (package-install p))))
 
+
+;; avoids having to modify this file when i use emacs somewhere where i don't
+;; have particular extensions
+(defun require-try (&rest args)
+  "require symbols, load-library strings, fail silently if some aren't
+   available"
+  (let (lib)
+    (condition-case err
+	(mapc (lambda (e)
+		(setq lib e)
+		(cond
+		 ((stringp e) (load-library e))
+		 ((symbolp e) (require e)))) args)
+      (file-error
+       (progn (message "Couldn't load extension: %s: %S" lib err) nil)))))
+
 (provide 'setup-package)
