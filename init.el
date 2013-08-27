@@ -40,6 +40,7 @@
 (require 'setup-uniquify)
 (require 'setup-lua)
 (require 'setup-irc)
+(require 'setup-file-hook)
 
 ;; shell-pop
 (require 'shell-pop)
@@ -156,8 +157,6 @@
 	      save-place-file (concat dotfiles-dir "emacs-places"))
 (require 'saveplace)
 
-;; automatically chmod +x when the file has shebang "#!"
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 (add-hook 'server-done-hook 'delete-frame)
 
@@ -167,8 +166,6 @@
      (multi-term-keystroke-setup)))
 
 
-(require 'evimodeline)
-(add-hook 'find-file-hook 'evimodeline-find-file-hook)
 
 ;; Change backup behavior to save in a directory, not in a miscellany
 ;; of files all over the place.
@@ -343,13 +340,6 @@ completion buffers."
 
 (add-to-list 'auto-mode-alist '("\\.ml\\w?" . tuareg-mode))
 
-;;; enable smerge mode
-(defun sm-try-smerge ()
-  (save-excursion
-    (goto-char (point-min))
-    (when (re-search-forward "^<<<<<<< " nil t)
-      (smerge-mode 1))))
-(add-hook 'find-file-hook 'sm-try-smerge t)
 
 (require 'help-mode)
 
