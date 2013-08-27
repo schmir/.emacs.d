@@ -20,6 +20,7 @@
 (require 'setup-clojure)
 (require 'setup-magit)
 (require 'setup-gnus)
+(require 'setup-compile)
 
 ;; autoloads
 (autoload 'gid "id-utils" t)
@@ -246,21 +247,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 (require 'evimodeline)
 (add-hook 'find-file-hook 'evimodeline-find-file-hook)
 
-(require 'eproject)
-(define-project-type generic-hg (generic) (look-for ".hg/00changelog.i")
-  :irrelevant-files ("^[.]" "^[#]" ".hg/"))
-
-(defun examine-project ()
-  (interactive)
-  (message "examine project %s" (eproject-root))
-  (if (file-exists-p (concat (eproject-root) "SConstruct"))
-      (setq compile-command (concat "cd " (eproject-root) "; scons")))
-  (if (file-exists-p (concat (eproject-root) "Makefile"))
-      (setq compile-command "make")))
-
-
-(add-hook 'generic-git-project-file-visit-hook 'examine-project)
-(add-hook 'generic-hg-project-file-visit-hook 'examine-project)
 
 
 
@@ -436,9 +422,6 @@ completion buffers."
 (global-set-key [f5] 'git-grep)
 
 
-(when (require-try 'compile-dwim)
-  (global-set-key (quote [f9]) 'compile-dwim)
-  (global-set-key "c" 'compile-dwim))
 
 
 (global-set-key (quote [S-iso-lefttab]) 'tab-to-tab-stop)
@@ -593,14 +576,6 @@ completion buffers."
 (global-set-key "\M-p" 'goto-line)
 
 (global-set-key [C-backspace] 'backward-kill-word)
-(defadvice yes-or-no-p (around no-query-compilation-always-kill activate)
-  "make `compile' always kill existing compilation."
-  (if (string-match "A compilation process is running; kill it\\?"
-		     prompt)
-      (setq ad-return-value t)
-    ad-do-it))
-
-(setq compilation-ask-about-save nil)
 (require 'setup-print)
 (put 'downcase-region 'disabled nil)
 
@@ -644,19 +619,6 @@ completion buffers."
 
 (blink-cursor-mode 1)
 
-(defun my-set-compile-command()
-  "If first line contains #!/usr/... set compile-command to the file itself"
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (if (and (looking-at "#! */")
-	     (file-executable-p buffer-file-name)
-	     (not (eq (variable-binding-locus 'compile-command) (current-buffer))))
-	(progn
-	  (make-local-variable 'compile-command)
-	  (setq compile-command buffer-file-name)))))
-
-(add-hook 'find-file-hook 'my-set-compile-command)
 
 
 (defun update-last-modified()
