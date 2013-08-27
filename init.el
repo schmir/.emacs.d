@@ -39,6 +39,7 @@
 (require 'setup-grep)
 (require 'setup-uniquify)
 (require 'setup-lua)
+(require 'setup-irc)
 
 ;; shell-pop
 (require 'shell-pop)
@@ -86,6 +87,7 @@
 
 (setq dired-recursive-deletes 'always)
 
+(blink-cursor-mode 1)
 (mouse-wheel-mode 1)
 (auto-image-file-mode 1)
 (global-cwarn-mode 1)
@@ -203,11 +205,6 @@ completion buffers."
 
 (add-hook 'completion-list-mode-hook 'completion-setup-directory-face)
 
-
-
-
-
-
 (autoload 'fm-start "fm" "follow mode for compilation like buffers")
 
 (add-hook 'emacs-lisp-mode-hook
@@ -236,12 +233,10 @@ completion buffers."
 	  '(lambda()
 	     (local-set-key [(tab)] 'smart-tab)
 	     (highlight-symbol-mode 1)
-	     (setq c-basic-offset 2)
-	     ))
+	     (setq c-basic-offset 2)))
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 
 (add-hook 'rst-mode-hook 'auto-fill-mode)
-
 
 (require 'schmir-flymake)
 
@@ -252,11 +247,6 @@ completion buffers."
 
 
 (setq smart-tab-using-hippie-expand 't)
-
-
-
-
-
 
 (global-set-key (quote [S-iso-lefttab]) 'tab-to-tab-stop)
 ;; (global-set-key "" (quote comment-region))
@@ -279,50 +269,6 @@ completion buffers."
 (global-set-key (quote [S-return]) 'open-line-below)
 (global-set-key (kbd "M-\"") 'comment-dwim)
 
-(eval-after-load "rcirc"
-  '(progn
-    (message "loading schmir-irc")
-    (require 'schmir-irc)))
-
-
-(setq irc-screen-number nil)
-(defun goto-irc-screen ()
-  (interactive)
-  (if (not irc-screen-number)
-      (progn
-	(escreen-create-screen)
-	(setq irc-screen-number escreen-current-screen-number)
-	;; as i don't do this by default in escreen-create-screen
-	(delete-other-windows))
-    (escreen-goto-screen irc-screen-number)))
-
-(defun toggle-irc-screen ()
-  (interactive)
-  (if (eq irc-screen-number escreen-current-screen-number)
-      (escreen-goto-last-screen)
-    (goto-irc-screen))
-  (escreen-get-active-screen-numbers-with-emphasis))
-
-(defun my-irc-next-active()
-  (interactive)
-  (if (fboundp 'rcirc-next-active-buffer)
-      (progn
-	(if rcirc-activity
-	    (progn
-	      (goto-irc-screen)
-	      (rcirc-next-active-buffer nil)
-	      (escreen-get-active-screen-numbers-with-emphasis))
-	  (if (or
-	       (eq irc-screen-number escreen-current-screen-number)
-	       (if (eq last-command 'my-irc-next-active)
-		   t
-		 (message "press key again in order to return to irc screen")
-		 nil))
-	      (toggle-irc-screen))))
-    (goto-irc-screen)
-    (my-irc)))
-
-(global-set-key [f12] 'my-irc-next-active)
 
 (global-set-key [mouse-3] 'imenu)
 
@@ -371,12 +317,6 @@ completion buffers."
   (repeatable-command-advice next-buffer)
   (repeatable-command-advice exchange-point-and-mark))
 
-
-
-
-
-
-
 (global-set-key (kbd "<mouse-3>") 'mouse-buffer-menu)
 
 (global-set-key (kbd "C-j")
@@ -391,12 +331,9 @@ completion buffers."
 (global-set-key "\M-p" 'goto-line)
 
 (global-set-key [C-backspace] 'backward-kill-word)
+
 (put 'downcase-region 'disabled nil)
-
-
-
 (put 'set-goal-column 'disabled nil)
-
 
 (define-key global-map (kbd "C-M-<left>") 'shrink-window-horizontally)
 (define-key global-map (kbd "C-M-<right>") 'enlarge-window-horizontally)
@@ -404,18 +341,7 @@ completion buffers."
 (define-key global-map (kbd "C-M-<down>") 'shrink-window)
 
 
-
-
-
-
-
-
-(blink-cursor-mode 1)
-
-
-
 (add-to-list 'auto-mode-alist '("\\.ml\\w?" . tuareg-mode))
-
 
 ;;; enable smerge mode
 (defun sm-try-smerge ()
@@ -425,9 +351,7 @@ completion buffers."
       (smerge-mode 1))))
 (add-hook 'find-file-hook 'sm-try-smerge t)
 
-
 (require 'help-mode)
-
 
 (require 'setup-exec-abbrev)
 (message "initialization complete")
