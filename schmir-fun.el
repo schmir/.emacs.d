@@ -1,6 +1,34 @@
 ;; -*- mode: emacs-lisp-*-
 ;;
 
+(defun toggle-windows-split()
+  "Switch back and forth between one window and whatever split of windows we might have in the frame. The idea is to maximize the current buffer, while being able to go back to the previous split of windows in the frame simply by calling this command again."
+  (interactive)
+  (if (not (window-minibuffer-p (selected-window)))
+      (progn
+	(if (< 1 (count-windows))
+	    (progn
+	      (window-configuration-to-register ?u)
+	      (delete-other-windows))
+	  (jump-to-register ?u)))))
+
+(defun dedicate-window()
+  (interactive)
+  (let* ((window    (selected-window))
+	 (dedicated (window-dedicated-p window)))
+    (set-window-dedicated-p window (not dedicated))
+    (message "Window %sdedicated to %s"
+	     (if dedicated "no longer " "")
+	     (buffer-name))))
+
+(defun show-trailing-whitespace()
+  (interactive)
+  (setq show-trailing-whitespace (not show-trailing-whitespace))
+  (message (if show-trailing-whitespace
+	       "show-trailing-whitespace enabled"
+	       "show-trailing-whitespace disabled")))
+;; (show-trailing-whitespace)
+
 (defun wipe-right-whitespace ()
   "White-space (blanks and tabs) right of point are removed"
   (interactive)

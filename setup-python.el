@@ -35,7 +35,6 @@
   (local-set-key (kbd "RET") 'newline-and-indent)
   (local-set-key (kbd "M-]") 'python-mark-block)
   (local-set-key (kbd "C-h n") 'schmir-pyhelp)
-  ;; (local-set-key (kbd ",") 'schmir-python-smart-comma)
 
   (local-set-key [C-S-left]  '(lambda()
 				(interactive)

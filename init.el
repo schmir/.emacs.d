@@ -35,20 +35,13 @@ With prefix argument UNQUOTEP, unquote the region." t)
 
 
 
-
+;; shell-pop
 (require 'shell-pop)
 (global-set-key (kbd "C-t") 'shell-pop)
 
-(unless (require-try 'diminish)
-  (defun diminish (mode)
-    t))
-
-(if (require-try 'highlight-symbol)
-    (diminish 'highlight-symbol-mode)
-  (defun highlight-symbol-mode (&optional arg)
-    t))
 
 
+(require 'setup-highlight-symbol)
 
 ;; git-messenger
 (setq git-messenger:show-detail t)
@@ -65,10 +58,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 
 (require 'setup-bm)
 
-(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
-(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode))
-			      auto-mode-alist))
-
 
 (schmir-maybe-server)
 
@@ -78,9 +67,7 @@ With prefix argument UNQUOTEP, unquote the region." t)
   (flet ((process-list ())) ad-do-it))
 
 
-(defun schmir-isearch-beginning ()
-  "Use with isearch hook to end search at first char of match."
-  (when isearch-forward (goto-char isearch-other-end)))
+(require 'setup-isearch)
 
 ;; -- from http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
 (defun stop-using-minibuffer ()
@@ -90,168 +77,124 @@ With prefix argument UNQUOTEP, unquote the region." t)
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
 
-(defun schmir-basic-setup ()
-  (interactive)
-  (savehist-mode 1) ;; keep track of minibuffer commands
-  (size-indication-mode 1) ;; show file size
-  (global-rainbow-delimiters-mode 1)
-  (global-auto-revert-mode 1) ;; re-read buffers from disk unless they're `dirty'
-  (display-time-mode 1)
-  (auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
-  (global-font-lock-mode t)
+(savehist-mode 1) ;; keep track of minibuffer commands
+(size-indication-mode 1) ;; show file size
+(global-rainbow-delimiters-mode 1)
+(global-auto-revert-mode 1) ;; re-read buffers from disk unless they're `dirty'
+(display-time-mode 1)
+(auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
+(global-font-lock-mode t)
 
-  (setq gist-view-gist t)
-  (put 'narrow-to-region 'disabled nil)
-  (setq line-move-visual nil) ;; what did they think ?
+(setq gist-view-gist t)
+(put 'narrow-to-region 'disabled nil)
+(setq line-move-visual nil) ;; what did they think ?
 
-  (setq highlight-symbol-idle-delay 0.3)
 
-  (recentf-mode t)
-  (setq recentf-max-saved-items 200)
+(recentf-mode t)
+(setq recentf-max-saved-items 200)
 
-  (require 'which-func)
-  (add-to-list 'which-func-modes 'org-mode)
-  (which-func-mode 1)
-
-  ;; higlight changes in documents
-  (global-highlight-changes-mode t)
-  (setq highlight-changes-visibility-initial-state nil); initially, hide#
-  (global-set-key (kbd "<f7>") 'highlight-changes-visible-mode)
-  ;; shift -pgup/pgdown jump to the previous/next change
-  (global-set-key (kbd "<S-prior>") 'highlight-changes-next-change)
-  (global-set-key (kbd "<S-next>")  'highlight-changes-previous-change)
+(require 'which-func)
+(add-to-list 'which-func-modes 'org-mode)
+(which-func-mode 1)
 
 
 
-  (ansi-color-for-comint-mode-on)
-  (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
 
-  (setq dired-recursive-deletes 'always)
+(ansi-color-for-comint-mode-on)
+(add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
 
-  (mouse-wheel-mode 1)
-  (auto-image-file-mode 1)
-  (global-cwarn-mode 1)
+(setq dired-recursive-deletes 'always)
 
-  (global-hl-line-mode 1)   ;; highlight line where cursor is
+(mouse-wheel-mode 1)
+(auto-image-file-mode 1)
+(global-cwarn-mode 1)
 
-  (column-number-mode 1)
-  (show-paren-mode 1)
-  (put 'overwrite-mode 'disabled nil)
-  (setq mark-even-if-inactive t)
-  (transient-mark-mode 1)
+(global-hl-line-mode 1)   ;; highlight line where cursor is
 
-
-  ;; Drive out the mouse when it's too near to the cursor.
-  (mouse-avoidance-mode 'exile)
-  (setq mouse-avoidance-threshold 10
-	mouse-avoidance-nudge-dist 20
-	mouse-avoidance-nudge-var 5)
-
-  ;; show pathnames for buffers with same name
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'reverse
-	uniquify-separator "/"
-	uniquify-after-kill-buffer-p t ; rename after killing uniquified
-	uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
-
-  (setq visible-bell 1
-	require-final-newline t
-	display-time-24hr-format t
-	inhibit-startup-message t)
-
-  (setq scroll-margin 2
-	scroll-step 0
-	scroll-conservatively 10000
-	scroll-preserve-screen-position 1)
-
-  (require-try 'smooth-scrolling)
-  (setq smooth-scroll-margin 3)
-
-  (setq save-abbrevs t
-	default-abbrev-mode t)
-  (abbrev-mode 1)
-
-  (if (file-exists-p abbrev-file-name)
-      (quietly-read-abbrev-file))
-
-  (setq change-major-mode-with-file-name t
-	;; Filename completion ignores these.
-	completion-ignored-extensions (append completion-ignored-extensions
-					      '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx"))
-	backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
-	font-lock-maximum-decoration t			;; maximum decoration
-	next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
-	show-paren-style 'expression
-	compilation-scroll-output t
-	default-indicate-empty-lines t
-	line-number-display-limit-width 100000
-	kill-whole-line t				;; make kill-line at beginning of line kill the whole line
-	woman-use-own-frame nil				;; don't create new frame for manpages
-	vc-handled-backends nil
-	vc-follow-symlinks t				;; follow symlinks and don't ask
-	enable-recursive-minibuffers t
-	)
+(column-number-mode 1)
+(show-paren-mode 1)
+(put 'overwrite-mode 'disabled nil)
+(setq mark-even-if-inactive t)
+(transient-mark-mode 1)
 
 
-  ;; prevent emacs from asking for coding-system...
-  (set-language-environment "utf-8")
+;; Drive out the mouse when it's too near to the cursor.
+(mouse-avoidance-mode 'exile)
+(setq mouse-avoidance-threshold 10
+      mouse-avoidance-nudge-dist 20
+      mouse-avoidance-nudge-var 5)
 
-  ;; when on a tab, make the cursor the tab length
-  (setq-default x-stretch-cursor t)
+;; show pathnames for buffers with same name
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse
+      uniquify-separator "/"
+      uniquify-after-kill-buffer-p t ; rename after killing uniquified
+      uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
-  ;; place cursor on same buffer position between editing sessions
-  (setq-default save-place t
-		save-place-file (concat dotfiles-dir "emacs-places"))
-  (require 'saveplace)
+(setq visible-bell 1
+      require-final-newline t
+      display-time-24hr-format t
+      inhibit-startup-message t)
 
-  ;; automatically chmod +x when the file has shebang "#!"
-  (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-
-  (add-hook 'server-done-hook 'delete-frame)
-
-
-
-  ;; Turn on time-stamp updating. Timestamp must be in first 8 lines of file and look like:
-  ;; Time-stamp: <>
-  (add-hook 'write-file-hooks 'time-stamp)
-  (add-hook 'before-save-hook 'time-stamp)
-
-  ;; Always end searches at the beginning of the matching expression.
-  (add-hook 'isearch-mode-end-hook 'schmir-isearch-beginning)
+(setq scroll-margin 2
+      scroll-step 0
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
 
 
+(setq save-abbrevs t
+      default-abbrev-mode t)
+(abbrev-mode 1)
 
-  (eval-after-load "multi-term"
-    '(progn
-       (multi-term-keystroke-setup)))
+(if (file-exists-p abbrev-file-name)
+    (quietly-read-abbrev-file))
 
-  (when (require-try 'tramp)
-    (add-to-list 'tramp-default-method-alist
-		 '("\\`localhost\\'" "\\`root\\'" "ssh"))
+(setq change-major-mode-with-file-name t
+      ;; Filename completion ignores these.
+      completion-ignored-extensions (append completion-ignored-extensions
+					    '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx"))
+      backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
+      font-lock-maximum-decoration t			;; maximum decoration
+      next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
+      show-paren-style 'expression
+      compilation-scroll-output t
+      default-indicate-empty-lines t
+      line-number-display-limit-width 100000
+      kill-whole-line t				;; make kill-line at beginning of line kill the whole line
+      woman-use-own-frame nil				;; don't create new frame for manpages
+      vc-handled-backends nil
+      vc-follow-symlinks t				;; follow symlinks and don't ask
+      enable-recursive-minibuffers t
+      )
 
-    (if (boundp 'tramp-remote-path)
-	(progn
-	  (add-to-list 'tramp-remote-path "~/bin")
-	  (add-to-list 'tramp-remote-path "~/local/bin")
-	  (add-to-list 'tramp-remote-path "~/rc/bin")))
 
-    (setq tramp-default-method "ssh"))
+;; prevent emacs from asking for coding-system...
+(set-language-environment "utf-8")
 
-  ;; switch windows with shift-(up/down/left/right)
-  (require-try 'framemove)
-  (setq framemove-hook-into-windmove t)
-  (windmove-default-keybindings 'shift))
+;; when on a tab, make the cursor the tab length
+(setq-default x-stretch-cursor t)
+
+;; place cursor on same buffer position between editing sessions
+(setq-default save-place t
+	      save-place-file (concat dotfiles-dir "emacs-places"))
+(require 'saveplace)
+
+;; automatically chmod +x when the file has shebang "#!"
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+(add-hook 'server-done-hook 'delete-frame)
 
 
-(schmir-basic-setup)
+(eval-after-load "multi-term"
+  '(progn
+     (multi-term-keystroke-setup)))
+
+(require 'setup-tramp)
+
+(require 'setup-frame)
+
 (require 'evimodeline)
 (add-hook 'find-file-hook 'evimodeline-find-file-hook)
-
-
-
-
-
-
 
 ;; Change backup behavior to save in a directory, not in a miscellany
 ;; of files all over the place.
@@ -261,9 +204,7 @@ With prefix argument UNQUOTEP, unquote the region." t)
       delete-old-versions t
       kept-new-versions 6
       kept-old-versions 2
-      version-control t       ; use versioned backups
-      frame-title-format `(,"%b    ---   ", (user-login-name) "@" ,(system-name))
-      )
+      version-control t)       ; use versioned backups
 
 ;; get rid of yes-or-no questions - y or n is enough
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -290,122 +231,70 @@ completion buffers."
 
 (add-hook 'completion-list-mode-hook 'completion-setup-directory-face)
 
-(defun schmir-setup-org-mode()
-  ;; Make windmove work in org-mode:
-
-  (add-hook 'org-shiftup-final-hook 'windmove-up)
-  (add-hook 'org-shiftleft-final-hook 'windmove-left)
-  (add-hook 'org-shiftdown-final-hook 'windmove-down)
-  (add-hook 'org-shiftright-final-hook 'windmove-right))
-
-(add-hook 'org-mode-hook 'schmir-setup-org-mode)
-(setq org-replace-disputed-keys t
-      org-startup-truncated nil)
 
 
-
+(require 'setup-org)
 (require 'setup-ido)
 
 
 
-(defun schmir-change-abbrev (&optional args)
-  (setq local-abbrev-table
-	(if (python-in-string/comment)
-	    text-mode-abbrev-table
-	  python-mode-abbrev-table)))
+(autoload 'fm-start "fm" "follow mode for compilation like buffers")
+
+(add-hook 'emacs-lisp-mode-hook
+	  '(lambda()
+	     (local-set-key [(tab)] 'smart-tab)
+	     (highlight-symbol-mode 1)))
+
+(add-to-list 'auto-mode-alist
+	     '("\\.md$\\|\\.markdown$" . markdown-mode))
 
 
-(unless (require-try 'smart-operator)
-  (defun smart-operator-insert (c &optional dummy)
-    (insert c)))
+(add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
+(add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
 
-(defun schmir-python-smart-comma()
-  (interactive)
-  (if (python-in-string/comment)
-      (insert ",")
-    (smart-operator-insert "," t)))
-
-(defun schmir-python-smart-equal()
-  (interactive)
-  (if (python-in-string/comment)
-      (insert "=")
-    (smart-operator-insert "=")))
+(add-to-list 'auto-mode-alist '("\\PKGBUILD$\\|\\.sh$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.wsdl$" . sgml-mode))
 
 
-
-(defun schmir-misc-setup()
-  (autoload 'fm-start "fm" "follow mode for compilation like buffers")
-
-  (add-hook 'emacs-lisp-mode-hook
-	    '(lambda()
-	       (local-set-key [(tab)] 'smart-tab)
-	       (highlight-symbol-mode 1)))
-
-  (add-to-list 'auto-mode-alist
-	       '("\\.md$\\|\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.pas$\\|\\.dpr" .  delphi-mode))
 
 
-  (add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
-  (add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+(add-hook 'espresso-mode-hook
+	  '(lambda()
+	     (local-set-key [(tab)] 'smart-tab)
+	     (highlight-symbol-mode 1)
+	     (setq c-basic-offset 2)
+	     ))
 
-  (add-to-list 'auto-mode-alist '("\\PKGBUILD$\\|\\.sh$" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-  (add-to-list 'auto-mode-alist '("\\.wsdl$" . sgml-mode))
+(add-hook 'javascript-mode-hook
+	  '(lambda()
+	     (local-set-key [(tab)] 'smart-tab)
+	     (highlight-symbol-mode 1)
+	     (setq c-basic-offset 2)
+	     ))
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 
+(add-hook 'rst-mode-hook 'auto-fill-mode)
 
-  (add-to-list 'auto-mode-alist '("\\.pas$\\|\\.dpr" .  delphi-mode))
-
-
-  (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-  (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-  (add-hook 'espresso-mode-hook
-	    '(lambda()
-	       (local-set-key [(tab)] 'smart-tab)
-	       (highlight-symbol-mode 1)
-	       (setq c-basic-offset 2)
-	       ))
-
-  (add-hook 'javascript-mode-hook
-	    '(lambda()
-	       (local-set-key [(tab)] 'smart-tab)
-	       (highlight-symbol-mode 1)
-	       (setq c-basic-offset 2)
-	       ))
-  (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-
-  (add-hook 'rst-mode-hook 'auto-fill-mode)
-
-)
 
 ;; --- lua
-(defun schmir-lua-setup()
-  (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-  (add-hook 'lua-mode-hook
-	    '(lambda()
-	       (local-set-key [(tab)] 'smart-tab)
-	       (highlight-symbol-mode 1)
-	       (setq lua-indent-level 4)
-	       (flymake-mode))))
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-hook 'lua-mode-hook
+	  '(lambda()
+	     (local-set-key [(tab)] 'smart-tab)
+	     (highlight-symbol-mode 1)
+	     (setq lua-indent-level 4)
+	     (flymake-mode)))
 
 
-(defun schmir-setup-modes()
-  (schmir-lua-setup)
-  (schmir-misc-setup)
-  (require-try 'schmir-flymake))
 
 (require 'setup-python)
 (require 'setup-c-mode)
-(schmir-setup-modes)
+(require 'schmir-flymake)
 
-(defun schmir-setup-frame (frame)
-  "Set display parameters for the current frame"
-  (select-frame frame)
-  (if (window-system frame)
-      (progn
-	(set-cursor-color "red"))))
-
-(add-hook 'after-make-frame-functions 'schmir-setup-frame)
-(schmir-setup-frame (selected-frame))
 
 (if (fboundp 'schmir-hl-fixme)
     (mapc 'schmir-hl-fixme
@@ -414,10 +303,6 @@ completion buffers."
 
 (setq smart-tab-using-hippie-expand 't)
 
-(global-set-key [(control f1)] 'highlight-symbol-at-point)
-(global-set-key [f1] 'highlight-symbol-next)
-(global-set-key [(shift f1)] 'highlight-symbol-prev)
-(global-set-key [(meta f1)] 'highlight-symbol-query-replace)
 
 (global-set-key [f5] 'git-grep)
 
@@ -433,7 +318,6 @@ completion buffers."
 (global-set-key [C-S-right] 'shift-right)
 (global-set-key [C-S-left] 'shift-left)
 
-(global-set-key (kbd "C-x C-r") 'find-alternative-file-with-sudo)
 
 ;; (global-unset-key (kbd "C-x C-c"))
 (global-set-key (kbd "C-x C-c") 'save-buffers-kill-terminal)
@@ -542,23 +426,6 @@ completion buffers."
 
 
 
-(setq isearch-allow-scroll t)
-(define-key isearch-mode-map [next] 'isearch-repeat-forward)
-(define-key isearch-mode-map [prior] 'isearch-repeat-backward)
-(global-set-key [C-next] 'isearch-repeat-forward)
-(global-set-key [C-prior] 'isearch-repeat-backward)
-
-(define-key isearch-mode-map (kbd "C-o")
-  (lambda ()
-    (interactive)
-    (let ((case-fold-search isearch-case-fold-search))
-      (occur (if isearch-regexp isearch-string
-	       (regexp-quote isearch-string))))))
-
-
-;; TAB expands even during isearch (Ctrl-S)
-(define-key isearch-mode-map [tab] 'isearch-yank-word)
-(setq lazy-highlight-cleanup nil) ;; keep search results highlighted
 
 
 
@@ -590,25 +457,6 @@ completion buffers."
 (define-key global-map (kbd "C-M-<up>") 'enlarge-window)
 (define-key global-map (kbd "C-M-<down>") 'shrink-window)
 
-(defun toggle-windows-split()
-  "Switch back and forth between one window and whatever split of windows we might have in the frame. The idea is to maximize the current buffer, while being able to go back to the previous split of windows in the frame simply by calling this command again."
-  (interactive)
-  (if (not (window-minibuffer-p (selected-window)))
-      (progn
-	(if (< 1 (count-windows))
-	    (progn
-	      (window-configuration-to-register ?u)
-	      (delete-other-windows))
-	  (jump-to-register ?u)))))
-
-(defun dedicate-window()
-  (interactive)
-  (let* ((window    (selected-window))
-	 (dedicated (window-dedicated-p window)))
-    (set-window-dedicated-p window (not dedicated))
-    (message "Window %sdedicated to %s"
-	     (if dedicated "no longer " "")
-	     (buffer-name))))
 
 
 (require 'setup-escreen)
@@ -620,50 +468,11 @@ completion buffers."
 (blink-cursor-mode 1)
 
 
+(require 'setup-lastmodified)
 
-(defun update-last-modified()
-  (interactive)
-  (save-excursion
-    (let ((case-replace t)
-	  (case-fold-search t))
-      (goto-char (point-min))
-       (while (re-search-forward
-	      "\\(Last[ -]\\(changed\\|modified\\):\\) [1-9].*"
-	      nil t)
-
-	(replace-match
-	 (concat "\\1 "
-		 (format-time-string "%Y-%m-%d %H:%M:%S")
-		 " by "
-		 (user-login-name)
-		 )
-	 nil nil)))))
-
-(add-hook 'write-file-hooks 'update-last-modified)
 (add-to-list 'auto-mode-alist '("\\.ml\\w?" . tuareg-mode))
 
-(when (require-try 'cwc)
-  (global-highlight-changes-mode t)
-  (setq highlight-changes-visibility-initial-state nil)
-  (add-to-list 'whitespace-style 'trailing)
-  (add-hook 'before-save-hook 'changed-whitespace-cleanup))
-
-
-(defun show-trailing-whitespace()
-  (interactive)
-  (setq show-trailing-whitespace (not show-trailing-whitespace))
-  (message (if show-trailing-whitespace
-	       "show-trailing-whitespace enabled"
-	       "show-trailing-whitespace disabled")))
-;; (show-trailing-whitespace)
-
-
-
-(setq exec-abbrev-cmd-file "~/.emacs.d/exec-abbrev-cmd.dat")
-(when (require-try 'exec-abbrev-cmd)
-  (exec-abbrev-cmd-mode 1)
-  (global-set-key (kbd "M-x") 'exec-abbrev-cmd))
-
+(require 'setup-exec-abbrev)
 
 ;;; enable smerge mode
 (defun sm-try-smerge ()

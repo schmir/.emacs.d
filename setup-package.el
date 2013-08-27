@@ -46,4 +46,8 @@
       (file-error
        (progn (message "Couldn't load extension: %s: %S" lib err) nil)))))
 
+(unless (require-try 'diminish)
+  (defun diminish (mode)
+    t))
+
 (provide 'setup-package)
