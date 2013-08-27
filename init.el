@@ -41,6 +41,7 @@
 (require 'setup-lua)
 (require 'setup-irc)
 (require 'setup-file-hook)
+(require 'setup-abbrev)
 
 ;; shell-pop
 (require 'shell-pop)
@@ -72,16 +73,12 @@
 (put 'narrow-to-region 'disabled nil)
 (setq line-move-visual nil) ;; what did they think ?
 
-
 (recentf-mode t)
 (setq recentf-max-saved-items 200)
 
 (require 'which-func)
 (add-to-list 'which-func-modes 'org-mode)
 (which-func-mode 1)
-
-
-
 
 (ansi-color-for-comint-mode-on)
 (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
@@ -119,14 +116,6 @@
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
 
-
-(setq save-abbrevs t
-      default-abbrev-mode t)
-(abbrev-mode 1)
-
-(if (file-exists-p abbrev-file-name)
-    (quietly-read-abbrev-file))
-
 (setq change-major-mode-with-file-name t
       ;; Filename completion ignores these.
       completion-ignored-extensions (append completion-ignored-extensions
@@ -135,15 +124,13 @@
       font-lock-maximum-decoration t			;; maximum decoration
       next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
       show-paren-style 'expression
-      compilation-scroll-output t
       default-indicate-empty-lines t
       line-number-display-limit-width 100000
       kill-whole-line t				;; make kill-line at beginning of line kill the whole line
       woman-use-own-frame nil				;; don't create new frame for manpages
       vc-handled-backends nil
       vc-follow-symlinks t				;; follow symlinks and don't ask
-      enable-recursive-minibuffers t
-      )
+      enable-recursive-minibuffers t)
 
 
 ;; prevent emacs from asking for coding-system...

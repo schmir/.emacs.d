@@ -24,7 +24,9 @@
       (setq ad-return-value t)
     ad-do-it))
 
-(setq compilation-ask-about-save nil)
+(setq compilation-ask-about-save nil
+      compilation-scroll-output t)
+
 
 (defun my-set-compile-command()
   "If first line contains #!/usr/... set compile-command to the file itself"
