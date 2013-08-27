@@ -1,6 +1,14 @@
 ;; -*- mode: emacs-lisp-*-
 ;;
 
+;; autoloads
+(autoload 'sgml-quote "sgml-mode"
+  "Quote SGML text in region START ... END.
+Only &, < and > are quoted, the rest is left untouched.
+With prefix argument UNQUOTEP, unquote the region." t)
+(defalias 'html-quote 'sgml-quote)
+
+
 (defun toggle-windows-split()
   "Switch back and forth between one window and whatever split of windows we might have in the frame. The idea is to maximize the current buffer, while being able to go back to the previous split of windows in the frame simply by calling this command again."
   (interactive)

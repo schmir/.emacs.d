@@ -21,32 +21,28 @@
 (require 'setup-magit)
 (require 'setup-gnus)
 (require 'setup-compile)
-
-;; autoloads
-(autoload 'gid "id-utils" t)
-(autoload 'sgml-quote "sgml-mode"
-  "Quote SGML text in region START ... END.
-Only &, < and > are quoted, the rest is left untouched.
-With prefix argument UNQUOTEP, unquote the region." t)
-(defalias 'html-quote 'sgml-quote)
-
-(autoload 'git-grep "git-grep" "Run git grep" t)
-(defalias 'gg 'git-grep)
-
-
+(require 'setup-highlight-symbol)
+(require 'setup-bm)
+(require 'setup-isearch)
+(require 'setup-tramp)
+(require 'setup-frame)
+(require 'setup-org)
+(require 'setup-ido)
+(require 'setup-print)
+(require 'setup-python)
+(require 'setup-c-mode)
+(require 'setup-key-chord)
+(require 'setup-fancy-comment)
+(require 'setup-escreen)
+(require 'setup-lastmodified)
+(require 'setup-completion)
+(require 'setup-grep)
+(require 'setup-uniquify)
+(require 'setup-lua)
 
 ;; shell-pop
 (require 'shell-pop)
 (global-set-key (kbd "C-t") 'shell-pop)
-
-
-
-(require 'setup-highlight-symbol)
-
-;; git-messenger
-(setq git-messenger:show-detail t)
-(global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
-
 
 (defadvice save-buffers-kill-emacs (around emacs-die-hard activate)
   "really???"
@@ -55,19 +51,15 @@ With prefix argument UNQUOTEP, unquote the region." t)
        (string= "kill emacs" (read-from-minibuffer "to quit emacs type: 'kill emacs':")))
       ad-do-it))
 
-
-(require 'setup-bm)
-
-
-(schmir-maybe-server)
-
-
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 
 
-(require 'setup-isearch)
+
+
+(schmir-maybe-server)
+
 
 ;; -- from http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
 (defun stop-using-minibuffer ()
@@ -124,12 +116,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
       mouse-avoidance-nudge-dist 20
       mouse-avoidance-nudge-var 5)
 
-;; show pathnames for buffers with same name
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'reverse
-      uniquify-separator "/"
-      uniquify-after-kill-buffer-p t ; rename after killing uniquified
-      uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 (setq visible-bell 1
       require-final-newline t
@@ -189,9 +175,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
   '(progn
      (multi-term-keystroke-setup)))
 
-(require 'setup-tramp)
-
-(require 'setup-frame)
 
 (require 'evimodeline)
 (add-hook 'find-file-hook 'evimodeline-find-file-hook)
@@ -233,8 +216,6 @@ completion buffers."
 
 
 
-(require 'setup-org)
-(require 'setup-ido)
 
 
 
@@ -260,15 +241,8 @@ completion buffers."
 (add-to-list 'auto-mode-alist '("\\.pas$\\|\\.dpr" .  delphi-mode))
 
 
-(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-(add-hook 'espresso-mode-hook
-	  '(lambda()
-	     (local-set-key [(tab)] 'smart-tab)
-	     (highlight-symbol-mode 1)
-	     (setq c-basic-offset 2)
-	     ))
-
+(add-to-list 'auto-mode-alist '("\\.js$" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . javascript-mode))
 (add-hook 'javascript-mode-hook
 	  '(lambda()
 	     (local-set-key [(tab)] 'smart-tab)
@@ -280,19 +254,6 @@ completion buffers."
 (add-hook 'rst-mode-hook 'auto-fill-mode)
 
 
-;; --- lua
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-(add-hook 'lua-mode-hook
-	  '(lambda()
-	     (local-set-key [(tab)] 'smart-tab)
-	     (highlight-symbol-mode 1)
-	     (setq lua-indent-level 4)
-	     (flymake-mode)))
-
-
-
-(require 'setup-python)
-(require 'setup-c-mode)
 (require 'schmir-flymake)
 
 
@@ -304,7 +265,6 @@ completion buffers."
 (setq smart-tab-using-hippie-expand 't)
 
 
-(global-set-key [f5] 'git-grep)
 
 
 
@@ -377,7 +337,6 @@ completion buffers."
 
 (global-set-key [mouse-3] 'imenu)
 
-(require 'setup-key-chord)
 
 (setq suggest-key-bindings t)
 
@@ -443,11 +402,9 @@ completion buffers."
 (global-set-key "\M-p" 'goto-line)
 
 (global-set-key [C-backspace] 'backward-kill-word)
-(require 'setup-print)
 (put 'downcase-region 'disabled nil)
 
 
-(require 'setup-fancy-comment)
 
 (put 'set-goal-column 'disabled nil)
 
@@ -459,7 +416,6 @@ completion buffers."
 
 
 
-(require 'setup-escreen)
 
 
 
@@ -468,11 +424,9 @@ completion buffers."
 (blink-cursor-mode 1)
 
 
-(require 'setup-lastmodified)
 
 (add-to-list 'auto-mode-alist '("\\.ml\\w?" . tuareg-mode))
 
-(require 'setup-exec-abbrev)
 
 ;;; enable smerge mode
 (defun sm-try-smerge ()
@@ -484,28 +438,7 @@ completion buffers."
 
 
 (require 'help-mode)
-(require 'setup-completion)
-
-(require 'grep)
-(setq search-all-buffers-ignored-files '(".bbdb" ".newsrc-dribble"))
-
-(defun search-all-buffers (regexp prefix)
-  "Searches file-visiting buffers for occurence of REGEXP.  With
-prefix > 1 (i.e., if you type C-u \\[search-all-buffers]),
-searches all buffers."
-  (interactive (list (grep-read-regexp)
-		     current-prefix-arg))
-  (message "Regexp is %s; prefix is %s" regexp prefix)
-  (multi-occur
-   (if (member prefix '(4 (4)))
-       (buffer-list)
-     (remove-if
-      (lambda (b) (some (lambda (rx) (string-match rx  (file-name-nondirectory (buffer-file-name b)))) search-all-buffers-ignored-files))
-      (remove-if-not 'buffer-file-name (buffer-list))))
-
-   regexp))
-
-(global-set-key [f7] 'search-all-buffers)
 
 
+(require 'setup-exec-abbrev)
 (message "initialization complete")
