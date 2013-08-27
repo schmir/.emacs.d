@@ -62,17 +62,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
       ad-do-it))
 
 
-(defadvice python-shift-left (around no-deactivate-mark activate)
-  "keep region active"
-  ad-do-it
-  (setq deactivate-mark nil))
-
-(defadvice python-shift-right (around no-deactivate-mark activate)
-  "keep region active"
-  ad-do-it
-  (setq deactivate-mark nil))
-
-
 (require 'setup-bm)
 
 (autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
