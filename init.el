@@ -259,20 +259,20 @@ completion buffers."
 
 (setq suggest-key-bindings t)
 
-(when (require-try 'misc-cmds)
-  (define-key ctl-x-map [home] 'mark-buffer-before-point)
-  (define-key ctl-x-map [end]  'mark-buffer-after-point))
+(require 'misc-cmds)
+(define-key ctl-x-map [home] 'mark-buffer-before-point)
+(define-key ctl-x-map [end]  'mark-buffer-after-point)
 
 ;; http://www.emacswiki.org/emacs-ru/WholeLineOrRegion
 ;; This minor mode allows functions to operate on the current line if
 ;; they would normally operate on a region and region is currently
 ;; undefined.
 
-(when (require-try 'whole-line-or-region)
-  (add-to-list 'whole-line-or-region-extensions-alist '(comment-dwim whole-line-or-region-comment-dwim nil))
-  (whole-line-or-region-mode t)
-  (diminish 'whole-line-or-region-mode)
-  (defalias 'whole-line-or-region-kill-region 'schmir-whole-line-or-region-kill-region))
+(require 'whole-line-or-region)
+(add-to-list 'whole-line-or-region-extensions-alist '(comment-dwim whole-line-or-region-comment-dwim nil))
+(whole-line-or-region-mode t)
+(diminish 'whole-line-or-region-mode)
+(defalias 'whole-line-or-region-kill-region 'schmir-whole-line-or-region-kill-region)
 
 
 ;; "funky stuff" ;; proceed with caution
