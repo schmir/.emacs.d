@@ -55,18 +55,7 @@
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 
-
-
-
 (schmir-maybe-server)
-
-
-;; -- from http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
-(defun stop-using-minibuffer ()
-  "kill the minibuffer"
-  (when (>= (recursion-depth) 1)
-    (abort-recursive-edit)))
-(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
 
 (savehist-mode 1) ;; keep track of minibuffer commands
