@@ -42,6 +42,7 @@
 (require 'setup-irc)
 (require 'setup-file-hook)
 (require 'setup-abbrev)
+(require 'setup-cwc)
 
 ;; shell-pop
 (require 'shell-pop)
