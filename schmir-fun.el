@@ -407,14 +407,6 @@ point."
   (font-lock-add-keywords mode
 			  '(("\\<\\(fixme\\|FIXME\\|HACK\\|XXX\\|TODO\\|assert\\)" 1 font-lock-warning-face prepend))))
 
-(defun schmir-maybe-server()
-  (unless (= 0 (user-uid))
-    ;; Only start server mode if it isn't started already
-    (when (or (not (boundp 'server-process))
-	      (not (eq (process-status server-process)
-		       'listen)))
-      (server-start))))
-
 (defun pyflakes ()
   (interactive)
   (compile (format "pyflakes %s" (buffer-file-name))))

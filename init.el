@@ -48,18 +48,9 @@
 (require 'shell-pop)
 (global-set-key (kbd "C-t") 'shell-pop)
 
-(defadvice save-buffers-kill-emacs (around emacs-die-hard activate)
-  "really???"
-  (if (or
-       (not server-process)
-       (string= "kill emacs" (read-from-minibuffer "to quit emacs type: 'kill emacs':")))
-      ad-do-it))
-
-(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-  (flet ((process-list ())) ad-do-it))
-
-(schmir-maybe-server)
+(require 'setup-kill-emacs)
+(require 'setup-server)
+(require 'setup-face)
 
 
 (savehist-mode 1) ;; keep track of minibuffer commands
@@ -146,7 +137,6 @@
 (require 'saveplace)
 
 
-(add-hook 'server-done-hook 'delete-frame)
 
 
 (eval-after-load "multi-term"
@@ -168,27 +158,6 @@
 ;; get rid of yes-or-no questions - y or n is enough
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(defface completion-setup-directory-face  '((t (:foreground "dark orange")))
-  "Face to use for directories."
-  :group 'color-file-completion)
-
-(defcustom color-file-completion-always t "If true, always turn on regexps in
-completion buffers."
-  :group 'color-file-completion
-  :type 'boolean)
-
-(defun completion-setup-directory-face()
-  "When we are completing a filename, highlight directories."
-  (interactive)
-  ;;if this is completing a filename... highlight faces...
-  (when (or color-file-completion-always
-            (eq minibuffer-completion-table 'read-file-name-internal))
-    (let((font-lock-verbose nil))
-      (font-lock-mode 1)
-      (font-lock-add-keywords nil '(("[^ \n]+/" 0 'completion-setup-directory-face keep)))
-      (font-lock-fontify-buffer))))
-
-(add-hook 'completion-list-mode-hook 'completion-setup-directory-face)
 
 (autoload 'fm-start "fm" "follow mode for compilation like buffers")
 
@@ -243,11 +212,8 @@ completion buffers."
 (global-set-key [C-S-left] 'shift-left)
 
 
-;; (global-unset-key (kbd "C-x C-c"))
-(global-set-key (kbd "C-x C-c") 'save-buffers-kill-terminal)
 
 (global-set-key (kbd "M-:") 'align-regexp)
-(global-set-key (kbd "M-b") 'save-buffers-kill-terminal)
 (global-set-key (kbd "M-RET") 'fullscreen)
 
 
@@ -282,25 +248,25 @@ completion buffers."
 
 
 
-(when (require-try 'sequential-command)
-  (define-sequential-command my-home
-    back-to-indentation
-    ;; beginning-of-line
-    beginning-of-buffer
-    seq-return)
+(require 'sequential-command)
+(define-sequential-command my-home
+  back-to-indentation
+  ;; beginning-of-line
+  beginning-of-buffer
+  seq-return)
 
-  (define-sequential-command my-end
-    end-of-line
-    end-of-buffer
-    seq-return)
+(define-sequential-command my-end
+  end-of-line
+  end-of-buffer
+  seq-return)
 
-  (global-set-key (quote [home]) 'my-home)
-  (global-set-key (quote [end]) 'my-end))
+(global-set-key (quote [home]) 'my-home)
+(global-set-key (quote [end]) 'my-end)
 
 
-(when (require-try 'repeatable)
-  (repeatable-command-advice next-buffer)
-  (repeatable-command-advice exchange-point-and-mark))
+(require 'repeatable)
+(repeatable-command-advice next-buffer)
+(repeatable-command-advice exchange-point-and-mark)
 
 (global-set-key (kbd "<mouse-3>") 'mouse-buffer-menu)
 
