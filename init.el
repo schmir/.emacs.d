@@ -52,7 +52,7 @@
 (require 'setup-kill-emacs)
 (require 'setup-server)
 (require 'setup-face)
-
+(require 'setup-mouse)
 
 (savehist-mode 1) ;; keep track of minibuffer commands
 (size-indication-mode 1) ;; show file size
@@ -79,7 +79,6 @@
 (setq dired-recursive-deletes 'always)
 
 (blink-cursor-mode 1)
-(mouse-wheel-mode 1)
 (auto-image-file-mode 1)
 (global-cwarn-mode 1)
 
@@ -92,11 +91,6 @@
 (transient-mark-mode 1)
 
 
-;; Drive out the mouse when it's too near to the cursor.
-(mouse-avoidance-mode 'exile)
-(setq mouse-avoidance-threshold 10
-      mouse-avoidance-nudge-dist 20
-      mouse-avoidance-nudge-var 5)
 
 
 (setq visible-bell 1
@@ -222,7 +216,6 @@
 (global-set-key (kbd "M-\"") 'comment-dwim)
 
 
-(global-set-key [mouse-3] 'imenu)
 
 
 (setq suggest-key-bindings t)
@@ -269,7 +262,6 @@
 (repeatable-command-advice next-buffer)
 (repeatable-command-advice exchange-point-and-mark)
 
-(global-set-key (kbd "<mouse-3>") 'mouse-buffer-menu)
 
 (global-set-key (kbd "C-j")
 		'(lambda()
