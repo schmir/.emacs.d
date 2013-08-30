@@ -13,7 +13,8 @@
 (add-to-list 'load-path dotfiles-dir)
 (require 'setup-pre-init)
 
-(load-theme 'sinburn t)
+(when (>= emacs-major-version 24)
+  (load-theme 'sinburn t))
 
 (require 'setup-package)
 (require 'schmir-fun)
