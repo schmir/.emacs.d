@@ -44,6 +44,8 @@
 (require 'setup-file-hook)
 (require 'setup-abbrev)
 (require 'setup-cwc)
+(require 'setup-whole-line-or-region)
+(require 'setup-sequential-command)
 
 ;; shell-pop
 (require 'shell-pop)
@@ -189,10 +191,9 @@
 
 (require 'schmir-flymake)
 
-
-(if (fboundp 'schmir-hl-fixme)
-    (mapc 'schmir-hl-fixme
-	  '(python-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode)))
+;; highlight XXX, FIXME, ... in these modes
+(mapc 'schmir-hl-fixme
+      '(python-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode))
 
 
 (setq smart-tab-using-hippie-expand 't)
@@ -206,17 +207,11 @@
 (global-set-key [C-S-right] 'shift-right)
 (global-set-key [C-S-left] 'shift-left)
 
-
-
 (global-set-key (kbd "M-:") 'align-regexp)
 (global-set-key (kbd "M-RET") 'fullscreen)
 
-
 (global-set-key (quote [S-return]) 'open-line-below)
 (global-set-key (kbd "M-\"") 'comment-dwim)
-
-
-
 
 (setq suggest-key-bindings t)
 
@@ -224,38 +219,7 @@
 (define-key ctl-x-map [home] 'mark-buffer-before-point)
 (define-key ctl-x-map [end]  'mark-buffer-after-point)
 
-;; http://www.emacswiki.org/emacs-ru/WholeLineOrRegion
-;; This minor mode allows functions to operate on the current line if
-;; they would normally operate on a region and region is currently
-;; undefined.
-
-(require 'whole-line-or-region)
-(add-to-list 'whole-line-or-region-extensions-alist '(comment-dwim whole-line-or-region-comment-dwim nil))
-(whole-line-or-region-mode t)
-(diminish 'whole-line-or-region-mode)
-(defalias 'whole-line-or-region-kill-region 'schmir-whole-line-or-region-kill-region)
-
-
-;; "funky stuff" ;; proceed with caution
-
 (global-set-key (kbd "C-z") 'undo)
-
-
-
-(require 'sequential-command)
-(define-sequential-command my-home
-  back-to-indentation
-  ;; beginning-of-line
-  beginning-of-buffer
-  seq-return)
-
-(define-sequential-command my-end
-  end-of-line
-  end-of-buffer
-  seq-return)
-
-(global-set-key (quote [home]) 'my-home)
-(global-set-key (quote [end]) 'my-end)
 
 
 (require 'repeatable)
@@ -284,9 +248,7 @@
 (define-key global-map (kbd "C-M-<up>") 'enlarge-window)
 (define-key global-map (kbd "C-M-<down>") 'shrink-window)
 
-
 (add-to-list 'auto-mode-alist '("\\.ml\\w?" . tuareg-mode))
-
 
 (require 'help-mode)
 
