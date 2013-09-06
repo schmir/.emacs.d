@@ -47,6 +47,9 @@
 (require 'setup-whole-line-or-region)
 (require 'setup-sequential-command)
 
+(require 'projectile)
+(projectile-global-mode)
+
 ;; shell-pop
 (require 'shell-pop)
 (global-set-key (kbd "C-t") 'shell-pop)
