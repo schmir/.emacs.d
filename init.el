@@ -190,6 +190,8 @@
 	     (setq c-basic-offset 2)))
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 
+(require 'rst)
+(clear-abbrev-table rst-mode-abbrev-table)
 (add-hook 'rst-mode-hook 'auto-fill-mode)
 
 (require 'schmir-flymake)
