@@ -24,6 +24,5 @@
       ido-max-prospects 32
       ido-max-directory-size 300000)
 
-(global-set-key (kbd "M-[") 'ido-goto-symbol)
-
+;; (global-set-key (kbd "M-[") 'ido-goto-symbol)
 (provide 'setup-ido)
