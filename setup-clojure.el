@@ -15,6 +15,8 @@
   (nrepl-return))
 (add-hook 'nrepl-connected-hook 'schmir-setup-nrepl)
 
+(add-hook 'nrepl-mode-hook 'enable-paredit-mode)
+
 (setq nrepl-hide-special-buffers t)
 (setq nrepl-popup-stacktraces-in-repl t)
 (setq nrepl-history-file "~/.emacs.d/nrepl-history")
