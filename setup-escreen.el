@@ -43,8 +43,8 @@
 
 (define-key escreen-map escreen-prefix-char 'dim:escreen-goto-last-screen)
 
-(global-set-key '[M-right] (quote dim:escreen-goto-next-screen))
-(global-set-key '[M-left] (quote dim:escreen-goto-prev-screen))
+(global-set-key '[M-S-right] (quote dim:escreen-goto-next-screen))
+(global-set-key '[M-S-left] (quote dim:escreen-goto-prev-screen))
 
 (global-set-key (kbd "C-\\ DEL") 'dim:escreen-goto-prev-screen)
 (global-set-key (kbd "C-\\ SPC") 'dim:escreen-goto-next-screen)

@@ -19,6 +19,7 @@
 (setq nrepl-popup-stacktraces-in-repl t)
 (setq nrepl-history-file "~/.emacs.d/nrepl-history")
 (defun schmir-clojure-hook ()
+  (paredit-mode 1)
   (highlight-symbol-mode 1))
 
 (add-hook 'clojure-mode-hook 'schmir-clojure-hook)

@@ -18,6 +18,7 @@
 
 (require 'setup-package)
 (require 'schmir-fun)
+(require 'setup-paredit)
 (require 'setup-clojure)
 (require 'setup-magit)
 (require 'setup-gnus)
@@ -58,6 +59,8 @@
 (require 'setup-server)
 (require 'setup-face)
 (require 'setup-mouse)
+
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 
 (savehist-mode 1) ;; keep track of minibuffer commands
 (size-indication-mode 1) ;; show file size
