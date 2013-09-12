@@ -206,6 +206,7 @@
 
 (setq smart-tab-using-hippie-expand 't)
 
+(global-set-key (kbd "C-c d") 'deft)
 (global-set-key (quote [S-iso-lefttab]) 'tab-to-tab-stop)
 ;; (global-set-key "" (quote comment-region))
 
