@@ -6,7 +6,10 @@
     (set! *print-length* 150)
     (set! *print-level* 20)
     (use 'clojure.pprint)
-    (use 'clojure.reflect))
+    (use 'clojure.reflect)
+    (try
+       (use '[clojure.tools.namespace.repl :only (refresh)])
+       (catch Exception err)))
 ")
 
 (defun schmir-setup-nrepl ()
