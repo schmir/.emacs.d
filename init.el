@@ -19,6 +19,7 @@
 (require 'setup-package)
 (require 'schmir-fun)
 (require 'setup-paredit)
+(require 'setup-elisp)
 (require 'setup-clojure)
 (require 'setup-magit)
 (require 'setup-gnus)
@@ -60,7 +61,6 @@
 (require 'setup-face)
 (require 'setup-mouse)
 
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 
 (savehist-mode 1) ;; keep track of minibuffer commands
 (size-indication-mode 1) ;; show file size
@@ -163,11 +163,6 @@
 
 
 (autoload 'fm-start "fm" "follow mode for compilation like buffers")
-
-(add-hook 'emacs-lisp-mode-hook
-	  '(lambda()
-	     (local-set-key [(tab)] 'smart-tab)
-	     (highlight-symbol-mode 1)))
 
 (add-to-list 'auto-mode-alist
 	     '("\\.md$\\|\\.markdown$" . markdown-mode))
