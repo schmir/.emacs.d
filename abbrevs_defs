@@ -55,13 +55,17 @@
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
+(define-abbrev-table 'gfm-mode-abbrev-table '())
+
 (define-abbrev-table 'git-commit-mode-abbrev-table '())
 
 (define-abbrev-table 'global-abbrev-table
   '(
     ("configurabe" "configurable" nil 1)
+    ("excpetions" "exceptions" nil 1)
     ("insensitve" "insensitive" nil 1)
     ("teh" "the" nil 3)
+    ("wheter" "whether" nil 1)
    ))
 
 (define-abbrev-table 'gnus-article-edit-mode-abbrev-table '())
@@ -101,6 +105,8 @@
 (define-abbrev-table 'magit-status-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-wazzup-mode-abbrev-table '())
+
+(define-abbrev-table 'markdown-mode-abbrev-table '())
 
 (define-abbrev-table 'message-mode-abbrev-table '())
 
@@ -151,4 +157,6 @@
 (define-abbrev-table 'term-mode-abbrev-table '())
 
 (define-abbrev-table 'text-mode-abbrev-table '())
+
+(define-abbrev-table 'yaml-mode-abbrev-table '())
 
