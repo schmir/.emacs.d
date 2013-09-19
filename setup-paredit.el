@@ -1,5 +1,6 @@
 (require 'paredit)
 
+(define-key paredit-mode-map (kbd "M-q") nil)
 (define-key paredit-mode-map (kbd "<C-right>") nil)
 (define-key paredit-mode-map (kbd "<C-left>") nil)
 (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
