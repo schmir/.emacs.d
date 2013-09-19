@@ -63,7 +63,9 @@
   '(
     ("configurabe" "configurable" nil 1)
     ("excpetions" "exceptions" nil 1)
+    ("hanle" "handle" nil 1)
     ("insensitve" "insensitive" nil 1)
+    ("practive" "practice" nil 1)
     ("teh" "the" nil 3)
     ("wheter" "whether" nil 1)
    ))
