@@ -65,6 +65,7 @@
     ("excpetions" "exceptions" nil 1)
     ("hanle" "handle" nil 1)
     ("insensitve" "insensitive" nil 1)
+    ("obsolt" "obsolete" nil 1)
     ("practive" "practice" nil 1)
     ("teh" "the" nil 3)
     ("wheter" "whether" nil 1)
@@ -77,6 +78,8 @@
 (define-abbrev-table 'grep-mode-abbrev-table '())
 
 (define-abbrev-table 'help-mode-abbrev-table '())
+
+(define-abbrev-table 'html-mode-abbrev-table '())
 
 (define-abbrev-table 'idl-mode-abbrev-table '())
 
@@ -147,6 +150,8 @@
 (define-abbrev-table 'rst-toc-mode-abbrev-table '())
 
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
+
+(define-abbrev-table 'sgml-mode-abbrev-table '())
 
 (define-abbrev-table 'shell-mode-abbrev-table '())
 
