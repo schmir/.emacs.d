@@ -62,10 +62,12 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("configurabe" "configurable" nil 1)
+    ("distrubted" "distributed" nil 1)
     ("excpetions" "exceptions" nil 1)
     ("hanle" "handle" nil 1)
     ("insensitve" "insensitive" nil 1)
     ("obsolt" "obsolete" nil 1)
+    ("paremt" "parent" nil 1)
     ("practive" "practice" nil 1)
     ("teh" "the" nil 3)
     ("wheter" "whether" nil 1)
@@ -111,6 +113,18 @@
 
 (define-abbrev-table 'magit-wazzup-mode-abbrev-table '())
 
+(define-abbrev-table 'makefile-automake-mode-abbrev-table '())
+
+(define-abbrev-table 'makefile-bsdmake-mode-abbrev-table '())
+
+(define-abbrev-table 'makefile-gmake-mode-abbrev-table '())
+
+(define-abbrev-table 'makefile-imake-mode-abbrev-table '())
+
+(define-abbrev-table 'makefile-makepp-mode-abbrev-table '())
+
+(define-abbrev-table 'makefile-mode-abbrev-table '())
+
 (define-abbrev-table 'markdown-mode-abbrev-table '())
 
 (define-abbrev-table 'message-mode-abbrev-table '())
@@ -152,6 +166,8 @@
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
 
 (define-abbrev-table 'sgml-mode-abbrev-table '())
+
+(define-abbrev-table 'sh-mode-abbrev-table '())
 
 (define-abbrev-table 'shell-mode-abbrev-table '())
 
