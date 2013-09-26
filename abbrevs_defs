@@ -61,7 +61,9 @@
 
 (define-abbrev-table 'global-abbrev-table
   '(
+    ("aslo" "also" nil 1)
     ("configurabe" "configurable" nil 1)
+    ("distribtion" "distribution" nil 1)
     ("distrubted" "distributed" nil 1)
     ("excpetions" "exceptions" nil 1)
     ("hanle" "handle" nil 1)
@@ -92,6 +94,8 @@
 (define-abbrev-table 'java-mode-abbrev-table
   '(
    ))
+
+(define-abbrev-table 'js-mode-abbrev-table '())
 
 (define-abbrev-table 'lisp-mode-abbrev-table '())
 
