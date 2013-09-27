@@ -69,6 +69,7 @@
     ("hanle" "handle" nil 1)
     ("insensitve" "insensitive" nil 1)
     ("obsolt" "obsolete" nil 1)
+    ("paramters" "parameters" nil 1)
     ("paremt" "parent" nil 1)
     ("practive" "practice" nil 1)
     ("teh" "the" nil 3)
