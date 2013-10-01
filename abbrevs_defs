@@ -72,6 +72,7 @@
     ("paramters" "parameters" nil 1)
     ("paremt" "parent" nil 1)
     ("practive" "practice" nil 1)
+    ("queus" "queues" nil 1)
     ("teh" "the" nil 3)
     ("wheter" "whether" nil 1)
    ))
