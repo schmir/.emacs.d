@@ -15,10 +15,10 @@
 (defun schmir-setup-nrepl ()
   (interactive)
   (insert nrepl-init-code)
-  (nrepl-return))
+  (cider-repl-return))
 (add-hook 'nrepl-connected-hook 'schmir-setup-nrepl)
 
-(add-hook 'nrepl-mode-hook 'enable-paredit-mode)
+(add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
 
 (setq nrepl-hide-special-buffers t)
 (setq nrepl-popup-stacktraces-in-repl t)
