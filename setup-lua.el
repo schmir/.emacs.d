@@ -4,7 +4,6 @@
 	  '(lambda()
 	     (local-set-key [(tab)] 'smart-tab)
 	     (highlight-symbol-mode 1)
-	     (setq lua-indent-level 4)
-	     (flymake-mode)))
+	     (setq lua-indent-level 4)))
 
 (provide 'setup-lua)

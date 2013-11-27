@@ -45,8 +45,9 @@
 
   (local-set-key [(tab)] 'smart-tab)
 
+  (setq flycheck-checker 'python-flake8)
   (if (not (file-remote-p (buffer-file-name)))
-      (flymake-mode 1)))
+      (flycheck-mode 1)))
 
 
 (add-hook 'python-mode-hook

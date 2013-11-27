@@ -7,6 +7,8 @@
 
 (require 'cl)
 
+(defvar dotfiles-dir nil "location of dotfiles-directory")
+
 (setq dotfiles-dir
       (file-name-directory
        (or (buffer-file-name) load-file-name)))
@@ -192,7 +194,7 @@
 (clear-abbrev-table rst-mode-abbrev-table)
 (add-hook 'rst-mode-hook 'auto-fill-mode)
 
-(require 'schmir-flymake)
+;; (require 'schmir-flymake)
 
 ;; highlight XXX, FIXME, ... in these modes
 (mapc 'schmir-hl-fixme
