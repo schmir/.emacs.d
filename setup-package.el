@@ -1,14 +1,14 @@
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives
+;;	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 (defvar prelude-packages '(pkg-info clojure-mode clojure-cheatsheet slamhound
   paredit bm boxquote key-chord lua-mode magit git-messenger diminish
   highlight-symbol framemove rainbow-mode jedi whole-line-or-region
-  python-pep8 ssh-config-mode textile-mode yaml-mode auto-complete
+  ssh-config-mode textile-mode yaml-mode auto-complete
   escreen smart-tab gist w3m php-mode markdown-mode textile-mode cider
   deft rainbow-delimiters shell-pop projectile ack-and-a-half flycheck nginx-mode)
   "A list of packages to ensure are installed at launch.")
