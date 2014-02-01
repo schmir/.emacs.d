@@ -17,14 +17,13 @@
 
 (when (>= emacs-major-version 24)
   (load-theme 'sinburn t))
-
+(require 'setup-gnus)
 (require 'setup-package)
 (require 'schmir-fun)
 (require 'setup-paredit)
 (require 'setup-elisp)
 (require 'setup-clojure)
 (require 'setup-magit)
-(require 'setup-gnus)
 (require 'setup-compile)
 (require 'setup-highlight-symbol)
 (require 'setup-bm)
