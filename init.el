@@ -50,6 +50,9 @@
 (require 'setup-whole-line-or-region)
 (require 'setup-sequential-command)
 
+(when (require-try 'rosi)
+  (require 'setup-rosi))
+
 (require 'projectile)
 (projectile-global-mode)
 
