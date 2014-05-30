@@ -4,12 +4,7 @@
 (setq nrepl-init-code
 "(do
     (set! *print-length* 150)
-    (set! *print-level* 20)
-    (use 'clojure.pprint)
-    (use 'clojure.reflect)
-    (try
-       (use '[clojure.tools.namespace.repl :only (refresh)])
-       (catch Exception err)))
+    (set! *print-level* 20))
 ")
 
 (defun schmir-setup-nrepl ()
