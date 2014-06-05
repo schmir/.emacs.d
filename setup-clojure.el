@@ -9,17 +9,6 @@
 ;; fix indentation of cond expressions
 (put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
 
-(setq nrepl-init-code
-"(do
-    (set! *print-length* 150)
-    (set! *print-level* 20))
-")
-
-(defun schmir-setup-nrepl ()
-  (interactive)
-  (insert nrepl-init-code)
-  (cider-repl-return))
-(add-hook 'nrepl-connected-hook 'schmir-setup-nrepl)
 
 (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
 
