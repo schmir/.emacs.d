@@ -9,7 +9,7 @@
   paredit bm boxquote key-chord lua-mode magit git-messenger diminish
   highlight-symbol framemove rainbow-mode jedi whole-line-or-region
   ssh-config-mode textile-mode yaml-mode auto-complete
-  escreen smart-tab gist w3m php-mode markdown-mode textile-mode cider
+  escreen smart-tab gist w3m php-mode markdown-mode textile-mode cider ac-nrepl
   deft rainbow-delimiters shell-pop projectile ack-and-a-half flycheck
   nginx-mode batch-mode)
   "A list of packages to ensure are installed at launch.")

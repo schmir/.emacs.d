@@ -4,6 +4,7 @@
 (require 'cider)
 (require 'clojure-mode)
 (require 'nrepl-client)
+(require 'ac-nrepl)
 
 ;;; Code:
 ;; fix indentation of cond expressions
@@ -31,6 +32,14 @@
   (cider-switch-to-repl-buffer))
 
 (define-key cider-mode-map '[f10] 'cider-load-current-buffer)
+
+
+
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'cider-repl-mode))
+(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
 
 (provide 'setup-clojure)
 ;;; setup-clojure.el ends here
