@@ -118,7 +118,7 @@
 (setq change-major-mode-with-file-name t
       ;; Filename completion ignores these.
       completion-ignored-extensions (append completion-ignored-extensions
-					    '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx"))
+					    '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx" ".rsm" ".rsr"))
       backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
       font-lock-maximum-decoration t			;; maximum decoration
       next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
