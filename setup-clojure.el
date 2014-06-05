@@ -1,9 +1,9 @@
 ;;; setup-clojure -- Summary
 ;;; Commentary:
 
-;; (require 'cider)
-;; (require 'clojure-mode)
-;; (require 'nrepl-client)
+(require 'cider)
+(require 'clojure-mode)
+(require 'nrepl-client)
 
 ;;; Code:
 ;; fix indentation of cond expressions
