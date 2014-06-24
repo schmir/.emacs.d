@@ -22,6 +22,7 @@
       ido-max-window-height 10
       ido-max-file-prompt-width 1400
       ido-max-prospects 32
+      ido-file-extension-order '(".rsf" ".rsi")
       ido-max-directory-size 300000)
 
 ;; (global-set-key (kbd "M-[") 'ido-goto-symbol)
