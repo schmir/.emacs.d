@@ -5,6 +5,9 @@
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
 
+(setq gc-cons-threshold 20000000)
+(setq max-specpdl-size 5000)
+
 (require 'cl)
 
 (defvar dotfiles-dir nil "location of dotfiles-directory")
@@ -262,3 +265,4 @@
 
 (require 'setup-exec-abbrev)
 (message "initialization complete")
+(put 'minibuffer-complete-and-exit 'disabled nil)
