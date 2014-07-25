@@ -11,7 +11,7 @@
   ssh-config-mode textile-mode yaml-mode auto-complete
   escreen smart-tab gist w3m php-mode markdown-mode textile-mode cider ac-nrepl
   deft rainbow-delimiters shell-pop projectile ack-and-a-half flycheck
-  nginx-mode batch-mode)
+  nginx-mode batch-mode ace-jump-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()

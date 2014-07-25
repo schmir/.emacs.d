@@ -23,6 +23,7 @@
 (require 'setup-gnus)
 (require 'setup-package)
 (require 'schmir-fun)
+(require 'setup-ace-jump)
 (require 'setup-paredit)
 (require 'setup-elisp)
 (require 'setup-clojure)
