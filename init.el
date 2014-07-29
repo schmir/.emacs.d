@@ -6,7 +6,8 @@
     (tool-bar-mode -1))
 
 (setq gc-cons-threshold 20000000)
-(setq max-specpdl-size 5000)
+(setq max-specpdl-size 5000
+      max-lisp-eval-depth 6000)
 
 (require 'cl)
 
