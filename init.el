@@ -16,11 +16,11 @@
 (setq dotfiles-dir
       (file-name-directory
        (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path dotfiles-dir)
+(add-to-list 'load-path (concat dotfiles-dir "lisp"))
 (require 'setup-pre-init)
 
 (when (>= emacs-major-version 24)
-  (load-theme 'sinburn t))
+  (load-theme 'zenburn t))
 (require 'setup-gnus)
 (require 'setup-package)
 (require 'schmir-fun)
