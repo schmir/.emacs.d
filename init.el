@@ -266,5 +266,6 @@
 (require 'help-mode)
 
 (require 'setup-exec-abbrev)
-(message "initialization complete")
+
 (put 'minibuffer-complete-and-exit 'disabled nil)
+(message "initialization complete")
