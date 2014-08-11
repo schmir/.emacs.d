@@ -5,8 +5,13 @@
 (require 'clojure-mode)
 (require 'clojure-mode-extra-font-locking)
 (require 'nrepl-client)
-(require 'ac-cider)
+(require 'company)
 
+(defun cider--var-choice (var-info)
+  var-info)
+
+(setq company-idle-delay 0.8
+      company-minimum-prefix-length 2)
 ;;; Code:
 ;; fix indentation of cond expressions
 (put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
@@ -19,10 +24,17 @@
 (setq nrepl-history-file "~/.emacs.d/nrepl-history")
 (defun schmir-clojure-hook ()
   (paredit-mode 1)
+  (auto-complete-mode 0)
+  (company-mode 1)
   (highlight-symbol-mode 1))
 
 (add-hook 'clojure-mode-hook 'schmir-clojure-hook)
 
+(defun schmir-cider-repl-hook ()
+  (auto-complete-mode 0)
+  (company-mode 1))
+
+(add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
 
 (setq cider-prompt-save-file-on-load nil)
 
@@ -35,19 +47,7 @@
 (define-key cider-mode-map '[f10] 'cider-load-current-buffer)
 
 
-(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-(add-hook 'cider-mode-hook 'ac-cider-setup)
-(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'cider-mode))
-
-(defun set-auto-complete-as-completion-at-point-function ()
-  (setq completion-at-point-functions '(auto-complete)))
-
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
-(define-key cider-mode-map (kbd "C-c C-d") 'ac-cider-popup-doc)
+(define-key cider-mode-map (kbd "C-c C-d") 'cider-doc)
 
 (provide 'setup-clojure)
 ;;; setup-clojure.el ends here
