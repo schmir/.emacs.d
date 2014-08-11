@@ -1,6 +1,8 @@
 (defun magit-commit-mode-init ()
   (when (looking-at "\n")
-    (open-line 1)))
+    (open-line 1))
+  (turn-on-flyspell)
+  (toggle-save-place 0))
 
 (add-hook 'git-commit-mode-hook 'magit-commit-mode-init)
 
