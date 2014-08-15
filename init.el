@@ -71,6 +71,8 @@
 (require 'setup-mouse)
 
 
+(setq echo-keystrokes 0.1)
+
 (savehist-mode 1) ;; keep track of minibuffer commands
 (size-indication-mode 1) ;; show file size
 (global-rainbow-delimiters-mode 1)
