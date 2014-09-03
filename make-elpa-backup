@@ -1,0 +1,44 @@
+#! /usr/bin/env python
+
+"backup elpa directory in .git, so that I can recover from git clean"
+
+import sys, os, time, subprocess, glob
+
+number_of_backups_to_keep = 5
+
+
+def get_filename():
+    return ".git/elpa-%s.tar.gz" % time.strftime("%Y-%m-%d-%H%M", time.localtime())
+
+
+def remove_old_backups():
+    old_files = sorted(glob.glob(".git/elpa-*.tar.gz"))
+    for x in old_files[:-number_of_backups_to_keep]:
+        print "removing", x
+        os.unlink(x)
+
+
+def make_backup():
+    fn = get_filename()
+    cmd = ["tar", "-czf", fn, "elpa"]
+    err = subprocess.call(cmd)
+    if err == 0:
+        print "created", fn
+    else:
+        print "error calling", cmd
+        if os.path.exists(fn):
+            os.unlink(fn)
+    return err
+
+
+def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+    err = make_backup()
+    remove_old_backups()
+
+    sys.exit(err)
+
+
+if __name__ == "__main__":
+    main()
