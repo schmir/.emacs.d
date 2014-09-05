@@ -75,7 +75,7 @@
 
 (savehist-mode 1) ;; keep track of minibuffer commands
 (size-indication-mode 1) ;; show file size
-(global-rainbow-delimiters-mode 1)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 (global-auto-revert-mode 1) ;; re-read buffers from disk unless they're `dirty'
 (display-time-mode 1)
 (auto-compression-mode t) ; allow loading of compressed (e.g. gzipped) files
