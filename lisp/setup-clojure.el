@@ -3,6 +3,7 @@
 
 (require 'cider)
 (require 'clojure-mode)
+(require 'clojure-mode-extra-font-locking)
 (require 'nrepl-client)
 (require 'ac-cider)
 
