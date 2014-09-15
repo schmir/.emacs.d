@@ -1,5 +1,4 @@
 (setq vendor-dir (concat dotfiles-dir "vendor/"))
-(setq abbrev-file-name (concat dotfiles-dir "abbrevs_defs"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 (setq my-private-file "~/.private.el")
 (setq generated-autoload-file (concat dotfiles-dir "loaddefs.el"))
