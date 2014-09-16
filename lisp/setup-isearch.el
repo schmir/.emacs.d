@@ -1,3 +1,6 @@
+(require 'anzu)
+(global-anzu-mode)
+
 (defun schmir-isearch-beginning ()
   "Use with isearch hook to end search at first char of match."
   (when isearch-forward (goto-char isearch-other-end)))
