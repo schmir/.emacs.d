@@ -15,7 +15,9 @@
 
 (add-to-list 'ido-ignore-buffers "\\.ido\\.last")
 
-(setq ido-enable-flex-matching t
+(setq ido-default-file-method 'selected-window
+      ido-default-buffer-method 'selected-window
+      ido-enable-flex-matching t
       ido-use-filename-at-point nil
       ido-use-virtual-buffers t
       ido-auto-merge-work-directories-length 0
