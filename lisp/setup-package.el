@@ -6,7 +6,7 @@
 (package-initialize)
 
 (defvar prelude-packages '(pkg-info clojure-mode clojure-mode-extra-font-locking slamhound
-  paredit bm boxquote key-chord lua-mode magit git-messenger diminish
+  paredit smartparens bm boxquote key-chord lua-mode magit git-messenger diminish
   highlight-symbol framemove rainbow-mode jedi whole-line-or-region
   ssh-config-mode textile-mode yaml-mode auto-complete
   smart-tab gist w3m php-mode markdown-mode textile-mode cider ac-cider

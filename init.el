@@ -27,6 +27,7 @@
 (require 'schmir-fun)
 (require 'setup-ace-jump)
 (require 'setup-paredit)
+(require 'setup-smartparens)
 (require 'setup-elisp)
 (require 'setup-clojure)
 (require 'setup-magit)
