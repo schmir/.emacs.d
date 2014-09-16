@@ -1,4 +1,5 @@
 ;; switch windows with shift-(up/down/left/right)
+(require 'winring)
 (require-try 'framemove)
 (setq framemove-hook-into-windmove t)
 (windmove-default-keybindings 'shift)
@@ -8,7 +9,8 @@
   (select-frame frame)
   (if (window-system frame)
       (progn
-	(set-cursor-color "red"))))
+	(set-cursor-color "red")))
+  (winring-set-name "default"))
 
 (add-hook 'after-make-frame-functions 'schmir-setup-frame)
 (schmir-setup-frame (selected-frame))

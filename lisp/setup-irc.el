@@ -4,23 +4,15 @@
     (require 'schmir-irc)))
 
 
-(setq irc-screen-number nil)
 (defun goto-irc-screen ()
   (interactive)
-  (if (not irc-screen-number)
-      (progn
-	(escreen-create-screen)
-	(setq irc-screen-number escreen-current-screen-number)
-	;; as i don't do this by default in escreen-create-screen
-	(delete-other-windows))
-    (escreen-goto-screen irc-screen-number)))
+  (winring-jump-or-create "irc"))
 
 (defun toggle-irc-screen ()
   (interactive)
-  (if (eq irc-screen-number escreen-current-screen-number)
-      (escreen-goto-last-screen)
-    (goto-irc-screen))
-  (escreen-get-active-screen-numbers-with-emphasis))
+  (if (string= winring-name "irc")
+      (winring-prev-configuration)
+    (goto-irc-screen)))
 
 (defun my-irc-next-active()
   (interactive)
@@ -29,10 +21,9 @@
 	(if rcirc-activity
 	    (progn
 	      (goto-irc-screen)
-	      (rcirc-next-active-buffer nil)
-	      (escreen-get-active-screen-numbers-with-emphasis))
+	      (rcirc-next-active-buffer nil))
 	  (if (or
-	       (eq irc-screen-number escreen-current-screen-number)
+	       (string= winring-name "irc")
 	       (if (eq last-command 'my-irc-next-active)
 		   t
 		 (message "press key again in order to return to irc screen")
