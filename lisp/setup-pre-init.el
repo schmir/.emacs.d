@@ -53,6 +53,9 @@
   (interactive)
   (byte-recompile-directory vendor-dir 0))
 
+(if (eq system-type 'windows-nt)
+    (setq w32-pass-apps-to-system nil
+	  w32-apps-modifier 'hyper))
 
 
 (provide 'setup-pre-init)
