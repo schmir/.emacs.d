@@ -46,8 +46,18 @@
 
 (define-key cider-mode-map '[f10] 'cider-load-current-buffer)
 
+(define-key cider-repl-mode-map '[f10] 'delete-window)
+(define-key cider-stacktrace-mode-map '[f10] 'cider-popup-buffer-quit-function)
+(define-key cider-docview-mode-map '[f10] 'cider-popup-buffer-quit-function)
+(define-key cider-docview-mode-map (kbd "H-h") 'cider-popup-buffer-quit-function)
 
-(define-key cider-mode-map (kbd "C-c C-d") 'cider-doc)
+
+
+
+
+
+(define-key cider-mode-map (kbd "H-h") 'cider-doc)
+(define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)
 
 (provide 'setup-clojure)
 ;;; setup-clojure.el ends here
