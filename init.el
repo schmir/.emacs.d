@@ -5,9 +5,9 @@
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
 
-(setq load-prefer-newer t)
-(setq gc-cons-threshold 20000000)
-(setq max-specpdl-size 5000
+(setq load-prefer-newer t
+      gc-cons-threshold 20000000
+      max-specpdl-size 5000
       max-lisp-eval-depth 6000)
 
 (require 'cl)
@@ -22,6 +22,7 @@
 
 (when (>= emacs-major-version 24)
   (load-theme 'zenburn t))
+
 (require 'setup-gnus)
 (require 'setup-package)
 (require 'schmir-fun)
@@ -56,9 +57,7 @@
 (require 'setup-cwc)
 (require 'setup-whole-line-or-region)
 (require 'setup-sequential-command)
-
-(when (require-try 'rosi)
-  (require 'setup-rosi))
+(require 'setup-rosi)
 
 (require 'projectile)
 (projectile-global-mode)
