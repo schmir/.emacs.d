@@ -9,6 +9,8 @@
   '(
    ))
 
+(define-abbrev-table 'bbdb-mode-abbrev-table '())
+
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
 (define-abbrev-table 'c++-mode-abbrev-table
@@ -65,6 +67,12 @@
 
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
 
+(define-abbrev-table 'epa-info-mode-abbrev-table '())
+
+(define-abbrev-table 'epa-key-list-mode-abbrev-table '())
+
+(define-abbrev-table 'epa-key-mode-abbrev-table '())
+
 (define-abbrev-table 'eshell-mode-abbrev-table '())
 
 (define-abbrev-table 'flycheck-error-list-mode-abbrev-table '())
@@ -75,8 +83,11 @@
 
 (define-abbrev-table 'git-commit-mode-abbrev-table '())
 
+(define-abbrev-table 'git-rebase-mode-abbrev-table '())
+
 (define-abbrev-table 'global-abbrev-table
   '(
+    ("aplly" "apply" nil 2)
     ("aslo" "also" nil 1)
     ("configurabe" "configurable" nil 1)
     ("distribtion" "distribution" nil 1)
@@ -95,6 +106,16 @@
    ))
 
 (define-abbrev-table 'gnus-article-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'gnus-article-mode-abbrev-table '())
+
+(define-abbrev-table 'gnus-browse-mode-abbrev-table '())
+
+(define-abbrev-table 'gnus-category-mode-abbrev-table '())
+
+(define-abbrev-table 'gnus-group-mode-abbrev-table '())
+
+(define-abbrev-table 'gnus-score-mode-abbrev-table '())
 
 (define-abbrev-table 'gnus-sticky-article-mode-abbrev-table '())
 
@@ -120,6 +141,8 @@
 
 (define-abbrev-table 'lisp-mode-abbrev-table '())
 
+(define-abbrev-table 'log-edit-mode-abbrev-table '())
+
 (define-abbrev-table 'magit-branch-manager-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-cherry-mode-abbrev-table '())
@@ -129,6 +152,10 @@
 (define-abbrev-table 'magit-diff-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-log-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-process-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-reflog-mode-abbrev-table '())
 
@@ -205,6 +232,8 @@
 (define-abbrev-table 'smime-mode-abbrev-table '())
 
 (define-abbrev-table 'special-mode-abbrev-table '())
+
+(define-abbrev-table 'speedbar-mode-abbrev-table '())
 
 (define-abbrev-table 'tabulated-list-mode-abbrev-table '())
 
