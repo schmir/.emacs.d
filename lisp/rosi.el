@@ -39,6 +39,8 @@
     (,(rx symbol-start (or "proc" "procedure") (1+ space) (group (1+ (or word ?_))))
      (1 font-lock-function-name-face))
 
+    (,(rx symbol-start (or "perform" "let")) . font-lock-warning-face)
+
     (, (regexp-opt
        '("abort" "abortstatus" "abs" "absolute" "actions" "after" "and"
 	 "append" "appevent" "arg" "argcount" "at" "attribute" "auto"
@@ -71,7 +73,7 @@
 	 "keydelchr" "keydown" "keyend" "keyerase" "keyesc" "keyhelp"
 	 "keyhome" "keyins" "keyinschr" "keyleft" "keynext" "keyprev"
 	 "keyright" "keystatus" "keytab" "keyup" "killsqlexec" "last"
-	 "lastcolpos" "leapyear" "left" "leftmargin" "length" "let"
+	 "lastcolpos" "leapyear" "left" "leftmargin" "length"
 	 "like" "lindim" "line" "linecounter" "link" "linoff"
 	 "location" "lock" "magenta" "maske" "matches" "matrix" "max"
 	 "menu" "menue" "message" "min" "minute" "mode" "module"
@@ -79,7 +81,7 @@
 	 "nextfield" "nextpage" "noerase" "nolinefeed" "nonblocking"
 	 "noobject" "normal" "not" "null" "of" "off" "offset" "on"
 	 "open" "or" "otherwise" "overflow" "pagenumber" "parameter"
-	 "parent" "path" "pause" "perform" "phycoldim" "phylindim"
+	 "parent" "path" "pause" "phycoldim" "phylindim"
 	 "picture" "pipe" "pmode0" "pmode1" "pmode2" "pmode3" "pmode4"
 	 "pmode5" "pmode6" "pmode7" "pmode8" "pmode9" "pos" "position"
 	 "prepare" "previous" "print" "printername" "prior" "proc"
