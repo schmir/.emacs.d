@@ -87,6 +87,7 @@
 
 (define-abbrev-table 'global-abbrev-table
   '(
+    ("additonal" "additional" nil 1)
     ("aplly" "apply" nil 2)
     ("aslo" "also" nil 1)
     ("configurabe" "configurable" nil 1)
