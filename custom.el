@@ -10,6 +10,8 @@
  '(gnus-signature ((t (:slant italic :height 0.85))))
  '(my-title-face ((t (:background "gray10"))))
  '(quack-threesemi-semi-face ((((class color) (background light)) (:background "#c0ffff"))))
+ '(rosi-field-face ((t (:inherit font-lock-preprocessor-face :foreground "turquoise"))))
+ '(rosi-perform-face ((t (:inherit font-lock-warning-face :foreground "pale green"))))
  '(rst-level-1-face ((t (:background "grey30"))) t)
  '(rst-level-2-face ((t (:background "grey30"))) t)
  '(rst-level-3-face ((t (:background "grey30"))) t)

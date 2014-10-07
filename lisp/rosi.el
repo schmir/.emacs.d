@@ -6,6 +6,38 @@
 ;;
 ;;; Code:
 
+
+(defgroup rosi nil
+  "Major mode for editing Rosi code."
+  :prefix "rosi-"
+  :group 'languages
+  :link '(url-link :tag "Github" "https://github.com/rosi-emacs/rosi-mode")
+  :link '(emacs-commentary-link :tag "Commentary" "rosi-mode"))
+
+(defface rosi-perform-face
+  '((t (:inherit font-lock-warning-face)))
+  "Face used to font-lock the function calls."
+  :group 'rosi
+  :package-version '(rosi-mode . "1.0.0"))
+
+(defface rosi-assign-face
+  '((t (:inherit font-lock-warning-face)))
+  "Face used to font-lock assign statements."
+  :group 'rosi
+  :package-version '(rosi-mode . "1.0.0"))
+
+(defface rosi-control-face
+  '((t (:inherit font-lock-preprocessor-face)))
+  "Face used to font-lock break/return/continue statements."
+  :group 'rosi
+  :package-version '(rosi-mode . "1.0.0"))
+
+(defface rosi-field-face
+  '((t (:inherit font-lock-preprocessor-face)))
+  "Face used to font-lock field statements."
+  :group 'rosi
+  :package-version '(rosi-mode . "1.0.0"))
+
 ;; Mode variables
 (defvar rosi-mode-hook nil
   "Hook run when we enter `rosi-mode'.")
@@ -39,31 +71,37 @@
     (,(rx symbol-start (or "proc" "procedure") (1+ space) (group (1+ (or word ?_))))
      (1 font-lock-function-name-face))
 
-    (,(rx symbol-start (or "perform" "let")) . font-lock-warning-face)
+    (,(rx symbol-start (or "let" "init" "returning") symbol-end) . 'rosi-assign-face)
+
+    (,(rx symbol-start (or "return" "break" "continue") symbol-end)  . 'rosi-control-face)
+
+    (,(rx symbol-start (or "perform" "call") symbol-end) . 'rosi-perform-face)
+
+    (,(rx symbol-start (or "field") symbol-end) . 'rosi-field-face)
 
     (, (regexp-opt
        '("abort" "abortstatus" "abs" "absolute" "actions" "after" "and"
 	 "append" "appevent" "arg" "argcount" "at" "attribute" "auto"
 	 "autonext" "avg" "background" "before" "bell" "binary" "black"
-	 "blankfill" "blink" "blue" "bordered" "break" "breakpoint"
+	 "blankfill" "blink" "blue" "bordered" "breakpoint"
 	 "call" "case" "catoffset" "catstatus" "cattable" "catuser"
 	 "center" "cexpand" "chain" "channel" "chaoffset" "char"
 	 "chdir" "child" "clipped" "close" "coldim" "coloff" "colpos"
 	 "comment" "compute" "concat" "concatenated" "constant"
-	 "continue" "control" "converror" "copy" "core" "count"
+	 "control" "converror" "copy" "core" "count"
 	 "create" "current" "cursor" "cyan" "data" "database" "date"
 	 "datetime" "day" "dayerror" "decimal" "default" "define"
 	 "delete" "delimiter" "dialog" "dimension" "display"
 	 "displayonly" "down" "downshift" "dynamic" "else" "elseif"
 	 "end" "enter" "environment" "erase" "errortext" "event"
 	 "every" "exception" "execute" "exitcode" "export" "fatal"
-	 "fetch" "field" "file" "first" "float" "floaterror" "flush"
+	 "fetch" "file" "first" "float" "floaterror" "flush"
 	 "fn_acos" "fn_asin" "fn_atan" "fn_atan2" "fn_cos" "fn_exp"
 	 "fn_frac" "fn_hypot" "fn_log" "fn_log10" "fn_power" "fn_sin"
 	 "fn_sqrt" "fn_tan" "for" "fork" "form" "formfeed" "fraction"
 	 "from" "function" "getchar" "getstr" "gettime" "goto" "green"
 	 "group" "header" "help" "highlight" "history" "hold" "hour"
-	 "id" "if" "illegalop" "import" "init" "inkey" "insert"
+	 "id" "if" "illegalop" "import" "inkey" "insert"
 	 "instring" "int" "integer" "interrupt" "interval" "into"
 	 "intrstatus" "is" "isnumeric" "key" "key1" "key10" "key11"
 	 "key12" "key13" "key14" "key15" "key16" "key17" "key18"
@@ -87,7 +125,7 @@
 	 "prepare" "previous" "print" "printername" "prior" "proc"
 	 "procedure" "put" "putchar" "putfield" "putstr" "query"
 	 "range" "read" "red" "refresh" "relative" "release" "removed"
-	 "repeat" "report" "required" "retry" "return" "returning"
+	 "repeat" "report" "required" "retry"
 	 "reverse" "right" "rightjust" "root" "round" "row" "run"
 	 "scrcoldim" "scrcoloff" "screen" "screeninit" "screenreset"
 	 "screndcol" "screndlin" "scrlindim" "scrlinoff" "scroll"
