@@ -39,12 +39,12 @@
 (setq cider-prompt-save-file-on-load nil)
 
 
-(defadvice cider-load-current-buffer (after switch-namespace activate compile)
+(defadvice cider-load-buffer (after switch-namespace activate compile)
   "switch to namespace"
   (cider-repl-set-ns (cider-current-ns))
   (cider-switch-to-repl-buffer))
 
-(define-key cider-mode-map '[f10] 'cider-load-current-buffer)
+(define-key cider-mode-map '[f10] 'cider-load-buffer)
 
 (define-key cider-repl-mode-map '[f10] 'delete-window)
 (define-key cider-stacktrace-mode-map '[f10] 'cider-popup-buffer-quit-function)
