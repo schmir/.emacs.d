@@ -23,6 +23,12 @@
 (when (>= emacs-major-version 24)
   (load-theme 'zenburn t))
 
+(if (string= system-name "W71580")
+    (progn
+      (add-to-list 'exec-path "C:/u6397/portable-git/bin")
+      (setenv "PATH" (concat "C:\\u6397\\portable-git\\bin;" (getenv "PATH")))))
+
+
 (require 'setup-gnus)
 (require 'setup-package)
 (require 'schmir-fun)
