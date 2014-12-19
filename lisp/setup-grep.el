@@ -1,8 +1,3 @@
-(require 'git-grep)
-
-(defalias 'gg 'git-grep)
-(global-set-key [f5] 'git-grep)
-
 (require 'grep)
 (setq search-all-buffers-ignored-files '(".bbdb" ".newsrc-dribble"))
 
@@ -21,8 +16,5 @@ searches all buffers."
       (remove-if-not 'buffer-file-name (buffer-list))))
 
    regexp))
-
-(global-set-key [f7] 'search-all-buffers)
-
 
 (provide 'setup-grep)

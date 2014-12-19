@@ -5,7 +5,7 @@
 ;;	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-(defvar prelude-packages '(pkg-info clojure-mode clojure-mode-extra-font-locking slamhound
+(defvar prelude-packages '(use-package pkg-info clojure-mode clojure-mode-extra-font-locking slamhound
   paredit smartparens bm boxquote key-chord lua-mode magit git-messenger diminish
   highlight-symbol framemove rainbow-mode jedi whole-line-or-region
   ssh-config-mode textile-mode yaml-mode company auto-complete

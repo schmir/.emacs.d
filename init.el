@@ -18,10 +18,8 @@
       (file-name-directory
        (or (buffer-file-name) load-file-name)))
 (add-to-list 'load-path (concat dotfiles-dir "lisp"))
+(add-to-list 'load-path (concat dotfiles-dir "use-package"))
 (require 'setup-pre-init)
-
-(when (>= emacs-major-version 24)
-  (load-theme 'zenburn t))
 
 (if (string= system-name "W71580")
     (progn
@@ -31,16 +29,136 @@
 
 (require 'setup-gnus)
 (require 'setup-package)
+(require 'use-package)
+
+(when (>= emacs-major-version 24)
+  (use-package color-theme :ensure t)
+  (use-package zenburn-theme :ensure t))
+
+
 (require 'schmir-fun)
-(require 'setup-ace-jump)
-(require 'setup-paredit)
+
+(use-package ace-jump-mode
+  :bind ("H-SPC" . ace-jump-mode)
+  :config (setq ace-jump-word-mode-use-query-char nil))
+
+(use-package paredit
+  :commands (paredit-mode enable-paredit-mode)
+  :config (progn
+	    (define-key paredit-mode-map (kbd "M-q") nil)
+	    (define-key paredit-mode-map (kbd "<C-right>") nil)
+	    (define-key paredit-mode-map (kbd "<C-left>") nil)
+	    (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
+	    (define-key paredit-mode-map (kbd "<M-left>") 'paredit-forward-barf-sexp)
+
+	    (define-key paredit-mode-map (kbd "M-9") 'paredit-wrap-sexp)
+	    (define-key paredit-mode-map (kbd "M-[") 'paredit-wrap-square)
+	    (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
+	    (define-key paredit-mode-map (kbd "<C-S-right>") 'forward-sexp)
+	    (define-key paredit-mode-map (kbd "<C-S-left>") 'backward-sexp)))
+
 (require 'setup-smartparens)
 (require 'setup-elisp)
 (require 'setup-clojure)
-(require 'setup-magit)
-(require 'setup-compile)
-(require 'setup-highlight-symbol)
-(require 'setup-bm)
+
+(use-package magit
+  :commands (magit-status)
+  :bind (("C-c m" . magit-status))
+  :config (progn
+	    (defun magit-commit-mode-init ()
+	      (when (looking-at "\n")
+		(open-line 1))
+	      (turn-on-flyspell)
+	      (toggle-save-place 0))
+
+	    (add-hook 'git-commit-mode-hook 'magit-commit-mode-init)
+
+
+	    ;; make magit commit mode not close the frame
+	    ;; we have (add-hook 'server-done-hook 'delete-frame)
+	    ;; see https://github.com/magit/magit/issues/771
+	    (defadvice git-commit-commit (around no-kill-frame activate)
+	      (flet ((delete-frame (&optional FRAME FORCE) ()))
+		ad-do-it))
+
+	    (defadvice magit-status (around magit-fullscreen activate)
+	      (window-configuration-to-register :magit-fullscreen)
+	      ad-do-it
+	      (delete-other-windows))
+
+	    (defun magit-quit-session ()
+	      "Restores the previous window configuration and kills the magit buffer"
+	      (interactive)
+	      (kill-buffer)
+	      (jump-to-register :magit-fullscreen))
+
+
+	    (setq magit-omit-untracked-dir-contents t)
+	    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+	    (if (eq system-type 'windows-nt)
+		(setq magit-git-executable (executable-find "git")))))
+
+(use-package git-messenger
+  :bind (("C-x v p" . git-messenger:popup-message)))
+
+(use-package compile-dwim
+  :bind (([f9] . compile-dwim)
+	 ("c" . compile-dwim))
+  :config (progn
+	    (defadvice yes-or-no-p (around no-query-compilation-always-kill activate)
+	      "make `compile' always kill existing compilation."
+	      (if (string-match "A compilation process is running; kill it\\?"
+				prompt)
+		  (setq ad-return-value t)
+		ad-do-it))
+
+	    (setq compilation-ask-about-save nil
+		  compilation-scroll-output t)))
+
+;(require 'setup-highlight-symbol)
+(use-package highlight-symbol
+  :commands highlight-symbol-mode
+  :bind (([(control f1)]	. highlight-symbol-at-point)
+	 ([f1]			. highlight-symbol-next)
+	 ([(shift f1)]		. highlight-symbol-prev)
+	 ([(meta f1)]		. highlight-symbol-query-replace))
+  :config (setq highlight-symbol-idle-delay 0.3))
+
+(use-package bm
+  :commands (bm-buffer-restore bm-buffer-save bm-buffer-save-all bm-repository-save bm-toggle bm-next bm-previous)
+  :bind (([C-f8] . bm-toggle)
+	 ([f8] . bm-next)
+	 ([S-f8] . bm-previous))
+  :config (progn ;; Restoring bookmarks when on file find.
+	    (add-hook 'find-file-hooks 'bm-buffer-restore)
+
+	    ;; Saving bookmark data on killing a buffer
+	    (add-hook 'kill-buffer-hook 'bm-buffer-save)
+
+	    ;; Saving the repository to file when on exit.
+	    ;; kill-buffer-hook is not called when emacs is killed, so we
+	    ;; must save all bookmarks first.
+	    (add-hook 'kill-emacs-hook '(lambda nil
+					  (bm-buffer-save-all)
+					  (bm-repository-save)))
+
+	    ;; Update bookmark repository when saving the file.
+	    (add-hook 'after-save-hook 'bm-buffer-save)
+
+	    ;; Restore bookmarks when buffer is reverted.
+	    (add-hook 'after-revert-hook 'bm-buffer-restore)
+
+	    (setq bm-highlight-style 'bm-highlight-only-fringe
+		  bm-recenter 1
+		  bm-wrap-immediately nil
+		  bm-buffer-persistence t
+		  bm-restore-repository-on-load t)
+
+	    (defadvice bm-buffer-save  (around no-message activate)
+	      "be quiet when saving bookmarks"
+	      (flet ((message ())) ad-do-it))))
+
+;; (require 'setup-bm)
 (require 'setup-isearch)
 (require 'setup-tramp)
 (require 'setup-frame)
@@ -54,7 +172,36 @@
 (require 'setup-fancy-comment)
 (require 'setup-lastmodified)
 (require 'setup-completion)
-(require 'setup-grep)
+
+(use-package
+ hippie-exp
+ :commands hippie-expand
+ ; :bind (("C-tab" . hippie-expand))
+ :init (global-set-key (quote [C-tab]) 'hippie-expand)
+ :config (progn
+	   (defun try-complete-abbrev (old)
+	     (if (expand-abbrev) t nil))
+
+	   (setq hippie-expand-try-functions-list
+		 '(try-complete-abbrev
+		   try-expand-dabbrev-visible
+		   try-expand-dabbrev
+		   try-expand-dabbrev-all-buffers
+		   try-expand-dabbrev-from-kill
+		   try-complete-file-name-partially
+		   try-complete-file-name
+		   try-expand-all-abbrevs
+		   try-expand-list
+		   try-expand-line
+		   try-complete-lisp-symbol-partially
+		   try-complete-lisp-symbol))))
+
+(use-package git-grep
+  :bind (([f5] . git-grep)))
+
+(use-package setup-grep
+  :bind (([f7] . search-all-buffers)))
+
 (require 'setup-uniquify)
 (require 'setup-lua)
 (require 'setup-irc)
@@ -63,14 +210,21 @@
 (require 'setup-cwc)
 (require 'setup-whole-line-or-region)
 (require 'setup-sequential-command)
-(require 'setup-rosi)
+
+(use-package rosi
+	     :commands rosi-mode
+	     :init (progn
+		     (add-to-list 'auto-mode-alist '("\\.rsf\\|\\.rsi\\'" . rosi-mode))
+		     (modify-coding-system-alist 'file "\\(\\.rsf\\|\\.msg\\)$" 'cp437))
+	     :config (add-hook 'rosi-mode-hook 'turn-on-highlight-symbol-mode))
 
 (require 'projectile)
 (projectile-global-mode)
 
 ;; shell-pop
-(require 'shell-pop)
-(global-set-key (kbd "C-t") 'shell-pop)
+(use-package shell-pop :ensure t
+	     :bind (("C-t" . shell-pop)))
+
 
 (require 'setup-kill-emacs)
 (require 'setup-server)
@@ -206,9 +360,11 @@
 	     (setq c-basic-offset 2)))
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 
-(require 'rst)
-(clear-abbrev-table rst-mode-abbrev-table)
-(add-hook 'rst-mode-hook 'auto-fill-mode)
+(use-package rst
+  :mode ("\\.rst\\'" . rst-mode)
+  :config (progn
+	    (clear-abbrev-table rst-mode-abbrev-table)
+	    (add-hook 'rst-mode-hook 'auto-fill-mode)))
 
 ;; (require 'schmir-flymake)
 
@@ -219,7 +375,10 @@
 
 (setq smart-tab-using-hippie-expand 't)
 
-(global-set-key (kbd "C-c d") 'deft)
+(use-package deft
+  :bind ("C-c d" . deft))
+
+;; (global-set-key (kbd "C-c d") 'deft)
 (global-set-key (quote [S-iso-lefttab]) 'tab-to-tab-stop)
 ;; (global-set-key "" (quote comment-region))
 
@@ -237,9 +396,10 @@
 
 (setq suggest-key-bindings t)
 
-(require 'misc-cmds)
-(define-key ctl-x-map [home] 'mark-buffer-before-point)
-(define-key ctl-x-map [end]  'mark-buffer-after-point)
+(use-package misc-cmds
+  :commands (mark-buffer-before-point mark-buffer-after-point)
+  :init (progn (define-key ctl-x-map [home] 'mark-buffer-before-point)
+		 (define-key ctl-x-map [end]  'mark-buffer-after-point)))
 
 (global-set-key (kbd "C-z") 'undo)
 
@@ -274,7 +434,15 @@
 
 (require 'help-mode)
 
-(require 'setup-exec-abbrev)
+(use-package
+ exec-abbrev-cmd
+ :commands exec-abbrev-cmd
+ :init (progn
+	 (global-set-key (kbd "M-x") 'exec-abbrev-cmd)
+	 (setq exec-abbrev-cmd-file "~/.emacs.d/exec-abbrev-cmd.dat"))
+ :config (progn (exec-abbrev-cmd-mode 1)
+		))
+;; (require 'setup-exec-abbrev)
 
 (put 'minibuffer-complete-and-exit 'disabled nil)
 (message "initialization complete")
