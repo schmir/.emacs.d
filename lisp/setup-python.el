@@ -22,8 +22,6 @@
       (cons "\\<\\(lambda\\)\\>" 'lambda))))
 
   (jedi:setup)
-  (eproject-maybe-turn-on)   ;; make sure the eproject-hook has run
-
   (add-hook 'find-file-hooks 'maybe-untabify 'nil 1)
   (setq py-smart-indentation 1
 	indent-tabs-mode nil)
