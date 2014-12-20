@@ -119,7 +119,6 @@
 	    (setq compilation-ask-about-save nil
 		  compilation-scroll-output t)))
 
-;(require 'setup-highlight-symbol)
 (use-package highlight-symbol
   :commands highlight-symbol-mode
   :bind (([(control f1)]	. highlight-symbol-at-point)
@@ -162,7 +161,6 @@
 	      "be quiet when saving bookmarks"
 	      (flet ((message ())) ad-do-it))))
 
-;; (require 'setup-bm)
 (require 'setup-isearch)
 (require 'setup-tramp)
 (require 'setup-frame)
@@ -177,28 +175,25 @@
 (require 'setup-lastmodified)
 (require 'setup-completion)
 
-(use-package
- hippie-exp
- :commands hippie-expand
- ; :bind (("C-tab" . hippie-expand))
- :init (global-set-key (quote [C-tab]) 'hippie-expand)
- :config (progn
-	   (defun try-complete-abbrev (old)
-	     (if (expand-abbrev) t nil))
+(use-package hippie-exp
+  :bind (([C-tab] . hippie-expand))
+  :config (progn
+	    (defun try-complete-abbrev (old)
+	      (if (expand-abbrev) t nil))
 
-	   (setq hippie-expand-try-functions-list
-		 '(try-complete-abbrev
-		   try-expand-dabbrev-visible
-		   try-expand-dabbrev
-		   try-expand-dabbrev-all-buffers
-		   try-expand-dabbrev-from-kill
-		   try-complete-file-name-partially
-		   try-complete-file-name
-		   try-expand-all-abbrevs
-		   try-expand-list
-		   try-expand-line
-		   try-complete-lisp-symbol-partially
-		   try-complete-lisp-symbol))))
+	    (setq hippie-expand-try-functions-list
+		  '(try-complete-abbrev
+		    try-expand-dabbrev-visible
+		    try-expand-dabbrev
+		    try-expand-dabbrev-all-buffers
+		    try-expand-dabbrev-from-kill
+		    try-complete-file-name-partially
+		    try-complete-file-name
+		    try-expand-all-abbrevs
+		    try-expand-list
+		    try-expand-line
+		    try-complete-lisp-symbol-partially
+		    try-complete-lisp-symbol))))
 
 (use-package git-grep
   :bind (([f5] . git-grep)))
