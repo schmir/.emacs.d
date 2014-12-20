@@ -35,6 +35,10 @@
   (use-package color-theme :ensure t)
   (use-package zenburn-theme :ensure t))
 
+;; delay loading of elisp mode and it's dependencies
+(setq initial-major-mode 'fundamental-mode)
+(use-package fixup-scratch-buffer
+  :idle (fixup-scratch-buffer))
 
 (require 'schmir-fun)
 
