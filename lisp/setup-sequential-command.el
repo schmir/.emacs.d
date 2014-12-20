@@ -10,7 +10,4 @@
   end-of-buffer
   seq-return)
 
-(global-set-key (quote [home]) 'my-home)
-(global-set-key (quote [end]) 'my-end)
-
 (provide 'setup-sequential-command)
