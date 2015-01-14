@@ -299,8 +299,9 @@
 (require 'setup-whole-line-or-region)
 
 (use-package setup-sequential-command
-     :bind (([home] . my-home)
-	    ([end] . my-end)))
+  :ensure sequential-command
+  :bind (([home] . my-home)
+	 ([end] . my-end)))
 
 (use-package rosi
 	     :commands rosi-mode

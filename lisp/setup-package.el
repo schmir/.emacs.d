@@ -11,7 +11,7 @@
   textile-mode yaml-mode auto-complete
   smart-tab gist w3m php-mode
   projectile flycheck
-  nginx-mode batch-mode bbdb anzu sequential-command)
+  nginx-mode batch-mode bbdb anzu)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
