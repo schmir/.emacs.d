@@ -434,9 +434,9 @@
 (add-to-list 'auto-mode-alist
 	     '("\\.md$\\|\\.markdown$" . markdown-mode))
 
+(use-package ssh-config-mode :ensure t
+  :mode "\\.ssh/config$\\|sshd?_config$")
 
-(add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
-(add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
 
 (add-to-list 'auto-mode-alist '("\\PKGBUILD$\\|\\.sh$" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
