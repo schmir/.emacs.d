@@ -62,6 +62,15 @@
 	    (define-key paredit-mode-map (kbd "<C-S-left>") 'backward-sexp)))
 
 (require 'setup-smartparens)
+
+(use-package highlight-symbol :ensure t
+  :commands highlight-symbol-mode
+  :bind (([(control f1)]	. highlight-symbol-at-point)
+	 ([f1]			. highlight-symbol-next)
+	 ([(shift f1)]		. highlight-symbol-prev)
+	 ([(meta f1)]		. highlight-symbol-query-replace))
+  :config (setq highlight-symbol-idle-delay 0.3))
+
 (use-package lisp-mode
   :config
   (progn
@@ -185,13 +194,6 @@
 	    (setq compilation-ask-about-save nil
 		  compilation-scroll-output t)))
 
-(use-package highlight-symbol :ensure t
-  :commands highlight-symbol-mode
-  :bind (([(control f1)]	. highlight-symbol-at-point)
-	 ([f1]			. highlight-symbol-next)
-	 ([(shift f1)]		. highlight-symbol-prev)
-	 ([(meta f1)]		. highlight-symbol-query-replace))
-  :config (setq highlight-symbol-idle-delay 0.3))
 
 (use-package bm :ensure t
   :commands (bm-buffer-restore bm-buffer-save bm-buffer-save-all bm-repository-save bm-toggle bm-next bm-previous)
