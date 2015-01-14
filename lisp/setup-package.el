@@ -7,7 +7,7 @@
 
 (defvar prelude-packages '(use-package pkg-info slamhound
   smartparens boxquote diminish
-  framemove rainbow-mode jedi whole-line-or-region
+  framemove rainbow-mode whole-line-or-region
   textile-mode yaml-mode auto-complete
   smart-tab gist w3m projectile flycheck
   nginx-mode batch-mode bbdb anzu)
