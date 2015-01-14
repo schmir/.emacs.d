@@ -430,9 +430,8 @@
 
 
 (autoload 'fm-start "fm" "follow mode for compilation like buffers")
-
-(add-to-list 'auto-mode-alist
-	     '("\\.md$\\|\\.markdown$" . markdown-mode))
+(use-package markdown-mode :ensure t
+  :mode "\\.md$\\|\\.markdown$")
 
 (use-package ssh-config-mode :ensure t
   :mode "\\.ssh/config$\\|sshd?_config$")
