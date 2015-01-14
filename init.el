@@ -62,8 +62,72 @@
 	    (define-key paredit-mode-map (kbd "<C-S-left>") 'backward-sexp)))
 
 (require 'setup-smartparens)
-(require 'setup-elisp)
-(require 'setup-clojure)
+(use-package lisp-mode
+  :config
+  (progn
+    (defun schmir-elisp-hook ()
+      (enable-paredit-mode)
+      (local-set-key [(tab)] 'smart-tab)
+      (flycheck-mode 1)
+      (highlight-symbol-mode 1))
+
+    (add-hook 'emacs-lisp-mode-hook 'schmir-elisp-hook)))
+
+(use-package company :ensure t
+  :commands (company-mode)
+  :config
+  (progn
+    (setq company-idle-delay 0.8
+	  company-minimum-prefix-length 2)))
+
+(use-package cider :ensure t
+  :commands (cider-connect cider-jack-in)
+  :config
+  (progn
+    (require 'cider-repl)
+    (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+
+    (setq nrepl-hide-special-buffers t)
+    (setq nrepl-popup-stacktraces-in-repl t)
+    (setq nrepl-history-file "~/.emacs.d/nrepl-history")
+    (defun schmir-cider-repl-hook ()
+      (auto-complete-mode 0)
+      (company-mode 1))
+
+    (add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
+
+    (setq cider-prompt-save-file-on-load nil)
+
+
+    (defadvice cider-load-buffer (after switch-namespace activate compile)
+      "switch to namespace"
+      (cider-repl-set-ns (cider-current-ns))
+      (cider-switch-to-repl-buffer))
+
+    (define-key cider-mode-map '[f10] 'cider-load-buffer)
+
+    (define-key cider-repl-mode-map '[f10] 'delete-window)
+    (define-key cider-stacktrace-mode-map '[f10] 'cider-popup-buffer-quit-function)
+    (define-key cider-docview-mode-map '[f10] 'cider-popup-buffer-quit-function)
+    (define-key cider-docview-mode-map (kbd "H-h") 'cider-popup-buffer-quit-function)
+    (define-key cider-mode-map (kbd "H-h") 'cider-doc)
+    (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)))
+
+(use-package clojure-mode :ensure t :mode "\\.clj\\'"
+  :config
+  (progn
+    (message "configuring clojure-mode")
+    (defun schmir-clojure-hook ()
+      (paredit-mode 1)
+      (auto-complete-mode 0)
+      (company-mode 1)
+      (highlight-symbol-mode 1))
+
+    (add-hook 'clojure-mode-hook 'schmir-clojure-hook)
+
+    ;; fix indentation of cond expressions
+    (put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
+    (put-clojure-indent 'cond nil)))
 
 (use-package magit
   :commands (magit-status)
