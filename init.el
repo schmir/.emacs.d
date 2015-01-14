@@ -282,7 +282,16 @@
   :bind (([f7] . search-all-buffers)))
 
 (require 'setup-uniquify)
-(require 'setup-lua)
+
+(use-package lua-mode :ensure t :mode "\\.lua$"
+  :config
+  (progn
+    (add-hook 'lua-mode-hook
+	      '(lambda()
+		 (local-set-key [(tab)] 'smart-tab)
+		 (highlight-symbol-mode 1)
+		 (setq lua-indent-level 4)))))
+
 (require 'setup-irc)
 (require 'setup-file-hook)
 (require 'setup-abbrev)
