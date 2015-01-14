@@ -13,8 +13,10 @@
 (setq company-idle-delay 0.8
       company-minimum-prefix-length 2)
 ;;; Code:
+
 ;; fix indentation of cond expressions
 (put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
+(put-clojure-indent 'cond nil)
 
 
 (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
