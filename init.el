@@ -229,6 +229,10 @@
 	      "be quiet when saving bookmarks"
 	      (flet ((message ())) ad-do-it))))
 
+(use-package anzu :ensure t
+  :commands global-anzu-mode
+  :idle (global-anzu-mode))
+
 (require 'setup-isearch)
 (require 'setup-tramp)
 (require 'setup-frame)

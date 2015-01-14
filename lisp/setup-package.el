@@ -10,7 +10,7 @@
   framemove rainbow-mode whole-line-or-region
   textile-mode yaml-mode auto-complete
   smart-tab gist w3m projectile flycheck
-  nginx-mode batch-mode bbdb anzu)
+  nginx-mode batch-mode bbdb)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
