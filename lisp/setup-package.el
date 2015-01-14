@@ -6,7 +6,7 @@
 (package-initialize)
 
 (defvar prelude-packages '(use-package pkg-info slamhound
-  smartparens boxquote key-chord lua-mode diminish
+  smartparens boxquote lua-mode diminish
   framemove rainbow-mode jedi whole-line-or-region
   ssh-config-mode textile-mode yaml-mode auto-complete
   smart-tab gist w3m php-mode markdown-mode textile-mode
