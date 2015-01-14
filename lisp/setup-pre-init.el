@@ -8,9 +8,6 @@
 (defun add-load-path (path)
   (add-to-list 'load-path path))
 
-(when (= emacs-major-version 23)
-  (add-load-path (concat dotfiles-dir "package-for-emacs23")))
-
 (add-load-path vendor-dir)
 (add-load-path (concat vendor-dir "emacs-w3m"))
 (add-load-path (concat vendor-dir "bbdb"))
