@@ -42,11 +42,11 @@
 
 (require 'schmir-fun)
 
-(use-package ace-jump-mode
+(use-package ace-jump-mode :ensure t
   :bind ("H-SPC" . ace-jump-mode)
   :config (setq ace-jump-word-mode-use-query-char nil))
 
-(use-package paredit
+(use-package paredit :ensure t
   :commands (paredit-mode enable-paredit-mode)
   :config (progn
 	    (define-key paredit-mode-map (kbd "M-q") nil)
@@ -113,10 +113,12 @@
     (define-key cider-mode-map (kbd "H-h") 'cider-doc)
     (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)))
 
+(use-package clojure-mode-extra-font-locking :ensure t :defer t)
 (use-package clojure-mode :ensure t :mode "\\.clj\\'"
   :config
   (progn
     (message "configuring clojure-mode")
+    (require 'clojure-mode-extra-font-locking)
     (defun schmir-clojure-hook ()
       (paredit-mode 1)
       (auto-complete-mode 0)
@@ -129,7 +131,7 @@
     (put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
     (put-clojure-indent 'cond nil)))
 
-(use-package magit
+(use-package magit :ensure t
   :commands (magit-status)
   :bind (("C-c m" . magit-status))
   :config (progn
@@ -166,7 +168,7 @@
 	    (if (eq system-type 'windows-nt)
 		(setq magit-git-executable (executable-find "git")))))
 
-(use-package git-messenger
+(use-package git-messenger :ensure t
   :bind (("C-x v p" . git-messenger:popup-message)))
 
 (use-package compile-dwim
@@ -183,7 +185,7 @@
 	    (setq compilation-ask-about-save nil
 		  compilation-scroll-output t)))
 
-(use-package highlight-symbol
+(use-package highlight-symbol :ensure t
   :commands highlight-symbol-mode
   :bind (([(control f1)]	. highlight-symbol-at-point)
 	 ([f1]			. highlight-symbol-next)
@@ -191,7 +193,7 @@
 	 ([(meta f1)]		. highlight-symbol-query-replace))
   :config (setq highlight-symbol-idle-delay 0.3))
 
-(use-package bm
+(use-package bm :ensure t
   :commands (bm-buffer-restore bm-buffer-save bm-buffer-save-all bm-repository-save bm-toggle bm-next bm-previous)
   :bind (([C-f8] . bm-toggle)
 	 ([f8] . bm-next)
@@ -441,7 +443,7 @@
 
 (setq smart-tab-using-hippie-expand 't)
 
-(use-package deft
+(use-package deft :ensure t
   :bind ("C-c d" . deft))
 
 ;; (global-set-key (kbd "C-c d") 'deft)
@@ -462,7 +464,7 @@
 
 (setq suggest-key-bindings t)
 
-(use-package misc-cmds
+(use-package misc-cmds :ensure t
   :commands (mark-buffer-before-point mark-buffer-after-point)
   :init (progn (define-key ctl-x-map [home] 'mark-buffer-before-point)
 		 (define-key ctl-x-map [end]  'mark-buffer-after-point)))

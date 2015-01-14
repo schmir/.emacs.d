@@ -5,13 +5,13 @@
 ;;	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-(defvar prelude-packages '(use-package pkg-info clojure-mode clojure-mode-extra-font-locking slamhound
-  paredit smartparens bm boxquote key-chord lua-mode magit git-messenger diminish
-  highlight-symbol framemove rainbow-mode jedi whole-line-or-region
-  ssh-config-mode textile-mode yaml-mode company auto-complete
-  smart-tab gist w3m php-mode markdown-mode textile-mode cider ac-cider
-  deft rainbow-delimiters shell-pop projectile flycheck
-  nginx-mode batch-mode ace-jump-mode bbdb anzu misc-cmds sequential-command)
+(defvar prelude-packages '(use-package pkg-info slamhound
+  smartparens boxquote key-chord lua-mode diminish
+  framemove rainbow-mode jedi whole-line-or-region
+  ssh-config-mode textile-mode yaml-mode auto-complete
+  smart-tab gist w3m php-mode markdown-mode textile-mode
+  rainbow-delimiters projectile flycheck
+  nginx-mode batch-mode bbdb anzu sequential-command)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
