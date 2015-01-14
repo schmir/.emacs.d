@@ -9,8 +9,7 @@
   smartparens boxquote diminish
   framemove rainbow-mode jedi whole-line-or-region
   textile-mode yaml-mode auto-complete
-  smart-tab gist w3m php-mode
-  projectile flycheck
+  smart-tab gist w3m projectile flycheck
   nginx-mode batch-mode bbdb anzu)
   "A list of packages to ensure are installed at launch.")
 

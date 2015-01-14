@@ -437,9 +437,9 @@
 (use-package ssh-config-mode :ensure t
   :mode "\\.ssh/config$\\|sshd?_config$")
 
+(use-package sh-script
+  :mode ("\\PKGBUILD$\\|\\.sh$" . sh-mode))
 
-(add-to-list 'auto-mode-alist '("\\PKGBUILD$\\|\\.sh$" . sh-mode))
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.wsdl$" . sgml-mode))
 
 
