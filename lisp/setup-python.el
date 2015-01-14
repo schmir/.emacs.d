@@ -16,10 +16,10 @@
 
 (defun schmir-python-hook ()
   (interactive)
-  (when (require-try 'unicode-symbols)
-    (substitute-patterns-with-unicode
-     (list
-      (cons "\\<\\(lambda\\)\\>" 'lambda))))
+  (require 'unicode-symbols)
+  (substitute-patterns-with-unicode
+   (list
+    (cons "\\<\\(lambda\\)\\>" 'lambda)))
 
   (jedi:setup)
   (add-hook 'find-file-hooks 'maybe-untabify 'nil 1)

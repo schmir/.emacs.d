@@ -1,6 +1,6 @@
 ;; switch windows with shift-(up/down/left/right)
 (require 'winring)
-(require-try 'framemove)
+(require 'framemove)
 (setq framemove-hook-into-windmove t)
 (windmove-default-keybindings 'shift)
 (setq frame-title-format `(,"%b    ---   ", (user-login-name) "@" ,(system-name)))
