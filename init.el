@@ -601,15 +601,10 @@
 
 (require 'help-mode)
 
-(use-package
- exec-abbrev-cmd
- :commands exec-abbrev-cmd
- :init (progn
-	 (global-set-key (kbd "M-x") 'exec-abbrev-cmd)
-	 (setq exec-abbrev-cmd-file "~/.emacs.d/exec-abbrev-cmd.dat"))
- :config (progn (exec-abbrev-cmd-mode 1)
-		))
-;; (require 'setup-exec-abbrev)
+(use-package exec-abbrev-cmd
+  :bind ("M-x" . exec-abbrev-cmd)
+  :init (setq exec-abbrev-cmd-file "~/.emacs.d/exec-abbrev-cmd.dat")
+  :config (exec-abbrev-cmd-mode 1))
 
 (put 'minibuffer-complete-and-exit 'disabled nil)
 (message "initialization complete")
