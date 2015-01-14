@@ -376,14 +376,14 @@
 	 ([end] . my-end)))
 
 (use-package rosi
-	     :commands rosi-mode
-	     :init (progn
-		     (add-to-list 'auto-mode-alist '("\\.rsf\\|\\.rsi\\'" . rosi-mode))
-		     (modify-coding-system-alist 'file "\\(\\.rsf\\|\\.msg\\)$" 'cp437))
-	     :config (add-hook 'rosi-mode-hook 'turn-on-highlight-symbol-mode))
+  :commands rosi-mode
+  :mode ("\\.rsf\\|\\.rsi\\'" . rosi-mode)
+  :init (modify-coding-system-alist 'file "\\(\\.rsf\\|\\.msg\\)$" 'cp437)
+  :config (add-hook 'rosi-mode-hook 'turn-on-highlight-symbol-mode))
 
-(require 'projectile)
-(projectile-global-mode)
+(use-package projectile :ensure t
+  :commands (projectile-global-mode)
+  :idle (projectile-global-mode))
 
 ;; shell-pop
 (use-package shell-pop :ensure t
