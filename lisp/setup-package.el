@@ -10,7 +10,7 @@
   framemove rainbow-mode jedi whole-line-or-region
   ssh-config-mode textile-mode yaml-mode auto-complete
   smart-tab gist w3m php-mode markdown-mode textile-mode
-  rainbow-delimiters projectile flycheck
+  projectile flycheck
   nginx-mode batch-mode bbdb anzu sequential-command)
   "A list of packages to ensure are installed at launch.")
 
