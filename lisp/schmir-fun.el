@@ -9,10 +9,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
 (defalias 'html-quote 'sgml-quote)
 
 
-(defun turn-on-highlight-symbol-mode ()
-  (interactive)
-  (highlight-symbol-mode 1))
-
 (defun toggle-windows-split()
   "Switch back and forth between one window and whatever split of windows we might have in the frame. The idea is to maximize the current buffer, while being able to go back to the previous split of windows in the frame simply by calling this command again."
   (interactive)
@@ -472,10 +468,7 @@ If there's no text, delete the previous line ending."
   (interactive)
   (if (looking-back "\n")
       (delete-char -1)
-    (kill-line 0)
-    )
-  )
-
+    (kill-line 0)))
 
 
 (require 'url)
@@ -486,10 +479,6 @@ If there's no text, delete the previous line ending."
    (format "http://google.com/search?q=%s+site:docs.python.org+inurl:library&btnI"
 	   (url-hexify-string (thing-at-point 'symbol)))))
 
-(defun schmir-py-test()
-  (interactive)
-  (with-project-root 
-      (compile "py.test" t)))
 
 ;; Move to match if on (){}[] when pressing %, otherwise insert %.
 (defun schmir-match-paren (arg)

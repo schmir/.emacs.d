@@ -69,7 +69,14 @@
 	 ([f1]			. highlight-symbol-next)
 	 ([(shift f1)]		. highlight-symbol-prev)
 	 ([(meta f1)]		. highlight-symbol-query-replace))
-  :config (setq highlight-symbol-idle-delay 0.3))
+  :init
+  (progn
+    (defun turn-on-highlight-symbol-mode ()
+      (interactive)
+      (highlight-symbol-mode 1)))
+
+  :config
+  (setq highlight-symbol-idle-delay 0.3))
 
 (use-package lisp-mode
   :config
