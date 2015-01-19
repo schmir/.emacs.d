@@ -29,3 +29,5 @@ ID
 .[#]*
 /projectile-bookmarks.eld
 /session.*
+/ido.last
+/recentf
