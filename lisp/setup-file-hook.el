@@ -1,7 +1,4 @@
 
-(require 'evimodeline)
-(add-hook 'find-file-hook 'evimodeline-find-file-hook)
-
 ;; automatically chmod +x when the file has shebang "#!"
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 

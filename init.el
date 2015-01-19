@@ -372,6 +372,10 @@
 		 (setq lua-indent-level 4)))))
 
 (require 'setup-irc)
+(use-package evimodeline
+  :commands (evimodeline-find-file-hook)
+  :init (add-hook 'find-file-hook 'evimodeline-find-file-hook))
+
 (require 'setup-file-hook)
 (require 'setup-abbrev)
 (require 'setup-cwc)
