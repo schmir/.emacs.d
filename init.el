@@ -130,7 +130,7 @@
     (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)))
 
 (use-package clojure-mode-extra-font-locking :ensure t :defer t)
-(use-package clojure-mode :ensure t :mode "\\.clj\\'"
+(use-package clojure-mode :ensure t :mode "\\.clj$\\|\\.boot$"
   :config
   (progn
     (message "configuring clojure-mode")
