@@ -8,6 +8,11 @@ Only &, < and > are quoted, the rest is left untouched.
 With prefix argument UNQUOTEP, unquote the region." t)
 (defalias 'html-quote 'sgml-quote)
 
+(defun remove-dos-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
 
 (defun turn-on-highlight-symbol-mode ()
   (interactive)

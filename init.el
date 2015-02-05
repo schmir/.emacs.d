@@ -95,7 +95,8 @@
   (progn
     (require 'cider-repl)
     (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
-
+    (if (eq system-type 'windows-nt)
+	(add-hook 'cider-repl-mode-hook 'remove-dos-eol))
     (setq nrepl-hide-special-buffers t)
     (setq nrepl-popup-stacktraces-in-repl t)
     (setq nrepl-history-file "~/.emacs.d/nrepl-history")
