@@ -102,7 +102,8 @@
   (progn
     (require 'cider-repl)
     (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
-
+    (if (eq system-type 'windows-nt)
+	(add-hook 'cider-repl-mode-hook 'remove-dos-eol))
     (setq nrepl-hide-special-buffers t)
     (setq nrepl-popup-stacktraces-in-repl t)
     (setq nrepl-history-file "~/.emacs.d/nrepl-history")
@@ -123,6 +124,7 @@
     (define-key cider-mode-map '[f10] 'cider-load-buffer)
 
     (define-key cider-repl-mode-map '[f10] 'delete-window)
+    (define-key cider-repl-mode-map (kbd "C-c C-w") 'cider-eval-last-sexp-and-replace)
     (define-key cider-stacktrace-mode-map '[f10] 'cider-popup-buffer-quit-function)
     (define-key cider-docview-mode-map '[f10] 'cider-popup-buffer-quit-function)
     (define-key cider-docview-mode-map (kbd "H-h") 'cider-popup-buffer-quit-function)
