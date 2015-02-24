@@ -10,6 +10,9 @@
       max-specpdl-size 5000
       max-lisp-eval-depth 6000)
 
+;; prevent emacs from asking for coding-system...
+(set-language-environment "utf-8")
+
 (require 'cl)
 
 (defvar dotfiles-dir nil "location of dotfiles-directory")
@@ -480,9 +483,6 @@
       vc-follow-symlinks t				;; follow symlinks and don't ask
       enable-recursive-minibuffers t)
 
-
-;; prevent emacs from asking for coding-system...
-(set-language-environment "utf-8")
 
 ;; when on a tab, make the cursor the tab length
 (setq-default x-stretch-cursor t)
