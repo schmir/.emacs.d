@@ -81,10 +81,14 @@
   :config
   (setq highlight-symbol-idle-delay 0.3))
 
+(use-package aggressive-indent :ensure t :defer t
+  :commands (aggressive-indent-mode))
+
 (use-package lisp-mode
   :config
   (progn
     (defun schmir-elisp-hook ()
+      (aggressive-indent-mode 1)
       (enable-paredit-mode)
       (local-set-key [(tab)] 'smart-tab)
       (flycheck-mode 1)
@@ -141,6 +145,7 @@
     (message "configuring clojure-mode")
     (require 'clojure-mode-extra-font-locking)
     (defun schmir-clojure-hook ()
+      (aggressive-indent-mode 1)
       (paredit-mode 1)
       (auto-complete-mode 0)
       (company-mode 1)
