@@ -112,16 +112,17 @@
     (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
     (if (eq system-type 'windows-nt)
 	(add-hook 'cider-repl-mode-hook 'remove-dos-eol))
-    (setq nrepl-hide-special-buffers t)
-    (setq nrepl-popup-stacktraces-in-repl t)
-    (setq nrepl-history-file "~/.emacs.d/nrepl-history")
+    (setq nrepl-hide-special-buffers t
+	  repl-popup-stacktraces-in-repl t
+	  nrepl-history-file "~/.emacs.d/nrepl-history")
     (defun schmir-cider-repl-hook ()
       (auto-complete-mode 0)
       (company-mode 1))
 
     (add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
     (add-hook 'cider-mode-hook 'eldoc-mode)
-    (setq cider-prompt-save-file-on-load nil)
+    (setq cider-prompt-save-file-on-load nil
+	  cider-repl-result-prefix ";; => ")
 
 
     (defadvice cider-load-buffer (after switch-namespace activate compile)
