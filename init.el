@@ -41,7 +41,8 @@
 ;; delay loading of elisp mode and it's dependencies
 (setq initial-major-mode 'fundamental-mode)
 (use-package fixup-scratch-buffer
-  :idle (fixup-scratch-buffer))
+  :defer 3
+  :config (fixup-scratch-buffer))
 
 (require 'schmir-fun)
 
@@ -247,8 +248,9 @@
 	      (flet ((message ())) ad-do-it))))
 
 (use-package anzu :ensure t
+  :defer 5
   :commands global-anzu-mode
-  :idle (global-anzu-mode))
+  :config (global-anzu-mode))
 
 (require 'setup-isearch)
 (require 'setup-tramp)
@@ -404,7 +406,9 @@
 
 (use-package projectile :ensure t
   :commands (projectile-global-mode)
-  :idle (projectile-global-mode))
+  :defer 5
+  :config (projectile-global-mode))
+
 
 ;; shell-pop
 (use-package shell-pop :ensure t
