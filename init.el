@@ -122,7 +122,10 @@
     (add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
     (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-prompt-save-file-on-load nil
-	  cider-repl-result-prefix ";; => ")
+	  cider-repl-result-prefix ";; => "
+	  cider-stacktrace-fill-column nil
+	  nrepl-buffer-name-show-port t ;; use port in repl buffer name
+	  cider-auto-select-error-buffer nil)
 
 
     (defadvice cider-load-buffer (after switch-namespace activate compile)
