@@ -147,7 +147,7 @@
     (require 'clojure-mode-extra-font-locking)
     (defun schmir-clojure-hook ()
       (aggressive-indent-mode 1)
-      (paredit-mode 1)
+      (enable-paredit-mode)
       (auto-complete-mode 0)
       (company-mode 1)
       (highlight-symbol-mode 1))
