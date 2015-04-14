@@ -21,7 +21,6 @@
       (file-name-directory
        (or (buffer-file-name) load-file-name)))
 (add-to-list 'load-path (concat dotfiles-dir "lisp"))
-(add-to-list 'load-path (concat dotfiles-dir "use-package"))
 (require 'setup-pre-init)
 
 (if (string= system-name "W71580")
