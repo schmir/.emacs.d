@@ -89,6 +89,7 @@
   (progn
     (defun schmir-elisp-hook ()
       (aggressive-indent-mode 1)
+      (eldoc-mode)
       (enable-paredit-mode)
       (local-set-key [(tab)] 'smart-tab)
       (flycheck-mode 1)
@@ -119,7 +120,7 @@
       (company-mode 1))
 
     (add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
-
+    (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-prompt-save-file-on-load nil)
 
 
