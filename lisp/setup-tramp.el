@@ -9,7 +9,8 @@
       (add-to-list 'tramp-remote-path "~/local/bin")
       (add-to-list 'tramp-remote-path "~/rc/bin")))
 
-(setq tramp-default-method "ssh")
+(setq tramp-default-method "ssh"
+      tramp-ssh-controlmaster-options "")
 
 (global-set-key (kbd "C-x C-r") 'find-alternative-file-with-sudo)
 
