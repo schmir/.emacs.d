@@ -195,7 +195,8 @@
 	      (jump-to-register :magit-fullscreen))
 
 
-	    (setq magit-omit-untracked-dir-contents t)
+	    (setq magit-omit-untracked-dir-contents t
+		  magit-last-seen-setup-instructions "1.4.0")
 	    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 	    (if (eq system-type 'windows-nt)
 		(setq magit-git-executable (executable-find "git")))))
