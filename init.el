@@ -82,7 +82,13 @@
   (setq highlight-symbol-idle-delay 0.3))
 
 (use-package aggressive-indent :ensure t :defer t
-  :commands (aggressive-indent-mode))
+  :commands (aggressive-indent-mode)
+  :config
+  (progn
+    (add-to-list 'aggressive-indent-protected-commands 'right-char)
+    (add-to-list 'aggressive-indent-protected-commands 'left-char)
+    (add-to-list 'aggressive-indent-protected-commands 'previous-line)
+    (add-to-list 'aggressive-indent-protected-commands 'next-line)))
 
 (use-package lisp-mode
   :config
