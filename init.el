@@ -172,6 +172,7 @@
 (use-package magit :ensure t
   :commands (magit-status)
   :bind (("C-c m" . magit-status))
+  :init (setq magit-last-seen-setup-instructions "1.4.0")
   :config (progn
 	    (defun magit-commit-mode-init ()
 	      (when (looking-at "\n")
@@ -201,8 +202,7 @@
 	      (jump-to-register :magit-fullscreen))
 
 
-	    (setq magit-omit-untracked-dir-contents t
-		  magit-last-seen-setup-instructions "1.4.0")
+	    (setq magit-omit-untracked-dir-contents t)
 	    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 	    (if (eq system-type 'windows-nt)
 		(setq magit-git-executable (executable-find "git")))))
