@@ -416,10 +416,18 @@
   :init (modify-coding-system-alist 'file "\\(\\.rsf\\|\\.msg\\)$" 'cp437)
   :config (add-hook 'rosi-mode-hook 'turn-on-highlight-symbol-mode))
 
+(use-package helm :ensure t)
 (use-package projectile :ensure t
   :commands (projectile-global-mode)
   :defer 5
-  :config (projectile-global-mode))
+  :init
+  (use-package helm-projectile
+    :ensure t
+    :commands helm-projectile-on)
+  :config
+  (progn
+    (projectile-global-mode)
+    (helm-projectile-on)))
 
 
 ;; shell-pop
