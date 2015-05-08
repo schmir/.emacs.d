@@ -45,9 +45,10 @@
 
 (require 'schmir-fun)
 
-(use-package ace-jump-mode :ensure t
-  :bind ("H-SPC" . ace-jump-mode)
-  :config (setq ace-jump-word-mode-use-query-char nil))
+
+(use-package avy :ensure t
+  :bind ("H-SPC" . avy-goto-char-2))
+
 
 (use-package paredit :ensure t
   :commands (paredit-mode enable-paredit-mode)
