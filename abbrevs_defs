@@ -13,6 +13,10 @@
 
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
+(define-abbrev-table 'bookmark-bmenu-mode-abbrev-table '())
+
+(define-abbrev-table 'bookmark-edit-annotation-mode-abbrev-table '())
+
 (define-abbrev-table 'c++-mode-abbrev-table
   '(
    ))
@@ -88,22 +92,44 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("additonal" "additional" nil 1)
+    ("aendern" "ändern" nil 1)
+    ("aenderungen" "Änderungen" nil 3)
     ("aplly" "apply" nil 2)
     ("aslo" "also" nil 1)
+    ("aufloesen" "auflösen" nil 1)
+    ("benoetigt" "benötigt" nil 1)
+    ("bundeslaender" "bundesländer" nil 1)
     ("configurabe" "configurable" nil 1)
     ("distribtion" "distribution" nil 1)
     ("distrubted" "distributed" nil 1)
+    ("eintraegt" "einträgt" nil 1)
     ("excpetions" "exceptions" nil 1)
+    ("fuer" "für" nil 5)
+    ("geaendert" "geändert" nil 1)
+    ("geloescht" "gelöscht" nil 1)
+    ("grundsaetzlich" "grundsätzlich" nil 1)
     ("hanle" "handle" nil 1)
     ("insensitve" "insensitive" nil 1)
+    ("koennen" "können" nil 2)
+    ("koennte" "könnte" nil 3)
+    ("moeglich" "möglich" nil 1)
+    ("moeglicherweise" "Möglicherweise" nil 1)
     ("obsolt" "obsolete" nil 1)
     ("paramters" "parameters" nil 1)
     ("paremt" "parent" nil 1)
     ("practive" "practice" nil 1)
     ("queus" "queues" nil 1)
+    ("tatsaechlich" "tatsächlich" nil 1)
     ("teh" "the" nil 4)
     ("timezoen" "timezone" nil 1)
+    ("ueber" "über" nil 1)
+    ("uebergibt" "übergibt" nil 1)
+    ("ueberhaupt" "überhaupt" nil 1)
+    ("ueberwachen" "überwachen" nil 1)
+    ("waere" "wäre" nil 1)
     ("wheter" "whether" nil 1)
+    ("wuerde" "würde" nil 3)
+    ("zurueck" "zurück" nil 2)
    ))
 
 (define-abbrev-table 'gnus-article-edit-mode-abbrev-table '())
@@ -122,6 +148,10 @@
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
 
+(define-abbrev-table 'helm-grep-mode-abbrev-table '())
+
+(define-abbrev-table 'helm-moccur-mode-abbrev-table '())
+
 (define-abbrev-table 'help-mode-abbrev-table '())
 
 (define-abbrev-table 'html-mode-abbrev-table '())
@@ -129,6 +159,10 @@
 (define-abbrev-table 'ibuffer-mode-abbrev-table '())
 
 (define-abbrev-table 'idl-mode-abbrev-table '())
+
+(define-abbrev-table 'image-dired-display-image-mode-abbrev-table '())
+
+(define-abbrev-table 'image-dired-thumbnail-mode-abbrev-table '())
 
 (define-abbrev-table 'inferior-lisp-mode-abbrev-table '())
 
@@ -186,6 +220,8 @@
 
 (define-abbrev-table 'nrepl-connections-buffer-mode-abbrev-table '())
 
+(define-abbrev-table 'nrepl-messages-mode-abbrev-table '())
+
 (define-abbrev-table 'nrepl-mode-abbrev-table '())
 
 (define-abbrev-table 'objc-mode-abbrev-table
@@ -212,9 +248,7 @@
 
 (define-abbrev-table 'python-mode-abbrev-table '())
 
-(define-abbrev-table 'python-mode-skeleton-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'python-mode-skeleton-abbrev-table '())
 
 (define-abbrev-table 'rosi-mode-abbrev-table '())
 
