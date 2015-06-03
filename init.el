@@ -613,6 +613,19 @@
 
 (global-set-key (kbd "C-z") 'undo)
 
+(defun schmir-goto-matching-paren ()
+  "Tries to jump to the matching parenthesis to the one currently
+under or before the point. Useful if the matching paren is out of
+sight."
+  (interactive)
+  (cond
+   ((save-excursion
+      (backward-char)
+      (looking-at "[]})]")) (backward-sexp 1))
+   ((looking-at "[{\[\(]") (forward-sexp 1))
+   (t (message "Point not at a parenthesis."))))
+
+(global-set-key (kbd "C-x p") 'schmir-goto-matching-paren)
 
 (require 'repeatable)
 (repeatable-command-advice next-buffer)
