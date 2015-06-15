@@ -166,6 +166,9 @@
 
     (add-hook 'clojure-mode-hook 'schmir-clojure-hook)
 
+    ;; (put 'cond-> 'clojure-backtracking-indent '(2 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
+    ;; (put-clojure-indent 'cond-> nil)
+
     ;; fix indentation of cond expressions
     (put 'cond 'clojure-backtracking-indent '(2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
     (put-clojure-indent 'cond nil)))
@@ -626,6 +629,11 @@ sight."
    (t (message "Point not at a parenthesis."))))
 
 (global-set-key (kbd "C-x p") 'schmir-goto-matching-paren)
+
+(defun insert-date-time ()
+  "Insert current date and time"
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d %H:%M")))
 
 (require 'repeatable)
 (repeatable-command-advice next-buffer)
