@@ -151,6 +151,9 @@
     (define-key cider-mode-map (kbd "H-h") 'cider-doc)
     (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)))
 
+(use-package clj-refactor :ensure t :defer t
+  :commands (clj-refactor-mode))
+
 (use-package clojure-mode-extra-font-locking :ensure t :defer t)
 (use-package clojure-mode :ensure t :mode "\\.clj$\\|\\.boot$"
   :config
@@ -158,6 +161,9 @@
     (message "configuring clojure-mode")
     (require 'clojure-mode-extra-font-locking)
     (defun schmir-clojure-hook ()
+      (clj-refactor-mode 1)
+      (yas-minor-mode 1)
+      (cljr-add-keybindings-with-prefix "C-c C-r")
       (aggressive-indent-mode 1)
       (enable-paredit-mode)
       (auto-complete-mode 0)
@@ -166,6 +172,8 @@
 
     (add-hook 'clojure-mode-hook 'schmir-clojure-hook)
 
+    (define-clojure-indent
+      (event-handler 'defun))
     ;; (put 'cond-> 'clojure-backtracking-indent '(2 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4))
     ;; (put-clojure-indent 'cond-> nil)
 
