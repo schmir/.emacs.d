@@ -57,6 +57,8 @@
 
 (define-abbrev-table 'conf-xdefaults-mode-abbrev-table '())
 
+(define-abbrev-table 'css-mode-abbrev-table '())
+
 (define-abbrev-table 'debugger-mode-abbrev-table '())
 
 (define-abbrev-table 'diff-mode-abbrev-table '())
@@ -94,9 +96,9 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("additonal" "additional" nil 1)
-    ("aendern" "ändern" nil 1)
+    ("aendern" "ändern" nil 2)
     ("aenderung" "Änderung" nil 2)
-    ("aenderungen" "Änderungen" nil 3)
+    ("aenderungen" "Änderungen" nil 4)
     ("aenderungsnummer" "Änderungsnummer" nil 2)
     ("aplly" "apply" nil 2)
     ("aslo" "also" nil 1)
@@ -120,7 +122,7 @@
     ("excpetions" "exceptions" nil 1)
     ("fuegt" "fügt" nil 1)
     ("fuehrt" "" nil 1)
-    ("fuer" "für" nil 24)
+    ("fuer" "für" nil 25)
     ("fuerchte" "fürchte" nil 1)
     ("geaendert" "geändert" nil 3)
     ("gefuehlt" "gefühlt" nil 1)
@@ -140,11 +142,12 @@
     ("koennen" "können" nil 8)
     ("koennte" "könnte" nil 7)
     ("kuemmern" "kümmern" nil 2)
+    ("laesst" "lässt" nil 1)
     ("laeuft" "läuft" nil 1)
     ("loesung" "Lösung" nil 2)
     ("moeglich" "möglich" nil 1)
     ("moeglicherweise" "Möglicherweise" nil 1)
-    ("mueller" "Müller" nil 1)
+    ("mueller" "Müller" nil 2)
     ("muessen" "müssen" nil 1)
     ("muesste" "müsste" nil 3)
     ("muesstest" "müsstest" nil 1)
@@ -185,6 +188,7 @@
     ("wunderschoenen" "wunderschönen" nil 1)
     ("zuegig" "zügig " nil 1)
     ("zurueck" "zurück" nil 6)
+    ("zusaetzlich" "zusätzlich" nil 1)
     ("zustaenden" "Zuständen" nil 1)
    ))
 
