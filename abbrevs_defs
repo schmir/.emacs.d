@@ -113,13 +113,14 @@
     ("additonal" "additional" nil 1)
     ("aendern" "ändern" nil 2)
     ("aenderung" "Änderung" nil 2)
-    ("aenderungen" "Änderungen" nil 4)
+    ("aenderungen" "Änderungen" nil 5)
     ("aenderungsnummer" "Änderungsnummer" nil 2)
     ("aplly" "apply" nil 2)
     ("aslo" "also" nil 1)
     ("aufloesen" "auflösen" nil 1)
     ("benoetigt" "benötigt" nil 1)
     ("beschraenkt" "beschränkt" nil 1)
+    ("boerse" "börse" nil 1)
     ("buechern" "Büchern" nil 1)
     ("bundeslaender" "bundesländer" nil 1)
     ("configurabe" "configurable" nil 1)
@@ -154,6 +155,7 @@
     ("haekchen" "Häkchen" nil 1)
     ("haelst" "hältst" nil 4)
     ("haendchen" "händchen" nil 2)
+    ("haengst" "hängst" nil 1)
     ("haette" "hätte" nil 13)
     ("hanle" "handle" nil 1)
     ("hisotry" "history" nil 1)
@@ -167,6 +169,7 @@
     ("kuemmern" "kümmern" nil 3)
     ("laesst" "lässt" nil 1)
     ("laeuft" "läuft" nil 2)
+    ("loeschungen" "Löschungen" nil 1)
     ("loesung" "Lösung" nil 2)
     ("moeglich" "möglich" nil 1)
     ("moeglicherweise" "Möglicherweise" nil 1)
@@ -314,6 +317,12 @@
 (define-abbrev-table 'message-mode-abbrev-table '())
 
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
+
+(define-abbrev-table 'meta-mode-abbrev-table '())
+
+(define-abbrev-table 'metafont-mode-abbrev-table '())
+
+(define-abbrev-table 'metapost-mode-abbrev-table '())
 
 (define-abbrev-table 'nrepl-connections-buffer-mode-abbrev-table '())
 
