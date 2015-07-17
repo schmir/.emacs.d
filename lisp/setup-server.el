@@ -12,6 +12,6 @@
   (when (not (running-as-server-p))
     (server-start)))
 
-(add-hook 'server-done-hook 'delete-frame)
+;; (add-hook 'server-done-hook 'delete-frame)
 
 (provide 'setup-server)
