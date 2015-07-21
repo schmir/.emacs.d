@@ -37,6 +37,13 @@
   (use-package color-theme :ensure t)
   (use-package zenburn-theme :ensure t))
 
+(use-package smart-mode-line :ensure t
+  :config
+  (progn
+    (setq sml/theme 'dark))
+  :init
+  (sml/setup))
+
 ;; delay loading of elisp mode and it's dependencies
 (setq initial-major-mode 'fundamental-mode)
 (use-package fixup-scratch-buffer
