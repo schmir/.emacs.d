@@ -157,7 +157,7 @@
   (let ((table (make-syntax-table)))
     ;; Give punctuation syntax to ASCII that normally has symbol
     ;; syntax or has word syntax and isn't a letter.
-    ;; (modify-syntax-entry ?$ "." table)
+    (modify-syntax-entry ?$ "." table)
     ;; (modify-syntax-entry ?% "." table)
     ;; exceptions
     ;; (modify-syntax-entry ?# "<" table)
@@ -172,7 +172,7 @@
 
     ;; (modify-syntax-entry ?` "$" table)
     table)
-  "Syntax table for Python files.")
+  "Syntax table for RosiSQL files.")
 
 (define-derived-mode rosi-mode prog-mode "Rosi"
   "Major mode for editing rosi sql files."
