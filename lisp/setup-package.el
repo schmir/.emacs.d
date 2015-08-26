@@ -6,7 +6,7 @@
 (package-initialize)
 
 (defvar my-package-list
-  '(use-package pkg-info slamhound
+  '(use-package pkg-info
      smartparens boxquote diminish
      framemove rainbow-mode whole-line-or-region
      textile-mode yaml-mode auto-complete
