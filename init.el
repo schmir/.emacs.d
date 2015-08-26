@@ -191,7 +191,8 @@
 (use-package magit :ensure t
   :commands (magit-status)
   :bind (("C-c m" . magit-status))
-  :init (setq magit-last-seen-setup-instructions "1.4.0")
+  :init (setq magit-last-seen-setup-instructions "1.4.0"
+	      magit-push-always-verify nil)
   :config (progn
 	    (defun magit-commit-mode-init ()
 	      (when (looking-at "\n")
