@@ -118,6 +118,8 @@
     (setq company-idle-delay 0.8
 	  company-minimum-prefix-length 2)))
 
+(use-package htmlize :ensure t)
+
 (use-package cider :ensure t
   :commands (cider-connect cider-jack-in)
   :config
