@@ -154,8 +154,7 @@
 ;;; Code
 
 (defun rosi-which-function ()
-  "Return the name of the function point is in"
-  (interactive)
+  "Return the name of the function point is in."
   (save-excursion
     (end-of-line) ;; make sure we get the complete name
     (if (re-search-backward "^ *PROCEDURE\\(.*\\)" 0 t)
@@ -188,8 +187,8 @@
   (setq-local which-func-functions '(rosi-which-function))
   (setq-local imenu-generic-expression
 	      '(("SQL"       "\\(^.*FROM SQL[^❄]*?END\\)" 1)
-		("FIELD"     "^ *FIELD\\(.*\\)" 1)
-		("PROCEDURE" "^ *PROCEDURE\\(.*\\)" 1)))
+		("FIELD"     "^[\t ]*FIELD\\(.*\\)" 1)
+		("PROCEDURE" "^[\t ]*PROCEDURE\\(.*\\)" 1)))
   (set (make-local-variable 'font-lock-defaults) '(rosi-font-lock-keywords nil t)))
 
 (add-to-list 'which-func-modes 'rosi-mode)
