@@ -153,6 +153,14 @@
 
 ;;; Code
 
+(defun rosi-which-function ()
+  "Return the name of the function point is in"
+  (interactive)
+  (save-excursion
+    (end-of-line) ;; make sure we get the complete name
+    (if (re-search-backward "^ *PROCEDURE\\(.*\\)" 0 t)
+	(match-string-no-properties 1))))
+
 (defvar rosi-mode-syntax-table
   (let ((table (make-syntax-table)))
     ;; Give punctuation syntax to ASCII that normally has symbol
@@ -177,11 +185,14 @@
 (define-derived-mode rosi-mode prog-mode "Rosi"
   "Major mode for editing rosi sql files."
   (set-syntax-table rosi-mode-syntax-table)
+  (setq-local which-func-functions '(rosi-which-function))
   (setq-local imenu-generic-expression
 	      '(("SQL"       "\\(^.*FROM SQL[^❄]*?END\\)" 1)
 		("FIELD"     "^ *FIELD\\(.*\\)" 1)
 		("PROCEDURE" "^ *PROCEDURE\\(.*\\)" 1)))
   (set (make-local-variable 'font-lock-defaults) '(rosi-font-lock-keywords nil t)))
+
+(add-to-list 'which-func-modes 'rosi-mode)
 
 (provide 'rosi)
 ;;; rosi.el ends here
