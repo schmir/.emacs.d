@@ -439,7 +439,8 @@
   :config (add-hook 'rosi-mode-hook 'turn-on-highlight-symbol-mode))
 
 (use-package helm :ensure t
-  :bind ("C-." . helm-imenu))
+  :bind ("C-." . helm-imenu)
+  :config (setq helm-candidate-number-limit 1000))
 
 (use-package projectile :ensure t
   :commands (projectile-global-mode)
