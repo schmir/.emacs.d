@@ -177,7 +177,10 @@
 (define-derived-mode rosi-mode prog-mode "Rosi"
   "Major mode for editing rosi sql files."
   (set-syntax-table rosi-mode-syntax-table)
-
+  (setq-local imenu-generic-expression
+	      '(("SQL"       "\\(^.*FROM SQL[^❄]*?END\\)" 1)
+		("FIELD"     "^ *FIELD\\(.*\\)" 1)
+		("PROCEDURE" "^ *PROCEDURE\\(.*\\)" 1)))
   (set (make-local-variable 'font-lock-defaults) '(rosi-font-lock-keywords nil t)))
 
 (provide 'rosi)
