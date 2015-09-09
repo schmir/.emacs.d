@@ -417,7 +417,34 @@
 		 (highlight-symbol-mode 1)
 		 (setq lua-indent-level 4)))))
 
-(require 'setup-irc)
+(use-package circe :ensure t
+  :config
+  (progn
+    (setq circe-reduce-lurker-spam t)
+    )
+  :init
+  (progn
+    (setq
+     lui-time-stamp-position 'left-margin
+     lui-time-stamp-format "%H:%M")
+
+    (add-hook 'lui-mode-hook 'my-circe-set-margin)
+    (defun my-circe-set-margin ()
+      (setq left-margin-width 5))
+
+    (add-hook 'circe-chat-mode-hook 'my-circe-prompt)
+    (defun my-circe-prompt ()
+      (lui-set-prompt
+       (concat (propertize (concat (buffer-name) ">")
+			   'face 'circe-prompt-face)
+	       " ")))
+
+    (require 'lui-autopaste)
+    (add-hook 'circe-channel-mode-hook 'enable-lui-autopaste)
+    (require 'circe-color-nicks)
+    (enable-circe-color-nicks)))
+
+;; (require 'setup-irc)
 (use-package evimodeline
   :commands (evimodeline-find-file-hook)
   :init (add-hook 'find-file-hook 'evimodeline-find-file-hook))
