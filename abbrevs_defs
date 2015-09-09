@@ -126,6 +126,7 @@
     ("aendern" "ändern" nil 3)
     ("aenderung" "Änderung" nil 6)
     ("aenderungen" "Änderungen" nil 15)
+    ("aenderungsarten" "Änderungsarten" nil 1)
     ("aenderungsnummer" "Änderungsnummer" nil 2)
     ("angehaengte" "angehängte" nil 2)
     ("aplly" "apply" nil 2)
@@ -161,7 +162,7 @@
     ("finsihed" "finished" nil 1)
     ("fuegt" "fügt" nil 1)
     ("fuehrt" "führt" nil 1)
-    ("fuer" "für" nil 65)
+    ("fuer" "für" nil 66)
     ("fuerchte" "fürchte" nil 3)
     ("gaebe" "gäbe" nil 1)
     ("geaendert" "geändert" nil 3)
@@ -169,7 +170,7 @@
     ("gehoeren" "gehören" nil 1)
     ("geloescht" "gelöscht" nil 4)
     ("geloeschten" "gelöschten" nil 1)
-    ("gruesse" "Grüße" nil 45)
+    ("gruesse" "Grüße" nil 46)
     ("gruessen" "Grüßen" nil 2)
     ("grundsaetzlich" "grundsätzlich" nil 1)
     ("haekchen" "Häkchen" nil 1)
@@ -205,8 +206,9 @@
     ("moeglichkeit" "Möglichkeit" nil 2)
     ("mueller" "Müller" nil 7)
     ("muessen" "müssen" nil 6)
-    ("muesste" "müsste" nil 7)
+    ("muesste" "müsste" nil 8)
     ("muesstest" "müsstest" nil 1)
+    ("müsste" "müßte" nil 1)
     ("naechste" "nächste" nil 7)
     ("naechsten" "nächsten" nil 1)
     ("notfaelle" "Notfälle" nil 1)
@@ -254,11 +256,11 @@
     ("vertraegen" "Verträgen" nil 1)
     ("vortraege" "Vorträge" nil 2)
     ("waehrend" "während" nil 1)
-    ("waere" "wäre" nil 12)
+    ("waere" "wäre" nil 14)
     ("wheter" "whether" nil 1)
     ("woerter" "Wörter" nil 2)
     ("wuenschen" "wünschen" nil 1)
-    ("wuerde" "würde" nil 18)
+    ("wuerde" "würde" nil 20)
     ("wunderschoenen" "wunderschönen" nil 1)
     ("zuegig" "zügig " nil 1)
     ("zurueck" "zurück" nil 11)
@@ -426,9 +428,7 @@
 
 (define-abbrev-table 'speedbar-mode-abbrev-table '())
 
-(define-abbrev-table 'sql-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'sql-mode-abbrev-table '())
 
 (define-abbrev-table 'tabulated-list-mode-abbrev-table '())
 
