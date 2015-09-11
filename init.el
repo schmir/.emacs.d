@@ -52,6 +52,8 @@
 
 (require 'schmir-fun)
 
+(use-package adoc-mode :ensure t
+  :mode "\\.asc$")
 
 (use-package avy :ensure t
   :bind ("H-SPC" . avy-goto-char-2))

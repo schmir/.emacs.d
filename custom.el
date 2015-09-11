@@ -8,6 +8,8 @@
  ;; If there is more than one, they won't work right.
  '(font-lock-warning-face ((t (:foreground "dark orange" :weight bold))))
  '(gnus-signature ((t (:slant italic :height 0.85))))
+ '(markup-meta-face ((t (:stipple nil :foreground "gray50" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "Monospace"))))
+ '(markup-meta-hide-face ((t (:inherit markup-meta-face :foreground "gray45"))))
  '(my-title-face ((t (:background "gray10"))))
  '(quack-threesemi-semi-face ((((class color) (background light)) (:background "#c0ffff"))))
  '(rosi-field-face ((t (:inherit font-lock-preprocessor-face :foreground "turquoise"))))
