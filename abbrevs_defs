@@ -3,6 +3,8 @@
 
 (define-abbrev-table 'Info-edit-mode-abbrev-table '())
 
+(define-abbrev-table 'adoc-mode-abbrev-table '())
+
 (define-abbrev-table 'apropos-mode-abbrev-table '())
 
 (define-abbrev-table 'awk-mode-abbrev-table
@@ -42,6 +44,16 @@
 (define-abbrev-table 'cider-stacktrace-mode-abbrev-table '())
 
 (define-abbrev-table 'cider-test-report-mode-abbrev-table '())
+
+(define-abbrev-table 'circe-channel-mode-abbrev-table '())
+
+(define-abbrev-table 'circe-chat-mode-abbrev-table '())
+
+(define-abbrev-table 'circe-mode-abbrev-table '())
+
+(define-abbrev-table 'circe-query-mode-abbrev-table '())
+
+(define-abbrev-table 'circe-server-mode-abbrev-table '())
 
 (define-abbrev-table 'cljr--change-signature-mode-abbrev-table '())
 
@@ -133,6 +145,7 @@
     ("aslo" "also" nil 1)
     ("aufloesen" "auflösen" nil 1)
     ("auszuege" "Auszüge" nil 2)
+    ("befuellt" "befüllt" nil 1)
     ("benoetigt" "benötigt" nil 1)
     ("beschraenkt" "beschränkt" nil 1)
     ("boerse" "börse" nil 1)
@@ -162,7 +175,7 @@
     ("finsihed" "finished" nil 1)
     ("fuegt" "fügt" nil 1)
     ("fuehrt" "führt" nil 1)
-    ("fuer" "für" nil 66)
+    ("fuer" "für" nil 71)
     ("fuerchte" "fürchte" nil 3)
     ("gaebe" "gäbe" nil 1)
     ("geaendert" "geändert" nil 3)
@@ -170,9 +183,11 @@
     ("gehoeren" "gehören" nil 1)
     ("geloescht" "gelöscht" nil 4)
     ("geloeschten" "gelöschten" nil 1)
-    ("gruesse" "Grüße" nil 46)
+    ("glueckwunsch" "Glückwunsch" nil 1)
+    ("gruesse" "Grüße" nil 47)
     ("gruessen" "Grüßen" nil 2)
     ("grundsaetzlich" "grundsätzlich" nil 1)
+    ("gueltigen" "gültigen" nil 1)
     ("haekchen" "Häkchen" nil 1)
     ("haelst" "hältst" nil 4)
     ("haendchen" "händchen" nil 2)
@@ -263,8 +278,8 @@
     ("wuerde" "würde" nil 20)
     ("wunderschoenen" "wunderschönen" nil 1)
     ("zuegig" "zügig " nil 1)
-    ("zurueck" "zurück" nil 11)
-    ("zusaetzlich" "zusätzlich" nil 2)
+    ("zurueck" "zurück" nil 12)
+    ("zusaetzlich" "zusätzlich" nil 3)
     ("zustaenden" "Zuständen" nil 1)
    ))
 
@@ -313,6 +328,8 @@
 (define-abbrev-table 'lisp-mode-abbrev-table '())
 
 (define-abbrev-table 'log-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'lui-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-branch-manager-mode-abbrev-table '())
 
