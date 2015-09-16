@@ -483,6 +483,9 @@
     (projectile-global-mode)
     (helm-projectile-on)))
 
+(use-package schmir-auto-save
+  :commands schmir-save-all-scm-managed-project-buffers
+  :init (add-hook 'focus-out-hook 'schmir-save-all-scm-managed-project-buffers))
 
 ;; shell-pop
 (use-package shell-pop :ensure t

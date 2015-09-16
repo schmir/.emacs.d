@@ -9,7 +9,7 @@
 	  (not (eq (projectile-project-vcs) 'none))
 	(error nil))))
 
-(defun schmir-save-all-git-project-buffers ()
+(defun schmir-save-all-scm-managed-project-buffers ()
   "Save all buffers that are managed with git."
   (interactive)
   (save-window-excursion
@@ -20,7 +20,7 @@
 	      (message (format "auto-saving scm managed buffer %s" buffer))
 	      (save-buffer)))))))
 
-;; (add-hook 'focus-out-hook 'schmir-save-all-git-project-buffers)
+;; (add-hook 'focus-out-hook 'schmir-save-all-scm-managed-project-buffers)
 
 (provide 'schmir-auto-save)
 ;;; schmir-auto-save.el ends here
