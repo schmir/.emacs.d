@@ -434,6 +434,9 @@
 		 (highlight-symbol-mode 1)
 		 (setq lua-indent-level 4)))))
 
+(use-package which-key :ensure t
+  :config (which-key-mode))
+
 (use-package circe :ensure t
   :config
   (progn
