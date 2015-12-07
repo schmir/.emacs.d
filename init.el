@@ -122,7 +122,7 @@
 
 (use-package htmlize :ensure t)
 
-(use-package cider :ensure t
+(use-package cider :ensure t :pin melpa-stable
   :commands (cider-connect cider-jack-in)
   :config
   (progn
