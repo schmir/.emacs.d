@@ -515,4 +515,23 @@ If there's no text, delete the previous line ending."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 
+(defun rs/replace (src dst)
+  (goto-char (point-min))
+  (let ((case-fold-search nil))
+    (while (re-search-forward src nil t)
+      (replace-match dst t nil))))
+
+(defun rs/replace-umlauts ()
+  (interactive)
+  (save-excursion
+    (save-restriction
+      (narrow-to-region (region-beginning) (region-end))
+      (rs/replace "Ä" "Ae")
+      (rs/replace "ä" "ae")
+      (rs/replace "Ü" "Ue")
+      (rs/replace "ü" "ue")
+      (rs/replace "Ö" "Oe")
+      (rs/replace "ö" "oe"))))
+
+
 (provide 'schmir-fun)
