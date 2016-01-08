@@ -483,7 +483,12 @@
   :commands rosi-mode
   :mode ("\\.rsf\\|\\.rsi\\'" . rosi-mode)
   :init (modify-coding-system-alist 'file "\\(\\.rsf\\|\\.msg\\)$" 'cp437)
-  :config (add-hook 'rosi-mode-hook 'turn-on-highlight-symbol-mode))
+  :config
+  (progn
+    (defun rs/-setup-rosi ()
+      (turn-on-highlight-symbol-mode)
+      (abbrev-mode 0))
+    (add-hook 'rosi-mode-hook 'rs/-setup-rosi)))
 
 (use-package helm :ensure t
   :bind ("C-." . helm-imenu)
