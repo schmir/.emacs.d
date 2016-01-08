@@ -37,6 +37,9 @@
   (use-package color-theme :ensure t)
   (use-package zenburn-theme :ensure t))
 
+(use-package fold-this :ensure t
+  :bind ("C-S-w" . fold-active-region))
+
 (use-package smart-mode-line :ensure t
   :config
   (progn
