@@ -490,7 +490,8 @@
   (progn
     (defun rs/-setup-rosi ()
       (turn-on-highlight-symbol-mode)
-      (abbrev-mode 0))
+      (abbrev-mode 0)
+      (setq fill-column 140))
     (add-hook 'rosi-mode-hook 'rs/-setup-rosi)))
 
 (use-package helm :ensure t
