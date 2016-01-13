@@ -168,8 +168,8 @@
     ;; (modify-syntax-entry ?% "." table)
     ;; exceptions
     ;; (modify-syntax-entry ?# "<" table)
-    (modify-syntax-entry ?\/ ". 14" table)
-    (modify-syntax-entry ?* ". 23" table)
+    (modify-syntax-entry ?\/ ". 14bn" table)
+    (modify-syntax-entry ?* ". 23bn" table)
 
     ;; (modify-syntax-entry ?\/ ". 12b" table)
     ;; (modify-syntax-entry ?\n "> b" table)
