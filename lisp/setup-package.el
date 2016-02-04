@@ -6,6 +6,13 @@
 	     '("melpa" . "http://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives
 ;;	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+(when (boundp 'package-archive-priorities)
+  (setq package-archive-priorities
+	'(("melpa-stable" . 20)
+	  ("melpa" . 15)
+	  ("gnu" . 10))))
+
 (package-initialize)
 
 (defvar my-package-list
