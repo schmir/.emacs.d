@@ -475,7 +475,7 @@
 (require 'setup-file-hook)
 (require 'setup-abbrev)
 (require 'setup-cwc)
-(require 'setup-whole-line-or-region)
+;;(require 'setup-whole-line-or-region)
 
 (use-package setup-sequential-command
   :ensure sequential-command
