@@ -682,7 +682,7 @@
 (global-set-key [C-S-left] 'shift-left)
 
 (global-set-key (kbd "M-:") 'align-regexp)
-(global-set-key (kbd "M-RET") 'fullscreen)
+(global-set-key (kbd "M-RET") #'toggle-frame-fullscreen)
 
 (global-set-key (quote [S-return]) 'open-line-below)
 (global-set-key (kbd "M-\"") 'comment-dwim)

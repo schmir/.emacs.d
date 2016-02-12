@@ -56,25 +56,6 @@ With prefix argument UNQUOTEP, unquote the region." t)
     (kill-line))) 
 
 
-
-(defvar saved-frame-parameters 'nil)
-(defun toggle-fullscreen-window ()
-  (interactive)
-  (if (frame-parameter nil 'fullscreen)
-      (progn
-	(modify-frame-parameters nil saved-frame-parameters)
-	(set-frame-parameter nil 'fullscreen 'nil))
-    (progn
-      (setq saved-frame-parameters (cdr (frame-parameters)))
-      (set-frame-parameter nil 'fullscreen 'fullboth))))
-
-
-(defun fullscreen()
-  (interactive)
-  (if (fboundp 'mac-toggle-full-frame)
-      (mac-toggle-full-frame)
-    (toggle-fullscreen-window)))
-
 (defun indent-buffer ()
   "Indents the current buffer."
   (interactive)
