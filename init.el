@@ -1,14 +1,22 @@
 ;; -*- mode: emacs-lisp; coding: utf-8 -*-
 
+(setq load-prefer-newer t
+      gc-cons-threshold 20000000
+      max-specpdl-size 5000
+      max-lisp-eval-depth 6000)
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+;; (package-initialize)
+
 (if (fboundp 'menu-bar-mode)
     (menu-bar-mode 1))
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
 
-(setq load-prefer-newer t
-      gc-cons-threshold 20000000
-      max-specpdl-size 5000
-      max-lisp-eval-depth 6000)
+
 
 ;; prevent emacs from asking for coding-system...
 (set-language-environment "utf-8")
@@ -41,11 +49,8 @@
   :bind ("C-S-w" . fold-active-region))
 
 (use-package smart-mode-line :ensure t
-  :config
-  (progn
-    (setq sml/theme 'dark))
-  :init
-  (sml/setup))
+  :config (setq sml/theme 'dark)
+  :init (sml/setup))
 
 ;; delay loading of elisp mode and it's dependencies
 (setq initial-major-mode 'fundamental-mode)
@@ -57,10 +62,6 @@
 
 (use-package adoc-mode :ensure t
   :mode "\\.asc$")
-
-(use-package avy :ensure t
-  :bind ("H-SPC" . avy-goto-char-2))
-
 
 (use-package paredit :ensure t
   :commands (paredit-mode enable-paredit-mode)
@@ -119,9 +120,8 @@
 (use-package company :ensure t
   :commands (company-mode)
   :config
-  (progn
-    (setq company-idle-delay 0.8
-	  company-minimum-prefix-length 2)))
+  (setq company-idle-delay 0.8
+	company-minimum-prefix-length 2))
 
 (use-package htmlize :ensure t)
 
@@ -150,12 +150,13 @@
 	  cider-auto-select-error-buffer nil)
 
 
-    (defadvice cider-load-buffer (after switch-namespace activate compile)
-      "switch to namespace"
+    (defun rs/cider-load-buffer-in-repl ()
+      (interactive)
+      (cider-load-buffer)
       (cider-repl-set-ns (cider-current-ns))
       (cider-switch-to-repl-buffer))
 
-    (define-key cider-mode-map '[f10] 'cider-load-buffer)
+    (define-key cider-mode-map '[f10] #'rs/cider-load-buffer-in-repl)
 
     (define-key cider-repl-mode-map '[f10] 'delete-window)
     (define-key cider-repl-mode-map (kbd "C-c C-w") 'cider-eval-last-sexp-and-replace)
@@ -516,7 +517,7 @@
 
 ;; shell-pop
 (use-package shell-pop :ensure t
-	     :bind (("C-t" . shell-pop)))
+  :bind (("C-t" . shell-pop)))
 
 
 (require 'setup-kill-emacs)
@@ -529,10 +530,6 @@
 
 (savehist-mode 1) ;; keep track of minibuffer commands
 (size-indication-mode 1) ;; show file size
-
-(use-package rainbow-delimiters :ensure t :defer t
-  :commands (rainbow-delimiters-mode)
-  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 (global-auto-revert-mode 1) ;; re-read buffers from disk unless they're `dirty'
 (display-time-mode 1)
@@ -566,9 +563,6 @@
 (put 'overwrite-mode 'disabled nil)
 (setq mark-even-if-inactive t)
 (transient-mark-mode 1)
-
-
-
 
 (setq visible-bell 1
       require-final-newline t
@@ -640,10 +634,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.wsdl$" . sgml-mode))
 
-
-(add-to-list 'auto-mode-alist '("\\.pas$\\|\\.dpr" .  delphi-mode))
-
-
 (add-to-list 'auto-mode-alist '("\\.js$" . javascript-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . javascript-mode))
 (add-hook 'javascript-mode-hook
@@ -655,15 +645,16 @@
 
 (use-package rst
   :mode ("\\.rst\\'" . rst-mode)
-  :config (progn
-	    (clear-abbrev-table rst-mode-abbrev-table)
-	    (add-hook 'rst-mode-hook 'auto-fill-mode)))
+  :config
+  (progn
+    (clear-abbrev-table rst-mode-abbrev-table)
+    (add-hook 'rst-mode-hook 'auto-fill-mode)))
 
 ;; (require 'schmir-flymake)
 
 ;; highlight XXX, FIXME, ... in these modes
 (mapc 'schmir-hl-fixme
-      '(python-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode))
+      '(python-mode clojure-mode c-mode c++-mode emacs-lisp-mode listp-mode js2-mode))
 
 
 (setq smart-tab-using-hippie-expand 't)
@@ -671,9 +662,7 @@
 (use-package deft :ensure t
   :bind ("C-c d" . deft))
 
-;; (global-set-key (kbd "C-c d") 'deft)
 (global-set-key (quote [S-iso-lefttab]) 'tab-to-tab-stop)
-;; (global-set-key "" (quote comment-region))
 
 (global-set-key (kbd "C-o") 'delete-blank-lines)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
@@ -691,8 +680,10 @@
 
 (use-package misc-cmds :ensure t
   :commands (mark-buffer-before-point mark-buffer-after-point)
-  :init (progn (define-key ctl-x-map [home] 'mark-buffer-before-point)
-		 (define-key ctl-x-map [end]  'mark-buffer-after-point)))
+  :init
+  (progn
+    (define-key ctl-x-map [home] #'mark-buffer-before-point)
+    (define-key ctl-x-map [end]  #'mark-buffer-after-point)))
 
 (global-set-key (kbd "C-z") 'undo)
 
@@ -719,29 +710,12 @@ sight."
 (repeatable-command-advice next-buffer)
 (repeatable-command-advice exchange-point-and-mark)
 
-
-(global-set-key (kbd "C-j")
-		'(lambda()
-		   (interactive)
-		   (delete-indentation 1)))
-
-(global-set-key (kbd "C-S-j")
-		'(lambda()
-		   (interactive)
-		   (delete-indentation)))
 (global-set-key "\M-p" 'goto-line)
 
 (global-set-key [C-backspace] 'backward-kill-word)
 
 (put 'downcase-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
-
-(define-key global-map (kbd "C-M-<left>") 'shrink-window-horizontally)
-(define-key global-map (kbd "C-M-<right>") 'enlarge-window-horizontally)
-(define-key global-map (kbd "C-M-<up>") 'enlarge-window)
-(define-key global-map (kbd "C-M-<down>") 'shrink-window)
-
-(add-to-list 'auto-mode-alist '("\\.ml\\w?" . tuareg-mode))
 
 (require 'help-mode)
 
