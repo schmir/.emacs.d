@@ -499,6 +499,9 @@
   :bind ("C-." . helm-imenu)
   :config (setq helm-candidate-number-limit 1000))
 
+(use-package helm-swoop :ensure t
+  :bind ("C-S-s" . helm-swoop))
+
 (use-package projectile :ensure t
   :commands (projectile-global-mode)
   :defer 5
