@@ -19,7 +19,7 @@
   '(use-package pkg-info
      smartparens boxquote diminish
      framemove rainbow-mode whole-line-or-region
-     textile-mode yaml-mode auto-complete
+     textile-mode yaml-mode
      smart-tab gist w3m flycheck
      nginx-mode batch-mode bbdb)
   "A list of packages to ensure are installed at launch.")

@@ -137,7 +137,8 @@
 	  repl-popup-stacktraces-in-repl t
 	  nrepl-history-file "~/.emacs.d/nrepl-history")
     (defun schmir-cider-repl-hook ()
-      (auto-complete-mode 0)
+      (when (fboundp #'auto-complete-mode)
+	(auto-complete-mode 0))
       (company-mode 1))
 
     (add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
@@ -181,7 +182,8 @@
       (cljr-add-keybindings-with-prefix "C-c C-r")
       (aggressive-indent-mode 1)
       (enable-paredit-mode)
-      (auto-complete-mode 0)
+      (when (fboundp #'auto-complete-mode)
+	(auto-complete-mode 0))
       (company-mode 1)
       (highlight-symbol-mode 1))
 
@@ -400,7 +402,7 @@
 
 (require 'setup-fancy-comment)
 (require 'setup-lastmodified)
-(require 'setup-completion)
+; (require 'setup-completion)
 
 (use-package hippie-exp
   :bind (([C-tab] . hippie-expand))
