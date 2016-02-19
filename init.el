@@ -186,6 +186,7 @@
       (highlight-symbol-mode 1))
 
     (add-hook 'clojure-mode-hook 'schmir-clojure-hook)
+    (define-key clojure-mode-map (kbd "<f10>") #'cider-connect)
 
     (define-clojure-indent
       (event-handler 'defun))
