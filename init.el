@@ -708,10 +708,6 @@ sight."
   (interactive)
   (insert (format-time-string "%Y-%m-%d %H:%M")))
 
-(require 'repeatable)
-(repeatable-command-advice next-buffer)
-(repeatable-command-advice exchange-point-and-mark)
-
 (global-set-key "\M-p" 'goto-line)
 
 (global-set-key [C-backspace] 'backward-kill-word)
