@@ -209,6 +209,7 @@
     ("fruehere" "frühere" nil 1)
     ("fuegt" "fügt" nil 1)
     ("fuehle" "fühle" nil 1)
+    ("fuehre" "führe" nil 1)
     ("fuehrt" "führt" nil 3)
     ("fuer" "für" nil 163)
     ("fuerchte" "fürchte" nil 3)
@@ -275,6 +276,7 @@
     ("magnetbaender" "Magnetbänder" nil 1)
     ("mfg" "Mit freundlichen Grüßen" nil 20)
     ("mitgezaehlt" "mitgezählt" nil 1)
+    ("mittowch" "Mittwoch" nil 1)
     ("moeglich" "möglich" nil 5)
     ("moeglichen" "möglichen" nil 3)
     ("moeglicherweise" "Möglicherweise" nil 1)
@@ -287,6 +289,7 @@
     ("müsste" "müßte" nil 1)
     ("naechste" "nächste" nil 9)
     ("naechsten" "nächsten" nil 2)
+    ("naemlich" "nämlich" nil 1)
     ("natuerlich" "natürlich" nil 7)
     ("noetig" "nötig" nil 2)
     ("notfaelle" "Notfälle" nil 1)
@@ -534,9 +537,7 @@
 
 (define-abbrev-table 'python-mode-abbrev-table '())
 
-(define-abbrev-table 'python-mode-skeleton-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'python-mode-skeleton-abbrev-table '())
 
 (define-abbrev-table 'rmail-summary-mode-abbrev-table '())
 
