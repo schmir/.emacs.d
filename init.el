@@ -125,6 +125,9 @@
 
 (use-package htmlize :ensure t)
 
+(use-package helm-cider :ensure t
+  :commands (helm-cider-mode helm-cider-apropos))
+
 (use-package cider :ensure t :pin melpa-stable
   :commands (cider-connect cider-jack-in)
   :config
@@ -162,6 +165,8 @@
     (define-key cider-stacktrace-mode-map '[f10] 'cider-popup-buffer-quit-function)
     (define-key cider-docview-mode-map '[f10] 'cider-popup-buffer-quit-function)
     (define-key cider-docview-mode-map (kbd "H-h") 'cider-popup-buffer-quit-function)
+    (define-key cider-mode-map (kbd "H-a") 'helm-cider-apropos)
+    (define-key cider-repl-mode-map (kbd "H-a") 'helm-cider-apropos)
     (define-key cider-mode-map (kbd "H-h") 'cider-doc)
     (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)))
 
