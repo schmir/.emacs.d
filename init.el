@@ -172,6 +172,9 @@
     (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc)))
 
 (use-package clj-refactor :ensure t :defer t
+  :config
+  (progn
+    (setq cljr-favor-prefix-notation nil))
   :commands (clj-refactor-mode))
 
 (use-package clojure-mode-extra-font-locking :ensure t :defer t)
