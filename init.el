@@ -148,6 +148,7 @@
 	  cider-repl-result-prefix ";; => "
 	  cider-stacktrace-fill-column nil
 	  cider-prompt-for-symbol nil
+	  cider-pprint-fn 'fipp
 	  nrepl-buffer-name-show-port t ;; use port in repl buffer name
 	  cider-auto-select-error-buffer nil)
 
