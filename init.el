@@ -146,6 +146,7 @@
     (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-prompt-save-file-on-load nil
 	  cider-repl-result-prefix ";; => "
+	  cider-repl-use-pretty-printing t
 	  cider-stacktrace-fill-column nil
 	  cider-prompt-for-symbol nil
 	  cider-pprint-fn 'fipp
