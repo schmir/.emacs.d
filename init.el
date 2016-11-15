@@ -63,6 +63,13 @@
 (use-package adoc-mode :ensure t
   :mode "\\.asc$")
 
+(use-package css-mode
+  :config
+  (progn
+    (defun schmir-setup-css ()
+      (rainbow-mode 1))
+    (add-hook 'css-mode-hook 'schmir-setup-css)))
+
 (use-package paredit :ensure t
   :commands (paredit-mode enable-paredit-mode)
   :config (progn
