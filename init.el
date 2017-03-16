@@ -594,6 +594,7 @@
       scroll-preserve-screen-position 1)
 
 (setq change-major-mode-with-file-name t
+      create-lockfiles nil
       ;; Filename completion ignores these.
       completion-ignored-extensions (append completion-ignored-extensions
 					    '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx" ".rsm" ".rsr"))
