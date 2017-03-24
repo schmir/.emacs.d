@@ -401,6 +401,13 @@
 
 (require 'setup-c-mode)
 
+(defun schmir-setup-java ()
+  (setq c-basic-offset 4
+	indent-tabs-mode 1
+	tab-width 4))
+
+(add-hook 'java-mode-hook 'schmir-setup-java)
+
 (use-package key-chord :ensure t
   :config
   (progn
