@@ -4,16 +4,24 @@
 
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
-;; (add-to-list 'package-archives
-;;	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 
-(when (boundp 'package-archive-priorities)
-  (setq package-archive-priorities
-	'(("melpa-stable" . 20)
-	  ("melpa" . 15)
-	  ("gnu" . 10))))
+(setq package-archive-priorities
+      '(("melpa-stable" . 20)
+	("melpa" . 15)
+	("gnu" . 10)))
 
 (package-initialize)
+
+;; fetch the list of packages available
+(unless package-archive-contents
+  (message "refreshing package database...")
+  (package-refresh-contents))
+
+(defun schmir-ensure-package (pkg)
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
+
+(schmir-ensure-package 'use-package)
 
 (defvar my-package-list
   '(use-package pkg-info
@@ -24,15 +32,11 @@
      nginx-mode batch-mode bbdb)
   "A list of packages to ensure are installed at launch.")
 
-; fetch the list of packages available
-(unless package-archive-contents
-  (message "refreshing package database...")
-  (package-refresh-contents))
 
 ; install the missing packages
 (dolist (package my-package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+  (schmir-ensure-package package)
+  )
 
 (require 'diminish)
 

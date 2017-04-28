@@ -16,45 +16,45 @@
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
 
-
-
 ;; prevent emacs from asking for coding-system...
 (set-language-environment "utf-8")
 
 (require 'cl)
 
-(defvar dotfiles-dir nil "location of dotfiles-directory")
+(defvar dotfiles-dir
+  (file-name-directory
+   (or (buffer-file-name) load-file-name))
+  "Location of dotfiles-directory.")
 
-(setq dotfiles-dir
-      (file-name-directory
-       (or (buffer-file-name) load-file-name)))
 (add-to-list 'load-path (concat dotfiles-dir "lisp"))
 (require 'setup-pre-init)
-
-(if (string= system-name "W71580")
-    (progn
-      (add-to-list 'exec-path "C:/u6397/portable-git/bin")
-      (setenv "PATH" (concat "C:\\u6397\\portable-git\\bin;" (getenv "PATH")))))
-
 
 (require 'setup-gnus)
 (require 'setup-package)
 (require 'use-package)
 
-(when (>= emacs-major-version 24)
-  (use-package color-theme :ensure t)
-  (use-package zenburn-theme :ensure t))
+(when (version< emacs-version "25.1")
+  (error "Emacs 25.1 is required, but you're running %s" emacs-version))
+
+(use-package color-theme :ensure t)
+(use-package spacemacs-theme :ensure t)
+(use-package color-theme-solarized :ensure t)
+(load-theme 'spacemacs-light)
+(use-package smart-mode-line :ensure t
+  :config (setq sml/theme 'light)
+  :init (sml/setup))
+
+;;(use-package zenburn-theme :ensure t)
 (use-package beacon :ensure t
   :config (setq beacon-blink-duration 0.6
 		beacon-size 80)
   :init (beacon-mode 1))
 
-(use-package fold-this :ensure t
-  :bind ("C-S-w" . fold-active-region))
 
-(use-package smart-mode-line :ensure t
-  :config (setq sml/theme 'dark)
-  :init (sml/setup))
+;; (use-package fold-this :ensure t
+;;   :bind ("C-S-w" . fold-active-region))
+
+
 
 ;; delay loading of elisp mode and it's dependencies
 (setq initial-major-mode 'fundamental-mode)
