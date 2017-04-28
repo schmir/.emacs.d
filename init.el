@@ -44,6 +44,10 @@
 (when (>= emacs-major-version 24)
   (use-package color-theme :ensure t)
   (use-package zenburn-theme :ensure t))
+(use-package beacon :ensure t
+  :config (setq beacon-blink-duration 0.6
+		beacon-size 80)
+  :init (beacon-mode 1))
 
 (use-package fold-this :ensure t
   :bind ("C-S-w" . fold-active-region))
