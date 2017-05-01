@@ -146,23 +146,23 @@
     (require 'cider-repl)
     (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
     (if (eq system-type 'windows-nt)
-	(add-hook 'cider-repl-mode-hook 'remove-dos-eol))
+        (add-hook 'cider-repl-mode-hook 'remove-dos-eol))
     (setq nrepl-hide-special-buffers t
-	  repl-popup-stacktraces-in-repl t
-	  nrepl-history-file "~/.emacs.d/nrepl-history")
+          repl-popup-stacktraces-in-repl t
+          nrepl-history-file "~/.emacs.d/nrepl-history")
     (defun schmir-cider-repl-hook ()
       (company-mode 1))
 
     (add-hook 'cider-repl-mode-hook 'schmir-cider-repl-hook)
     (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-prompt-save-file-on-load nil
-	  cider-repl-result-prefix ";; => "
-	  cider-repl-use-pretty-printing t
-	  cider-stacktrace-fill-column nil
-	  cider-prompt-for-symbol nil
-	  cider-pprint-fn 'fipp
-	  nrepl-buffer-name-show-port t ;; use port in repl buffer name
-	  cider-auto-select-error-buffer nil)
+          cider-repl-result-prefix ";; => "
+          cider-repl-use-pretty-printing t
+          cider-stacktrace-fill-column nil
+          cider-prompt-for-symbol nil
+          cider-pprint-fn 'fipp
+          nrepl-buffer-name-show-port t ;; use port in repl buffer name
+          cider-auto-select-error-buffer nil)
 
 
     (defun rs/cider-load-buffer-in-repl ()
@@ -214,21 +214,21 @@
     (defun indent-cond (indent-point state)
       (goto-char (elt state 1))
       (let ((pos -1)
-	    (base-col (current-column)))
-	(forward-char 1)
-	;; `forward-sexp' will error if indent-point is after
-	;; the last sexp in the current sexp.
-	(condition-case nil
-	    (while (and (<= (point) indent-point)
-			(not (eobp)))
-	      (clojure-forward-logical-sexp 1)
-	      (cl-incf pos))
-	  ;; If indent-point is _after_ the last sexp in the
-	  ;; current sexp, we detect that by catching the
-	  ;; `scan-error'. In that case, we should return the
-	  ;; indentation as if there were an extra sexp at point.
-	  (scan-error (cl-incf pos)))
-	(+ base-col (if (evenp pos) 4 2))))
+            (base-col (current-column)))
+        (forward-char 1)
+        ;; `forward-sexp' will error if indent-point is after
+        ;; the last sexp in the current sexp.
+        (condition-case nil
+            (while (and (<= (point) indent-point)
+                        (not (eobp)))
+              (clojure-forward-logical-sexp 1)
+              (cl-incf pos))
+          ;; If indent-point is _after_ the last sexp in the
+          ;; current sexp, we detect that by catching the
+          ;; `scan-error'. In that case, we should return the
+          ;; indentation as if there were an extra sexp at point.
+          (scan-error (cl-incf pos)))
+        (+ base-col (if (evenp pos) 4 2))))
     (put-clojure-indent 'cond #'indent-cond)))
 
 (use-package magit :ensure t
