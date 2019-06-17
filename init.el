@@ -182,4 +182,9 @@
     (revert-buffer t t t)))
 
 (elpy-enable)
+;; these conflict with setup-smartparens
+(define-key elpy-mode-map (kbd "<M-right>") nil)
+(define-key elpy-mode-map (kbd "<M-left>") nil)
+
+
 (define-key python-mode-map (kbd "C-c b") 'schmir/black-buffer)
