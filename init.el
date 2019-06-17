@@ -125,6 +125,7 @@
 (require 'which-key)
 (which-key-mode)
 
+(require 'setup-cwc)
 (require 'setup-smartparens)
 
 (counsel-projectile-mode)
