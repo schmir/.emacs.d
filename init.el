@@ -48,6 +48,7 @@
 (global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
 (setq make-backup-files nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
+(setq-default indent-tabs-mode nil)
 
 (setq echo-keystrokes 0.1
       use-dialog-box nil
@@ -180,6 +181,11 @@
     (save-buffer)
     (shell-command (format "black %s" (shell-quote-argument (buffer-file-name))))
     (revert-buffer t t t)))
+
+(defun untabify-buffer ()
+  (interactive)
+  (save-excursion
+    (untabify (point-min) (point-max))))
 
 (elpy-enable)
 ;; these conflict with setup-smartparens
