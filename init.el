@@ -123,7 +123,39 @@
 (require 'git-messenger)
 (global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
 (global-hl-line-mode)
+(global-auto-revert-mode 1)
+(auto-image-file-mode 1)
+(column-number-mode 1)
+
+(recentf-mode t)
+(setq recentf-max-saved-items 200)
+
+(setq mark-even-if-inactive t)
+(transient-mark-mode 1)
+
+(setq line-move-visual nil) ;; what did they think ?
+
+(auto-compression-mode t)
 (windmove-default-keybindings)
+
+(setq line-move-visual nil) ;; what did they think ?
+
+(setq change-major-mode-with-file-name t
+      create-lockfiles nil
+      ;; Filename completion ignores these.
+      completion-ignored-extensions (append completion-ignored-extensions
+                                            '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx" ".rsm" ".rsr"))
+      backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
+      font-lock-maximum-decoration t			;; maximum decoration
+      next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
+      show-paren-style 'expression
+      default-indicate-empty-lines t
+      line-number-display-limit-width 100000
+      kill-whole-line t				;; make kill-line at beginning of line kill the whole line
+      woman-use-own-frame nil				;; don't create new frame for manpages
+      vc-handled-backends nil
+      vc-follow-symlinks t				;; follow symlinks and don't ask
+      enable-recursive-minibuffers t)
 
 (setq company-idle-delay 0.8
       company-minimum-prefix-length 2)
