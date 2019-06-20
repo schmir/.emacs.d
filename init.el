@@ -67,6 +67,7 @@
    company-solidity
    counsel
    counsel-projectile
+   deft
    dockerfile-mode
    elpy
    git-messenger
