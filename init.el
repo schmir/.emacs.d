@@ -83,10 +83,14 @@
    solidity-flycheck
    solidity-mode
    spacemacs-theme
+   swiper
    which-key
    yaml-mode
    zenburn-theme))
 
+(setq package-pinned-packages
+      '((swiper    . "melpa")
+	(ivy       . "melpa")))
 
 
 (defun abedra/packages-installed-p ()
