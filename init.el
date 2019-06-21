@@ -259,4 +259,5 @@
         try-complete-lisp-symbol))
 
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
+(global-set-key (kbd "C-s") 'swiper-isearch)
 (require 'setup-server)
