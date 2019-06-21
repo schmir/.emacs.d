@@ -259,3 +259,4 @@
         try-complete-lisp-symbol))
 
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
+(require 'setup-server)
