@@ -67,6 +67,7 @@
    company-solidity
    counsel
    counsel-projectile
+   default-text-scale
    deft
    dockerfile-mode
    elpy
@@ -190,6 +191,9 @@
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "<f5>") 'counsel-git-grep)
+
+(global-set-key (kbd "C--") 'default-text-scale-decrease)
+(global-set-key (kbd "C-=") 'default-text-scale-increase)
 
 (progn
   (require 'highlight-symbol)
