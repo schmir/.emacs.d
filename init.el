@@ -264,4 +264,5 @@
 
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
 (global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "C-c s") 'magit-status)
 (require 'setup-server)
