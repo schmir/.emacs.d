@@ -63,6 +63,7 @@
    boxquote
    cider
    clojure-mode
+   clojure-mode-extra-font-locking
    company
    company-solidity
    counsel
@@ -232,6 +233,7 @@
   (save-excursion
     (untabify (point-min) (point-max))))
 
+(require 'setup-clojure)
 (elpy-enable)
 ;; these conflict with setup-smartparens
 (define-key elpy-mode-map (kbd "<M-right>") nil)
