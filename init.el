@@ -260,7 +260,7 @@
         try-complete-lisp-symbol))
 
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
-(global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "C-S-s") 'swiper-isearch)
 (global-set-key (kbd "C-c s") 'magit-status)
 (global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
 (require 'setup-server)
