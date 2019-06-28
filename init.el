@@ -114,6 +114,7 @@
 
 ;; when on a tab, make the cursor the tab length
 (setq-default x-stretch-cursor t)
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; place cursor on same buffer position between editing sessions
 (setq-default save-place t
