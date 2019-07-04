@@ -77,6 +77,9 @@
    htmlize
    ivy
    leuven-theme
+   lsp-mode
+   ;; lsp-ui
+   lsp-java
    magit
    markdown-mode
    persistent-scratch
@@ -94,7 +97,9 @@
 
 (setq package-pinned-packages
       '((swiper    . "melpa")
-	(ivy       . "melpa")))
+        (ivy       . "melpa")
+        (lsp-mode  . "melpa")
+        (lsp-java  . "melpa")))
 
 
 (defun abedra/packages-installed-p ()
@@ -233,6 +238,9 @@
   (interactive)
   (save-excursion
     (untabify (point-min) (point-max))))
+
+(require 'lsp-java)
+(add-hook 'java-mode-hook #'lsp)
 
 (require 'setup-clojure)
 (elpy-enable)
