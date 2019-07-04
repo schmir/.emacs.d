@@ -265,5 +265,18 @@
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
 (global-set-key (kbd "C-S-s") 'swiper-isearch)
 (global-set-key (kbd "C-c s") 'magit-status)
+
+;; colorize pre-commit output
+(defun display-ansi-colors
+    (proc &rest args)
+  (interactive)
+  (with-current-buffer (process-buffer proc)
+    (read-only-mode -1)
+    (ansi-color-apply-on-region (point-min) (point-max))
+    (read-only-mode 1)))
+
+(with-eval-after-load 'magit
+  (advice-add 'magit-process-filter :after #'display-ansi-colors))
+
 (global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
 (require 'setup-server)
