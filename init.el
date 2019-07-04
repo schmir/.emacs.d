@@ -122,9 +122,9 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; place cursor on same buffer position between editing sessions
-(setq-default save-place t
-	      save-place-file (expand-file-name "places" user-emacs-directory))
+(setq-default save-place-file (expand-file-name "places" user-emacs-directory))
 (require 'saveplace)
+(save-place-mode)
 
 (global-set-key (kbd "C-t") 'shell-pop)
 (global-set-key (kbd "C-z") 'undo)
