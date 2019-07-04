@@ -61,6 +61,7 @@
  '(aggressive-indent
    bbdb
    boxquote
+   cargo
    cider
    clojure-mode
    clojure-mode-extra-font-locking
@@ -72,6 +73,7 @@
    deft
    dockerfile-mode
    elpy
+   flycheck-rust
    git-messenger
    highlight-symbol
    htmlize
@@ -84,6 +86,8 @@
    markdown-mode
    persistent-scratch
    projectile
+   racer
+   rust-mode
    shell-pop
    smartparens
    smex
@@ -238,6 +242,22 @@
   (interactive)
   (save-excursion
     (untabify (point-min) (point-max))))
+
+
+(with-eval-after-load 'rust-mode
+  (require 'racer)
+  (require 'flycheck)
+  (define-key rust-mode-map (kbd "C-c b") 'rust-format-buffer)
+  (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+
+  (setq racer-rust-src-path (expand-file-name "~/vendor/rust/src")) ;; Rust source code PATH
+
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
+  (add-hook 'rust-mode-hook #'flycheck-mode)
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
 
 (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
