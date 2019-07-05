@@ -273,6 +273,15 @@
 
 (define-key python-mode-map (kbd "C-c b") 'schmir/black-buffer)
 
+(defun schmir/solidity-setup ()
+  ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
+  (c-set-offset 'arglist-intro '+)
+  (setq c-basic-offset 4)
+  (setq tab-width 8))
+(add-hook 'solidity-mode-hook 'schmir/solidity-setup)
+
+
+
 (defun try-complete-abbrev (old)
   (if (expand-abbrev) t nil))
 
