@@ -33,3 +33,9 @@ ID
 /recentf
 /server/
 /.persistent-scratch
+/.cache/
+/.lsp-session-v1
+/eclipse.jdt.ls/
+/meghanada/
+/places
+/workspace/
