@@ -243,6 +243,11 @@
   (save-excursion
     (untabify (point-min) (point-max))))
 
+(setq deft-default-extension "org"
+      deft-extensions '("org" "md" "txt")
+      deft-text-mode 'org-mode
+      deft-use-filename-as-title t
+      deft-use-filter-string-for-filename t)
 
 (with-eval-after-load 'rust-mode
   (require 'racer)
