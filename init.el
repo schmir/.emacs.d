@@ -243,6 +243,9 @@
   (save-excursion
     (untabify (point-min) (point-max))))
 
+;; let me use windmove keybindings even in org-mode
+(setq org-replace-disputed-keys t)
+
 (setq deft-default-extension "org"
       deft-extensions '("org" "md" "txt")
       deft-text-mode 'org-mode
