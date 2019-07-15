@@ -74,6 +74,7 @@
    dockerfile-mode
    elpy
    flycheck-rust
+   flymake-shellcheck
    git-messenger
    highlight-symbol
    htmlize
@@ -288,6 +289,17 @@
   (setq tab-width 8))
 (add-hook 'solidity-mode-hook 'schmir/solidity-setup)
 
+(defun schmir/shfmt-buffer ()
+  (interactive)
+  (save-excursion
+    (save-buffer)
+    (shell-command (format "shfmt -w -i 2 %s" (shell-quote-argument (buffer-file-name))))
+    (revert-buffer t t t)))
+
+(with-eval-after-load 'sh-script
+  (define-key sh-mode-map (kbd "C-c b") 'schmir/shfmt-buffer)
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+  (add-hook 'sh-mode-hook 'flymake-mode))
 
 
 (defun try-complete-abbrev (old)
