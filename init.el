@@ -31,6 +31,8 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
+;; fix elpa connection issues
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 
 (load "package")
