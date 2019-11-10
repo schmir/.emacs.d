@@ -98,8 +98,10 @@
    solidity-mode
    spacemacs-theme
    swiper
+   terraform-mode
    tide
    which-key
+   writegood-mode
    yaml-mode
    zenburn-theme))
 
@@ -365,6 +367,10 @@
 ;; colorize compile mode output
 (add-hook 'compilation-filter-hook #'display-ansi-colors)
 
+(add-hook 'text-mode-hook 'writegood-mode)
+(add-hook 'markdown-mode-hook 'writegood-mode)
+(global-set-key (kbd "C-c g") 'writegood-mode)
 
 (global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
 (require 'setup-server)
+(put 'narrow-to-region 'disabled nil)
