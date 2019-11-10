@@ -325,6 +325,9 @@
   (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
   (add-hook 'sh-mode-hook 'flymake-mode))
 
+(with-eval-after-load 'terraform-mode
+  (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
+  (define-key terraform-mode-map (kbd "C-c b") 'terraform-format-buffer))
 
 (defun try-complete-abbrev (old)
   (if (expand-abbrev) t nil))
