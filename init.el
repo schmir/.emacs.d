@@ -75,6 +75,7 @@
    deft
    dockerfile-mode
    elpy
+   elixir-mode
    flycheck-rust
    flymake-shellcheck
    git-messenger
@@ -377,3 +378,4 @@
 (global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
 (require 'setup-server)
 (put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
