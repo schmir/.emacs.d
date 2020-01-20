@@ -297,7 +297,11 @@
 (add-hook 'java-mode-hook #'lsp)
 
 (require 'setup-clojure)
+
+(setq elpy-rpc-python-command "python3"
+      python-shell-interpreter "python3")
 (elpy-enable)
+
 ;; these conflict with setup-smartparens
 (define-key elpy-mode-map (kbd "<M-right>") nil)
 (define-key elpy-mode-map (kbd "<M-left>") nil)
