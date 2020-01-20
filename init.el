@@ -110,7 +110,8 @@
       '((swiper    . "melpa")
         (ivy       . "melpa")
         (lsp-mode  . "melpa")
-        (lsp-java  . "melpa")))
+        (lsp-java  . "melpa")
+        (elixir-mode . "melpa")))
 
 
 (defun abedra/packages-installed-p ()
