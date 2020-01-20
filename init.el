@@ -209,7 +209,10 @@
       '((t   . ivy--regex-ignore-order)))
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "<f5>") 'counsel-git-grep)
+
+;; (global-set-key (kbd "<f5>") 'counsel-git-grep)
+(require 'git-grep)
+(global-set-key (kbd "<f5>") 'git-grep)
 
 (global-set-key (kbd "C--") 'default-text-scale-decrease)
 (global-set-key (kbd "C-=") 'default-text-scale-increase)
