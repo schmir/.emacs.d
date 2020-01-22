@@ -82,6 +82,7 @@
    highlight-symbol
    htmlize
    ivy
+   js2-mode
    leuven-theme
    lsp-mode
    ;; lsp-ui
@@ -287,6 +288,11 @@
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+
+
 
 ;; aligns annotation to the right hand side
 ;; (setq company-tooltip-align-annotations t)
