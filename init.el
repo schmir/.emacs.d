@@ -220,6 +220,8 @@
 
 (progn
   (require 'highlight-symbol)
+  (defadvice highlight-symbol-count (around turn-off-symbol-counting activate)
+    (interactive))
   (global-set-key [(control f3)] #'highlight-symbol)
   (global-set-key [f3] #'highlight-symbol-next)
   (global-set-key [(shift f3)] #'highlight-symbol-prev)
