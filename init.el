@@ -282,6 +282,8 @@
 
 
 ;; --- setup typescript
+(setq tide-completion-detailed 't
+      tide-always-show-documentation 't)
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
