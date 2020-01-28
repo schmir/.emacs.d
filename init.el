@@ -157,7 +157,10 @@
 (setq line-move-visual nil) ;; what did they think ?
 
 (auto-compression-mode t)
+
+(require 'framemove)
 (windmove-default-keybindings)
+(setq framemove-hook-into-windmove t)
 
 (setq line-move-visual nil) ;; what did they think ?
 
