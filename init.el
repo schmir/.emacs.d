@@ -391,6 +391,7 @@
 
 ;; colorize compile mode output
 (add-hook 'compilation-filter-hook #'display-ansi-colors)
+(global-set-key (kbd "<f9>") 'projectile-compile-project)
 
 (add-hook 'text-mode-hook 'writegood-mode)
 (add-hook 'markdown-mode-hook 'writegood-mode)
