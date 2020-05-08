@@ -316,7 +316,8 @@
 (require 'setup-clojure)
 
 (setq elpy-rpc-python-command "python3"
-      python-shell-interpreter "python3")
+      python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i --simple-prompt")
 (elpy-enable)
 
 ;; these conflict with setup-smartparens
