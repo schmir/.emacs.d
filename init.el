@@ -181,6 +181,10 @@
 
 (setq smart-tab-using-hippie-expand 't)
 
+
+(setq tramp-default-method "ssh")
+(customize-set-variable 'tramp-syntax 'simplified)
+
 (require 'setup-cwc)
 (require 'setup-smartparens)
 
