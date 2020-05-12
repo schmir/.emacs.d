@@ -78,6 +78,7 @@
    elixir-mode
    flycheck-rust
    flymake-shellcheck
+   gitignore-mode
    git-messenger
    highlight-symbol
    htmlize
