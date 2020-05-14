@@ -78,7 +78,8 @@
    default-text-scale
    deft
    dockerfile-mode
-   elpy
+   anaconda-mode
+   company-anaconda
    elixir-mode
    flycheck-rust
    flymake-shellcheck
@@ -303,19 +304,11 @@
 
 (require 'setup-clojure)
 
-(setq elpy-rpc-python-command "python3"
-      python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i --simple-prompt")
-(elpy-enable)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
-;; these conflict with setup-smartparens
-(define-key elpy-mode-map (kbd "<M-right>") nil)
-(define-key elpy-mode-map (kbd "<M-left>") nil)
-(define-key elpy-mode-map (kbd "<M-up>") nil)
-(define-key elpy-mode-map (kbd "<M-down>") nil)
-
-
-(define-key python-mode-map (kbd "C-c b") 'schmir/black-buffer)
+(with-eval-after-load 'python
+  (define-key python-mode-map (kbd "C-c b") 'schmir/black-buffer))
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
