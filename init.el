@@ -66,6 +66,7 @@
  schmir/packages
  '(aggressive-indent
    bbdb
+   blacken
    boxquote
    cargo
    cider
@@ -237,13 +238,6 @@
       message-sendmail-envelope-from 'header      
       gnus-init-file (expand-file-name "~/.gnus-init.el"))
 
-(defun schmir/black-buffer ()
-  (interactive)
-  (save-excursion
-    (save-buffer)
-    (shell-command (format "black %s" (shell-quote-argument (buffer-file-name))))
-    (revert-buffer t t t)))
-
 (defun untabify-buffer ()
   (interactive)
   (save-excursion
@@ -304,11 +298,13 @@
 
 (require 'setup-clojure)
 
+(setq blacken-only-if-project-is-blackened t)
+(add-hook 'python-mode-hook 'blacken-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 (with-eval-after-load 'python
-  (define-key python-mode-map (kbd "C-c b") 'schmir/black-buffer))
+  (define-key python-mode-map (kbd "C-c b") 'blacken-buffer))
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs

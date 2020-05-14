@@ -4,6 +4,7 @@
  ("anaconda-mode" . "10299bd9ff38c4f0da1d892905d02ef828e7fdce")
  ("avy" . "509471bad0e8094b8639729ec39ca141fae7d4bd")
  ("bbdb" . "45529e315ba861f9df2914f9b88d2f7b991d5595")
+ ("blacken" . "a09f8e2564739792a1b86bc8a6ce41039db3bbf8")
  ("boxquote.el" . "7e47e0e2853bc1215739b2e28f260e9eed93b2c5")
  ("cargo.el" . "dc9ff35c2861d524ac4d65020c5320eec71acacf")
  ("cider" . "25fb15d915117310069254016391c9d76abcebcc")
