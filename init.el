@@ -31,21 +31,25 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
-;; fix elpa connection issues
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; bootstrap straight.el
+;; https://github.com/raxod502/straight.el/blob/develop/README.md#getting-started
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-
-(load "package")
-(package-initialize)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-(setq package-archive-priorities
-      '(("melpa-stable"     . 9)
-        ("melpa"            . 5)
-	("gnu"              . 1)))
-
+;;;;  Effectively replace use-package with straight-use-package
+;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 (global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
 (setq make-backup-files nil)
@@ -108,25 +112,8 @@
    yaml-mode
    zenburn-theme))
 
-(setq package-pinned-packages
-      '((swiper    . "melpa")
-        (ivy       . "melpa")
-        (lsp-mode  . "melpa")
-        (lsp-java  . "melpa")
-        (elixir-mode . "melpa")))
-
-
-(defun abedra/packages-installed-p ()
-  (loop for pkg in schmir/packages
-        when (not (package-installed-p pkg)) do (return nil)
-        finally (return t)))
-
-(unless (abedra/packages-installed-p)
-  (message "%s" "Refreshing package database...")
-  (package-refresh-contents)
-  (dolist (pkg schmir/packages)
-    (when (not (package-installed-p pkg))
-      (package-install pkg))))
+(dolist (pkg schmir/packages)
+  (straight-use-package pkg))
 
 ;; (load-theme 'spacemacs-dark)
 (load-theme 'leuven)
