@@ -302,10 +302,15 @@
 
 (require 'setup-clojure)
 
+(defun schmir/anaconda-eldoc-unless-tramp ()
+  (if (tramp-tramp-file-p (buffer-file-name))
+      (message "tramp file, disabling anaconda-eldoc-mode")
+      (anaconda-eldoc-mode t)))
+
 (setq blacken-only-if-project-is-blackened t)
 (add-hook 'python-mode-hook 'blacken-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'python-mode-hook 'schmir/anaconda-eldoc-unless-tramp)
 
 (with-eval-after-load 'python
   (define-key python-mode-map (kbd "C-c b") 'blacken-buffer))
