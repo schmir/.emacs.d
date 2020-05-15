@@ -311,6 +311,8 @@
 (add-hook 'python-mode-hook 'blacken-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'schmir/anaconda-eldoc-unless-tramp)
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-anaconda))
 
 (with-eval-after-load 'python
   (define-key python-mode-map (kbd "C-c b") 'blacken-buffer))
