@@ -1,4 +1,5 @@
-;; -*- mode: emacs-lisp; coding: utf-8 -*-
+;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
+;; on lexical-binding: https://nullprogram.com/blog/2016/12/22/
 
 ;; increase some internal limits related to elisp execution
 (setq load-prefer-newer t
@@ -51,6 +52,15 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(straight-use-package
+ '(gcmh
+   :type git
+   :host github
+   :repo "emacsmirror/gcmh"))
+(require 'gcmh)
+(gcmh-mode 1)
+
+
 (global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
 (setq make-backup-files nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -76,6 +86,7 @@
    company-solidity
    counsel
    counsel-projectile
+   crux
    default-text-scale
    deft
    dockerfile-mode
@@ -96,6 +107,7 @@
    lsp-java
    magit
    markdown-mode
+   markdown-preview-mode
    persistent-scratch
    projectile
    racer
@@ -109,6 +121,7 @@
    swiper
    terraform-mode
    tide
+   tldr
    which-key
    writegood-mode
    yaml-mode
