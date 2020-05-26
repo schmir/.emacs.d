@@ -327,8 +327,16 @@
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-anaconda))
 
+(defun with-project-root-as-default-directory
+    (orig-fun &rest args)
+  "Run orig-fun with default-directory set to (projectile-project-root)"
+  (let ((default-directory (or (projectile-project-root)
+                               default-directory)))
+    (apply orig-fun args)))
+
 (with-eval-after-load 'python
-  (define-key python-mode-map (kbd "C-c b") 'blacken-buffer))
+  (define-key python-mode-map (kbd "C-c b") 'blacken-buffer)
+  (advice-add 'run-python :around #'with-project-root-as-default-directory))
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
