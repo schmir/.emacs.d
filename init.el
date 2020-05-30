@@ -315,6 +315,10 @@
 
 (require 'setup-clojure)
 
+(straight-use-package
+ '(zimports :host github :repo "schmir/zimports.el"
+            :branch "master"))
+
 (defun schmir/anaconda-eldoc-unless-tramp ()
   (if (tramp-tramp-file-p (buffer-file-name))
       (message "tramp file, disabling anaconda-eldoc-mode")
