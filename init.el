@@ -313,6 +313,8 @@
 (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
 
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+
 (require 'setup-clojure)
 
 (straight-use-package
