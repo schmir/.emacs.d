@@ -324,7 +324,7 @@
 (defun schmir/anaconda-eldoc-unless-tramp ()
   (if (tramp-tramp-file-p (buffer-file-name))
       (message "tramp file, disabling anaconda-eldoc-mode")
-      (anaconda-eldoc-mode t)))
+    (anaconda-eldoc-mode t)))
 
 (setq blacken-only-if-project-is-blackened t)
 (add-hook 'python-mode-hook 'blacken-mode)
