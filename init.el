@@ -97,6 +97,7 @@
    flymake-shellcheck
    gitignore-mode
    git-messenger
+   go-mode
    highlight-symbol
    htmlize
    ivy
