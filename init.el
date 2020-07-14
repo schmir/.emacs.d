@@ -104,8 +104,9 @@
    js2-mode
    leuven-theme
    lsp-mode
-   ;; lsp-ui
+   lsp-ui
    lsp-java
+   company-lsp
    magit
    markdown-mode
    markdown-preview-mode
@@ -344,6 +345,8 @@
 (with-eval-after-load 'python
   (define-key python-mode-map (kbd "C-c b") 'blacken-buffer)
   (advice-add 'run-python :around #'with-project-root-as-default-directory))
+
+(add-hook 'go-mode-hook #'lsp-deferred)
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
