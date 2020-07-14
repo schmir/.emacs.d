@@ -198,7 +198,7 @@
 
 
 (setq tramp-default-method "ssh")
-(customize-set-variable 'tramp-syntax 'simplified)
+;; (customize-set-variable 'tramp-syntax 'simplified)
 
 (require 'setup-cwc)
 (require 'setup-smartparens)
