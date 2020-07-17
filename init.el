@@ -412,6 +412,7 @@
 ;; colorize compile mode output
 (add-hook 'compilation-filter-hook #'display-ansi-colors)
 (global-set-key (kbd "<f9>") 'projectile-compile-project)
+(setq compilation-scroll-output 'first-error)  ;; scroll, but stop at first error
 
 (add-hook 'text-mode-hook 'writegood-mode)
 (add-hook 'markdown-mode-hook 'writegood-mode)
