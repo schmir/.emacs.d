@@ -119,6 +119,7 @@
    smex
    solidity-flycheck
    solidity-mode
+   prettier-js
    spacemacs-theme
    swiper
    terraform-mode
