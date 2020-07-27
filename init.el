@@ -328,7 +328,8 @@
   (if (tramp-tramp-file-p (buffer-file-name))
       (message "tramp file, disabling anaconda-eldoc-mode")
     (anaconda-eldoc-mode t)))
-
+(setq pythonic-interpreter "python3")
+(setq python-shell-interpreter "python3")
 (setq blacken-only-if-project-is-blackened t)
 (add-hook 'python-mode-hook 'blacken-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
