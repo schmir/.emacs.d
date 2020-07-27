@@ -1,7 +1,7 @@
 (("a.el" . "18966975db7110d0aac726be95b593e2fc3d44ed")
  ("ace-window" . "7003c88cd9cad58dc35c7cd13ebc61c355fb5be7")
  ("aggressive-indent-mode" . "12a64b4e5c1a1e124baa74336738b6ae1972607f")
- ("anaconda-mode" . "e19e9d78b5633306b29405ed1cccdde7ebc9e69f")
+ ("anaconda-mode" . "8c44a3d84c83f12b11d200c4214055a0b9756556")
  ("avy" . "509471bad0e8094b8639729ec39ca141fae7d4bd")
  ("bbdb" . "45529e315ba861f9df2914f9b88d2f7b991d5595")
  ("blacken" . "a09f8e2564739792a1b86bc8a6ce41039db3bbf8")

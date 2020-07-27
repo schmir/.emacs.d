@@ -72,6 +72,11 @@
 (show-paren-mode t)
 (require 'cl)
 
+(straight-use-package
+ '(anaconda-mode
+   :host github :repo "schmir/anaconda-mode"
+   :branch "prevent-stdlib-conflicts"))
+
 (setq
  schmir/packages
  '(aggressive-indent
@@ -90,7 +95,6 @@
    default-text-scale
    deft
    dockerfile-mode
-   anaconda-mode
    company-anaconda
    elixir-mode
    flycheck-rust
