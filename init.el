@@ -353,7 +353,11 @@
   (define-key python-mode-map (kbd "C-c b") 'blacken-buffer)
   (advice-add 'run-python :around #'with-project-root-as-default-directory))
 
-(add-hook 'go-mode-hook #'lsp-deferred)
+(defun setup-go-mode ()
+  (lsp-deferred)
+  (add-hook 'before-save-hook 'lsp-format-buffer))
+
+(add-hook 'go-mode-hook #'setup-go-mode)
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
