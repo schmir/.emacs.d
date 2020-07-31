@@ -193,7 +193,7 @@
       enable-recursive-minibuffers t)
 
 (setq company-idle-delay 0.8
-      company-minimum-prefix-length 2)
+      company-minimum-prefix-length 0)
 (add-hook 'after-init-hook 'global-company-mode)
 
 (persistent-scratch-setup-default)
