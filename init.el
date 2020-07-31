@@ -107,6 +107,7 @@
    ivy
    js2-mode
    leuven-theme
+   lua-mode
    lsp-mode
    lsp-ui
    lsp-java
