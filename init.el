@@ -356,7 +356,9 @@
 (defun setup-go-mode ()
   (lsp-deferred)
   (setq fill-column 99)
-  (add-hook 'before-save-hook 'lsp-format-buffer))
+  ;;(add-hook 'before-save-hook 'lsp-format-buffer)
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook #'gofmt-before-save))
 
 (add-hook 'go-mode-hook #'setup-go-mode)
 
