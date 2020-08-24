@@ -194,7 +194,7 @@
 
 (setq company-idle-delay 0.8
       company-minimum-prefix-length 0)
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode)
 
 (persistent-scratch-setup-default)
 (require 'which-key)
@@ -358,6 +358,7 @@
   (setq fill-column 99)
   ;;(add-hook 'before-save-hook 'lsp-format-buffer)
   (setq gofmt-command "goimports")
+  (company-mode)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (add-hook 'go-mode-hook #'setup-go-mode)
