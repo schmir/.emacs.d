@@ -357,7 +357,7 @@
   (lsp-deferred)
   (setq fill-column 99)
   ;;(add-hook 'before-save-hook 'lsp-format-buffer)
-  (setq gofmt-command "goimports")
+  (setq gofmt-command "gofumports")
   (company-mode)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
