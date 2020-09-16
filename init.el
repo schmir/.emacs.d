@@ -361,6 +361,11 @@
   (company-mode)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
+(add-to-list 'safe-local-variable-values '(gofmt-command . "gofumports"))
+(add-to-list 'safe-local-variable-values '(gofmt-command . "gofmt"))
+(add-to-list 'safe-local-variable-values '(gofmt-command . "goimports"))
+
+
 (add-hook 'go-mode-hook #'setup-go-mode)
 
 (defun schmir/solidity-setup ()
