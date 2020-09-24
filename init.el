@@ -117,6 +117,7 @@
    markdown-preview-mode
    persistent-scratch
    projectile
+   protobuf-mode
    racer
    rust-mode
    shell-pop
@@ -325,6 +326,15 @@
 
 (require 'setup-clojure)
 
+(defconst my-protobuf-style
+  '((c-basic-offset . 8)
+    (indent-tabs-mode . nil)))
+
+(defun setup-protobuf ()
+  (c-add-style "my-style" my-protobuf-style t))
+
+(add-hook 'protobuf-mode-hook #'setup-protobuf)
+
 (straight-use-package
  '(zimports :host github :repo "schmir/zimports.el"
             :branch "master"))
@@ -443,4 +453,6 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
 (mouse-avoidance-mode 'banish)
+(setq make-pointer-invisible nil)
