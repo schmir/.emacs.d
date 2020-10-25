@@ -115,6 +115,8 @@
    magit
    markdown-mode
    markdown-preview-mode
+   modus-operandi-theme
+   modus-vivendi-theme
    persistent-scratch
    projectile
    protobuf-mode
@@ -140,8 +142,8 @@
   (straight-use-package pkg))
 
 ;; (load-theme 'spacemacs-dark)
-(load-theme 'leuven)
-
+;;(load-theme 'leuven)
+(load-theme 'modus-operandi)
 ;; when on a tab, make the cursor the tab length
 (setq-default x-stretch-cursor t)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
