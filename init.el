@@ -456,5 +456,8 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-(mouse-avoidance-mode 'banish)
+;; mouse avoidance mode is buggy, see
+;; https://groups.google.com/g/gnu.emacs.help/c/W_1VhwJrelE
+;; (mouse-avoidance-mode 'banish)
+
 (setq make-pointer-invisible nil)
