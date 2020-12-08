@@ -82,7 +82,7 @@
  '(aggressive-indent
    bbdb
    blacken
-   boxquote
+   ;; boxquote
    cargo
    cider
    clojure-mode
@@ -140,6 +140,11 @@
 
 (dolist (pkg schmir/packages)
   (straight-use-package pkg))
+
+(straight-use-package
+ '(boxquote :host github :repo "davep/boxquote.el"
+            :branch "main"))
+
 
 ;; (load-theme 'spacemacs-dark)
 ;;(load-theme 'leuven)
