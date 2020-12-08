@@ -125,6 +125,7 @@
    rust-mode
    shell-pop
    smartparens
+   smartscan
    smex
    solidity-flycheck
    solidity-mode
@@ -254,6 +255,8 @@
   (global-set-key [(shift f3)] #'highlight-symbol-prev)
   (global-set-key [(meta f3)] #'highlight-symbol-query-replace)
   (add-hook 'prog-mode-hook #'highlight-symbol-mode))
+
+(add-hook 'prog-mode-hook #'smartscan-mode)
 
 (defalias 'br 'boxquote-region)
 (defalias 'cc 'cider-connect)
