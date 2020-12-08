@@ -96,6 +96,7 @@
    deft
    dockerfile-mode
    company-anaconda
+   easy-kill
    elixir-mode
    flycheck-rust
    flymake-shellcheck
@@ -144,7 +145,7 @@
 (straight-use-package
  '(boxquote :host github :repo "davep/boxquote.el"
             :branch "main"))
-
+(global-set-key [remap kill-ring-save] 'easy-kill)
 
 ;; (load-theme 'spacemacs-dark)
 ;;(load-theme 'leuven)
