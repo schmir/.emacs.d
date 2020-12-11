@@ -103,6 +103,7 @@
    gitignore-mode
    git-messenger
    go-mode
+   golden-ratio
    highlight-symbol
    htmlize
    ivy
