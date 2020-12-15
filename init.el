@@ -90,6 +90,7 @@
    clojure-mode-extra-font-locking
    company
    company-solidity
+   consult
    crux
    default-text-scale
    deft
@@ -145,10 +146,14 @@
   (straight-use-package pkg))
 
 (straight-use-package
+ '(marginalia :host github :repo "minad/marginalia"
+              :branch "main"))
+
+(straight-use-package
  '(boxquote :host github :repo "davep/boxquote.el"
             :branch "main"))
-(global-set-key [remap kill-ring-save] 'easy-kill)
 
+(global-set-key [remap kill-ring-save] 'easy-kill)
 ;; (load-theme 'spacemacs-dark)
 ;;(load-theme 'leuven)
 (load-theme 'modus-operandi)
@@ -225,6 +230,17 @@
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
+
+(marginalia-mode +1)
+
+;; Prefer richer, more heavy, annotations over the lighter default variant.
+;; E.g. M-x will show the documentation string additional to the keybinding.
+;; By default only the keybinding is shown as annotation.
+;; Note that there is the command `marginalia-cycle-annotators` to
+;; switch between the annotators.
+(setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
+
+(global-set-key [remap switch-to-buffer] 'consult-buffer)
 (selectrum-mode +1)
 (selectrum-prescient-mode +1)
 (prescient-persist-mode +1)
