@@ -77,6 +77,7 @@
    :host github :repo "schmir/anaconda-mode"
    :branch "prevent-stdlib-conflicts"))
 
+(setq lsp-keymap-prefix "s-x")
 (setq
  schmir/packages
  '(aggressive-indent
@@ -334,7 +335,7 @@
 ;; (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
-
+(add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
 
 (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
