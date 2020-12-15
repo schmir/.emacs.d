@@ -84,13 +84,12 @@
    blacken
    ;; boxquote
    cargo
+   ctrlf
    cider
    clojure-mode
    clojure-mode-extra-font-locking
    company
    company-solidity
-   counsel
-   counsel-projectile
    crux
    default-text-scale
    deft
@@ -106,7 +105,6 @@
    golden-ratio
    highlight-symbol
    htmlize
-   ivy
    js2-mode
    leuven-theme
    lua-mode
@@ -125,6 +123,8 @@
    racer
    rust-mode
    shell-pop
+   selectrum
+   selectrum-prescient
    smartparens
    smartscan
    smex
@@ -220,27 +220,16 @@
 (require 'setup-cwc)
 (require 'setup-smartparens)
 
-(counsel-projectile-mode)
+(require 'projectile)
+(setq-default projectile-completion-system 'default)
+(projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-(ivy-mode 1)
-;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-(setq ivy-use-virtual-buffers t
-      ivy-count-format "%d/%d ")
+(selectrum-mode +1)
+(selectrum-prescient-mode +1)
+(prescient-persist-mode +1)
+(ctrlf-mode +1)
 
-(setq ivy-use-virtual-buffers t)
-;; number of result lines to display
-(setq ivy-height 10)
-;; no regexp by default
-(setq ivy-initial-inputs-alist nil)
-;; configure regexp engine.
-(setq ivy-re-builders-alist
-      ;; allow input not in order
-      '((t   . ivy--regex-ignore-order)))
-
-(global-set-key (kbd "M-x") 'counsel-M-x)
-
-;; (global-set-key (kbd "<f5>") 'counsel-git-grep)
 (require 'git-grep)
 (global-set-key (kbd "<f5>") 'git-grep)
 
