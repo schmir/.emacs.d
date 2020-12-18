@@ -108,6 +108,7 @@
    highlight-symbol
    htmlize
    js2-mode
+   leo
    leuven-theme
    lua-mode
    lsp-mode
