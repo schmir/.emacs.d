@@ -83,7 +83,7 @@
  '(aggressive-indent
    bbdb
    blacken
-   ;; boxquote
+   boxquote
    cargo
    ctrlf
    cider
@@ -115,6 +115,7 @@
    lsp-java
    company-lsp
    magit
+   marginalia
    markdown-mode
    markdown-preview-mode
    modus-operandi-theme
@@ -146,13 +147,6 @@
 (dolist (pkg schmir/packages)
   (straight-use-package pkg))
 
-(straight-use-package
- '(marginalia :host github :repo "minad/marginalia"
-              :branch "main"))
-
-(straight-use-package
- '(boxquote :host github :repo "davep/boxquote.el"
-            :branch "main"))
 
 (global-set-key [remap kill-ring-save] 'easy-kill)
 ;; (load-theme 'spacemacs-dark)
