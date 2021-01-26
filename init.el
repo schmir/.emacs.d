@@ -131,12 +131,12 @@
    selectrum-prescient
    smartparens
    smartscan
-   smex
+   ;; smex
    solidity-flycheck
    solidity-mode
    prettier-js
    spacemacs-theme
-   swiper
+   ;; swiper
    terraform-mode
    tide
    tldr
@@ -432,7 +432,7 @@
         try-complete-lisp-symbol))
 
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
-(global-set-key (kbd "C-S-s") 'swiper-isearch)
+;; (global-set-key (kbd "C-S-s") 'swiper-isearch)
 (global-set-key (kbd "C-c s") 'magit-status)
 
 ;; colorize pre-commit output
