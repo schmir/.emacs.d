@@ -13,6 +13,10 @@
 .DS_Store
 .ropeproject
 ID
+/.dap-breakpoints
+/smex-items
+/eln-cache/
+/var/
 /.cask/
 /elpa/
 /auto-save-list/*
