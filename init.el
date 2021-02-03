@@ -269,13 +269,15 @@
 
 (setq send-mail-function 'message-send-mail-with-sendmail
       message-send-mail-function 'message-send-mail-with-sendmail
-
-      ;; we substitute sendmail with msmtp
-      sendmail-program "/usr/bin/msmtp"
       mail-specify-envelope-from t
       mail-envelope-from 'header
       message-sendmail-envelope-from 'header      
       gnus-init-file (expand-file-name "~/.gnus-init.el"))
+
+;; we substitute sendmail with msmtp if it's installed
+(let ((msmtp (executable-find "msmtp")))
+  (when msmtp
+    (setq sendmail-program msmtp)))
 
 (defun untabify-buffer ()
   (interactive)
