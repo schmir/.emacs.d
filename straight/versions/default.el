@@ -28,6 +28,7 @@
  ("emacs-htmlize" . "49205105898ba8993b5253beec55d8bddd820a70")
  ("emacs-leo" . "b9d8f6705dcec4fcefd4209c18a043c355988c3a")
  ("emacs-leuven-theme" . "898c1426c29abbb1c86a715b1323669e30d4699e")
+ ("emacs-python-pytest" . "3fadf1f8bc363d57c54eedd1bf98e6d9db9f0a62")
  ("emacs-racer" . "f17f9d73c74ac86001a19d08735e6b966d6c5609")
  ("emacs-request" . "0183da84cb45eb94da996cd2eab714ef0d7504cc")
  ("emacs-solidity" . "b4fd719715be098921b6cbfb2ff9da31f3bd0d05")

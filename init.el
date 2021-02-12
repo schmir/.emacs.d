@@ -124,6 +124,7 @@
    persistent-scratch
    projectile
    protobuf-mode
+   python-pytest
    racer
    rust-mode
    shell-pop
