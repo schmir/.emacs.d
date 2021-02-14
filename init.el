@@ -1,22 +1,6 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 ;; on lexical-binding: https://nullprogram.com/blog/2016/12/22/
 
-;; increase some internal limits related to elisp execution
-(setq load-prefer-newer t
-      gc-cons-threshold 20000000
-      max-specpdl-size 5000
-      max-lisp-eval-depth 6000)
-
-;; get rid of visual clutter
-(setq inhibit-splash-screen t
-      initial-scratch-message nil)
-
-(if (fboundp 'menu-bar-mode)
-    (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
 
 ;; prevent emacs from asking for coding-system...
 (set-language-environment "utf-8")
@@ -31,35 +15,6 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (if (file-exists-p custom-file)
     (load custom-file))
-
-;; bootstrap straight.el
-;; https://github.com/raxod502/straight.el/blob/develop/README.md#getting-started
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;;;;  Effectively replace use-package with straight-use-package
-;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
-(straight-use-package
- '(gcmh
-   :type git
-   :host github
-   :repo "emacsmirror/gcmh"))
-(require 'gcmh)
-(gcmh-mode 1)
-
 
 (global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
 (setq make-backup-files nil)
@@ -151,9 +106,6 @@
 
 
 (global-set-key [remap kill-ring-save] 'easy-kill)
-;; (load-theme 'spacemacs-dark)
-;;(load-theme 'leuven)
-(load-theme 'modus-operandi)
 ;; when on a tab, make the cursor the tab length
 (setq-default x-stretch-cursor t)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -475,3 +427,11 @@
 ;; (mouse-avoidance-mode 'banish)
 
 (setq make-pointer-invisible nil)
+
+(straight-use-package
+ '(gcmh
+   :type git
+   :host github
+   :repo "emacsmirror/gcmh"))
+(require 'gcmh)
+(gcmh-mode 1)
