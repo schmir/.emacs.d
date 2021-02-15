@@ -56,7 +56,7 @@
    highlight-symbol
    htmlize
    leo
-   leuven-theme
+
    lua-mode
    lsp-mode
    lsp-ui
@@ -66,8 +66,6 @@
    marginalia
    markdown-mode
    markdown-preview-mode
-   modus-operandi-theme
-   modus-vivendi-theme
    persistent-scratch
    projectile
    python-pytest
@@ -82,14 +80,12 @@
    solidity-flycheck
    solidity-mode
    prettier-js
-   spacemacs-theme
    ;; swiper
    terraform-mode
    tide
    tldr
    which-key
-   yaml-mode
-   zenburn-theme))
+   yaml-mode))
 
 (dolist (pkg schmir/packages)
   (straight-use-package pkg))

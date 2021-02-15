@@ -48,7 +48,13 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-(straight-use-package 'modus-operandi-theme)
+(dolist (pkg '(leuven-theme
+               modus-operandi-theme
+               modus-vivendi-theme
+               spacemacs-theme
+               zenburn-theme))
+  (straight-use-package pkg))
+
 (load-theme 'modus-operandi t)
 
 (provide 'early-init)
