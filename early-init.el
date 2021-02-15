@@ -55,6 +55,6 @@
                zenburn-theme))
   (straight-use-package pkg))
 
-(load-theme 'modus-operandi t)
+(load-theme 'leuven-dark t)
 
 (provide 'early-init)
