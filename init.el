@@ -37,9 +37,6 @@
    boxquote
    cargo
    ctrlf
-   cider
-   clojure-mode
-   clojure-mode-extra-font-locking
    company
    company-solidity
    consult
