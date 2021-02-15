@@ -54,7 +54,6 @@
    flymake-shellcheck
    gitignore-mode
    git-messenger
-   go-mode
    golden-ratio
    highlight-symbol
    htmlize
@@ -284,12 +283,14 @@
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
 
-(require 'lsp-java)
+(use-package lsp-java :defer t)
+;; (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 (require 'setup-clojure)
+(require 'setup-go)
 
 (defconst my-protobuf-style
   '((c-basic-offset . 8)
@@ -300,9 +301,7 @@
 
 (add-hook 'protobuf-mode-hook #'setup-protobuf)
 
-(straight-use-package
- '(zimports :host github :repo "schmir/zimports.el"
-            :branch "master"))
+(use-package zimports :defer t)
 
 (defun schmir/anaconda-eldoc-unless-tramp ()
   (if (tramp-tramp-file-p (buffer-file-name))
@@ -328,20 +327,9 @@
   (define-key python-mode-map (kbd "C-c b") 'blacken-buffer)
   (advice-add 'run-python :around #'with-project-root-as-default-directory))
 
-(defun setup-go-mode ()
-  (lsp-deferred)
-  (setq fill-column 99)
-  ;;(add-hook 'before-save-hook 'lsp-format-buffer)
-  (setq gofmt-command "gofumports")
-  (company-mode)
-  (add-hook 'before-save-hook #'gofmt-before-save))
-
-(add-to-list 'safe-local-variable-values '(gofmt-command . "gofumports"))
-(add-to-list 'safe-local-variable-values '(gofmt-command . "gofmt"))
-(add-to-list 'safe-local-variable-values '(gofmt-command . "goimports"))
 
 
-(add-hook 'go-mode-hook #'setup-go-mode)
+
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
