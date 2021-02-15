@@ -31,9 +31,7 @@
 (setq
  schmir/packages
  '(aggressive-indent
-   anaconda-mode
    bbdb
-   blacken
    boxquote
    cargo
    ctrlf
@@ -43,7 +41,6 @@
    crux
    default-text-scale
    dockerfile-mode
-   company-anaconda
    easy-kill
    elixir-mode
    flycheck-rust
@@ -65,7 +62,6 @@
    markdown-preview-mode
    persistent-scratch
    projectile
-   python-pytest
    racer
    rust-mode
    shell-pop
@@ -285,7 +281,7 @@
 
 (require 'setup-clojure)
 (require 'setup-go)
-
+(require 'setup-python)
 
 (use-package protobuf-mode
   :defer t
@@ -300,20 +296,7 @@
 
     (add-hook 'protobuf-mode-hook #'setup-protobuf)))
 
-(use-package zimports :defer t)
 
-(defun schmir/anaconda-eldoc-unless-tramp ()
-  (if (tramp-tramp-file-p (buffer-file-name))
-      (message "tramp file, disabling anaconda-eldoc-mode")
-    (anaconda-eldoc-mode t)))
-(setq pythonic-interpreter "python3")
-(setq python-shell-interpreter "python3")
-(setq blacken-only-if-project-is-blackened t)
-(add-hook 'python-mode-hook 'blacken-mode)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'schmir/anaconda-eldoc-unless-tramp)
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-anaconda))
 
 (defun with-project-root-as-default-directory
     (orig-fun &rest args)
@@ -321,14 +304,6 @@
   (let ((default-directory (or (projectile-project-root)
                                default-directory)))
     (apply orig-fun args)))
-
-(with-eval-after-load 'python
-  (define-key python-mode-map (kbd "C-c b") 'blacken-buffer)
-  (advice-add 'run-python :around #'with-project-root-as-default-directory))
-
-
-
-
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
