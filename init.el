@@ -88,7 +88,6 @@
    tide
    tldr
    which-key
-   writegood-mode
    yaml-mode
    zenburn-theme))
 
@@ -103,11 +102,14 @@
 
 ;; place cursor on same buffer position between editing sessions
 (setq-default save-place-file (expand-file-name "places" user-emacs-directory))
-(require 'saveplace)
-(save-place-mode)
 
-(global-set-key (kbd "C-t") 'shell-pop)
-(global-set-key (kbd "C-z") 'undo)
+(use-package saveplace
+  :config (save-place-mode))
+
+
+(global-set-key (kbd "C-t") #'shell-pop)
+(global-set-key (kbd "C-z") #'undo)
+
 (use-package git-messenger
   :bind ("C-x v p" . git-messenger:popup-message))
 
@@ -344,7 +346,7 @@
 (use-package solidity-mode
   :defer t
   :config
-  (add-hook 'solidity-mode-hook 'schmir/solidity-setup))
+  (add-hook 'solidity-mode-hook #'schmir/solidity-setup))
 
 (defun schmir/shfmt-buffer ()
   (interactive)
@@ -353,10 +355,14 @@
     (shell-command (format "shfmt -w -i 2 %s" (shell-quote-argument (buffer-file-name))))
     (revert-buffer t t t)))
 
-(with-eval-after-load 'sh-script
-  (define-key sh-mode-map (kbd "C-c b") 'schmir/shfmt-buffer)
-  (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
-  (add-hook 'sh-mode-hook 'flymake-mode))
+(use-package sh-script
+  :config
+  (progn
+    (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+    (add-hook 'sh-mode-hook 'flymake-mode))
+  :bind (:map sh-mode-map
+              ("C-c b" . #'schmir/shfmt-buffer)))
+
 
 (with-eval-after-load 'terraform-mode
   (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
@@ -365,23 +371,23 @@
 (defun try-complete-abbrev (old)
   (if (expand-abbrev) t nil))
 
-(setq hippie-expand-try-functions-list
-      '(try-complete-abbrev
-        try-expand-dabbrev-visible
-        try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
-
-(global-set-key (kbd "<C-tab>") 'hippie-expand)
-;; (global-set-key (kbd "C-S-s") 'swiper-isearch)
-(global-set-key (kbd "C-c s") 'magit-status)
+(use-package hippie-exp
+  :ensure f
+  :init
+  (setq hippie-expand-try-functions-list
+        '(try-complete-abbrev
+          try-expand-dabbrev-visible
+          try-expand-dabbrev
+          try-expand-dabbrev-all-buffers
+          try-expand-dabbrev-from-kill
+          try-complete-file-name-partially
+          try-complete-file-name
+          try-expand-all-abbrevs
+          try-expand-list
+          try-expand-line
+          try-complete-lisp-symbol-partially
+          try-complete-lisp-symbol))
+  :bind (("<C-tab>" . #'hippie-expand)))
 
 ;; colorize pre-commit output
 (require 'ansi-color)
@@ -397,17 +403,24 @@
   (with-current-buffer (process-buffer proc)
     (display-ansi-colors)))
 
-(with-eval-after-load 'magit
-  (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
+(use-package magit :defer t
+  :bind ("C-c s" . #'magit-status)
+  :config (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
+
 
 ;; colorize compile mode output
 (add-hook 'compilation-filter-hook #'display-ansi-colors)
 (global-set-key (kbd "<f9>") 'projectile-compile-project)
 (setq compilation-scroll-output 'first-error)  ;; scroll, but stop at first error
 
-(add-hook 'text-mode-hook 'writegood-mode)
-(add-hook 'markdown-mode-hook 'writegood-mode)
-(global-set-key (kbd "C-c g") 'writegood-mode)
+(use-package writegood-mode
+  :defer t
+  :init
+  (progn
+    (add-hook 'text-mode-hook #'writegood-mode)
+    (add-hook 'markdown-mode-hook #'writegood-mode))
+  :bind (("C-c g" . #'writegood-mode)))
+
 
 (global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
 
