@@ -37,7 +37,6 @@
    company-solidity
    consult
    crux
-   default-text-scale
    dockerfile-mode
    easy-kill
    elixir-mode
@@ -48,30 +47,23 @@
    highlight-symbol
    htmlize
    leo
-
    lua-mode
    magit
    marginalia
    markdown-mode
    markdown-preview-mode
-   persistent-scratch
    projectile
    racer
    rust-mode
-   shell-pop
    selectrum
    selectrum-prescient
-   smartparens
    smartscan
-   ;; smex
    solidity-flycheck
    solidity-mode
    prettier-js
-   ;; swiper
    terraform-mode
    tide
    tldr
-   which-key
    yaml-mode))
 
 (dolist (pkg schmir/packages)
@@ -84,13 +76,15 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; place cursor on same buffer position between editing sessions
-(setq-default save-place-file (expand-file-name "places" user-emacs-directory))
-
 (use-package saveplace
-  :config (save-place-mode))
+  :init
+  (setq-default save-place-file (expand-file-name "places" user-emacs-directory))
+  :config
+  (save-place-mode))
 
+(use-package shell-pop
+  :bind ("C-t" . #'shell-pop))
 
-(global-set-key (kbd "C-t") #'shell-pop)
 (global-set-key (kbd "C-z") #'undo)
 
 (use-package git-messenger
@@ -140,11 +134,18 @@
         company-minimum-prefix-length 0))
 ;; (add-hook 'after-init-hook 'global-company-mode)
 
-(persistent-scratch-setup-default)
-(require 'which-key)
-(which-key-mode)
+(use-package persistent-scratch
+  :demand t
+  :config
+  (persistent-scratch-setup-default))
 
-(setq smart-tab-using-hippie-expand 't)
+(use-package which-key
+  :demand t
+  :config
+  (which-key-mode))
+
+
+;; (setq smart-tab-using-hippie-expand 't)
 
 
 (setq tramp-default-method "ssh")
@@ -174,21 +175,27 @@
 (prescient-persist-mode +1)
 (ctrlf-mode +1)
 
-(require 'git-grep)
-(global-set-key (kbd "<f5>") 'git-grep)
+(use-package
+  git-grep
+  :bind
+  ("<f5>" . #'git-grep))
 
-(global-set-key (kbd "C--") 'default-text-scale-decrease)
-(global-set-key (kbd "C-=") 'default-text-scale-increase)
+(use-package default-text-scale
+  :bind
+  ("C--" . #'default-text-scale-decrease)
+  ("C-=" . #'default-text-scale-increase))
 
-(progn
-  (require 'highlight-symbol)
+(use-package highlight-symbol
+  :init
+  (add-hook 'prog-mode-hook #'highlight-symbol-mode)
+  :config
   (defadvice highlight-symbol-count (around turn-off-symbol-counting activate)
     (interactive))
-  (global-set-key [(control f3)] #'highlight-symbol)
-  (global-set-key [f3] #'highlight-symbol-next)
-  (global-set-key [(shift f3)] #'highlight-symbol-prev)
-  (global-set-key [(meta f3)] #'highlight-symbol-query-replace)
-  (add-hook 'prog-mode-hook #'highlight-symbol-mode))
+  :bind
+  ([(control f3)] . #'highlight-symbol)
+  ([f3] . #'highlight-symbol-next)
+  ([(shift f3)] . #'highlight-symbol-prev)
+  ([(meta f3)] . #'highlight-symbol-query-replace))
 
 (add-hook 'prog-mode-hook #'smartscan-mode)
 
