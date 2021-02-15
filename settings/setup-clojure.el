@@ -1,11 +1,17 @@
-(require 'clojure-mode)
-(require 'clojure-mode-extra-font-locking)
+(use-package clojure-mode-extra-font-locking
+  :defer t)
 
-(message "configuring clojure-mode")
-(define-clojure-indent
-  (event-handler 'defun))
+(use-package clojure-mode
+  :defer t
+  :config
+  (progn
+    (require 'clojure-mode-extra-font-locking)
+    (define-clojure-indent
+      (event-handler 'defun))
+    (put-clojure-indent 'cond #'schmir/indent-cond))
+  :bind (:map clojure-mode-map
+              ("<f10>" . #'cider-connect)))
 
-(define-key clojure-mode-map (kbd "<f10>") #'cider-connect)
 
 ;; fix indentation of cond expressions
 ;; see https://github.com/clojure-emacs/clojure-mode/issues/337
@@ -26,26 +32,34 @@
       ;; `scan-error'. In that case, we should return the
       ;; indentation as if there were an extra sexp at point.
       (scan-error (cl-incf pos)))
-    (+ base-col (if (evenp pos) 4 2))))
-(put-clojure-indent 'cond #'schmir/indent-cond)
+    (+ base-col (if (cl-evenp pos) 4 2))))
 
-(with-eval-after-load 'cider
-  (defun schmir/cider-load-buffer-in-repl ()
-    (interactive)
-    (cider-load-buffer)
-    (cider-repl-set-ns (cider-current-ns))
-    (cider-switch-to-repl-buffer))
+(defun schmir/cider-load-buffer-in-repl ()
+  (interactive)
+  (cider-load-buffer)
+  (cider-repl-set-ns (cider-current-ns))
+  (cider-switch-to-repl-buffer))
 
-  (define-key cider-mode-map '[f10] #'schmir/cider-load-buffer-in-repl)
+(use-package cider
+  :defer t
+  :bind
+  (
+   :map cider-mode-map
+   ("<f10>" . #'schmir/cider-load-buffer-in-repl)
+   ("H-a" . #'helm-cider-apropos)
+   ("H-h" . #'cider-doc)
 
-  (define-key cider-repl-mode-map '[f10] 'delete-window)
-  (define-key cider-repl-mode-map (kbd "C-c C-w") 'cider-eval-last-sexp-and-replace)
-  (define-key cider-stacktrace-mode-map '[f10] 'cider-popup-buffer-quit-function)
-  (define-key cider-docview-mode-map '[f10] 'cider-popup-buffer-quit-function)
-  (define-key cider-docview-mode-map (kbd "H-h") 'cider-popup-buffer-quit-function)
-  (define-key cider-mode-map (kbd "H-a") 'helm-cider-apropos)
-  (define-key cider-repl-mode-map (kbd "H-a") 'helm-cider-apropos)
-  (define-key cider-mode-map (kbd "H-h") 'cider-doc)
-  (define-key cider-repl-mode-map (kbd "H-h") 'cider-doc))
+   :map cider-repl-mode-map
+   ("<f10>" . #'delete-window)
+   ("C-c C-w" . #'cider-eval-last-sexp-and-replace)
+   ("H-a" . #'helm-cider-apropos)
+   ("H-h" . #'cider-doc)
+
+   :map cider-docview-mode-map
+   ("<f10>" . #'cider-popup-buffer-quit-function)
+   ("H-h" . #'cider-popup-buffer-quit-function)
+
+   :map cider-stacktrace-mode-map
+   ("<f10>" . #'cider-popup-buffer-quit-function)))
 
 (provide 'setup-clojure)

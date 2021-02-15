@@ -25,17 +25,13 @@
       use-dialog-box nil
       visible-bell t)
 (show-paren-mode t)
-(require 'cl)
-
-(straight-use-package
- '(anaconda-mode
-   :host github :repo "schmir/anaconda-mode"
-   :branch "prevent-stdlib-conflicts"))
+;; (require 'cl)
 
 (setq lsp-keymap-prefix "s-x")
 (setq
  schmir/packages
  '(aggressive-indent
+   anaconda-mode
    bbdb
    blacken
    boxquote
@@ -117,8 +113,9 @@
 
 (global-set-key (kbd "C-t") 'shell-pop)
 (global-set-key (kbd "C-z") 'undo)
-(require 'git-messenger)
-(global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
+(use-package git-messenger
+  :bind ("C-x v p" . git-messenger:popup-message))
+
 (global-hl-line-mode)
 (global-auto-revert-mode 1)
 (auto-image-file-mode 1)
