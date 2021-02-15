@@ -15,7 +15,10 @@
       (message "tramp file, disabling anaconda-eldoc-mode")
     (anaconda-eldoc-mode t)))
 
-(setq pythonic-interpreter "python3")
+;; pythonic is used by anaconda-mode
+(use-package pythonic :defer t
+  :init
+  (setq pythonic-interpreter "python3"))
 
 (use-package python :defer t
   :init
