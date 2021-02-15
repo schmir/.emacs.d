@@ -1,7 +1,6 @@
 (defun setup-go-mode ()
-  (lsp-deferred)
+  (eglot-ensure)
   (setq fill-column 99)
-  ;;(add-hook 'before-save-hook 'lsp-format-buffer)
   (setq gofmt-command "gofumports")
   (company-mode)
   (add-hook 'before-save-hook #'gofmt-before-save))
@@ -9,11 +8,9 @@
 (use-package go-mode
   :ensure t
   :config
-  (progn
-    (add-hook 'go-mode-hook #'setup-go-mode)))
+  (add-hook 'go-mode-hook #'setup-go-mode))
 
-(add-to-list 'safe-local-variable-values '(gofmt-command . "gofumports"))
-(add-to-list 'safe-local-variable-values '(gofmt-command . "gofmt"))
-(add-to-list 'safe-local-variable-values '(gofmt-command . "goimports"))
+(dolist (cmd '("gofumports" "gofmt" "goimports"))
+  (add-to-list 'safe-local-variable-values `(gofmt-command . ,cmd)))
 
 (provide 'setup-go)

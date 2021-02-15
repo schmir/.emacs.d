@@ -27,7 +27,6 @@
 (show-paren-mode t)
 ;; (require 'cl)
 
-(setq lsp-keymap-prefix "s-x")
 (setq
  schmir/packages
  '(aggressive-indent
@@ -35,7 +34,6 @@
    boxquote
    cargo
    ctrlf
-   company
    company-solidity
    consult
    crux
@@ -52,10 +50,6 @@
    leo
 
    lua-mode
-   lsp-mode
-   lsp-ui
-   lsp-java
-   company-lsp
    magit
    marginalia
    markdown-mode
@@ -140,8 +134,10 @@
       vc-follow-symlinks t				;; follow symlinks and don't ask
       enable-recursive-minibuffers t)
 
-(setq company-idle-delay 0.8
-      company-minimum-prefix-length 0)
+(use-package company
+  :init
+  (setq company-idle-delay 0.8
+        company-minimum-prefix-length 0))
 ;; (add-hook 'after-init-hook 'global-company-mode)
 
 (persistent-scratch-setup-default)
@@ -271,13 +267,14 @@
 ;; (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
-(add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-
-(use-package lsp-java :defer t)
-;; (require 'lsp-java)
-(add-hook 'java-mode-hook #'lsp)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+
+(use-package eglot :defer t
+  :bind (
+         :map eglot-mode-map
+         ("C-c r" . #'eglot-rename)
+         ("C-c h" . #'eldoc)))
 
 (require 'setup-clojure)
 (require 'setup-go)
@@ -307,6 +304,7 @@
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
+  (company-mode +1)
   (c-set-offset 'arglist-intro '+)
   (setq c-basic-offset 4)
   (setq tab-width 8))
@@ -314,7 +312,9 @@
 (use-package solidity-mode
   :defer t
   :config
-  (add-hook 'solidity-mode-hook #'schmir/solidity-setup))
+  (progn
+    (require 'company-solidity)
+    (add-hook 'solidity-mode-hook #'schmir/solidity-setup)))
 
 (defun schmir/shfmt-buffer ()
   (interactive)
@@ -340,7 +340,6 @@
   (if (expand-abbrev) t nil))
 
 (use-package hippie-exp
-  :ensure f
   :init
   (setq hippie-expand-try-functions-list
         '(try-complete-abbrev
