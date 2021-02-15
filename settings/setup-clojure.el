@@ -1,3 +1,7 @@
+;;; setup-clojure  --- setup clojure with cider
+
+;;; Code:
+(require 'use-package)
 (use-package clojure-mode-extra-font-locking
   :defer t)
 
@@ -16,6 +20,7 @@
 ;; fix indentation of cond expressions
 ;; see https://github.com/clojure-emacs/clojure-mode/issues/337
 (defun schmir/indent-cond (indent-point state)
+  "Indent cond statement."
   (goto-char (elt state 1))
   (let ((pos -1)
         (base-col (current-column)))
@@ -35,6 +40,7 @@
     (+ base-col (if (cl-evenp pos) 4 2))))
 
 (defun schmir/cider-load-buffer-in-repl ()
+  "Load buffer and switch to it."
   (interactive)
   (cider-load-buffer)
   (cider-repl-set-ns (cider-current-ns))
@@ -46,13 +52,11 @@
   (
    :map cider-mode-map
    ("<f10>" . #'schmir/cider-load-buffer-in-repl)
-   ("H-a" . #'helm-cider-apropos)
    ("H-h" . #'cider-doc)
 
    :map cider-repl-mode-map
    ("<f10>" . #'delete-window)
    ("C-c C-w" . #'cider-eval-last-sexp-and-replace)
-   ("H-a" . #'helm-cider-apropos)
    ("H-h" . #'cider-doc)
 
    :map cider-docview-mode-map
@@ -63,3 +67,4 @@
    ("<f10>" . #'cider-popup-buffer-quit-function)))
 
 (provide 'setup-clojure)
+;;; setup-clojure ends here
