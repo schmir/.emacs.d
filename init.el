@@ -45,7 +45,6 @@
    consult
    crux
    default-text-scale
-   deft
    dockerfile-mode
    company-anaconda
    easy-kill
@@ -53,11 +52,9 @@
    flycheck-rust
    flymake-shellcheck
    gitignore-mode
-   git-messenger
    golden-ratio
    highlight-symbol
    htmlize
-   js2-mode
    leo
    leuven-theme
    lua-mode
@@ -73,7 +70,6 @@
    modus-vivendi-theme
    persistent-scratch
    projectile
-   protobuf-mode
    python-pytest
    racer
    rust-mode
@@ -236,11 +232,14 @@
 ;; let me use windmove keybindings even in org-mode
 (setq org-replace-disputed-keys t)
 
-(setq deft-default-extension "org"
-      deft-extensions '("org" "md" "txt")
-      deft-text-mode 'org-mode
-      deft-use-filename-as-title t
-      deft-use-filter-string-for-filename t)
+(use-package deft
+  :defer t
+  :init
+  (setq deft-default-extension "org"
+        deft-extensions '("org" "md" "txt")
+        deft-text-mode 'org-mode
+        deft-use-filename-as-title t
+        deft-use-filter-string-for-filename t))
 
 (with-eval-after-load 'rust-mode
   (require 'racer)
@@ -269,10 +268,10 @@
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-
-
+(use-package js2-mode
+  :defer t
+  :mode "\\.js\\'"
+  :interpreter "node")
 
 ;; aligns annotation to the right hand side
 ;; (setq company-tooltip-align-annotations t)
@@ -292,14 +291,19 @@
 (require 'setup-clojure)
 (require 'setup-go)
 
-(defconst my-protobuf-style
-  '((c-basic-offset . 8)
-    (indent-tabs-mode . nil)))
 
-(defun setup-protobuf ()
-  (c-add-style "my-style" my-protobuf-style t))
+(use-package protobuf-mode
+  :defer t
+  :config
+  (progn
+    (defconst my-protobuf-style
+      '((c-basic-offset . 8)
+        (indent-tabs-mode . nil)))
 
-(add-hook 'protobuf-mode-hook #'setup-protobuf)
+    (defun setup-protobuf ()
+      (c-add-style "my-style" my-protobuf-style t))
+
+    (add-hook 'protobuf-mode-hook #'setup-protobuf)))
 
 (use-package zimports :defer t)
 
@@ -336,7 +340,11 @@
   (c-set-offset 'arglist-intro '+)
   (setq c-basic-offset 4)
   (setq tab-width 8))
-(add-hook 'solidity-mode-hook 'schmir/solidity-setup)
+
+(use-package solidity-mode
+  :defer t
+  :config
+  (add-hook 'solidity-mode-hook 'schmir/solidity-setup))
 
 (defun schmir/shfmt-buffer ()
   (interactive)
@@ -402,7 +410,11 @@
 (global-set-key (kbd "C-c g") 'writegood-mode)
 
 (global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
-(require 'setup-server)
+
+(use-package server
+  :config
+  (server-start))
+
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -413,10 +425,6 @@
 
 (setq make-pointer-invisible nil)
 
-(straight-use-package
- '(gcmh
-   :type git
-   :host github
-   :repo "emacsmirror/gcmh"))
-(require 'gcmh)
-(gcmh-mode 1)
+(use-package gcmh
+  :config
+  (gcmh-mode 1))
