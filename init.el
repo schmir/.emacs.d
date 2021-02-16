@@ -33,30 +33,23 @@
    bbdb
    boxquote
    cargo
-   company-solidity
    consult
    crux
    dockerfile-mode
-   easy-kill
    elixir-mode
    flycheck-rust
    flymake-shellcheck
    gitignore-mode
    golden-ratio
-   highlight-symbol
    htmlize
    leo
    lua-mode
-   magit
    markdown-mode
    markdown-preview-mode
-   projectile
    racer
    rust-mode
    solidity-flycheck
-   solidity-mode
    prettier-js
-   terraform-mode
    tide
    tldr
    yaml-mode))
@@ -64,8 +57,10 @@
 (dolist (pkg schmir/packages)
   (straight-use-package pkg))
 
+(use-package easy-kill :defer t
+  :config
+  (global-set-key [remap kill-ring-save] 'easy-kill))
 
-(global-set-key [remap kill-ring-save] 'easy-kill)
 ;; when on a tab, make the cursor the tab length
 (setq-default x-stretch-cursor t)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -152,9 +147,13 @@
 (use-package projectile :demand t
   :init
   (setq-default projectile-completion-system 'default)
+
   :config
   (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+  :bind
+  (("<f9>" . #'projectile-compile-project)))
 
 (use-package marginalia :demand t
   :init
@@ -350,10 +349,12 @@
   :bind (:map sh-mode-map
               ("C-c b" . #'schmir/shfmt-buffer)))
 
-
-(with-eval-after-load 'terraform-mode
+(use-package terraform-mode
+  :defer t
+  :config
   (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
-  (define-key terraform-mode-map (kbd "C-c b") 'terraform-format-buffer))
+  :bind (:map terraform-mode-map
+              ("C-c b" . #'terraform-format-buffer)))
 
 (defun try-complete-abbrev (old)
   (if (expand-abbrev) t nil))
@@ -396,7 +397,6 @@
 
 ;; colorize compile mode output
 (add-hook 'compilation-filter-hook #'display-ansi-colors)
-(global-set-key (kbd "<f9>") 'projectile-compile-project)
 (setq compilation-scroll-output 'first-error)  ;; scroll, but stop at first error
 
 (use-package writegood-mode
