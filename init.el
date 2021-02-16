@@ -291,6 +291,7 @@
   :bind (
          :map eglot-mode-map
          ("C-c ." . #'xref-find-references)
+         ("C-c t" . #'eglot-find-typeDefinition)
          ("C-c r" . #'eglot-rename)
          ("C-c h" . #'eldoc)))
 
