@@ -1,31 +1,12 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 ;; on lexical-binding: https://nullprogram.com/blog/2016/12/22/
 
-
-;; prevent emacs from asking for coding-system...
-(set-language-environment "utf-8")
-
 (add-to-list 'load-path
 	     (expand-file-name "site-lisp" user-emacs-directory))
 
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
-;; Keep emacs Custom-settings in separate file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(if (file-exists-p custom-file)
-    (load custom-file))
-
-(global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
-(setq make-backup-files nil)
-(defalias 'yes-or-no-p 'y-or-n-p)
-(setq-default indent-tabs-mode nil)
-
-(setq echo-keystrokes 0.1
-      use-dialog-box nil
-      visible-bell t)
-(show-paren-mode t)
-;; (require 'cl)
 
 (setq
  schmir/packages
@@ -61,10 +42,6 @@
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
-;; when on a tab, make the cursor the tab length
-(setq-default x-stretch-cursor t)
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-
 ;; place cursor on same buffer position between editing sessions
 (use-package saveplace
   :init
@@ -75,72 +52,23 @@
 (use-package shell-pop
   :bind ("C-t" . #'shell-pop))
 
-(global-set-key (kbd "C-z") #'undo)
-
 (use-package git-messenger
   :bind ("C-x v p" . git-messenger:popup-message))
-
-(global-hl-line-mode)
-(global-auto-revert-mode 1)
-(auto-image-file-mode 1)
-(column-number-mode 1)
-
-(recentf-mode t)
-(setq recentf-max-saved-items 200)
-
-(setq mark-even-if-inactive t)
-(transient-mark-mode 1)
-
-(setq line-move-visual nil) ;; what did they think ?
-
-(auto-compression-mode t)
-
-(require 'framemove)
-(windmove-default-keybindings)
-(setq framemove-hook-into-windmove t)
-
-(setq line-move-visual nil) ;; what did they think ?
-
-(setq change-major-mode-with-file-name t
-      create-lockfiles nil
-      ;; Filename completion ignores these.
-      completion-ignored-extensions (append completion-ignored-extensions
-                                            '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx" ".rsm" ".rsr"))
-      backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
-      font-lock-maximum-decoration t			;; maximum decoration
-      next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
-      show-paren-style 'expression
-      default-indicate-empty-lines t
-      line-number-display-limit-width 100000
-      kill-whole-line t				;; make kill-line at beginning of line kill the whole line
-      woman-use-own-frame nil				;; don't create new frame for manpages
-      vc-handled-backends '(Git Hg)
-      vc-follow-symlinks t				;; follow symlinks and don't ask
-      enable-recursive-minibuffers t)
 
 (use-package company
   :init
   (setq company-idle-delay 0.8
         company-minimum-prefix-length 0))
-;; (add-hook 'after-init-hook 'global-company-mode)
 
-(use-package persistent-scratch
-  :demand t
+(use-package persistent-scratch :demand t
   :config
   (persistent-scratch-setup-default))
 
-(use-package which-key
-  :demand t
+(use-package which-key :demand t
   :config
   (which-key-mode))
 
-
-;; (setq smart-tab-using-hippie-expand 't)
-
-
-(setq tramp-default-method "ssh")
-;; (customize-set-variable 'tramp-syntax 'simplified)
-
+(require 'setup-core)
 (require 'setup-cwc)
 (require 'setup-smartparens)
 
@@ -182,8 +110,7 @@
   :config
   (ctrlf-mode +1))
 
-(use-package
-  git-grep
+(use-package git-grep
   :bind
   ("<f5>" . #'git-grep))
 
@@ -208,35 +135,7 @@
   :init
   (add-hook 'prog-mode-hook #'smartscan-mode))
 
-(defalias 'br 'boxquote-region)
-(defalias 'cc 'cider-connect)
-(defalias 'sbke 'save-buffers-kill-emacs)
-(defalias 'g 'gnus)
-(defalias 'ee 'eval-expression)
-(defalias 'rb 'revert-buffer)
-
-(setq send-mail-function 'message-send-mail-with-sendmail
-      message-send-mail-function 'message-send-mail-with-sendmail
-      mail-specify-envelope-from t
-      mail-envelope-from 'header
-      message-sendmail-envelope-from 'header      
-      gnus-init-file (expand-file-name "~/.gnus-init.el"))
-
-;; we substitute sendmail with msmtp if it's installed
-(let ((msmtp (executable-find "msmtp")))
-  (when msmtp
-    (setq sendmail-program msmtp)))
-
-(defun untabify-buffer ()
-  (interactive)
-  (save-excursion
-    (untabify (point-min) (point-max))))
-
-;; let me use windmove keybindings even in org-mode
-(setq org-replace-disputed-keys t)
-
-(use-package deft
-  :defer t
+(use-package deft :defer t
   :init
   (setq deft-default-extension "org"
         deft-extensions '("org" "md" "txt")
@@ -276,14 +175,8 @@
   :mode "\\.js\\'"
   :interpreter "node")
 
-;; aligns annotation to the right hand side
-;; (setq company-tooltip-align-annotations t)
-
-;; formats the buffer before saving
-;; (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
-
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 (use-package eglot :defer t
@@ -310,8 +203,6 @@
       (c-add-style "my-style" my-protobuf-style t))
 
     (add-hook 'protobuf-mode-hook #'setup-protobuf)))
-
-
 
 (defun with-project-root-as-default-directory
     (orig-fun &rest args)
@@ -377,7 +268,7 @@
   :bind (("<C-tab>" . #'hippie-expand)))
 
 ;; colorize pre-commit output
-(require 'ansi-color)
+;; (require 'ansi-color)
 (defun display-ansi-colors
     ()
   (interactive)
@@ -394,36 +285,30 @@
   :bind ("C-c s" . #'magit-status)
   :config (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
 
+(use-package compile :defer t
+  :init
+  ;; scroll, but stop at first error
+  (setq compilation-scroll-output 'first-error)
+  :config
+  ;; colorize compile mode output
+  (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
-;; colorize compile mode output
-(add-hook 'compilation-filter-hook #'display-ansi-colors)
-(setq compilation-scroll-output 'first-error)  ;; scroll, but stop at first error
-
-(use-package writegood-mode
-  :defer t
+(use-package writegood-mode :defer t
   :init
   (progn
     (add-hook 'text-mode-hook #'writegood-mode)
     (add-hook 'markdown-mode-hook #'writegood-mode))
   :bind (("C-c g" . #'writegood-mode)))
 
+(use-package framemove :demand t
+  :config
+  (windmove-default-keybindings)
+  (setq framemove-hook-into-windmove t))
 
-(global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
-
-(use-package server
+(use-package server :demand t
   :config
   (server-start))
 
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
-(put 'upcase-region 'disabled nil)
-
-;; mouse avoidance mode is buggy, see
-;; https://groups.google.com/g/gnu.emacs.help/c/W_1VhwJrelE
-;; (mouse-avoidance-mode 'banish)
-
-(setq make-pointer-invisible nil)
-
-(use-package gcmh
+(use-package gcmh :demand t
   :config
   (gcmh-mode 1))
