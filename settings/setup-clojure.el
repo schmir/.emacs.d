@@ -1,4 +1,4 @@
-;;; setup-clojure  --- setup clojure with cider
+;;; setup-clojure  --- setup clojure with cider     -*- lexical-binding: t -*-
 
 ;;; Code:
 (require 'use-package)

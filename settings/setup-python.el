@@ -1,4 +1,4 @@
-;;; setup-python --- setup python
+;;; setup-python --- setup python     -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
