@@ -280,6 +280,7 @@
 (use-package eglot :defer t
   :bind (
          :map eglot-mode-map
+         ("C-c ." . #'xref-find-references)
          ("C-c r" . #'eglot-rename)
          ("C-c h" . #'eldoc)))
 
