@@ -309,6 +309,4 @@
   :config
   (server-start))
 
-(use-package gcmh :demand t
-  :config
-  (gcmh-mode 1))
+(use-package gcmh :defer t) ;; early-init.el enables gcmh-mode

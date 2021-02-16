@@ -1,17 +1,21 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
 (defconst my/start-time (current-time))
+
+(setq gc-cons-threshold most-positive-fixnum) ;; will be reverted with the next hook
 (add-hook 'emacs-startup-hook
           `(lambda ()
+             (if (fboundp #'gcmh-mode)
+                 (gcmh-mode 1)
+               (setq gc-cons-threshold 8000000))
              (garbage-collect)
              (message "Load time %.06f"
                       (float-time (time-since my/start-time)))) t)
-(setq comp-deferred-compilation t)
-(setq load-prefer-newer noninteractive)
+
+(setq comp-deferred-compilation t)  ;; asynchrounous native compilation
 
 ;; increase some internal limits related to elisp execution
 (setq load-prefer-newer t
-      gc-cons-threshold most-positive-fixnum  ;; will be reverted by gcmh package
       max-specpdl-size 5000
       max-lisp-eval-depth 6000)
 
@@ -27,6 +31,8 @@
     (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
+(if (fboundp 'horizontal-scroll-bar-mode)
+    (horizontal-scroll-bar-mode -1))
 
 ;; bootstrap straight.el
 ;; https://github.com/raxod502/straight.el/blob/develop/README.md#getting-started
