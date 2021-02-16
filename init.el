@@ -33,7 +33,6 @@
    bbdb
    boxquote
    cargo
-   ctrlf
    company-solidity
    consult
    crux
@@ -49,15 +48,11 @@
    leo
    lua-mode
    magit
-   marginalia
    markdown-mode
    markdown-preview-mode
    projectile
    racer
    rust-mode
-   selectrum
-   selectrum-prescient
-   smartscan
    solidity-flycheck
    solidity-mode
    prettier-js
@@ -154,26 +149,39 @@
 (require 'setup-cwc)
 (require 'setup-smartparens)
 
-(require 'projectile)
-(setq-default projectile-completion-system 'default)
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(use-package projectile :demand t
+  :init
+  (setq-default projectile-completion-system 'default)
+  :config
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+(use-package marginalia :demand t
+  :init
+  ;; Prefer richer, more heavy, annotations over the lighter default variant.
+  ;; E.g. M-x will show the documentation string additional to the keybinding.
+  ;; By default only the keybinding is shown as annotation.
+  ;; Note that there is the command `marginalia-cycle-annotators` to
+  ;; switch between the annotators.
+  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
 
-(marginalia-mode +1)
+  :config
+  (marginalia-mode +1)
+  (global-set-key [remap switch-to-buffer] 'consult-buffer))
 
-;; Prefer richer, more heavy, annotations over the lighter default variant.
-;; E.g. M-x will show the documentation string additional to the keybinding.
-;; By default only the keybinding is shown as annotation.
-;; Note that there is the command `marginalia-cycle-annotators` to
-;; switch between the annotators.
-(setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
+(use-package selectrum :demand t
+  :config
+  (progn
+    (selectrum-mode +1)))
 
-(global-set-key [remap switch-to-buffer] 'consult-buffer)
-(selectrum-mode +1)
-(selectrum-prescient-mode +1)
-(prescient-persist-mode +1)
-(ctrlf-mode +1)
+(use-package selectrum-prescient :demand t
+  :config
+  (selectrum-prescient-mode +1)
+  (prescient-persist-mode +1))
+
+(use-package ctrlf :demand t
+  :config
+  (ctrlf-mode +1))
 
 (use-package
   git-grep
@@ -197,7 +205,9 @@
   ([(shift f3)] . #'highlight-symbol-prev)
   ([(meta f3)] . #'highlight-symbol-query-replace))
 
-(add-hook 'prog-mode-hook #'smartscan-mode)
+(use-package smartscan
+  :init
+  (add-hook 'prog-mode-hook #'smartscan-mode))
 
 (defalias 'br 'boxquote-region)
 (defalias 'cc 'cider-connect)
