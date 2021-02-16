@@ -177,7 +177,6 @@
 
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 (use-package eglot :defer t
   :bind (
@@ -310,3 +309,12 @@
   (server-start))
 
 (use-package gcmh :defer t) ;; early-init.el enables gcmh-mode
+
+;;; Configure emacs lisp mode
+(defun schmir/elisp-hook ()
+  (aggressive-indent-mode 1)
+  (eldoc-mode 1)
+  (company-mode 1))
+(add-hook 'emacs-lisp-mode-hook #'schmir/elisp-hook)
+
+;;; init.el ends here

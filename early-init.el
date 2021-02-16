@@ -1,4 +1,6 @@
-;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
+;;; early-init.el     -*- lexical-binding: t; -*-
+
+;; emacs 27.1 reads early-init.el first
 
 (defconst my/start-time (current-time))
 
@@ -65,3 +67,4 @@
 (add-to-list 'default-frame-alist '(mouse-color . "gold2"))
 
 (provide 'early-init)
+;;; early-init.el ends here
