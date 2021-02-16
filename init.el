@@ -122,6 +122,11 @@
   :bind
   ("<f5>" . #'git-grep))
 
+(use-package git-gutter :defer t
+  :ensure t
+  :init (global-git-gutter-mode +1)
+  :diminish git-gutter-mode)
+
 (use-package default-text-scale
   :bind
   ("C--" . #'default-text-scale-decrease)
