@@ -38,6 +38,11 @@
 (dolist (pkg schmir/packages)
   (straight-use-package pkg))
 
+(use-package diminish :defer t)
+
+(use-package aggressive-indent :defer t
+  :diminish aggressive-indent-mode)
+
 (use-package easy-kill :defer t
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
@@ -56,6 +61,7 @@
   :bind ("C-x v p" . git-messenger:popup-message))
 
 (use-package company
+  :diminish company-mode
   :init
   (setq company-idle-delay 0.8
         company-minimum-prefix-length 0))
@@ -65,6 +71,7 @@
   (persistent-scratch-setup-default))
 
 (use-package which-key :demand t
+  :diminish which-key-mode
   :config
   (which-key-mode))
 
@@ -73,6 +80,7 @@
 (require 'setup-smartparens)
 
 (use-package projectile :demand t
+  :diminish projectile-mode
   :init
   (setq-default projectile-completion-system 'default)
 
@@ -120,8 +128,10 @@
   ("C-=" . #'default-text-scale-increase))
 
 (use-package highlight-symbol
+  :diminish highlight-symbol-mode
   :init
   (add-hook 'prog-mode-hook #'highlight-symbol-mode)
+
   :config
   (defadvice highlight-symbol-count (around turn-off-symbol-counting activate)
     (interactive))
@@ -308,7 +318,8 @@
   :config
   (server-start))
 
-(use-package gcmh :defer t) ;; early-init.el enables gcmh-mode
+(use-package gcmh :defer t
+  :diminish gcmh-mode) ;; early-init.el enables gcmh-mode
 
 ;;; Configure emacs lisp mode
 (defun schmir/elisp-hook ()
@@ -317,4 +328,6 @@
   (company-mode 1))
 (add-hook 'emacs-lisp-mode-hook #'schmir/elisp-hook)
 
+(dolist (mode '(eldoc-mode highlight-changes-mode))
+  (diminish mode))
 ;;; init.el ends here

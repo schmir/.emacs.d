@@ -1,4 +1,7 @@
 ;;; cwc.el --- remove whitespace     -*- lexical-binding: t -*-
+
+;;; Commentary:
+
 (require 'cwc)
 
 ;;; Code:
@@ -9,3 +12,4 @@
 (add-hook 'before-save-hook 'changed-whitespace-cleanup)
 
 (provide 'setup-cwc)
+;;; setup-cwc.el ends here

@@ -1,6 +1,7 @@
 ;;; setup-smartparens.el --- setup smartparens     -*- lexical-binding: t -*-
 (use-package smartparens
   :demand t
+  :diminish smartparens-mode
   :config
   (progn
     (require 'smartparens-config)
