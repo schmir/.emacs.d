@@ -78,7 +78,7 @@
  ("sesman" . "edee869c209c016e5f0c5cbb8abb9f3ccd2d1e05")
  ("shell-pop-el" . "4b4394037940a890a313d715d203d9ead2d156a6")
  ("smart-scan" . "234e077145710a174c20742de792b97ed2f965f6")
- ("smartparens" . "fb1ce4b4013fe6f86dde9dd5bd5d4c032ab0d45b")
+ ("smartparens" . "eb2eb921ef289d40fad19159fb5ef95b3d9c683d")
  ("spacemacs-theme" . "c8c468580048e2464f012d171b2101bfb208e33d")
  ("spinner" . "e19f3cfc0646c0e23c10c22df219fcf427054621")
  ("straight.el" . "e1390a933b6f5a15079d6dec91eac97a17aad10c")
