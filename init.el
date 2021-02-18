@@ -67,7 +67,10 @@
   :diminish company-mode
   :init
   (setq company-idle-delay 0.8
-        company-minimum-prefix-length 0))
+        company-minimum-prefix-length 0
+        company-tooltip-align-annotations t
+        company-tooltip-flip-when-above t
+        company-show-numbers t))
 
 (use-package persistent-scratch :demand t
   :config
