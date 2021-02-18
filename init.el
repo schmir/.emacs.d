@@ -118,10 +118,6 @@
   :config
   (ctrlf-mode +1))
 
-(use-package git-grep
-  :bind
-  ("<f5>" . #'git-grep))
-
 (use-package git-gutter :defer t
   :ensure t
   :init (global-git-gutter-mode +1)
@@ -332,6 +328,9 @@
   (eldoc-mode 1)
   (company-mode 1))
 (add-hook 'emacs-lisp-mode-hook #'schmir/elisp-hook)
+
+(autoload 'git-grep "git-grep")
+(global-set-key (kbd "<f5>") #'git-grep)
 
 (dolist (mode '(eldoc-mode highlight-changes-mode))
   (diminish mode))
