@@ -1,11 +1,14 @@
+
 (defun setup-go-mode ()
   (setq fill-column 99)
   (setq gofmt-command "gofumports")
   (company-mode)
-  (add-hook 'before-save-hook #'gofmt-before-save))
+  (require 'lsp)
+  ;;(add-hook 'before-save-hook #'gofmt-before-save)
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
 
-(use-package go-mode
-  :ensure t
+(use-package go-mode :defer t
   :config
   (add-hook 'go-mode-hook #'setup-go-mode))
 
