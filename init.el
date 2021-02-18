@@ -197,18 +197,31 @@
 
 (use-package lsp-mode
   :init
+  (setq schmir/lsp-settings nil)  ;; this is meant to be set via .dir-locals.el
   (setq lsp-keymap-prefix "C-c l"
         lsp-eldoc-render-all t
         lsp-before-save-edits t
         lsp-enable-imenu t
         lsp-idle-delay 0.1
         lsp-headerline-breadcrumb-enable nil)
+  (add-hook
+   'hack-local-variables-hook
+   (lambda ()
+     (when (derived-mode-p 'go-mode)
+       (require 'lsp)
+       (message "lsp-register-custom-settings: %s" schmir/lsp-settings)
+       (lsp-register-custom-settings schmir/lsp-settings)
+       (lsp))))
+  :config
+  (lsp-register-custom-settings
+   '(("gopls.completeUnimported" t t)
+     ("gopls.staticcheck" t t)
+     ("gopls.gofumpt" t t)))
   :bind (:map lsp-mode-map
               ("C-c ." . #'lsp-find-references)
               ("C-c t" . #'lsp-find-type-definition)
               ("C-c r" . #'lsp-rename))
-  :hook ((go-mode . lsp)
-         (python-mode . lsp)
+  :hook ((python-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
