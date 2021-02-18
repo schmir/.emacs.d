@@ -202,8 +202,7 @@
         lsp-before-save-edits t
         lsp-enable-imenu t
         lsp-idle-delay 0.1
-        lsp-headerline-breadcrumb-enable t
-        lsp-headerline-breadcrumb-mode nil)
+        lsp-headerline-breadcrumb-enable nil)
   :bind (:map lsp-mode-map
               ("C-c ." . #'lsp-find-references)
               ("C-c t" . #'lsp-find-type-definition)
