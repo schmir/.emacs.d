@@ -63,7 +63,7 @@
                zenburn-theme))
   (straight-use-package pkg))
 
-(load-theme 'leuven-dark t)
+(load-theme 'spacemacs-dark t)
 (add-to-list 'default-frame-alist '(mouse-color . "gold2"))
 
 (provide 'early-init)
