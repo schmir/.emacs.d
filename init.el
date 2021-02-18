@@ -58,6 +58,9 @@
   :bind ("C-t" . #'shell-pop))
 
 (use-package git-messenger
+  :init
+  (setq git-messenger:show-detail t
+        git-messenger:use-magit-popup t)
   :bind ("C-x v p" . git-messenger:popup-message))
 
 (use-package company
