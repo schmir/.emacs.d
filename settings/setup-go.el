@@ -1,5 +1,4 @@
 (defun setup-go-mode ()
-  (eglot-ensure)
   (setq fill-column 99)
   (setq gofmt-command "gofumports")
   (company-mode)

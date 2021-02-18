@@ -192,13 +192,23 @@
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
-(use-package eglot :defer t
-  :bind (
-         :map eglot-mode-map
-         ("C-c ." . #'xref-find-references)
-         ("C-c t" . #'eglot-find-typeDefinition)
-         ("C-c r" . #'eglot-rename)
-         ("C-c h" . #'eldoc)))
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l"
+        lsp-eldoc-render-all t
+        lsp-before-save-edits t
+        lsp-enable-imenu t
+        lsp-idle-delay 0.1
+        lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-mode nil)
+  :bind (:map lsp-mode-map
+              ("C-c ." . #'lsp-find-references)
+              ("C-c t" . #'lsp-find-type-definition)
+              ("C-c r" . #'lsp-rename))
+  :hook ((go-mode . lsp)
+         (python-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
 (require 'setup-clojure)
 (require 'setup-go)

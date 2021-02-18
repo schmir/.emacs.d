@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 ;;
-;; Configure python mode with eglot
+;; Configure python mode
 
 (require 'use-package)
 
@@ -22,8 +22,7 @@
   :config
   (progn
     (advice-add 'run-python :around #'with-project-root-as-default-directory)
-    (add-hook 'python-mode-hook #'blacken-mode)
-    (add-hook 'python-mode-hook #'eglot-ensure))
+    (add-hook 'python-mode-hook #'blacken-mode))
   :bind
   (:map python-mode-map
         ("C-c b" . #'blacken-buffer)))

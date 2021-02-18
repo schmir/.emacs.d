@@ -39,6 +39,9 @@
 
 (setq line-move-visual nil)
 
+;; Increase the amount of data which Emacs reads from the process (recommended by lsp mode's doc)
+(setq read-process-output-max (* 1024 1024))
+
 (setq change-major-mode-with-file-name t
       create-lockfiles nil
       ;; Filename completion ignores these.
