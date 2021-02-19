@@ -285,26 +285,6 @@
   :bind (:map terraform-mode-map
               ("C-c b" . #'terraform-format-buffer)))
 
-(defun try-complete-abbrev (old)
-  (if (expand-abbrev) t nil))
-
-(use-package hippie-exp
-  :init
-  (setq hippie-expand-try-functions-list
-        '(try-complete-abbrev
-          try-expand-dabbrev-visible
-          try-expand-dabbrev
-          try-expand-dabbrev-all-buffers
-          try-expand-dabbrev-from-kill
-          try-complete-file-name-partially
-          try-complete-file-name
-          try-expand-all-abbrevs
-          try-expand-list
-          try-expand-line
-          try-complete-lisp-symbol-partially
-          try-complete-lisp-symbol))
-  :bind (("<C-tab>" . #'hippie-expand)))
-
 ;; colorize pre-commit output
 ;; (require 'ansi-color)
 (defun display-ansi-colors
