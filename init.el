@@ -28,8 +28,6 @@
    lua-mode
    markdown-mode
    markdown-preview-mode
-   racer
-   rust-mode
    solidity-flycheck
    prettier-js
    tldr
@@ -159,19 +157,24 @@
         deft-use-filename-as-title t
         deft-use-filter-string-for-filename t))
 
-(with-eval-after-load 'rust-mode
-  (require 'racer)
-  (require 'flycheck)
-  (define-key rust-mode-map (kbd "C-c b") 'rust-format-buffer)
-  (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+(use-package racer :defer t
+  :init
+  (progn
+    (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+    (setq racer-rust-src-path (expand-file-name "~/vendor/rust/src"))) ;; Rust source code PATH
+  )
 
-  (setq racer-rust-src-path (expand-file-name "~/vendor/rust/src")) ;; Rust source code PATH
-
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (add-hook 'rust-mode-hook #'flycheck-mode)
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+(use-package rust-mode :defer t
+  :config
+  (progn
+    (require 'racer)
+    (require 'flycheck)
+    (define-key rust-mode-map (kbd "C-c b") 'rust-format-buffer)
+    (add-hook 'rust-mode-hook #'racer-mode)
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode)
+    (add-hook 'rust-mode-hook #'flycheck-mode)
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
 
 
 ;; --- setup typescript
