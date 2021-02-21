@@ -7,6 +7,7 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
+(require 'setup-core)
 
 (setq
  schmir/packages
@@ -31,7 +32,6 @@
    rust-mode
    solidity-flycheck
    prettier-js
-   tide
    tldr
    yaml-mode))
 
@@ -81,7 +81,6 @@
   :config
   (which-key-mode))
 
-(require 'setup-core)
 (require 'setup-cwc)
 (require 'setup-smartparens)
 
@@ -176,8 +175,6 @@
 
 
 ;; --- setup typescript
-(setq tide-completion-detailed 't
-      tide-always-show-documentation 't)
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -187,13 +184,18 @@
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 
+(use-package tide
+  :init
+  (setq tide-completion-detailed 't
+        tide-always-show-documentation 't)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode))
+
 (use-package js2-mode
   :defer t
   :mode "\\.js\\'"
   :interpreter "node")
 
 
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (use-package lsp-mode
   :init
