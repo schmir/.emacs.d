@@ -79,8 +79,6 @@
   :config
   (which-key-mode))
 
-(require 'setup-cwc)
-(require 'setup-smartparens)
 
 (use-package projectile :demand t
   :diminish projectile-mode
@@ -230,9 +228,6 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
-(require 'setup-clojure)
-(require 'setup-go)
-(require 'setup-python)
 
 (use-package protobuf-mode
   :defer t
@@ -334,6 +329,12 @@
 
 (use-package gcmh :defer t
   :diminish gcmh-mode) ;; early-init.el enables gcmh-mode
+
+(require 'setup-cwc)
+(require 'setup-smartparens)
+(require 'setup-clojure)
+(require 'setup-go)
+(require 'setup-python)
 
 ;;; Configure emacs lisp mode
 (defun schmir/elisp-hook ()
