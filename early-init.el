@@ -60,11 +60,12 @@
                modus-operandi-theme
                modus-vivendi-theme
                spacemacs-theme
-               zenburn-theme))
+               zenburn-theme
+               anti-zenburn-theme))
   (straight-use-package pkg))
 
-(load-theme 'spacemacs-dark t)
-(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
+(load-theme 'anti-zenburn t)
+(add-to-list 'default-frame-alist '(mouse-color . "black"))
 
 (provide 'early-init)
 ;;; early-init.el ends here
