@@ -36,12 +36,12 @@
 (dolist (pkg schmir/packages)
   (straight-use-package pkg))
 
-(use-package diminish :defer t)
+(use-package diminish)
 
-(use-package aggressive-indent :defer t
+(use-package aggressive-indent
   :diminish aggressive-indent-mode)
 
-(use-package easy-kill :defer t
+(use-package easy-kill
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
@@ -119,7 +119,7 @@
   :config
   (ctrlf-mode +1))
 
-(use-package git-gutter :defer t
+(use-package git-gutter
   :ensure t
   :init (global-git-gutter-mode +1)
   :diminish git-gutter-mode)
@@ -147,7 +147,7 @@
   :init
   (add-hook 'prog-mode-hook #'smartscan-mode))
 
-(use-package deft :defer t
+(use-package deft
   :init
   (setq deft-default-extension "org"
         deft-extensions '("org" "md" "txt")
@@ -155,14 +155,14 @@
         deft-use-filename-as-title t
         deft-use-filter-string-for-filename t))
 
-(use-package racer :defer t
+(use-package racer
   :init
   (progn
     (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
     (setq racer-rust-src-path (expand-file-name "~/vendor/rust/src"))) ;; Rust source code PATH
   )
 
-(use-package rust-mode :defer t
+(use-package rust-mode
   :config
   (progn
     (require 'racer)
@@ -192,7 +192,6 @@
   (add-hook 'typescript-mode-hook #'setup-tide-mode))
 
 (use-package js2-mode
-  :defer t
   :mode "\\.js\\'"
   :interpreter "node")
 
@@ -230,7 +229,6 @@
 
 
 (use-package protobuf-mode
-  :defer t
   :config
   (progn
     (defconst my-protobuf-style
@@ -257,7 +255,6 @@
   (setq tab-width 8))
 
 (use-package solidity-mode
-  :defer t
   :config
   (progn
     (require 'company-solidity)
@@ -279,7 +276,6 @@
               ("C-c b" . #'schmir/shfmt-buffer)))
 
 (use-package terraform-mode
-  :defer t
   :config
   (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
   :bind (:map terraform-mode-map
@@ -299,11 +295,11 @@
   (with-current-buffer (process-buffer proc)
     (display-ansi-colors)))
 
-(use-package magit :defer t
+(use-package magit
   :bind ("C-c s" . #'magit-status)
   :config (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
 
-(use-package compile :defer t
+(use-package compile
   :init
   ;; scroll, but stop at first error
   (setq compilation-scroll-output 'first-error)
@@ -311,7 +307,7 @@
   ;; colorize compile mode output
   (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
-(use-package writegood-mode :defer t
+(use-package writegood-mode
   :init
   (progn
     (add-hook 'text-mode-hook #'writegood-mode)
@@ -327,7 +323,7 @@
   :config
   (server-start))
 
-(use-package gcmh :defer t
+(use-package gcmh
   :diminish gcmh-mode) ;; early-init.el enables gcmh-mode
 
 (require 'setup-cwc)

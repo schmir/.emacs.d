@@ -8,15 +8,15 @@
 
 ;;; Code:
 
-(use-package python-pytest :defer t)
-(use-package zimports :defer t)
+(use-package python-pytest)
+(use-package zimports)
 
 
-(use-package blacken :defer t
+(use-package blacken
   :config
   (setq blacken-only-if-project-is-blackened t))
 
-(use-package python :defer t
+(use-package python
   :init
   (setq python-shell-interpreter "python3")
   :config

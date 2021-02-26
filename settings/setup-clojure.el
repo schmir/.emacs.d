@@ -2,11 +2,9 @@
 
 ;;; Code:
 (require 'use-package)
-(use-package clojure-mode-extra-font-locking
-  :defer t)
+(use-package clojure-mode-extra-font-locking)
 
 (use-package clojure-mode
-  :defer t
   :config
   (progn
     (require 'clojure-mode-extra-font-locking)

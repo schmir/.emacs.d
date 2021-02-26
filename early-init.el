@@ -55,6 +55,7 @@
 ;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+(setq use-package-always-defer t)  ;; always load lazily
 
 (dolist (pkg '(leuven-theme
                modus-operandi-theme
