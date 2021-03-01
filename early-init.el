@@ -36,6 +36,18 @@
 (if (fboundp 'horizontal-scroll-bar-mode)
     (horizontal-scroll-bar-mode -1))
 
+(defun radian--advice-disable-x-resource-application ()
+  "Disable `x-apply-session-resources'.
+Now, `x-apply-session-resources' normally gets called before
+reading the init-file. However if we do our initialization in the
+early init-file, before that function gets called, then it may
+override some important things like the cursor color. So we just
+disable it, since there's no real reason to respect X
+resources.")
+
+(advice-add #'x-apply-session-resources :override
+            #'radian--advice-disable-x-resource-application)
+
 ;; bootstrap straight.el
 ;; https://github.com/raxod502/straight.el/blob/develop/README.md#getting-started
 (defvar bootstrap-version)
@@ -62,11 +74,13 @@
                modus-vivendi-theme
                spacemacs-theme
                zenburn-theme
-               anti-zenburn-theme))
+               anti-zenburn-theme
+               zerodark-theme))
   (straight-use-package pkg))
 
-(load-theme 'anti-zenburn t)
-(add-to-list 'default-frame-alist '(mouse-color . "black"))
+(load-theme 'zerodark t)
+(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
+;; (zerodark-setup-modeline-format)
 
 (provide 'early-init)
 ;;; early-init.el ends here
