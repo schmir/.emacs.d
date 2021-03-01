@@ -28,6 +28,7 @@
    lua-mode
    markdown-mode
    markdown-preview-mode
+   prodigy
    solidity-flycheck
    prettier-js
    tldr
