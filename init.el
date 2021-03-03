@@ -223,6 +223,7 @@
   :bind (:map lsp-mode-map
               ("C-c ." . #'lsp-find-references)
               ("C-c t" . #'lsp-find-type-definition)
+              ("C-c i" . #'lsp-find-implementation)
               ("C-c r" . #'lsp-rename))
   :hook ((python-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
