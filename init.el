@@ -1,6 +1,9 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 ;; on lexical-binding: https://nullprogram.com/blog/2016/12/22/
 
+(if (version< emacs-version "27")
+    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+
 (add-to-list 'load-path
 	     (expand-file-name "site-lisp" user-emacs-directory))
 
