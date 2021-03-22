@@ -125,7 +125,7 @@
 
 (use-package git-gutter
   :ensure t
-  :init (global-git-gutter-mode +1)
+  ;; :init (global-git-gutter-mode +1)
   :diminish git-gutter-mode)
 
 (use-package default-text-scale
