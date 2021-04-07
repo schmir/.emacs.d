@@ -75,10 +75,11 @@ resources.")
                spacemacs-theme
                zenburn-theme
                anti-zenburn-theme
+               omtose-phellack-theme
                zerodark-theme))
   (straight-use-package pkg))
 
-(load-theme 'zerodark t)
+(load-theme 'omtose-darker t)
 (add-to-list 'default-frame-alist '(mouse-color . "gold2"))
 ;; (zerodark-setup-modeline-format)
 
