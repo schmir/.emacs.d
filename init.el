@@ -59,8 +59,8 @@
 (use-package shell-pop
   :bind ("C-t" . #'shell-pop))
 
-(use-package good-scroll :demand t
-  :config (good-scroll-mode 1))
+;; (use-package good-scroll :demand t
+;;   :config (good-scroll-mode 1))
 
 (use-package git-messenger
   :init
