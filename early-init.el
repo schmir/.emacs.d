@@ -48,6 +48,8 @@ resources.")
 (advice-add #'x-apply-session-resources :override
             #'radian--advice-disable-x-resource-application)
 
+(setq straight-check-for-modifications '(check-on-save find-when-checking))
+
 ;; bootstrap straight.el
 ;; https://github.com/raxod502/straight.el/blob/develop/README.md#getting-started
 (defvar bootstrap-version)
