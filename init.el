@@ -50,7 +50,7 @@
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
 ;; place cursor on same buffer position between editing sessions
-(use-package saveplace
+(use-package saveplace :demand t
   :init
   (setq-default save-place-file (expand-file-name "places" user-emacs-directory))
   :config
