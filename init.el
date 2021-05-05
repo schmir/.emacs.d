@@ -99,6 +99,10 @@
   :bind
   (("<f9>" . #'projectile-compile-project)))
 
+(use-package direnv :demand t
+  :config
+  (direnv-mode))
+
 (use-package marginalia :demand t
   :init
   ;; Prefer richer, more heavy, annotations over the lighter default variant.
