@@ -17,6 +17,7 @@ ID
 /smex-items
 /eln-cache/
 /var/
+/etc/
 /.cask/
 /elpa/
 /auto-save-list/*

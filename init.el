@@ -10,7 +10,17 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
+;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
+(use-package no-littering
+  :demand t
+  :config
+  (progn
+    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+    (if (file-exists-p custom-file)
+        (load custom-file))))
+
 (require 'setup-core)
+
 
 (setq
  schmir/packages
@@ -52,8 +62,6 @@
 ;; place cursor on same buffer position between editing sessions
 (use-package saveplace :demand t
   :straight nil
-  :init
-  (setq-default save-place-file (expand-file-name "places" user-emacs-directory))
   :config
   (save-place-mode))
 
@@ -62,6 +70,13 @@
   :init
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 2))
+
+(use-package recentf
+  :straight nil
+  :init
+  (progn
+    (add-to-list 'recentf-exclude no-littering-var-directory)
+    (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
 (use-package shell-pop
   :bind ("C-t" . #'shell-pop))

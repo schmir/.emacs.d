@@ -4,11 +4,6 @@
 
 (advice-add 'risky-local-variable-p :override #'ignore)
 
-;; Keep emacs Custom-settings in separate file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(if (file-exists-p custom-file)
-    (load custom-file))
-
 ;; prevent emacs from asking for coding-system...
 (set-language-environment "utf-8")
 (global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
