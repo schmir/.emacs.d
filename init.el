@@ -51,10 +51,17 @@
 
 ;; place cursor on same buffer position between editing sessions
 (use-package saveplace :demand t
+  :straight nil
   :init
   (setq-default save-place-file (expand-file-name "places" user-emacs-directory))
   :config
   (save-place-mode))
+
+(use-package uniquify
+  :straight nil
+  :init
+  (setq uniquify-buffer-name-style 'forward
+        uniquify-min-dir-content 2))
 
 (use-package shell-pop
   :bind ("C-t" . #'shell-pop))
