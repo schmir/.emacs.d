@@ -288,6 +288,7 @@
   (setq c-basic-offset 4)
   (setq tab-width 8))
 
+(use-package company-solidity)
 (use-package solidity-mode
   :config
   (progn
