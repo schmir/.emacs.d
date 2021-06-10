@@ -252,6 +252,7 @@
    '(("gopls.completeUnimported" t t)
      ("gopls.staticcheck" t t)
      ("gopls.gofumpt" t t)))
+  (setq lsp-enable-file-watchers nil)
   :bind (:map lsp-mode-map
               ("C-c ." . #'lsp-find-references)
               ("C-c t" . #'lsp-find-type-definition)
