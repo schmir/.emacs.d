@@ -9,23 +9,13 @@
 ;;; Code:
 
 (use-package python-pytest)
-(use-package zimports)
-
-
-(use-package blacken
-  :config
-  (setq blacken-only-if-project-is-blackened t))
 
 (use-package python
   :init
   (setq python-shell-interpreter "python3")
   :config
   (progn
-    (advice-add 'run-python :around #'with-project-root-as-default-directory)
-    (add-hook 'python-mode-hook #'blacken-mode))
-  :bind
-  (:map python-mode-map
-        ("C-c b" . #'blacken-buffer)))
+    (advice-add 'run-python :around #'with-project-root-as-default-directory)))
 
 (provide 'setup-python)
 ;;; setup-python.el ends here

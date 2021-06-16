@@ -43,7 +43,6 @@
    markdown-preview-mode
    prodigy
    solidity-flycheck
-   prettier-js
    tldr
    yaml-mode))
 
@@ -51,6 +50,18 @@
   (straight-use-package pkg))
 
 (use-package diminish)
+
+(use-package apheleia
+  :straight '(apheleia :host github :repo "raxod502/apheleia")
+  :init
+  (apheleia-global-mode +1)
+  :config
+  (setf (alist-get 'blackzim apheleia-formatters)
+        '("blackzim"))
+  (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
+  (add-to-list 'apheleia-mode-alist '(conf-toml-mode . prettier))
+
+  :bind ("C-c b" . #'apheleia-format-buffer))
 
 (use-package aggressive-indent
   :diminish aggressive-indent-mode)
