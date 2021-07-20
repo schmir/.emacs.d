@@ -72,8 +72,6 @@ resources.")
 (setq use-package-always-defer t)  ;; always load lazily
 
 (dolist (pkg '(leuven-theme
-               modus-operandi-theme
-               modus-vivendi-theme
                spacemacs-theme
                zenburn-theme
                anti-zenburn-theme
@@ -81,8 +79,9 @@ resources.")
                zerodark-theme))
   (straight-use-package pkg))
 
-(load-theme 'omtose-darker t)
-(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
+;;(load-theme 'omtose-darker t)
+;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
+(load-theme 'modus-operandi t)
 ;; (zerodark-setup-modeline-format)
 
 (provide 'early-init)
