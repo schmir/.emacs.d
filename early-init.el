@@ -79,6 +79,9 @@ resources.")
                zerodark-theme))
   (straight-use-package pkg))
 
+(if (version< emacs-version "28")
+    (straight-use-package 'modus-themes))
+
 ;;(load-theme 'omtose-darker t)
 ;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
 (load-theme 'modus-operandi t)

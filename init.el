@@ -76,13 +76,16 @@
   :config
   (save-place-mode))
 
-(use-package so-long
-  :straight nil
-  :config
-  (setq so-long-max-lines nil
-        so-long-threshold 400)
-  :init
-  (global-so-long-mode +1))
+
+(eval
+ `(use-package so-long
+    ,@(if (version<= "27.1" emacs-version)
+          '(:straight nil))
+    :config
+    (setq so-long-max-lines nil
+          so-long-threshold 400)
+    :init
+    (global-so-long-mode +1)))
 
 (use-package uniquify
   :straight nil
