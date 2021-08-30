@@ -58,6 +58,7 @@
   :config
   (setf (alist-get 'blackzim apheleia-formatters)
         '("blackzim"))
+  (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
   (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
   (add-to-list 'apheleia-mode-alist '(conf-toml-mode . prettier))
 
