@@ -28,7 +28,6 @@
    bbdb
    boxquote
    cargo
-   consult
    crux
    dockerfile-mode
    elixir-mode
@@ -147,6 +146,14 @@
 (use-package direnv :demand t
   :config
   (direnv-mode))
+
+(use-package consult :demand t
+  :config
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep consult-buffer
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-file consult--source-project-file consult--source-bookmark
+   :preview-key (kbd "M-.")))
 
 (use-package marginalia :demand t
   :init
