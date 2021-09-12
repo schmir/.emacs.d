@@ -294,6 +294,14 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
+(use-package tree-sitter-langs :demand t)
+(use-package tree-sitter
+  :demand t
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+
 
 (use-package protobuf-mode
   :config
