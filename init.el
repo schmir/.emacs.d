@@ -298,6 +298,8 @@
 (use-package tree-sitter
   :demand t
   :config
+  (add-to-list 'tree-sitter-major-mode-language-alist
+               '(direnv-envrc-mode . bash))
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
