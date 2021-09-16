@@ -50,6 +50,15 @@
 
 (use-package diminish)
 
+(use-package vterm
+  :init
+  (add-hook 'vterm-mode-hook
+            (lambda()
+              (setq-local global-display-fill-column-indicator-mode nil
+                          global-hl-line-mode nil)
+              (display-fill-column-indicator-mode -1)
+              (hl-line-mode -1))))
+
 (use-package apheleia
   :straight '(apheleia :host github :repo "raxod502/apheleia")
   :init
