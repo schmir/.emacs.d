@@ -8,6 +8,7 @@
   :config
   (progn
     (require 'clojure-mode-extra-font-locking)
+    (add-hook 'clojure-mode-hook #'company-mode)
     (define-clojure-indent
       (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond))
@@ -46,6 +47,22 @@
 
 (use-package cider
   :defer t
+  :config
+  (setq nrepl-hide-special-buffers t
+        ;;nrepl-history-file "~/.emacs.d/nrepl-history"
+        )
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (setq cider-prompt-save-file-on-load nil
+        cider-repl-result-prefix ";; => "
+        cider-repl-use-pretty-printing t
+        cider-stacktrace-fill-column nil
+        cider-prompt-for-symbol nil
+        cider-pprint-fn 'fipp
+        nrepl-buffer-name-show-port t ;; use port in repl buffer name
+        cider-auto-select-error-buffer nil)
+
+
   :bind
   (
    :map cider-mode-map
