@@ -6,7 +6,7 @@
  ("bbdb" . "03c9ab00642fd54d7fb601f95a094b8b7f0eefb0")
  ("boxquote.el" . "bdc6c84b9274b228dbc383a14abf9694157e869c")
  ("cargo.el" . "794f902bb84437afcc5d677d4a7a996c1f98359b")
- ("cider" . "d8dd41e3c31ce0df0d0f4d35054bd5ce7d302b42")
+ ("cider" . "fe8cf244fd3426261f9f630c981a6296afd433a4")
  ("clojure-mode" . "e1dc7caee76d117a366f8b8b1c2da7e6400636a8")
  ("company-mode" . "1887974e7ad50cb4884fbec27985078bba754b60")
  ("consult" . "a07ca383318cdce6935a370f1d17687ba9f225c3")
