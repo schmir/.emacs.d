@@ -119,5 +119,7 @@
         try-complete-lisp-symbol))
 (global-set-key (kbd "<C-tab>") #'hippie-expand)
 
+(global-display-fill-column-indicator-mode)
+
 (provide 'setup-core)
 ;;; setup-core.el ends here
