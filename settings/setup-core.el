@@ -38,7 +38,7 @@
 
 ;; Increase the amount of data which Emacs reads from the process (recommended by lsp mode's doc)
 (setq read-process-output-max (* 1024 1024))
-
+(setq-default fill-column 99)
 (setq change-major-mode-with-file-name t
       create-lockfiles nil
       x-select-enable-primary t  ;; after mouse selection in X11, you can paste by `yank' in emacs
