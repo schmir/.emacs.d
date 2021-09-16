@@ -50,6 +50,7 @@
 
 (use-package diminish)
 
+;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 (use-package vterm
   :init
   (add-hook 'vterm-mode-hook
