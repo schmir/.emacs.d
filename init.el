@@ -383,9 +383,23 @@
   (with-current-buffer (process-buffer proc)
     (display-ansi-colors)))
 
+(defun yadm-status ()
+  (interactive)
+  (magit-status "/yadm::"))
+
 (use-package magit
-  :bind ("C-c s" . #'magit-status)
-  :config (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
+  :bind (("C-c s" . #'magit-status)
+         ("C-c y" . #'yadm-status))
+  :config
+  (advice-add 'magit-process-filter :after #'magit-display-ansi-colors)
+  (require 'tramp)
+  (add-to-list 'tramp-methods
+               '("yadm"
+                 (tramp-login-program "yadm")
+                 (tramp-login-args (("enter")))
+                 (tramp-login-env (("SHELL") ("/bin/sh")))
+                 (tramp-remote-shell "/bin/sh")
+                 (tramp-remote-shell-args ("-c")))))
 
 (use-package compile
   :init
