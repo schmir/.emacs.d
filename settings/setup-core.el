@@ -21,7 +21,12 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (global-set-key (kbd "C-z") #'undo)
 
-(global-hl-line-mode)
+(add-hook 'prog-mode-hook #'hl-line-mode)
+(add-hook 'text-mode-hook #'hl-line-mode)
+
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'text-mode-hook #'display-fill-column-indicator-mode)
+
 (global-auto-revert-mode 1)
 (auto-image-file-mode 1)
 (column-number-mode 1)
@@ -119,7 +124,6 @@
         try-complete-lisp-symbol))
 (global-set-key (kbd "<C-tab>") #'hippie-expand)
 
-(global-display-fill-column-indicator-mode)
 
 (provide 'setup-core)
 ;;; setup-core.el ends here
