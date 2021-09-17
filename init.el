@@ -50,8 +50,6 @@
 
 (use-package diminish)
 
-;; apt install libvterm-dev libvterm-bin libtool-bin cmake
-(use-package vterm)
 
 (use-package apheleia
   :straight '(apheleia :host github :repo "raxod502/apheleia")
@@ -103,11 +101,20 @@
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
-(use-package shell-pop
-  :bind ("C-t" . #'shell-pop))
+;; apt install libvterm-dev libvterm-bin libtool-bin cmake
+(use-package vterm
+  :config
+  (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
+  :bind (:map vterm-mode-map
+              ("C-t" . #'shell-pop)))
 
-;; (use-package good-scroll :demand t
-;;   :config (good-scroll-mode 1))
+(use-package shell-pop
+  :bind
+  ("C-t" . #'shell-pop)
+  :init
+  (setq shell-pop-shell-type '("vterm" "*vterm*" #'vterm)
+        shell-pop-term-shell "/usr/bin/zsh"
+        shell-pop-window-size 40))
 
 (use-package git-messenger
   :init
