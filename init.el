@@ -449,4 +449,26 @@
 
 (dolist (mode '(eldoc-mode highlight-changes-mode))
   (diminish mode))
+
+;; --- Configure display-buffer-alist
+
+(setq display-buffer-alist
+      (list
+       '("\\`\\*e?shell\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
+         (display-buffer-reuse-window
+          display-buffer-in-side-window)
+         (reusable-frames . visible)
+         (side . bottom)
+         (window-height . 0.4))))
+
+(defun lunaryorn-quit-bottom-side-windows ()
+  "Quit side windows of the current frame."
+  (interactive)
+  (dolist (window (window-at-side-list))
+    (quit-window nil window)))
+
+(global-set-key (kbd "C-c q") #'lunaryorn-quit-bottom-side-windows)
+(global-set-key (kbd "C-c C-q") #'lunaryorn-quit-bottom-side-windows)
+
+
 ;;; init.el ends here
