@@ -21,9 +21,11 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (global-set-key (kbd "C-z") #'undo)
 
+(setq-default fill-column 80)
+(add-hook 'prog-mode-hook (lambda()
+                            (setq fill-column 99)))
 (add-hook 'prog-mode-hook #'hl-line-mode)
 (add-hook 'text-mode-hook #'hl-line-mode)
-
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 (add-hook 'text-mode-hook #'display-fill-column-indicator-mode)
 
@@ -43,7 +45,6 @@
 
 ;; Increase the amount of data which Emacs reads from the process (recommended by lsp mode's doc)
 (setq read-process-output-max (* 1024 1024))
-(setq-default fill-column 99)
 (setq change-major-mode-with-file-name t
       create-lockfiles nil
       x-select-enable-primary t  ;; after mouse selection in X11, you can paste by `yank' in emacs
