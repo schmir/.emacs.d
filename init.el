@@ -103,6 +103,8 @@
 
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 (use-package vterm
+  :init
+  (setq vterm-max-scrollback 10000)
   :config
   (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
   :bind (:map vterm-mode-map
