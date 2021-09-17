@@ -107,6 +107,7 @@
   (setq vterm-max-scrollback 10000)
   :config
   (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
+  (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
   :bind (:map vterm-mode-map
               ("C-t" . #'shell-pop)))
 
