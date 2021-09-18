@@ -94,12 +94,6 @@
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 2))
 
-(use-package recentf
-  :straight nil
-  :init
-  (progn
-    (add-to-list 'recentf-exclude no-littering-var-directory)
-    (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 (use-package vterm
@@ -404,6 +398,13 @@
                  (tramp-remote-shell "/bin/sh")
                  (tramp-remote-shell-args ("-c")))))
 
+(use-package recentf
+  :straight nil
+  :init
+  (progn
+    (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
+    (add-to-list 'recentf-exclude no-littering-var-directory)
+    (add-to-list 'recentf-exclude no-littering-etc-directory)))
 (use-package compile
   :init
   ;; scroll, but stop at first error
