@@ -84,7 +84,7 @@
           '(:straight nil))
     :config
     (setq so-long-max-lines nil
-          so-long-threshold 400)
+          so-long-threshold 500)
     :init
     (global-so-long-mode +1)))
 
