@@ -292,6 +292,12 @@
      ("gopls.staticcheck" t t)
      ("gopls.gofumpt" t t)))
   (setq lsp-enable-file-watchers nil)
+  (defun hide-lsp-no-formatting-changes (func &rest r)
+    (unless (string-prefix-p "No formatting changes" (car r))
+      (apply func r)))
+
+  (advice-add 'lsp--info :around #'hide-lsp-no-formatting-changes)
+
   :bind (:map lsp-mode-map
               ("C-c ." . #'lsp-find-references)
               ("C-c t" . #'lsp-find-type-definition)
