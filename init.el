@@ -50,6 +50,13 @@
 
 (use-package diminish)
 
+(use-package flycheck
+  :init
+  (setq flycheck-check-syntax-automatically '(save new-line mode-enabled)))
+
+(use-package flycheck-inline
+  :init
+  (global-flycheck-inline-mode))
 
 (use-package apheleia
   :straight '(apheleia :host github :repo "raxod502/apheleia")
