@@ -3,12 +3,15 @@
 ;;; Code:
 (require 'use-package)
 (use-package clojure-mode-extra-font-locking)
+(use-package flycheck-clj-kondo)
 
 (use-package clojure-mode
   :config
   (progn
     (require 'clojure-mode-extra-font-locking)
+    (require 'flycheck-clj-kondo)
     (add-hook 'clojure-mode-hook #'company-mode)
+    (add-hook 'clojure-mode-hook #'flycheck-mode)
     (define-clojure-indent
       (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond))
