@@ -272,6 +272,9 @@
   :mode "\\.js\\'"
   :interpreter "node")
 
+(use-package flymake-eslint
+  :init
+  (add-hook 'js-mode-hook #'flymake-eslint-enable))
 
 
 (use-package lsp-mode
