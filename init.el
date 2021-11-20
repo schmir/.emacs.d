@@ -448,6 +448,10 @@
 (use-package gcmh
   :diminish gcmh-mode) ;; early-init.el enables gcmh-mode
 
+(use-package super-save :demand t
+  :config
+  (super-save-mode +1))
+
 (require 'setup-cwc)
 (require 'setup-smartparens)
 (require 'setup-clojure)
