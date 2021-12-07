@@ -414,6 +414,10 @@
                  (tramp-remote-shell "/bin/sh")
                  (tramp-remote-shell-args ("-c")))))
 
+(use-package git-link
+  :config
+  (setq git-link-use-commit 't))
+
 (use-package recentf
   :straight nil
   :init
