@@ -72,6 +72,7 @@ resources.")
 (setq use-package-always-defer t)  ;; always load lazily
 
 (dolist (pkg '(leuven-theme
+               gruvbox-theme
                spacemacs-theme
                zenburn-theme
                anti-zenburn-theme
@@ -82,9 +83,13 @@ resources.")
 (if (version< emacs-version "28")
     (straight-use-package 'modus-themes))
 
-;;(load-theme 'omtose-darker t)
+;; (load-theme 'omtose-darker t)
+;; (load-theme 'zenburn t)
+(load-theme 'spacemacs-dark t)
 ;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
-(load-theme 'modus-operandi t)
+;; (load-theme 'modus-operandi t)
+
+;; (load-theme 'gruvbox t)
 ;; (zerodark-setup-modeline-format)
 
 (provide 'early-init)
