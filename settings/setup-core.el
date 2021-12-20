@@ -11,6 +11,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq-default indent-tabs-mode nil)
 
+(if (fboundp #'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode))
+
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t)
