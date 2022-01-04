@@ -77,6 +77,7 @@ resources.")
                zenburn-theme
                anti-zenburn-theme
                omtose-phellack-theme
+               kaolin-themes
                zerodark-theme))
   (straight-use-package pkg))
 
