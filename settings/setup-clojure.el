@@ -61,7 +61,10 @@
         cider-repl-use-pretty-printing t
         cider-stacktrace-fill-column nil
         cider-prompt-for-symbol nil
-        cider-pprint-fn 'fipp
+        cider-print-fn 'fipp
+        cider-print-options '(("print-length" 200)
+                              ("print-level" 5)
+                              ("width" 99))
         nrepl-buffer-name-show-port t ;; use port in repl buffer name
         cider-auto-select-error-buffer nil)
 
