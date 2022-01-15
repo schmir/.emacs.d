@@ -62,8 +62,9 @@
         cider-stacktrace-fill-column nil
         cider-prompt-for-symbol nil
         cider-print-fn 'fipp
+        cider-clojure-cli-aliases ":dev"
         cider-print-options '(("print-length" 200)
-                              ("print-level" 5)
+                              ("print-level" 10)
                               ("width" 99))
         nrepl-buffer-name-show-port t ;; use port in repl buffer name
         cider-auto-select-error-buffer nil)
