@@ -44,6 +44,7 @@
 (defun schmir/cider-load-buffer-in-repl ()
   "Load buffer and switch to it."
   (interactive)
+  ;; (cider-ns-refresh)
   (cider-load-buffer)
   (cider-repl-set-ns (cider-current-ns))
   (cider-switch-to-repl-buffer))
@@ -57,7 +58,7 @@
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (setq cider-prompt-save-file-on-load nil
-        cider-repl-result-prefix ";; => "
+        cider-repl-result-prefix ""
         cider-repl-use-pretty-printing t
         cider-stacktrace-fill-column nil
         cider-prompt-for-symbol nil
@@ -65,7 +66,7 @@
         cider-clojure-cli-aliases ":dev"
         cider-print-options '(("print-length" 200)
                               ("print-level" 10)
-                              ("width" 99))
+                              ("width" 200))
         nrepl-buffer-name-show-port t ;; use port in repl buffer name
         cider-auto-select-error-buffer nil)
 
