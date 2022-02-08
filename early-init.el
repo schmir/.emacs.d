@@ -86,7 +86,8 @@ resources.")
 
 ;; (load-theme 'omtose-darker t)
 ;; (load-theme 'zenburn t)
-(load-theme 'spacemacs-dark t)
+;;(load-theme 'spacemacs-dark t)
+(load-theme 'leuven t)
 ;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
 ;; (load-theme 'modus-operandi t)
 
