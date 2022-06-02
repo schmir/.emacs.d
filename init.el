@@ -58,6 +58,9 @@
   :init
   (global-flycheck-inline-mode))
 
+(use-package adoc-mode :ensure t
+  :mode "\\.adoc$")
+
 (use-package apheleia
   :straight '(apheleia :host github :repo "raxod502/apheleia")
   :init
