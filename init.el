@@ -302,6 +302,10 @@
   :mode "\\.js\\'"
   :interpreter "node")
 
+(use-package add-node-modules-path
+  :init
+  (add-hook 'js-mode-hook #'add-node-modules-path))
+
 (use-package flymake-eslint
   :init
   ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
