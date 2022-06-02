@@ -278,6 +278,9 @@
 
 (use-package flymake-eslint
   :init
+  ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
+  ;; work.
+  (setq flymake-eslint-defer-binary-check t)
   (add-hook 'js-mode-hook #'flymake-eslint-enable))
 
 
