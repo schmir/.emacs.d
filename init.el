@@ -186,15 +186,41 @@
   (marginalia-mode +1)
   (global-set-key [remap switch-to-buffer] 'consult-buffer))
 
-(use-package selectrum :demand t
+(use-package selectrum :disabled :demand t
   :config
   (progn
     (selectrum-mode +1)))
 
-(use-package selectrum-prescient :demand t
+(use-package selectrum-prescient :disabled :demand t
   :config
   (selectrum-prescient-mode +1)
   (prescient-persist-mode +1))
+
+(use-package vertico
+  :init
+  (vertico-mode)
+
+  ;; Different scroll margin
+  ;; (setq vertico-scroll-margin 0)
+
+  ;; Show more candidates
+  (setq vertico-count 20)
+
+  ;; Grow and shrink the Vertico minibuffer
+  ;; (setq vertico-resize t)
+
+  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+  ;; (setq vertico-cycle t)
+  )
+
+(use-package hotfuzz :disabled
+  :init
+  (setq completion-styles '(hotfuzz)))
+
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)))
+
 
 (use-package ctrlf :demand t
   :config
