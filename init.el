@@ -10,6 +10,7 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
+(use-package compat)
 ;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
 (use-package no-littering
   :demand t
