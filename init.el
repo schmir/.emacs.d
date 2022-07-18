@@ -34,7 +34,7 @@
    elixir-mode
    flycheck-rust
    flymake-shellcheck
-   gitignore-mode
+   ;; gitignore-mode
    golden-ratio
    htmlize
    leo
@@ -171,7 +171,9 @@
   (consult-customize
    consult-ripgrep consult-git-grep consult-grep consult-buffer
    consult-bookmark consult-recent-file consult-xref
-   consult--source-file consult--source-project-file consult--source-bookmark
+   ;; consult--source-file
+   ;; consult--source-project-file
+   consult--source-bookmark
    :preview-key (kbd "M-.")))
 
 (use-package marginalia :demand t
