@@ -107,7 +107,7 @@
 ;; https://groups.google.com/g/gnu.emacs.help/c/W_1VhwJrelE
 ;; (mouse-avoidance-mode 'banish)
 
-(setq make-pointer-invisible nil)
+;; (setq make-pointer-invisible nil)
 
 ;; Configure hippie-expand
 (defun try-complete-abbrev (old)
