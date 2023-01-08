@@ -103,7 +103,7 @@
   :straight nil
   :init
   (setq uniquify-buffer-name-style 'forward
-        uniquify-min-dir-content 2))
+        uniquify-min-dir-content 4))
 
 
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
