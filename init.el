@@ -225,7 +225,7 @@
   (setq completion-styles '(orderless)))
 
 
-(use-package ctrlf :demand t
+(use-package ctrlf :disabled :demand t
   :config
   (ctrlf-mode +1))
 
