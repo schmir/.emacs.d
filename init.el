@@ -208,7 +208,7 @@
 
   ;; Show more candidates
   (setq vertico-count 20)
-
+  (setq completion-styles '(basic substring))
   ;; Grow and shrink the Vertico minibuffer
   ;; (setq vertico-resize t)
 
@@ -220,7 +220,9 @@
   :init
   (setq completion-styles '(hotfuzz)))
 
-(use-package orderless
+;; orderless completion style interferes with cider's completion
+;; see https://github.com/clojure-emacs/cider/issues/3019
+(use-package orderless :disabled
   :init
   (setq completion-styles '(orderless)))
 
