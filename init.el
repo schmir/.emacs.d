@@ -10,16 +10,6 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
-(use-package compat)
-;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
-(use-package no-littering
-  :demand t
-  :config
-  (progn
-    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-    (if (file-exists-p custom-file)
-        (load custom-file))))
-
 (require 'setup-core)
 
 

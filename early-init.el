@@ -71,6 +71,19 @@ resources.")
 (setq straight-use-package-by-default t)
 (setq use-package-always-defer t)  ;; always load lazily
 
+;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
+(use-package no-littering
+  :demand t
+  :config
+  (progn
+    (when (fboundp 'startup-redirect-eln-cache)
+      (startup-redirect-eln-cache
+       (convert-standard-filename
+        (expand-file-name  "var/eln-cache/" user-emacs-directory))))
+    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+    (if (file-exists-p custom-file)
+        (load custom-file))))
+
 (dolist (pkg '(leuven-theme
                gruvbox-theme
                spacemacs-theme
