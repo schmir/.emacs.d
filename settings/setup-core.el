@@ -2,6 +2,9 @@
 
 ;;; Code:
 
+;; silence warnings, especially from native compilation
+(setq warning-minimum-level :error)
+
 (advice-add 'risky-local-variable-p :override #'ignore)
 
 ;; prevent emacs from asking for coding-system...
