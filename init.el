@@ -325,8 +325,6 @@
        (require 'lsp)
        (message "lsp-register-custom-settings: %s" schmir/lsp-settings)
        (lsp-register-custom-settings schmir/lsp-settings)
-       (lsp-register-custom-settings
-        '(("gopls.experimentalWorkspaceModule" t t)))
        (lsp))))
   :config
   (lsp-register-custom-settings
