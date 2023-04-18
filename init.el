@@ -97,6 +97,7 @@
 
 
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
+;; dnf install libvterm-devel libtool cmake
 (use-package vterm
   :init
   (setq vterm-max-scrollback 10000)
