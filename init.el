@@ -252,7 +252,8 @@
 
 (use-package deft
   :init
-  (setq deft-default-extension "org"
+  (setq deft-directory (expand-file-name "~/m/deft/")
+        deft-default-extension "org"
         deft-extensions '("org" "md" "txt")
         deft-text-mode 'org-mode
         deft-use-filename-as-title t
