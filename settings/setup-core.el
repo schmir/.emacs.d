@@ -71,9 +71,6 @@
       enable-recursive-minibuffers t)
 
 
-(setq tramp-default-method "ssh")
-;; (customize-set-variable 'tramp-syntax 'simplified)
-
 (defalias 'br 'boxquote-region)
 (defalias 'cc 'cider-connect)
 (defalias 'sbke 'save-buffers-kill-emacs)

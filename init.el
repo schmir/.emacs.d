@@ -72,12 +72,6 @@
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
-;; place cursor on same buffer position between editing sessions
-(use-package saveplace :demand t
-  :straight nil
-  :config
-  (save-place-mode))
-
 
 (eval
  `(use-package so-long
@@ -436,15 +430,27 @@
   :bind (("C-c s" . #'magit-status)
          ("C-c y" . #'yadm-status))
   :config
-  (advice-add 'magit-process-filter :after #'magit-display-ansi-colors)
-  (require 'tramp)
-  (add-to-list 'tramp-methods
-               '("yadm"
-                 (tramp-login-program "yadm")
-                 (tramp-login-args (("enter")))
-                 (tramp-login-env (("SHELL") ("/bin/sh")))
-                 (tramp-remote-shell "/bin/sh")
-                 (tramp-remote-shell-args ("-c")))))
+  (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
+
+
+;; configure tramp before saveplace, because it might use tramp
+(require 'tramp)
+(setq tramp-default-method "ssh")
+;; (customize-set-variable 'tramp-syntax 'simplified)
+(add-to-list 'tramp-methods
+             '("yadm"
+               (tramp-login-program "yadm")
+               (tramp-login-args (("enter")))
+               (tramp-login-env (("SHELL") ("/bin/sh")))
+               (tramp-remote-shell "/bin/sh")
+               (tramp-remote-shell-args ("-c"))))
+
+;; saveplace may need the yadm tramp method.
+;; place cursor on same buffer position between editing sessions
+(use-package saveplace :demand t
+  :straight nil
+  :config
+  (save-place-mode))
 
 (use-package git-link
   :config
