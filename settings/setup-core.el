@@ -39,6 +39,7 @@
 (auto-image-file-mode 1)
 (column-number-mode 1)
 
+(setq read-file-name-completion-ignore-case t)
 (recentf-mode t)
 (setq recentf-max-saved-items 200)
 
