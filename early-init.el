@@ -23,6 +23,10 @@
 
 (setq package-enable-at-startup nil)
 
+(setq byte-compile-warnings '(not obsolete))
+(setq warning-suppress-log-types '((comp) (bytecomp)))
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;; get rid of visual clutter
 (setq inhibit-splash-screen t
       initial-scratch-message nil)
@@ -65,47 +69,19 @@ resources.")
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;;;;  Effectively replace use-package with straight-use-package
-;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-(setq use-package-always-defer t)  ;; always load lazily
+(setq default-frame-alist '(;; (fullscreen . maximized)
 
-;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
-(use-package no-littering
-  :demand t
-  :config
-  (progn
-    (when (fboundp 'startup-redirect-eln-cache)
-      (startup-redirect-eln-cache
-       (convert-standard-filename
-        (expand-file-name  "var/eln-cache/" user-emacs-directory))))
-    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-    (if (file-exists-p custom-file)
-        (load custom-file))))
+                            ;; You can turn off scroll bars by uncommenting these lines:
+                            ;; (vertical-scroll-bars . nil)
+                            ;; (horizontal-scroll-bars . nil)
 
-(dolist (pkg '(leuven-theme
-               gruvbox-theme
-               spacemacs-theme
-               zenburn-theme
-               anti-zenburn-theme
-               omtose-phellack-theme
-               kaolin-themes
-               zerodark-theme))
-  (straight-use-package pkg))
+                            ;; Determine with (face-attribute 'default :background)
+                            ;; Setting the face in here prevents flashes of
+                            ;; color as the theme gets activated
+                            (background-color . "#282c34")
+                            (ns-appearance . dark)
+                            (ns-transparent-titlebar . t)))
 
-(if (version< emacs-version "28")
-    (straight-use-package 'modus-themes))
-
-;; (load-theme 'omtose-darker t)
-;; (load-theme 'zenburn t)
-;;(load-theme 'spacemacs-dark t)
-(load-theme 'leuven t)
-;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
-;; (load-theme 'modus-operandi t)
-
-;; (load-theme 'gruvbox t)
-;; (zerodark-setup-modeline-format)
 
 (provide 'early-init)
 ;;; early-init.el ends here

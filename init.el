@@ -10,6 +10,54 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
+;;;;  Effectively replace use-package with straight-use-package
+;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+(setq use-package-always-defer t)  ;; always load lazily
+
+;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
+(use-package no-littering
+  :demand t
+  :config
+  (progn
+    (when (fboundp 'startup-redirect-eln-cache)
+      (startup-redirect-eln-cache
+       (convert-standard-filename
+        (expand-file-name  "var/eln-cache/" user-emacs-directory))))
+    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+    (if (file-exists-p custom-file)
+        (load custom-file))))
+
+
+;; (dolist (pkg '(leuven-theme
+;;                gruvbox-theme
+;;                spacemacs-theme
+;;                zenburn-theme
+;;                anti-zenburn-theme
+;;                omtose-phellack-theme
+;;                kaolin-themes
+;;                zerodark-theme))
+;;   (straight-use-package pkg))
+
+;; (if (version< emacs-version "28")
+;;     (straight-use-package 'modus-themes))
+
+;; (straight-use-package 'spacemacs-theme)
+;; (load-theme 'spacemacs-dark t)
+(straight-use-package 'zerodark-theme)
+(load-theme 'zerodark t)
+
+;; (load-theme 'omtose-darker t)
+;; (load-theme 'zenburn t)
+;;(load-theme 'spacemacs-dark t)
+;; (load-theme 'leuven t)
+;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
+;; (load-theme 'modus-operandi t)
+
+;; (load-theme 'gruvbox t)
+;; (zerodark-setup-modeline-format)
+
 (require 'setup-core)
 
 
