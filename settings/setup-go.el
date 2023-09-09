@@ -1,12 +1,15 @@
+;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
+
+(defun schmir/fix-imports()
+  (with-demoted-errors "Error: %s" (call-interactively 'eglot-code-action-organize-imports)))
 
 (defun setup-go-mode ()
-  (setq fill-column 99)
-  (setq gofmt-command "gofumports")
+  (setq fill-column 99
+        gofmt-command "gofumports")
   (company-mode)
-  (require 'lsp)
-  ;;(add-hook 'before-save-hook #'gofmt-before-save)
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t)
+  (add-hook 'before-save-hook 'schmir/fix-imports nil t)
+  (eglot-ensure))
 
 (use-package go-mode
   :config

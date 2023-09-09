@@ -355,6 +355,7 @@
 
 
 (use-package lsp-mode
+  :disabled true
   :init
   (setq schmir/lsp-settings nil)  ;; this is meant to be set via .dir-locals.el
   (setq lsp-keymap-prefix "C-c l"
@@ -391,6 +392,16 @@
   :hook ((python-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
+
+(eval
+ `(use-package eglot
+    ,@(if (version< "29.0" emacs-version)
+          '(:straight nil))
+    :bind (:map eglot-mode-map
+                ("C-c ." . #'xref-find-references)
+                ("C-c t" . #'eglot-find-typeDefinition)
+                ("C-c i" . #'eglot-find-implementation)
+                ("C-c r" . #'eglot-rename))))
 
 (use-package tree-sitter-langs :demand t)
 (use-package tree-sitter
