@@ -74,7 +74,6 @@
    flycheck-rust
    flymake-shellcheck
    ;; gitignore-mode
-   golden-ratio
    htmlize
    leo
    lua-mode
@@ -89,6 +88,10 @@
   (straight-use-package pkg))
 
 (use-package diminish)
+
+(use-package zoom
+  :init (zoom-mode)
+  :diminish zoom-mode)
 
 (use-package flycheck
   :init

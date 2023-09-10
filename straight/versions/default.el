@@ -52,7 +52,6 @@
  ("git-messenger" . "eade986ef529aa2dac6944ad61b18de55cee0b76")
  ("gnu-elpa-mirror" . "e814620b181b7f1b14da51d4ee022b766067d114")
  ("go-mode.el" . "8dce1e3ba1cdc34a856ad53c8421413cfe33660e")
- ("golden-ratio.el" . "749b313cf27e15856443890e62a94008d4a6795a")
  ("hcl-mode" . "751b79247f326ab52e00032e805775c37ad9f080")
  ("highlight-symbol.el" . "7a789c779648c55b16e43278e51be5898c121b3a")
  ("js2-mode" . "79bc78d77db0d2e8e43dc0f9e0504ad90bcbc26d")
@@ -97,5 +96,6 @@
  ("writegood-mode" . "d54eadeedb8bf3aa0e0a584c0a7373c69644f4b8")
  ("yaml-mode" . "13728b4b1b1bd33d3a754236a0f23e4c76d6ba91")
  ("zenburn-emacs" . "8a1f9d28f503615e5d9b3eac59a2f3c14e75fc20")
- ("zerodark-theme" . "b463528704f6eb00684c0ee003fbd8e42901cde0"))
+ ("zerodark-theme" . "b463528704f6eb00684c0ee003fbd8e42901cde0")
+ ("zoom" . "2104abb074682db79b9ff3a748e8e2e760a4d8cf"))
 :gamma
