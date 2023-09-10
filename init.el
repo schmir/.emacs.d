@@ -31,23 +31,23 @@
         (load custom-file))))
 
 
-;; (dolist (pkg '(leuven-theme
-;;                gruvbox-theme
-;;                spacemacs-theme
-;;                zenburn-theme
-;;                anti-zenburn-theme
-;;                omtose-phellack-theme
-;;                kaolin-themes
-;;                zerodark-theme))
-;;   (straight-use-package pkg))
+(dolist (pkg '(leuven-theme
+               gruvbox-theme
+               spacemacs-theme
+               zenburn-theme
+               anti-zenburn-theme
+               omtose-phellack-theme
+               kaolin-themes
+               zerodark-theme))
+  (straight-use-package pkg))
 
 ;; (if (version< emacs-version "28")
 ;;     (straight-use-package 'modus-themes))
 
 ;; (straight-use-package 'spacemacs-theme)
 ;; (load-theme 'spacemacs-dark t)
-(straight-use-package 'zerodark-theme)
-(load-theme 'zerodark t)
+;;(straight-use-package 'zerodark-theme)
+(load-theme 'spacemacs-light t)
 
 ;; (load-theme 'omtose-darker t)
 ;; (load-theme 'zenburn t)
@@ -208,7 +208,7 @@
    ;; consult--source-file
    ;; consult--source-project-file
    consult--source-bookmark
-   :preview-key (kbd "M-.")))
+   :preview-key "M-."))
 
 (use-package marginalia :demand t
   :init

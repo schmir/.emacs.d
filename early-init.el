@@ -78,7 +78,7 @@ resources.")
                             ;; Determine with (face-attribute 'default :background)
                             ;; Setting the face in here prevents flashes of
                             ;; color as the theme gets activated
-                            (background-color . "#282c34")
+                            (background-color . "#fbf8ef")
                             (ns-appearance . dark)
                             (ns-transparent-titlebar . t)))
 
