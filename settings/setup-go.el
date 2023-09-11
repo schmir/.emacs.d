@@ -6,7 +6,7 @@
 (defun setup-go-mode ()
   (setq fill-column 99
         gofmt-command "gofumports")
-  (company-mode)
+  ;; (company-mode)
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t)
   (add-hook 'before-save-hook 'schmir/fix-imports nil t)
   (eglot-ensure))

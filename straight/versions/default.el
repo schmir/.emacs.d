@@ -13,6 +13,7 @@
  ("company-mode" . "7c24dc8668af5aea8a5d07aeceda5fac7a2a85b5")
  ("compat" . "d1e893b02301a7321ca9879bc9a4da50e2fdf09f")
  ("consult" . "e1dce9725b2fdf5c450d77bfb1ba93f97fd4d980")
+ ("corfu" . "cc244c54b392ce4d27ed166730efde4f4d01a07f")
  ("crux" . "f8789f67a9d2e1eb31a0e4531aec9bb6d6ec1282")
  ("dash.el" . "6db80c711ce947f6c6fa11e5c2257fff2c79d139")
  ("default-text-scale" . "bfc0987c37e93742255d3b23d86c17096fda8e7e")

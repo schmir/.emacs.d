@@ -10,10 +10,10 @@
   (progn
     (require 'clojure-mode-extra-font-locking)
     (require 'flycheck-clj-kondo)
-    (add-hook 'clojure-mode-hook #'company-mode)
+    ;; (add-hook 'clojure-mode-hook #'company-mode)
     (add-hook 'clojure-mode-hook #'flycheck-mode)
     (define-clojure-indent
-      (event-handler 'defun))
+     (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond))
   :bind (:map clojure-mode-map
               ("<f10>" . #'cider-connect)))
@@ -55,7 +55,7 @@
   (setq nrepl-hide-special-buffers t
         ;;nrepl-history-file "~/.emacs.d/nrepl-history"
         )
-  (add-hook 'cider-repl-mode-hook #'company-mode)
+  ;; (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (setq cider-prompt-save-file-on-load nil
         cider-repl-result-prefix ""
