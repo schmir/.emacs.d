@@ -27,34 +27,7 @@
         (load custom-file))))
 
 
-(dolist (pkg '(leuven-theme
-               gruvbox-theme
-               spacemacs-theme
-               zenburn-theme
-               anti-zenburn-theme
-               omtose-phellack-theme
-               kaolin-themes
-               zerodark-theme))
-  (straight-use-package pkg))
-
-;; (if (version< emacs-version "28")
-;;     (straight-use-package 'modus-themes))
-
-;; (straight-use-package 'spacemacs-theme)
-;; (load-theme 'spacemacs-dark t)
-;;(straight-use-package 'zerodark-theme)
-(load-theme 'spacemacs-light t)
-
-;; (load-theme 'omtose-darker t)
-;; (load-theme 'zenburn t)
-;;(load-theme 'spacemacs-dark t)
-;; (load-theme 'leuven t)
-;;(add-to-list 'default-frame-alist '(mouse-color . "gold2"))
-;; (load-theme 'modus-operandi t)
-
-;; (load-theme 'gruvbox t)
-;; (zerodark-setup-modeline-format)
-
+(require 'setup-theme)
 (require 'setup-core)
 
 
