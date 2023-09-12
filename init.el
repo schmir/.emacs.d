@@ -425,6 +425,8 @@
  `(use-package eglot
     ,@(if (version< "29.0" emacs-version)
           '(:straight nil))
+    :custom
+    (eglot-autoshutdown t)
     :bind (:map eglot-mode-map
                 ("C-c ." . #'xref-find-references)
                 ("C-c t" . #'eglot-find-typeDefinition)
