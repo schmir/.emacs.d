@@ -64,8 +64,7 @@
 
 (setq
  schmir/packages
- '(aggressive-indent
-   bbdb
+ '(bbdb
    boxquote
    cargo
    crux
@@ -118,7 +117,8 @@
   :bind ("C-c b" . #'apheleia-format-buffer))
 
 (use-package aggressive-indent
-  :diminish aggressive-indent-mode)
+  :diminish
+  :hook ((emacs-lisp-mode clojure-mode) . aggressive-indent-mode))
 
 (use-package easy-kill
   :config
