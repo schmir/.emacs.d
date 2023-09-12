@@ -76,8 +76,6 @@
    htmlize
    leo
    lua-mode
-   markdown-mode
-   markdown-preview-mode
    prodigy
    solidity-flycheck
    tldr
@@ -87,6 +85,13 @@
   (straight-use-package pkg))
 
 (use-package diminish)
+
+(use-package markdown-mode
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init
+  (setq markdown-command "multimarkdown"))
+
+(use-package markdown-preview-mode)
 
 (use-package zoom
   :init (zoom-mode)
