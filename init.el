@@ -17,11 +17,6 @@
   :demand t
   :config
   (progn
-    (when (and (native-comp-available-p)
-               (fboundp 'startup-redirect-eln-cache))
-      (startup-redirect-eln-cache
-       (convert-standard-filename
-        (expand-file-name  "var/eln-cache/" user-emacs-directory))))
     (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
     (if (file-exists-p custom-file)
         (load custom-file))))
