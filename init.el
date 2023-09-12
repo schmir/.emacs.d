@@ -39,7 +39,6 @@
    crux
    dockerfile-mode
    elixir-mode
-   flycheck-rust
    flymake-shellcheck
    ;; gitignore-mode
    htmlize
@@ -303,26 +302,6 @@
         deft-text-mode 'org-mode
         deft-use-filename-as-title t
         deft-use-filter-string-for-filename t))
-
-(use-package racer
-  :init
-  (progn
-    (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
-    (setq racer-rust-src-path (expand-file-name "~/vendor/rust/src"))) ;; Rust source code PATH
-  )
-
-(use-package rust-mode
-  :config
-  (progn
-    (require 'racer)
-    (require 'flycheck)
-    (define-key rust-mode-map (kbd "C-c b") 'rust-format-buffer)
-    (add-hook 'rust-mode-hook #'racer-mode)
-    (add-hook 'racer-mode-hook #'eldoc-mode)
-    (add-hook 'racer-mode-hook #'company-mode)
-    (add-hook 'rust-mode-hook #'flycheck-mode)
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
-
 
 ;; --- setup typescript
 (defun setup-tide-mode ()
