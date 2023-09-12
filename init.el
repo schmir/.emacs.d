@@ -10,11 +10,7 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
-;;;;  Effectively replace use-package with straight-use-package
-;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-(setq use-package-always-defer t)  ;; always load lazily
+(require 'setup-straight)
 
 ;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
 (use-package no-littering

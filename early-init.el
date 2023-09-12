@@ -52,23 +52,6 @@ resources.")
 (advice-add #'x-apply-session-resources :override
             #'radian--advice-disable-x-resource-application)
 
-(setq straight-check-for-modifications '(check-on-save find-when-checking))
-
-;; bootstrap straight.el
-;; https://github.com/raxod502/straight.el/blob/develop/README.md#getting-started
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
 (setq default-frame-alist '(;; (fullscreen . maximized)
 
                             ;; You can turn off scroll bars by uncommenting these lines:
