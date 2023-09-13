@@ -21,31 +21,24 @@
     (if (file-exists-p custom-file)
         (load custom-file))))
 
-
 (require 'setup-theme)
 (require 'setup-core)
 
-
-(setq
- schmir/packages
- '(bbdb
-   boxquote
-   cargo
-   crux
-   dockerfile-mode
-   elixir-mode
-   flymake-shellcheck
-   ;; gitignore-mode
-   htmlize
-   leo
-   lua-mode
-   prodigy
-   solidity-flycheck
-   tldr
-   yaml-mode))
-
-(dolist (pkg schmir/packages)
-  (straight-use-package pkg))
+(use-package bbdb)
+(use-package boxquote)
+(use-package cargo)
+(use-package crux)
+(use-package dockerfile-mode)
+(use-package elixir-mode)
+(use-package flymake-shellcheck)
+;; (use-package gitignore-mode)
+(use-package htmlize)
+(use-package leo)
+(use-package lua-mode)
+(use-package prodigy)
+(use-package solidity-flycheck)
+(use-package tldr)
+(use-package yaml-mode)
 
 (use-package diminish)
 
@@ -58,7 +51,7 @@
 
 (use-package zoom
   :init (zoom-mode)
-  :diminish zoom-mode)
+  :diminish)
 
 (use-package flycheck
   :init
@@ -136,7 +129,7 @@
   :bind ("C-x v p" . git-messenger:popup-message))
 
 (use-package company
-  :diminish company-mode
+  :diminish
   :init
   (setq company-idle-delay 0.8
         company-minimum-prefix-length 0
@@ -174,13 +167,13 @@
   (persistent-scratch-setup-default))
 
 (use-package which-key :demand t
-  :diminish which-key-mode
+  :diminish
   :config
   (which-key-mode))
 
 
 (use-package projectile :demand t
-  :diminish projectile-mode
+  :diminish
   :init
   (setq-default projectile-completion-system 'default)
 
@@ -219,15 +212,6 @@
   (marginalia-mode +1)
   (global-set-key [remap switch-to-buffer] 'consult-buffer))
 
-(use-package selectrum :disabled :demand t
-  :config
-  (progn
-    (selectrum-mode +1)))
-
-(use-package selectrum-prescient :disabled :demand t
-  :config
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
 
 (use-package vertico
   :init
@@ -246,25 +230,10 @@
   ;; (setq vertico-cycle t)
   )
 
-(use-package hotfuzz :disabled
-  :init
-  (setq completion-styles '(hotfuzz)))
-
-;; orderless completion style interferes with cider's completion
-;; see https://github.com/clojure-emacs/cider/issues/3019
-(use-package orderless :disabled
-  :init
-  (setq completion-styles '(orderless)))
-
-
-(use-package ctrlf :disabled :demand t
-  :config
-  (ctrlf-mode +1))
-
 (use-package git-gutter
   :ensure t
   ;; :init (global-git-gutter-mode +1)
-  :diminish git-gutter-mode)
+  :diminish)
 
 (use-package default-text-scale
   :bind
@@ -272,7 +241,7 @@
   ("C-=" . #'default-text-scale-increase))
 
 (use-package highlight-symbol
-  :diminish highlight-symbol-mode
+  :diminish
   :init
   (add-hook 'prog-mode-hook #'highlight-symbol-mode)
 
@@ -330,44 +299,6 @@
   (add-hook 'js-mode-hook #'flymake-eslint-enable))
 
 
-(use-package lsp-mode
-  :disabled true
-  :init
-  (setq schmir/lsp-settings nil)  ;; this is meant to be set via .dir-locals.el
-  (setq lsp-keymap-prefix "C-c l"
-        lsp-eldoc-render-all t
-        lsp-before-save-edits t
-        lsp-enable-imenu t
-        lsp-idle-delay 0.1
-        lsp-headerline-breadcrumb-enable nil)
-  (add-hook
-   'hack-local-variables-hook
-   (lambda ()
-     (when (derived-mode-p 'go-mode)
-       (require 'lsp)
-       (message "lsp-register-custom-settings: %s" schmir/lsp-settings)
-       (lsp-register-custom-settings schmir/lsp-settings)
-       (lsp))))
-  :config
-  (lsp-register-custom-settings
-   '(("gopls.completeUnimported" t t)
-     ("gopls.staticcheck" t t)
-     ("gopls.gofumpt" t t)))
-  (setq lsp-enable-file-watchers nil)
-  (defun hide-lsp-no-formatting-changes (func &rest r)
-    (unless (string-prefix-p "No formatting changes" (car r))
-      (apply func r)))
-
-  (advice-add 'lsp--info :around #'hide-lsp-no-formatting-changes)
-
-  :bind (:map lsp-mode-map
-              ("C-c ." . #'lsp-find-references)
-              ("C-c t" . #'lsp-find-type-definition)
-              ("C-c i" . #'lsp-find-implementation)
-              ("C-c r" . #'lsp-rename))
-  :hook ((python-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
 
 (eval
  `(use-package eglot
@@ -389,8 +320,6 @@
                '(direnv-envrc-mode . bash))
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-
 
 (use-package protobuf-mode
   :config
@@ -526,7 +455,7 @@
   (server-start))
 
 (use-package gcmh
-  :diminish gcmh-mode) ;; early-init.el enables gcmh-mode
+  :diminish) ;; early-init.el enables gcmh-mode
 
 (require 'setup-cwc)
 (require 'setup-smartparens)
