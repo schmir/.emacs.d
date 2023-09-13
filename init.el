@@ -31,7 +31,6 @@
 (use-package dockerfile-mode)
 (use-package elixir-mode)
 (use-package flymake-shellcheck)
-;; (use-package gitignore-mode)
 (use-package htmlize)
 (use-package leo)
 (use-package lua-mode)
@@ -77,6 +76,10 @@
 
   :bind ("C-c b" . #'apheleia-format-buffer))
 
+(use-package eldoc
+  :straight nil
+  :hook ((emacs-lisp-mode clojure-mode) . eldoc-mode))
+
 (use-package aggressive-indent
   :diminish
   :hook ((emacs-lisp-mode clojure-mode) . aggressive-indent-mode))
@@ -84,7 +87,6 @@
 (use-package easy-kill
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
-
 
 (eval
  `(use-package so-long
@@ -121,12 +123,6 @@
   (setq shell-pop-shell-type '("vterm" "*vterm*" #'vterm)
         shell-pop-term-shell "/usr/bin/zsh"
         shell-pop-window-size 40))
-
-(use-package git-messenger
-  :init
-  (setq git-messenger:show-detail t
-        git-messenger:use-magit-popup t)
-  :bind ("C-x v p" . git-messenger:popup-message))
 
 (use-package company
   :diminish
@@ -230,10 +226,6 @@
   ;; (setq vertico-cycle t)
   )
 
-(use-package git-gutter
-  :ensure t
-  ;; :init (global-git-gutter-mode +1)
-  :diminish)
 
 (use-package default-text-scale
   :bind
@@ -242,9 +234,8 @@
 
 (use-package highlight-symbol
   :diminish
-  :init
-  (add-hook 'prog-mode-hook #'highlight-symbol-mode)
-
+  :hook
+  (prog-mode . highlight-symbol-mode)
   :config
   (defadvice highlight-symbol-count (around turn-off-symbol-counting activate)
     (interactive))
@@ -288,15 +279,14 @@
   :interpreter "node")
 
 (use-package add-node-modules-path
-  :init
-  (add-hook 'js-mode-hook #'add-node-modules-path))
+  :hook (js-mode . add-node-modules-path))
 
 (use-package flymake-eslint
+  :hook (js-mode . flymake-eslint-enable)
   :init
   ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
   ;; work.
-  (setq flymake-eslint-defer-binary-check t)
-  (add-hook 'js-mode-hook #'flymake-eslint-enable))
+  (setq flymake-eslint-defer-binary-check t))
 
 
 
@@ -375,29 +365,6 @@
   :bind (:map terraform-mode-map
               ("C-c b" . #'terraform-format-buffer)))
 
-;; colorize pre-commit output
-;; (require 'ansi-color)
-(defun display-ansi-colors
-    ()
-  (interactive)
-  (let ((inhibit-read-only t))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-
-(defun magit-display-ansi-colors
-    (proc &rest args)
-  (interactive)
-  (with-current-buffer (process-buffer proc)
-    (display-ansi-colors)))
-
-(defun yadm-status ()
-  (interactive)
-  (magit-status "/yadm::"))
-
-(use-package magit
-  :bind (("C-c s" . #'magit-status)
-         ("C-c y" . #'yadm-status))
-  :config
-  (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
 
 
 ;; configure tramp before saveplace, because it might use tramp
@@ -419,9 +386,6 @@
   :config
   (save-place-mode))
 
-(use-package git-link
-  :config
-  (setq git-link-use-commit 't))
 
 (use-package recentf
   :straight nil
@@ -457,20 +421,12 @@
 (use-package gcmh
   :diminish) ;; early-init.el enables gcmh-mode
 
+(require 'setup-git)
 (require 'setup-cwc)
 (require 'setup-smartparens)
 (require 'setup-clojure)
 (require 'setup-go)
 (require 'setup-python)
-
-;;; Configure emacs lisp mode
-(defun schmir/elisp-hook ()
-  (aggressive-indent-mode 1)
-  (eldoc-mode 1)
-  ;; (company-mode 1)
-  )
-
-(add-hook 'emacs-lisp-mode-hook #'schmir/elisp-hook)
 
 (autoload 'git-grep "git-grep")
 (global-set-key (kbd "<f5>") #'git-grep)
