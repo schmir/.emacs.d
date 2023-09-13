@@ -351,13 +351,7 @@
     (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
     (add-hook 'sh-mode-hook 'flymake-mode)))
 
-(use-package terraform-mode
-  :config
-  (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
-  :bind (:map terraform-mode-map
-              ("C-c b" . #'terraform-format-buffer)))
-
-
+(use-package terraform-mode)
 
 ;; configure tramp before saveplace, because it might use tramp
 (require 'tramp)
