@@ -70,6 +70,7 @@
   :config
   (setf (alist-get 'blackzim apheleia-formatters)
         '("blackzim"))
+  (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
   (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
   (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
   (add-to-list 'apheleia-mode-alist '(conf-toml-mode . prettier))
@@ -344,20 +345,11 @@
     (require 'company-solidity)
     (add-hook 'solidity-mode-hook #'schmir/solidity-setup)))
 
-(defun schmir/shfmt-buffer ()
-  (interactive)
-  (save-excursion
-    (save-buffer)
-    (shell-command (format "shfmt -w -i 2 %s" (shell-quote-argument (buffer-file-name))))
-    (revert-buffer t t t)))
-
 (use-package sh-script
   :config
   (progn
     (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
-    (add-hook 'sh-mode-hook 'flymake-mode))
-  :bind (:map sh-mode-map
-              ("C-c b" . #'schmir/shfmt-buffer)))
+    (add-hook 'sh-mode-hook 'flymake-mode)))
 
 (use-package terraform-mode
   :config
