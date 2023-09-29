@@ -57,7 +57,7 @@
         )
   ;; (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
-  (setq cider-prompt-save-file-on-load nil
+  (setq cider-save-file-on-load t
         cider-repl-result-prefix ""
         cider-repl-use-pretty-printing t
         cider-stacktrace-fill-column nil
