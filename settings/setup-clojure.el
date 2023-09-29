@@ -78,7 +78,7 @@
    ("H-h" . #'cider-doc)
 
    :map cider-repl-mode-map
-   ("<f10>" . #'delete-window)
+   ("<f10>" . #'cider-switch-to-last-clojure-buffer)
    ("C-c C-w" . #'cider-eval-last-sexp-and-replace)
    ("H-h" . #'cider-doc)
 

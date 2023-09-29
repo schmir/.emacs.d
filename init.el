@@ -423,13 +423,17 @@
 ;; --- Configure display-buffer-alist
 
 (setq display-buffer-alist
-      (list
-       '("\\`\\*e?shell\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
+      '(("\\`\\*e?shell\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
          (display-buffer-reuse-window
           display-buffer-in-side-window)
          (reusable-frames . visible)
          (side . bottom)
-         (window-height . 0.4))))
+         (window-height . 0.4))
+        ("\\`\\*cider-repl\\|.*.clj"
+         (display-buffer-reuse-window
+          display-buffer-pop-up-window)
+         (reusable-frames . t)
+         (inhibit-switch-frames . nil))))
 
 (defun lunaryorn-quit-bottom-side-windows ()
   "Quit side windows of the current frame."
