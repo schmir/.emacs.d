@@ -89,21 +89,5 @@
    :map cider-stacktrace-mode-map
    ("<f10>" . #'cider-popup-buffer-quit-function)))
 
-(defun cider-jack-in-babashka ()
-  "Start an babashka nREPL server for the current project and connect to it."
-  (interactive)
-  (let* ((default-directory (project-root (project-current t)))
-         (process-filter (lambda (proc string)
-                           "Run cider-connect once babashka nrepl server is ready."
-                           (when (string-match "Started nREPL server at .+:\\([0-9]+\\)" string)
-                             (cider-connect-clj (list :host "localhost"
-                                                      :port (match-string 1 string)
-                                                      :project-dir default-directory)))
-                           ;; Default behavior: write to process buffer
-                           (internal-default-process-filter proc string))))
-    (set-process-filter
-     (start-file-process "babashka" "*babashka*" "bb" "--nrepl-server" "0")
-     process-filter)))
-
 (provide 'setup-clojure)
 ;;; setup-clojure ends here
