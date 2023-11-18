@@ -136,5 +136,11 @@
 (global-set-key (kbd "<C-tab>") #'hippie-expand)
 
 
+;; let me tyoe umlauts with right option + u and do not mess with the left option key
+(if (boundp 'ns-alternate-modifier)
+    (setq ns-alternate-modifier 'meta
+          ns-right-alternate-modifier 'none))
+
+
 (provide 'setup-core)
 ;;; setup-core.el ends here
