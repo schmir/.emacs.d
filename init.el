@@ -388,6 +388,8 @@
   ;; colorize compile mode output
   (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
+(use-package ninja-mode)
+
 (use-package writegood-mode
   :init
   (progn
