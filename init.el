@@ -352,6 +352,8 @@
     (add-hook 'sh-mode-hook 'flymake-mode)))
 
 (use-package terraform-mode)
+(use-package nix-mode
+  :mode "\\.nix\\'")
 
 ;; configure tramp before saveplace, because it might use tramp
 (require 'tramp)
