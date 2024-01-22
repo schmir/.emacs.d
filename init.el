@@ -106,17 +106,6 @@
         uniquify-min-dir-content 4))
 
 
-;; apt install libvterm-dev libvterm-bin libtool-bin cmake
-;; dnf install libvterm-devel libtool cmake
-(use-package vterm
-  :init
-  (setq vterm-max-scrollback 10000)
-  :config
-  (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
-  (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
-  :bind (:map vterm-mode-map
-              ("C-t" . #'shell-pop)))
-
 (use-package shell-pop
   :bind
   ("C-t" . #'shell-pop)
