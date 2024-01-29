@@ -41,6 +41,7 @@
 (use-package solidity-flycheck)
 (use-package tldr)
 (use-package yaml-mode)
+(use-package just-mode)
 
 (use-package diminish)
 
