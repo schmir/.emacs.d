@@ -6,16 +6,22 @@
 (use-package spacemacs-theme)
 (use-package zenburn-theme)
 (use-package anti-zenburn-theme)
-(use-package omtose-phellack-theme)
+;; (use-package omtose-phellack-theme)
 (use-package kaolin-themes)
 (use-package zerodark-theme)
 
 (if (version< emacs-version "28")
     (use-package modus-themes))
 
-;; (load-theme 'spacemacs-dark t)
+(elpaca-wait)
+
 (load-theme 'spacemacs-light t)
 
+;;(load-theme 'zerodark t)
+;;(zerodark-setup-modeline-format)
+
+;; (load-theme 'spacemacs-dark t)
+;; 
 ;; (load-theme 'omtose-darker t)
 ;; (load-theme 'zenburn t)
 ;; (load-theme 'leuven t)
@@ -23,7 +29,6 @@
 ;; (load-theme 'modus-operandi t)
 
 ;; (load-theme 'gruvbox t)
-;; (zerodark-setup-modeline-format)
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here

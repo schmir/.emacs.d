@@ -33,7 +33,9 @@
   (interactive)
   (magit-status "/yadm::"))
 
+(use-package transient)
 (use-package magit
+  :after transient
   :bind (("C-c s" . #'magit-status)
          ("C-c y" . #'yadm-status))
   :config
