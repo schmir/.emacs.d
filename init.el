@@ -13,16 +13,40 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
-(require 'setup-straight)
+;; Elpaca calls an external emacs process to compile packages. It concatenates the
+;; invocation-directory and invocation-name to determine the path to the emacs executable.  On nix
+;; with the emacsWithPackages package, this is different to what would be found on PATH.  This
+;; leads to problems during the build process. We help elpaca here a bit to find the right
+;; executable.
+(when (string-prefix-p "/nix/store" invocation-directory)
+  (setq
+   original-invocation-directory invocation-directory
+   invocation-directory (expand-file-name "bin/" "~/.nix-profile/")))
 
-;; Help keep ~/.emacs.d clean; see https://github.com/emacscollective/no-littering
-(use-package no-littering
-  :demand t
-  :config
-  (progn
-    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-    (if (file-exists-p custom-file)
-        (load custom-file))))
+(load-file (expand-file-name "install-elpaca.el" user-emacs-directory))
+(add-hook 'elpaca-after-init-hook #'my/finish-init `t)
+
+;; activate packages installed as part of the emacsWithPackages package
+(package-activate-all)
+(when (featurep 'vterm-autoloads)
+  (message "init.el: adding vterm to elpaca-ignored-dependencies")
+  (add-to-list 'elpaca-ignored-dependencies 'vterm))
+
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode)
+  ;; Assume :elpaca t unless otherwise specified.
+  (setq elpaca-use-package-by-default t))
+
+(elpaca no-littering
+  (require 'no-littering)
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
+
+(elpaca diminish
+  (require 'diminish))
+;; Block until current queue processed.
+(elpaca-wait)
 
 (require 'setup-theme)
 (require 'setup-core)
@@ -57,8 +81,6 @@
 (use-package yaml-mode)
 (use-package just-mode)
 
-(use-package diminish)
-
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :init
@@ -82,7 +104,7 @@
   :mode "\\.adoc$")
 
 (use-package apheleia
-  :straight '(apheleia :host github :repo "raxod502/apheleia")
+  :elpaca '(apheleia :host github :repo "raxod502/apheleia")
   :init
   (apheleia-global-mode +1)
   :config
@@ -96,7 +118,7 @@
   :bind ("C-c b" . #'apheleia-format-buffer))
 
 (use-package eldoc
-  :straight nil
+  :elpaca nil
   :hook ((emacs-lisp-mode clojure-mode) . eldoc-mode))
 
 (use-package aggressive-indent
@@ -110,7 +132,7 @@
 (eval
  `(use-package so-long
     ,@(if (version<= "27.1" emacs-version)
-          '(:straight nil))
+          '(:elpaca nil))
     :config
     (setq so-long-max-lines nil
           so-long-threshold 500)
@@ -118,22 +140,24 @@
     (global-so-long-mode +1)))
 
 (use-package uniquify
-  :straight nil
+  :elpaca nil
   :init
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 4))
 
-
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 ;; dnf install libvterm-devel libtool cmake
-(use-package vterm
-  :init
-  (setq vterm-max-scrollback 10000)
-  :config
-  (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
-  (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
-  :bind (:map vterm-mode-map
-              ("C-t" . #'shell-pop)))
+(eval
+ `(use-package vterm
+    :elpaca ,(not (featurep 'vterm-autoloads))
+    :init
+    (setq vterm-max-scrollback 10000)
+    :config
+    (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
+    (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
+    :bind (:map vterm-mode-map
+                ("C-t" . #'shell-pop))
+    :after shell-pop))
 
 (use-package shell-pop
   :bind
@@ -312,7 +336,7 @@
 (eval
  `(use-package eglot
     ,@(if (version< "29.0" emacs-version)
-          '(:straight nil))
+          '(:elpaca nil))
     :custom
     (eglot-autoshutdown t)
     :bind (:map eglot-mode-map
@@ -356,7 +380,9 @@
   (setq c-basic-offset 4)
   (setq tab-width 8))
 
-(use-package company-solidity)
+(use-package company-solidity
+  :after solidity-mode)
+
 (use-package solidity-mode
   :config
   (progn
@@ -364,6 +390,7 @@
     (add-hook 'solidity-mode-hook #'schmir/solidity-setup)))
 
 (use-package sh-script
+  :elpaca nil
   :config
   (progn
     (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
@@ -388,19 +415,21 @@
 ;; saveplace may need the yadm tramp method.
 ;; place cursor on same buffer position between editing sessions
 (use-package saveplace :demand t
-  :straight nil
+  :elpaca nil
   :config
   (save-place-mode))
 
 
 (use-package recentf
-  :straight nil
+  :elpaca nil
   :init
   (progn
     (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
+
 (use-package compile
+  :elpaca nil
   :init
   ;; scroll, but stop at first error
   (setq compilation-scroll-output 'first-error)
@@ -418,11 +447,13 @@
   :bind (("C-c g" . #'writegood-mode)))
 
 (use-package framemove :demand t
+  :elpaca (:host "github.com" :repo "emacsmirror/framemove")
   :config
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
 
 (use-package server :demand t
+  :elpaca nil
   :config
   (server-start))
 

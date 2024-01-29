@@ -10,14 +10,15 @@
     (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
 (setq gc-cons-threshold most-positive-fixnum) ;; will be reverted with the next hook
-(add-hook 'emacs-startup-hook
-          `(lambda ()
-             (if (fboundp #'gcmh-mode)
-                 (gcmh-mode 1)
-               (setq gc-cons-threshold 8000000))
-             (garbage-collect)
-             (message "Load time %.06f"
-                      (float-time (time-since my/start-time)))) t)
+(defun my/finish-init ()
+  (if (fboundp #'gcmh-mode)
+      (gcmh-mode 1)
+    (setq gc-cons-threshold 8000000))
+  (garbage-collect)
+  (let ((m (format "init.el: load time %.06f" (float-time (time-since my/start-time)))))
+    (run-with-timer 5.0 nil (lambda () (message m)))))
+
+;; (add-hook 'emacs-startup-hook my/finish-init `t)
 
 (setq comp-deferred-compilation t)  ;; asynchrounous native compilation
 
@@ -63,10 +64,13 @@ resources.")
                             ;; (vertical-scroll-bars . nil)
                             ;; (horizontal-scroll-bars . nil)
 
-                            ;; Determine with (face-attribute 'default :background)
+                            ;; Determine with
+                            ;;   (face-attribute 'default :background)
+                            ;;   (face-attribute 'default :foreground) )
                             ;; Setting the face in here prevents flashes of
                             ;; color as the theme gets activated
                             (background-color . "#fbf8ef")
+                            (foreground-color . "#655370")
                             (ns-appearance . dark)
                             (ns-transparent-titlebar . t)))
 

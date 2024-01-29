@@ -47,15 +47,11 @@ ID
 /workspace/
 /elpy/
 /custom.el
-/straight/build-cache.el
-/straight/build/
-/straight/repos/
-/straight/mtimes/
 /anaconda-mode/
 /games/
 /request/
-/straight/modified/
 /tldr/
 /transient/
 /projectile.cache
 /url/
+/elpaca/
