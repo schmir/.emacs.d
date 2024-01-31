@@ -4,8 +4,10 @@
 (if (eq 'ns (window-system))
     (x-focus-frame nil))
 
-(if (version< emacs-version "27")
-    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+(let ((minver "29.1"))
+  (when (version< emacs-version minver)
+    (error "init.el: Emacs too -- this config requires at least v%s" minver)))
+
 
 (add-to-list 'load-path
 	     (expand-file-name "site-lisp" user-emacs-directory))
