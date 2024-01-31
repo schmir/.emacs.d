@@ -1,6 +1,9 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 ;; on lexical-binding: https://nullprogram.com/blog/2016/12/22/
 
+(if (eq 'ns (window-system))
+    (x-focus-frame nil))
+
 (if (version< emacs-version "27")
     (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
