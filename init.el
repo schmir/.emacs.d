@@ -27,7 +27,21 @@
 (require 'setup-theme)
 (require 'setup-core)
 
-(use-package bbdb)
+(use-package ebdb
+  :after (:any gnus message)
+  :init
+  (setq ebdb-sources "~/.ebdb")
+  ;; load code for GNUs for reading and message for sending
+  (require 'ebdb-gnus)
+  (require 'ebdb-message)
+  ;; use complete at point interface to select email from contacts
+  (setq ebdb-complete-mail 'capf
+        ebdb-mua-pop-up nil             ; don't show any pop ups
+        ;; when reading or sending with the "reader" in GNUS create contact if it does not exist
+        ebdb-gnus-auto-update-p 'create
+        ;; save on exit
+        ebdb-save-on-exit t))
+
 (use-package boxquote)
 (use-package cargo)
 (use-package crux)
