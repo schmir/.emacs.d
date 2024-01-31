@@ -45,6 +45,9 @@
 
 (elpaca diminish
   (require 'diminish))
+
+(load-file (expand-file-name "elpaca-update-seq.el" user-emacs-directory))
+
 ;; Block until current queue processed.
 (elpaca-wait)
 
