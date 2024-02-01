@@ -9,18 +9,24 @@
    (convert-standard-filename
     (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
-(setq gc-cons-threshold most-positive-fixnum) ;; will be reverted with the next hook
+;; Improves startup time, we reset this later
+(defvar default-file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil
+      gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 1)
+
 (defun my/finish-init ()
+  (setq file-name-handler-alist default-file-name-handler-alist
+        gc-cons-percentage 0.1
+        gc-cons-threshold 100000000)
   (if (fboundp #'gcmh-mode)
-      (gcmh-mode 1)
-    (setq gc-cons-threshold 8000000))
+      (gcmh-mode 1))
   (garbage-collect)
   (let ((m (format "init.el: load time %.06f" (float-time (time-since my/start-time)))))
     (run-with-timer 5.0 nil (lambda () (message m)))))
 
-;; (add-hook 'emacs-startup-hook my/finish-init `t)
-
-(setq comp-deferred-compilation t)  ;; asynchrounous native compilation
+(with-eval-after-load 'elpaca
+  (add-hook 'elpaca-after-init-hook #'my/finish-init `t))
 
 ;; increase some internal limits related to elisp execution
 (setq load-prefer-newer t
@@ -29,51 +35,36 @@
 
 (setq package-enable-at-startup nil)
 
-(setq byte-compile-warnings '(not obsolete))
-(setq warning-suppress-log-types '((comp) (bytecomp)))
-(setq native-comp-async-report-warnings-errors 'silent)
+(setq byte-compile-warnings '(not obsolete)
+      warning-suppress-log-types '((comp) (bytecomp))
+      native-comp-async-report-warnings-errors 'silent)
 
 ;; get rid of visual clutter
-(setq inhibit-splash-screen t
-      initial-scratch-message nil)
+(progn
+  (setq inhibit-splash-screen t
+        initial-scratch-message nil
+        frame-inhibit-implied-resize t)
+  (if (fboundp 'menu-bar-mode)
+      (menu-bar-mode -1))
+  (if (fboundp 'tool-bar-mode)
+      (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode)
+      (scroll-bar-mode -1))
+  (if (fboundp 'horizontal-scroll-bar-mode)
+      (horizontal-scroll-bar-mode -1)))
 
-(if (fboundp 'menu-bar-mode)
-    (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
-(if (fboundp 'horizontal-scroll-bar-mode)
-    (horizontal-scroll-bar-mode -1))
+;; Disable X resources handling
+(advice-add #'x-apply-session-resources :override #'ignore)
 
-(defun radian--advice-disable-x-resource-application ()
-  "Disable `x-apply-session-resources'.
-Now, `x-apply-session-resources' normally gets called before
-reading the init-file. However if we do our initialization in the
-early init-file, before that function gets called, then it may
-override some important things like the cursor color. So we just
-disable it, since there's no real reason to respect X
-resources.")
-
-(advice-add #'x-apply-session-resources :override
-            #'radian--advice-disable-x-resource-application)
-
-(setq default-frame-alist '(;; (fullscreen . maximized)
-
-                            ;; You can turn off scroll bars by uncommenting these lines:
-                            ;; (vertical-scroll-bars . nil)
-                            ;; (horizontal-scroll-bars . nil)
-
-                            ;; Determine with
-                            ;;   (face-attribute 'default :background)
-                            ;;   (face-attribute 'default :foreground) )
-                            ;; Setting the face in here prevents flashes of
-                            ;; color as the theme gets activated
-                            (background-color . "#fbf8ef")
-                            (foreground-color . "#655370")
-                            (ns-appearance . dark)
-                            (ns-transparent-titlebar . t)))
-
+(setq default-frame-alist
+      '(;; We set foreground/background color to prevent flashes when switching the theme
+        ;; Determine the values with
+        ;;   (face-attribute 'default :background)
+        ;;   (face-attribute 'default :foreground) )
+        (background-color . "#fbf8ef")
+        (foreground-color . "#655370")
+        (ns-appearance . dark)
+        (ns-transparent-titlebar . t)))
 
 (provide 'early-init)
 ;;; early-init.el ends here

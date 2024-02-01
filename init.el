@@ -26,7 +26,6 @@
    invocation-directory (expand-file-name "bin/" "~/.nix-profile/")))
 
 (load-file (expand-file-name "install-elpaca.el" user-emacs-directory))
-(add-hook 'elpaca-after-init-hook #'my/finish-init `t)
 
 ;; activate packages installed as part of the emacsWithPackages package
 (package-activate-all)
