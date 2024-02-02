@@ -2,10 +2,11 @@
 
 ;;; Code:
 (require 'use-package)
-(use-package clojure-mode-extra-font-locking)
-(use-package flycheck-clj-kondo)
+(use-package clojure-mode-extra-font-locking :defer t)
+(use-package flycheck-clj-kondo :defer t)
 
 (use-package clojure-mode
+  :defer t
   :config
   (progn
     (require 'clojure-mode-extra-font-locking)

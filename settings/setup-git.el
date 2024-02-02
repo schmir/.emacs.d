@@ -5,12 +5,14 @@
 ;; (use-package gitignore-mode)
 
 (use-package git-messenger
+  :defer t
   :init
   (setq git-messenger:show-detail t
         git-messenger:use-magit-popup t)
   :bind ("C-x v p" . git-messenger:popup-message))
 
 (use-package git-gutter
+  :defer t
   :ensure t
   ;; :init (global-git-gutter-mode +1)
   :diminish)
@@ -33,15 +35,16 @@
   (interactive)
   (magit-status "/yadm::"))
 
-(use-package transient)
+(use-package transient :defer t)
 (use-package magit
-  :after transient
+  :defer t
+  ;; :after transient
   :bind (("C-c s" . #'magit-status)
          ("C-c y" . #'yadm-status))
   :config
   (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
 
-(use-package git-link
+(use-package git-link :defer t
   :config
   (setq git-link-use-commit 't))
 

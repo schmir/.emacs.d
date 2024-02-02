@@ -4,13 +4,13 @@
 ;;
 ;; Configure python mode
 
-(require 'use-package)
 
 ;;; Code:
 
-(use-package python-pytest)
+(use-package python-pytest :defer t)
 
 (use-package python
+  :defer t
   :init
   (setq python-shell-interpreter "python3")
   :config

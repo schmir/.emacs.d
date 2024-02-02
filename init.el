@@ -44,6 +44,7 @@
   ;; Enable :elpaca use-package keyword.
   (elpaca-use-package-mode)
   ;; Assume :elpaca t unless otherwise specified.
+  (setq use-package-verbose t)
   (setq elpaca-use-package-by-default t))
 
 (elpaca no-littering
@@ -76,41 +77,43 @@
         ;; save on exit
         ebdb-save-on-exit t))
 
-(use-package boxquote)
-(use-package cargo)
-(use-package crux)
-(use-package dockerfile-mode)
-(use-package elixir-mode)
-(use-package flymake-shellcheck)
-(use-package htmlize)
-(use-package leo)
-(use-package lua-mode)
-(use-package prodigy)
-(use-package solidity-flycheck)
-(use-package tldr)
-(use-package yaml-mode)
-(use-package just-mode)
+(use-package boxquote :defer t)
+(use-package cargo :defer t)
+(use-package crux :defer t)
+(use-package dockerfile-mode :defer t)
+(use-package elixir-mode :defer t)
+(use-package flymake-shellcheck :defer t)
+(use-package htmlize :defer t)
+(use-package leo :defer t)
+(use-package lua-mode :defer t)
+(use-package prodigy :defer tsc--dir)
+(use-package solidity-flycheck :defer t)
+(use-package tldr :defer t)
+(use-package yaml-mode :defer t)
+(use-package just-mode :defer t)
 
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :init
   (setq markdown-command "multimarkdown"))
 
-(use-package markdown-preview-mode)
+(use-package markdown-preview-mode :defer t)
 
 (use-package zoom
   :init (zoom-mode)
   :diminish)
 
 (use-package flycheck
+  :defer t
   :init
   (setq flycheck-check-syntax-automatically '(save new-line mode-enabled)))
 
 (use-package flycheck-inline
+  :defer t
   :init
   (global-flycheck-inline-mode))
 
-(use-package adoc-mode :ensure t
+(use-package adoc-mode :ensure t :defer t
   :mode "\\.adoc$")
 
 (use-package apheleia
@@ -132,6 +135,7 @@
   :hook ((emacs-lisp-mode clojure-mode) . eldoc-mode))
 
 (use-package aggressive-indent
+  :defer t
   :diminish
   :hook ((emacs-lisp-mode clojure-mode) . aggressive-indent-mode))
 
@@ -170,6 +174,7 @@
     :after shell-pop))
 
 (use-package shell-pop
+  :defer t
   :bind
   ("C-t" . #'shell-pop)
   :init
@@ -345,6 +350,7 @@
 
 (eval
  `(use-package eglot
+    :defer t
     ,@(if (version< "29.0" emacs-version)
           '(:elpaca nil))
     :custom
@@ -355,7 +361,7 @@
                 ("C-c i" . #'eglot-find-implementation)
                 ("C-c r" . #'eglot-rename))))
 
-(use-package tree-sitter-langs :demand t)
+(use-package tree-sitter-langs :defer t)
 (use-package tree-sitter
   :demand t
   :config
@@ -365,6 +371,7 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package protobuf-mode
+  :defer t
   :config
   (progn
     (defconst my-protobuf-style
@@ -391,9 +398,11 @@
   (setq tab-width 8))
 
 (use-package company-solidity
+  :defer t
   :after solidity-mode)
 
 (use-package solidity-mode
+  :defer t
   :config
   (progn
     (require 'company-solidity)
@@ -401,13 +410,15 @@
 
 (use-package sh-script
   :elpaca nil
+  :defer t
   :config
   (progn
     (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
     (add-hook 'sh-mode-hook 'flymake-mode)))
 
-(use-package terraform-mode)
+(use-package terraform-mode :defer t)
 (use-package nix-mode
+  :defer t
   :mode "\\.nix\\'")
 
 ;; configure tramp before saveplace, because it might use tramp
@@ -439,6 +450,7 @@
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
 (use-package compile
+  :defer t
   :elpaca nil
   :init
   ;; scroll, but stop at first error
@@ -447,9 +459,10 @@
   ;; colorize compile mode output
   (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
-(use-package ninja-mode)
+(use-package ninja-mode :defer t)
 
 (use-package writegood-mode
+  :defer t
   :init
   (progn
     (add-hook 'text-mode-hook #'writegood-mode)

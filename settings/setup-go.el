@@ -12,6 +12,7 @@
   (eglot-ensure))
 
 (use-package go-mode
+  :defer t
   :config
   (add-hook 'go-mode-hook #'setup-go-mode))
 
