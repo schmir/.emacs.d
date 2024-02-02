@@ -56,15 +56,5 @@
 ;; Disable X resources handling
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-(setq default-frame-alist
-      '(;; We set foreground/background color to prevent flashes when switching the theme
-        ;; Determine the values with
-        ;;   (face-attribute 'default :background)
-        ;;   (face-attribute 'default :foreground) )
-        (background-color . "#fbf8ef")
-        (foreground-color . "#655370")
-        (ns-appearance . dark)
-        (ns-transparent-titlebar . t)))
-
 (provide 'early-init)
 ;;; early-init.el ends here

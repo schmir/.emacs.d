@@ -4,6 +4,12 @@
 (if (eq 'ns (window-system))
     (x-focus-frame nil))
 
+(defun after-make-frame (f)
+  (x-focus-frame f))
+
+(add-hook 'after-make-frame-functions
+          #'after-make-frame)
+
 (let ((minver "29.1"))
   (when (version< emacs-version minver)
     (error "init.el: Emacs too -- this config requires at least v%s" minver)))
