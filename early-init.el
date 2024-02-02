@@ -2,6 +2,9 @@
 
 ;; emacs 27.1 reads early-init.el first
 
+(defconst my/elpaca? t)
+(defconst my/straight? (not my/elpaca?))
+
 (defconst my/start-time (current-time))
 (when (and (native-comp-available-p)
            (fboundp 'startup-redirect-eln-cache))
@@ -25,8 +28,12 @@
   (let ((m (format "init.el: load time %.06f" (float-time (time-since my/start-time)))))
     (run-with-timer 5.0 nil (lambda () (message m)))))
 
-(with-eval-after-load 'elpaca
-  (add-hook 'elpaca-after-init-hook #'my/finish-init `t))
+(when my/elpaca?
+  (with-eval-after-load 'elpaca
+    (add-hook 'elpaca-after-init-hook #'my/finish-init `t)))
+
+(when my/straight?
+  (add-hook 'after-init-hook my/finish-init))
 
 ;; increase some internal limits related to elisp execution
 (setq load-prefer-newer t

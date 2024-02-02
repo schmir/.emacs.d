@@ -12,7 +12,7 @@
 
 (let ((minver "29.1"))
   (when (version< emacs-version minver)
-    (error "init.el: Emacs too -- this config requires at least v%s" minver)))
+    (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
 
 (add-to-list 'load-path
@@ -21,43 +21,16 @@
 (add-to-list 'load-path
 	     (expand-file-name "settings" user-emacs-directory))
 
-;; Elpaca calls an external emacs process to compile packages. It concatenates the
-;; invocation-directory and invocation-name to determine the path to the emacs executable.  On nix
-;; with the emacsWithPackages package, this is different to what would be found on PATH.  This
-;; leads to problems during the build process. We help elpaca here a bit to find the right
-;; executable.
-(when (string-prefix-p "/nix/store" invocation-directory)
-  (setq
-   original-invocation-directory invocation-directory
-   invocation-directory (expand-file-name "bin/" "~/.nix-profile/")))
+(when my/elpaca?
+  (load-file (expand-file-name "setup-elpaca.el" user-emacs-directory))
+  (defmacro use-feature (name &rest args)
+    "Like `use-package' but accounting for asynchronous installation.
+  NAME and ARGS are in `use-package'."
+    (declare (indent defun))
+    `(use-package ,name
+       :elpaca nil
+       ,@args)))
 
-(load-file (expand-file-name "install-elpaca.el" user-emacs-directory))
-
-;; activate packages installed as part of the emacsWithPackages package
-(package-activate-all)
-(when (featurep 'vterm-autoloads)
-  (message "init.el: adding vterm to elpaca-ignored-dependencies")
-  (add-to-list 'elpaca-ignored-dependencies 'vterm))
-
-;; Install use-package support
-(elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
-  (elpaca-use-package-mode)
-  ;; Assume :elpaca t unless otherwise specified.
-  (setq use-package-verbose t)
-  (setq elpaca-use-package-by-default t))
-
-(elpaca no-littering
-  (require 'no-littering)
-  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
-
-(elpaca diminish
-  (require 'diminish))
-
-(load-file (expand-file-name "elpaca-update-seq.el" user-emacs-directory))
-
-;; Block until current queue processed.
-(elpaca-wait)
 
 (require 'setup-theme)
 (require 'setup-core)
@@ -130,8 +103,7 @@
 
   :bind ("C-c b" . #'apheleia-format-buffer))
 
-(use-package eldoc
-  :elpaca nil
+(use-feature eldoc
   :hook ((emacs-lisp-mode clojure-mode) . eldoc-mode))
 
 (use-package aggressive-indent
@@ -143,18 +115,14 @@
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
-(eval
- `(use-package so-long
-    ,@(if (version<= "27.1" emacs-version)
-          '(:elpaca nil))
-    :config
-    (setq so-long-max-lines nil
-          so-long-threshold 500)
-    :init
-    (global-so-long-mode +1)))
+(use-feature so-long
+  :config
+  (setq so-long-max-lines nil
+        so-long-threshold 500)
+  :init
+  (global-so-long-mode +1))
 
-(use-package uniquify
-  :elpaca nil
+(use-feature uniquify
   :init
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 4))
@@ -408,8 +376,7 @@
     (require 'company-solidity)
     (add-hook 'solidity-mode-hook #'schmir/solidity-setup)))
 
-(use-package sh-script
-  :elpaca nil
+(use-feature sh-script
   :defer t
   :config
   (progn
@@ -435,23 +402,20 @@
 
 ;; saveplace may need the yadm tramp method.
 ;; place cursor on same buffer position between editing sessions
-(use-package saveplace :demand t
-  :elpaca nil
+(use-feature saveplace :demand t
   :config
   (save-place-mode))
 
 
-(use-package recentf
-  :elpaca nil
+(use-feature recentf
   :init
   (progn
     (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
-(use-package compile
+(use-feature compile
   :defer t
-  :elpaca nil
   :init
   ;; scroll, but stop at first error
   (setq compilation-scroll-output 'first-error)
@@ -462,6 +426,7 @@
 (use-package ninja-mode :defer t)
 
 (use-package writegood-mode
+  :disabled
   :defer t
   :init
   (progn
@@ -475,8 +440,7 @@
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
 
-(use-package server :demand t
-  :elpaca nil
+(use-feature server :demand t
   :config
   (server-start))
 
