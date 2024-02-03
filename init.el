@@ -28,33 +28,7 @@
    original-invocation-directory invocation-directory
    invocation-directory (expand-file-name "bin/" "~/.nix-profile/")))
 
-(load-file (expand-file-name "lisp/install-elpaca.el" user-emacs-directory))
-
-;; activate packages installed as part of the emacsWithPackages package
-(package-activate-all)
-(when (featurep 'vterm-autoloads)
-  (message "init.el: adding vterm to elpaca-ignored-dependencies")
-  (add-to-list 'elpaca-ignored-dependencies 'vterm))
-
-;; Install use-package support
-(elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
-  (elpaca-use-package-mode)
-  ;; Assume :elpaca t unless otherwise specified.
-  (setq use-package-verbose t)
-  (setq elpaca-use-package-by-default t))
-
-(elpaca no-littering
-  (require 'no-littering)
-  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
-
-(elpaca diminish
-  (require 'diminish))
-
-(load-file (expand-file-name "lisp/elpaca-update-seq.el" user-emacs-directory))
-
-;; Block until current queue processed.
-(elpaca-wait)
+(require 'setup-elpaca)
 
 (require 'setup-theme)
 (require 'setup-core)
