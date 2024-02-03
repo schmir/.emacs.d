@@ -10,7 +10,7 @@
 (add-hook 'after-make-frame-functions
           #'after-make-frame)
 
-(let ((minver "29.1"))
+(let ((minver "28.1"))
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
@@ -341,13 +341,11 @@
   ;; work.
   (setq flymake-eslint-defer-binary-check t))
 
-
-
-(eval
- `(use-package eglot
+(when (version< emacs-version "29")
+  (message "init.el: no eglot available in this emacs version")
+  (use-package eglot
     :defer t
-    ,@(if (version< "29.0" emacs-version)
-          '(:elpaca nil))
+    :elpaca nil
     :custom
     (eglot-autoshutdown t)
     :bind (:map eglot-mode-map
