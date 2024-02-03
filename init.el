@@ -140,15 +140,13 @@
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
-(eval
- `(use-package so-long
-    ,@(if (version<= "27.1" emacs-version)
-          '(:elpaca nil))
-    :config
-    (setq so-long-max-lines nil
-          so-long-threshold 500)
-    :init
-    (global-so-long-mode +1)))
+(use-package so-long
+  :elpaca nil
+  :config
+  (setq so-long-max-lines nil
+        so-long-threshold 500)
+  :init
+  (global-so-long-mode +1))
 
 (use-package uniquify
   :elpaca nil
@@ -187,6 +185,7 @@
         company-tooltip-align-annotations t
         company-tooltip-flip-when-above t
         company-show-numbers t))
+
 (use-package corfu
   ;; Optional customizations
   :custom
@@ -221,7 +220,6 @@
   :diminish
   :config
   (which-key-mode))
-
 
 (use-package projectile :demand t
   :diminish
