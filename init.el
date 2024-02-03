@@ -101,8 +101,7 @@
 
   :bind ("C-c b" . #'apheleia-format-buffer))
 
-(use-package eldoc
-  :elpaca nil
+(use-builtin eldoc
   :hook ((emacs-lisp-mode clojure-mode) . eldoc-mode))
 
 (use-package aggressive-indent
@@ -114,16 +113,14 @@
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
-(use-package so-long
-  :elpaca nil
+(use-builtin so-long
   :config
   (setq so-long-max-lines nil
         so-long-threshold 500)
   :init
   (global-so-long-mode +1))
 
-(use-package uniquify
-  :elpaca nil
+(use-builtin uniquify
   :init
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 4))
@@ -317,9 +314,8 @@
 
 (when (version< emacs-version "29")
   (message "init.el: no eglot available in this emacs version")
-  (use-package eglot
+  (use-builtin eglot
     :defer t
-    :elpaca nil
     :custom
     (eglot-autoshutdown t)
     :bind (:map eglot-mode-map
@@ -375,8 +371,7 @@
     (require 'company-solidity)
     (add-hook 'solidity-mode-hook #'schmir/solidity-setup)))
 
-(use-package sh-script
-  :elpaca nil
+(use-builtin sh-script
   :defer t
   :config
   (progn
@@ -389,8 +384,7 @@
   :mode "\\.nix\\'")
 
 ;; configure tramp before saveplace, because it might use tramp
-(use-package tramp
-  :elpaca nil
+(use-builtin tramp
   :config
   ;; (customize-set-variable 'tramp-syntax 'simplified)
   (setq tramp-default-method "ssh")
@@ -404,23 +398,20 @@
 
 ;; saveplace may need the yadm tramp method.
 ;; place cursor on same buffer position between editing sessions
-(use-package saveplace :demand t :after tramp
-  :elpaca nil
+(use-builtin saveplace :demand t :after tramp
   :config
   (save-place-mode))
 
 
-(use-package recentf
-  :elpaca nil
+(use-builtin recentf
   :init
   (progn
     (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
-(use-package compile
+(use-builtin compile
   :defer t
-  :elpaca nil
   :init
   ;; scroll, but stop at first error
   (setq compilation-scroll-output 'first-error)
@@ -444,8 +435,7 @@
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
 
-(use-package server :demand t
-  :elpaca nil
+(use-builtin server :demand t
   :config
   (server-start))
 

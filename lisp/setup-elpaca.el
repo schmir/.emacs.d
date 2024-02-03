@@ -75,6 +75,13 @@
 
 (elpaca `(seq :build ,(+elpaca-seq-build-steps)))
 
+(defmacro use-builtin (name &rest args)
+  "`use-package' for a builtin package"
+  (declare (indent defun))
+  `(use-package ,name
+     :elpaca nil
+     ,@args))
+
 ;; Block until current queue processed.
 (elpaca-wait)
 
