@@ -12,14 +12,11 @@
 
 (let ((minver "29.1"))
   (when (version< emacs-version minver)
-    (error "init.el: Emacs too -- this config requires at least v%s" minver)))
+    (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
 
 (add-to-list 'load-path
-	     (expand-file-name "site-lisp" user-emacs-directory))
-
-(add-to-list 'load-path
-	     (expand-file-name "settings" user-emacs-directory))
+	     (expand-file-name "lisp" user-emacs-directory))
 
 ;; Elpaca calls an external emacs process to compile packages. It concatenates the
 ;; invocation-directory and invocation-name to determine the path to the emacs executable.  On nix
@@ -31,7 +28,7 @@
    original-invocation-directory invocation-directory
    invocation-directory (expand-file-name "bin/" "~/.nix-profile/")))
 
-(load-file (expand-file-name "install-elpaca.el" user-emacs-directory))
+(load-file (expand-file-name "lisp/install-elpaca.el" user-emacs-directory))
 
 ;; activate packages installed as part of the emacsWithPackages package
 (package-activate-all)
@@ -54,7 +51,7 @@
 (elpaca diminish
   (require 'diminish))
 
-(load-file (expand-file-name "elpaca-update-seq.el" user-emacs-directory))
+(load-file (expand-file-name "lisp/elpaca-update-seq.el" user-emacs-directory))
 
 ;; Block until current queue processed.
 (elpaca-wait)
