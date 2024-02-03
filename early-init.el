@@ -2,6 +2,8 @@
 
 ;; emacs 27.1 reads early-init.el first
 
+(setq debug-on-error t)
+
 (defconst my/start-time (current-time))
 (when (and (native-comp-available-p)
            (fboundp 'startup-redirect-eln-cache))
