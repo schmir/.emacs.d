@@ -13,12 +13,15 @@
 
 ;; Improves startup time, we reset this later
 (defvar default-file-name-handler-alist file-name-handler-alist)
+
 (setq file-name-handler-alist nil
+      vc-handled-backends nil
       gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 1)
 
 (defun my/finish-init ()
   (setq file-name-handler-alist default-file-name-handler-alist
+        vc-handled-backends '(Git)
         gc-cons-percentage 0.1
         gc-cons-threshold 100000000)
   (if (fboundp #'gcmh-mode)

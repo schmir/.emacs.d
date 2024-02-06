@@ -73,7 +73,6 @@
       line-number-display-limit-width 100000
       kill-whole-line t				;; make kill-line at beginning of line kill the whole line
       woman-use-own-frame nil				;; don't create new frame for manpages
-      vc-handled-backends '(Git Hg)
       vc-follow-symlinks t				;; follow symlinks and don't ask
       enable-recursive-minibuffers t)
 
