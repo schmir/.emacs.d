@@ -24,6 +24,7 @@
   (if (fboundp #'gcmh-mode)
       (gcmh-mode 1))
   (garbage-collect)
+  (setq debug-on-error nil)
   (let ((m (format "init.el: load time %.06f" (float-time (time-since my/start-time)))))
     (run-with-timer 5.0 nil (lambda () (message m)))))
 
