@@ -19,8 +19,12 @@
 (use-package gruvbox-theme)
 
 (use-package spacemacs-theme
-  :demand t
-  :config (my/load-theme 'spacemacs-dark))
+  ;; :config (my/load-theme 'spacemacs-dark)
+  :demand t)
+
+(use-package ef-themes
+  :config (my/load-theme 'ef-melissa-dark)
+  :demand t)
 
 (use-package zenburn-theme)
 (use-package anti-zenburn-theme)
