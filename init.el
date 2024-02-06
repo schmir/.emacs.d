@@ -269,6 +269,17 @@
   ([(shift f3)] . #'highlight-symbol-prev)
   ([(meta f3)] . #'highlight-symbol-query-replace))
 
+(use-package pulsar
+  :init
+  (setq pulsar-pulse t
+        pulsar-delay 0.045
+        pulsar-iterations 10
+        pulsar-face 'pulsar-magenta
+        pulsar-highlight-face 'pulsar-yellow)
+  :config
+  (pulsar-global-mode 1))
+
+
 (use-package smartscan
   :init
   (add-hook 'prog-mode-hook #'smartscan-mode))
