@@ -297,9 +297,16 @@
   (setq denote-directory (expand-file-name "~/m/notes")
         denote-known-keywords '("emacs" "cli" "dev" "linux" "git" "clojure" "python" "golang")))
 
+(use-package orderless
+  :demand t)
+
 (use-package consult-notes
-  :bind (("C-c n f" . consult-notes))
+  :bind (("C-c n f" . #'my/consult-notes))
   :config
+  (defun my/consult-notes ()
+    (interactive)
+    (let ((completion-styles '(orderless)))
+      (consult-notes)))
   (setq consult-notes-file-dir-sources
         '(;; ("notes"             ?o "~/m//notes/")
           ("deft"      ?r "~/m/deft/")))
