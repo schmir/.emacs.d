@@ -52,6 +52,7 @@
 
 (elpaca no-littering
   (require 'no-littering)
+  (no-littering-theme-backups)
   (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 (elpaca diminish
