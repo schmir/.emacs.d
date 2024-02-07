@@ -2,6 +2,8 @@
 
 ;;; Code:
 
+;; Consider all themes safe to load
+(setq custom-safe-themes t)
 
 (defun my/load-theme-via-hook (theme)
   (letrec ((*load-theme* (lambda (frame)
