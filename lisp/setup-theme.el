@@ -25,7 +25,9 @@
   :demand t)
 
 (use-package ef-themes
-  :config (my/load-theme 'ef-melissa-dark)
+  :config
+  ;;(my/load-theme 'ef-melissa-dark)
+  (my/load-theme 'ef-bio)
   :demand t)
 
 (use-package zenburn-theme)
