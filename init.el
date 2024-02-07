@@ -284,15 +284,34 @@
   :init
   (add-hook 'prog-mode-hook #'smartscan-mode))
 
-(use-package deft
+(use-package denote
+  :bind
+  (("C-c n n" . denote)
+   ("C-c n i" . denote-link-or-create)
+   ("C-c n I" . denote-link)
+   ("C-c n b" . denote-link-backlinks)
+   ("C-c n a" . denote-add-front-matter)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter))
   :init
-  (setq deft-directory (expand-file-name "~/m/deft/")
-        deft-default-extension "org"
-        deft-extensions '("org" "md" "txt")
-        deft-text-mode 'org-mode
-        deft-use-filename-as-title t
-        deft-use-filter-string-for-filename t))
+  (setq denote-directory (expand-file-name "~/m/notes")
+        denote-known-keywords '("emacs" "cli" "dev" "linux" "git" "clojure" "python" "golang")))
 
+(use-package consult-notes
+  :bind (("C-c n f" . consult-notes))
+  :config
+  (setq consult-notes-file-dir-sources
+        '(;; ("notes"             ?o "~/m//notes/")
+          ("deft"      ?r "~/m/deft/")))
+
+  ;; (setq consult-notes-file-dir-sources '(("Name"  ?key  "path/to/dir"))) ;; Set notes dir(s), see below
+  ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
+  (consult-notes-denote-mode)
+
+  ;; search only for text files in denote dir
+  (setq consult-notes-denote-files-function (function denote-directory-text-only-files)))
+
+;; (use-package denote-menu)
 ;; --- setup typescript
 (defun setup-tide-mode ()
   (interactive)
