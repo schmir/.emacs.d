@@ -349,8 +349,8 @@
   ;; work.
   (setq flymake-eslint-defer-binary-check t))
 
-(when (version< emacs-version "29")
-  (message "init.el: no eglot available in this emacs version")
+(if (version< emacs-version "29")
+    (message "init.el: no eglot available in this emacs version")
   (use-builtin eglot
     :defer t
     :custom
