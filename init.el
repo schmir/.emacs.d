@@ -439,13 +439,14 @@
   :config
   (save-place-mode))
 
-
 (use-builtin recentf
-  :init
-  (progn
-    (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
-    (add-to-list 'recentf-exclude no-littering-var-directory)
-    (add-to-list 'recentf-exclude no-littering-etc-directory)))
+  :custom
+  (recentf-max-saved-items 200)
+  :config
+  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory)  
+  (recentf-mode t))
 
 (use-builtin compile
   :defer t

@@ -55,8 +55,6 @@
 (column-number-mode 1)
 
 (setq read-file-name-completion-ignore-case t)
-(recentf-mode t)
-(setq recentf-max-saved-items 200)
 
 (setq mark-even-if-inactive t)
 (transient-mark-mode 1)
