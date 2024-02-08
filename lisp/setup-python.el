@@ -15,7 +15,8 @@
   (python-shell-interpreter "python3")
   :config
   (when (fboundp #'eglot-ensure)
-    (add-hook 'python-mode-hook #'eglot-ensure))
+    (add-hook 'python-mode-hook #'eglot-ensure)
+    (add-hook 'python-ts-mode-hook #'eglot-ensure))
   (when (executable-find "ruff")
     (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
     (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))

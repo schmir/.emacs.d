@@ -361,14 +361,13 @@
                 ("C-c i" . #'eglot-find-implementation)
                 ("C-c r" . #'eglot-rename))))
 
-(use-package tree-sitter-langs :defer t)
-(use-package tree-sitter
-  :demand t
+(use-package treesit-auto
+  :custom
+  (treesit-auto-langs '(python go gomod bash yaml))
+  (treesit-auto-install 'prompt)
   :config
-  (add-to-list 'tree-sitter-major-mode-language-alist
-               '(direnv-envrc-mode . bash))
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 (use-package protobuf-mode
   :defer t

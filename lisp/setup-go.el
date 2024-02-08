@@ -16,6 +16,11 @@
   :config
   (add-hook 'go-mode-hook #'setup-go-mode))
 
+(use-builtin go-ts-mode
+  :defer t
+  :config
+  (add-hook 'go-ts-mode-hook #'setup-go-mode))
+
 (dolist (cmd '("gofumports" "gofmt" "goimports"))
   (add-to-list 'safe-local-variable-values `(gofmt-command . ,cmd)))
 
