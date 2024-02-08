@@ -28,6 +28,15 @@
       visible-bell t)
 (show-paren-mode t)
 
+;; Make sure we have a sensible word list. Otherwise corfu may complain it's missing, which
+;; happened in git-commit mode to me. The root cause is that a call to ispell-lookup-words, e.g.
+;;
+;;   (ispell-lookup-words "an")
+;;
+;; failed.
+(setq ispell-complete-word-dict
+      (expand-file-name "google-10000-english-no-swears.txt" user-emacs-directory))
+
 ;; when on a tab, make the cursor the tab length
 (setq-default x-stretch-cursor t)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
