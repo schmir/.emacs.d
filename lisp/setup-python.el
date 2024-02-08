@@ -9,13 +9,17 @@
 
 (use-package python-pytest :defer t)
 
-(use-package python
+(use-builtin python
   :defer t
-  :init
-  (setq python-shell-interpreter "python3")
+  :custom
+  (python-shell-interpreter "python3")
   :config
-  (progn
-    (advice-add 'run-python :around #'with-project-root-as-default-directory)))
+  (when (fboundp #'eglot-ensure)
+    (add-hook 'python-mode-hook #'eglot-ensure))
+  (when (executable-find "ruff")
+    (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
+    (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))
+  (advice-add 'run-python :around #'with-project-root-as-default-directory))
 
 (provide 'setup-python)
 ;;; setup-python.el ends here
