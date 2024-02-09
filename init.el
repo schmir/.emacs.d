@@ -391,10 +391,16 @@
 
 (defun schmir/solidity-setup ()
   ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
-  (company-mode +1)
+  (setq-local completion-at-point-functions
+              (list (cape-capf-super
+                     (cape-company-to-capf #'company-solidity)
+                     #'cape-dabbrev)))
   (c-set-offset 'arglist-intro '+)
-  (setq c-basic-offset 4)
-  (setq tab-width 8))
+  (setq-local c-basic-offset 4
+              tab-width 8))
+
+(use-package cape
+  :defer t)
 
 (use-package company-solidity
   :defer t
@@ -403,9 +409,9 @@
 (use-package solidity-mode
   :defer t
   :config
-  (progn
-    (require 'company-solidity)
-    (add-hook 'solidity-mode-hook #'schmir/solidity-setup)))
+  (require 'company-solidity)
+  (require 'cape)
+  (add-hook 'solidity-mode-hook #'schmir/solidity-setup))
 
 (use-builtin sh-script
   :defer t
