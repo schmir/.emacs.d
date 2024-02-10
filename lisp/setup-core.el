@@ -107,6 +107,8 @@
   (save-excursion
     (untabify (point-min) (point-max))))
 
+(setq epg-pinentry-mode 'loopback)
+
 ;; let me use windmove keybindings even in org-mode
 (setq org-replace-disputed-keys t)
 
