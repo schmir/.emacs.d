@@ -33,6 +33,9 @@
 (require 'setup-theme)
 (require 'setup-core)
 
+(if (file-exists-p custom-file)
+    (load custom-file))
+
 (use-package ebdb
   :after (:any gnus message)
   :init
