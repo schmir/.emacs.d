@@ -91,7 +91,7 @@
   :mode "\\.adoc$")
 
 (use-package apheleia
-  :elpaca '(apheleia :host github :repo "raxod502/apheleia")
+  :ensure '(apheleia :host github :repo "raxod502/apheleia")
   :init
   (apheleia-global-mode +1)
   :config
@@ -132,7 +132,7 @@
 ;; dnf install libvterm-devel libtool cmake
 (eval
  `(use-package vterm
-    :elpaca ,(not (featurep 'vterm-autoloads))
+    :ensure ,(not (featurep 'vterm-autoloads))
     :init
     (setq vterm-max-scrollback 10000)
     :config
@@ -439,7 +439,7 @@
   :bind (("C-c g" . #'writegood-mode)))
 
 (use-package framemove :demand t
-  :elpaca (:host "github.com" :repo "emacsmirror/framemove")
+  :ensure (:host "github.com" :repo "emacsmirror/framemove")
   :config
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))

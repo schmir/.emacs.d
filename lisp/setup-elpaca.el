@@ -80,7 +80,7 @@
   "`use-package' for a builtin package"
   (declare (indent defun))
   `(use-package ,name
-     :elpaca nil
+     :ensure nil
      ,@args))
 
 ;; Block until current queue processed.
