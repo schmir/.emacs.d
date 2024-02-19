@@ -225,6 +225,9 @@
   ("C--" . #'default-text-scale-decrease)
   ("C-=" . #'default-text-scale-increase))
 
+(use-package prism
+  :hook ((emacs-lisp-mode clojure-mode) . prism-mode))
+
 (use-package highlight-symbol
   :diminish
   :hook
