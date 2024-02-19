@@ -28,6 +28,11 @@
       visible-bell t)
 (show-paren-mode t)
 
+
+(when-let ((exe (executable-find "hunspell")))
+  (setq ispell-program-name exe)
+  (message (format "setup-core.el: using %s for ispell" exe)))
+
 ;; Make sure we have a sensible word list. Otherwise corfu may complain it's missing, which
 ;; happened in git-commit mode to me. The root cause is that a call to ispell-lookup-words, e.g.
 ;;
