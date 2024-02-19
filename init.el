@@ -162,6 +162,7 @@
   (which-key-mode))
 
 (use-package projectile :demand t
+  :disabled
   :diminish
   :init
   (setq-default projectile-completion-system 'default)
