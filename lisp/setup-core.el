@@ -31,6 +31,10 @@
 (show-paren-mode t)
 
 
+(setq auth-source-debug 'trivia)
+(auth-source-pass-enable)
+
+
 (when-let ((exe (executable-find "hunspell")))
   (setq ispell-program-name exe)
   (message (format "setup-core.el: using %s for ispell" exe)))
