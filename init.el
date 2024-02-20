@@ -39,7 +39,8 @@
 (use-package ebdb
   :after (:any gnus message)
   :init
-  (setq ebdb-sources "~/.ebdb")
+  (setq ebdb-sources "~/.ebdb"
+        ebdb-permanent-ignores-file "~/.ebdb-permanent-ignores")
   ;; load code for GNUs for reading and message for sending
   (require 'ebdb-gnus)
   (require 'ebdb-message)
