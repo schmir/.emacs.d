@@ -135,7 +135,8 @@
  `(use-package vterm
     :ensure ,(not (featurep 'vterm-autoloads))
     :init
-    (setq vterm-max-scrollback 10000)
+    (setq vterm-max-scrollback 10000
+          vterm-shell (executable-find "zsh"))
     :config
     (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
     (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
@@ -149,7 +150,7 @@
   ("C-t" . #'shell-pop)
   :init
   (setq shell-pop-shell-type '("vterm" "*vterm*" #'vterm)
-        shell-pop-term-shell "/usr/bin/zsh"
+        shell-pop-term-shell (executable-find "zsh")
         shell-pop-window-size 40))
 
 

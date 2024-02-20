@@ -14,6 +14,8 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq-default indent-tabs-mode nil)
 
+(setq explicit-shell-file-name (executable-find "zsh"))
+
 (if (fboundp #'pixel-scroll-precision-mode)
     (progn
       (setq pixel-scroll-precision-interpolate-page t
