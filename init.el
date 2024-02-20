@@ -47,7 +47,7 @@
   (setq ebdb-complete-mail 'capf
         ebdb-mua-pop-up nil             ; don't show any pop ups
         ;; when reading or sending with the "reader" in GNUS create contact if it does not exist
-        ebdb-gnus-auto-update-p 'create
+        ebdb-gnus-auto-update-p 'query
         ;; save on exit
         ebdb-save-on-exit t))
 
