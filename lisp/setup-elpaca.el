@@ -64,6 +64,12 @@
 ;; see https://github.com/progfolio/elpaca/issues/216#issuecomment-1868444883
 ;;
 
+(elpaca exec-path-from-shell
+  (require 'exec-path-from-shell)
+  (dolist (var '("DICPATH" "XDG_DATA_DIRS"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
+
 (defun +elpaca-unload-seq (e)
   (and (featurep 'seq) (unload-feature 'seq t))
   (elpaca--continue-build e))
