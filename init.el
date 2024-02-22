@@ -163,10 +163,10 @@
   :bind
   (("<f9>" . #'projectile-compile-project)))
 
-(when (executable-find "direnv")
-  (use-package direnv :demand t
-    :config
-    (direnv-mode)))
+(use-package direnv :demand t
+  :if (executable-find "direnv")
+  :config
+  (direnv-mode))
 
 (use-package consult :demand t
   :config
