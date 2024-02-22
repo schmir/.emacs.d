@@ -26,7 +26,10 @@
 (when (string-prefix-p "/nix/store" invocation-directory)
   (setq
    original-invocation-directory invocation-directory
-   invocation-directory (expand-file-name "bin/" "~/.nix-profile/")))
+   invocation-directory (expand-file-name "bin/" "~/.nix-profile/"))
+  (when (string-match "/nix/store/.*-git-\\(\[0-9\]\\{8\\}\\)" original-invocation-directory)
+    (setq elpaca-core-date (list (string-to-number (match-string 1 original-invocation-directory))))
+    (message (format "init.el: using nix emacs, set elpaca-core-date to %s" elpaca-core-date))))
 
 (require 'setup-elpaca)
 
