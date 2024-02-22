@@ -42,6 +42,10 @@
   (message "init.el: adding vterm to elpaca-ignored-dependencies")
   (add-to-list 'elpaca-ignored-dependencies 'vterm))
 
+
+;; Let imenu see `use-package' declarations
+(setq use-package-enable-imenu-support t)
+
 ;; Install use-package support
 (elpaca elpaca-use-package
   ;; Enable :elpaca use-package keyword.
