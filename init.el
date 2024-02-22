@@ -39,22 +39,6 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
-(use-package ebdb
-  :after (:any gnus message)
-  :init
-  (setq ebdb-sources "~/.ebdb"
-        ebdb-permanent-ignores-file "~/.ebdb-permanent-ignores")
-  ;; load code for GNUs for reading and message for sending
-  (require 'ebdb-gnus)
-  (require 'ebdb-message)
-  ;; use complete at point interface to select email from contacts
-  (setq ebdb-complete-mail 'capf
-        ebdb-mua-pop-up nil             ; don't show any pop ups
-        ;; when reading or sending with the "reader" in GNUS create contact if it does not exist
-        ebdb-gnus-auto-update-p 'query
-        ;; save on exit
-        ebdb-save-on-exit t))
-
 (use-package boxquote :defer t)
 (use-package cargo :defer t)
 (use-package crux :defer t)
@@ -460,6 +444,7 @@
 (use-package gcmh
   :diminish) ;; early-init.el enables gcmh-mode
 
+(require 'setup-mail)
 (require 'setup-completion)
 (require 'setup-git)
 (require 'setup-cwc)
