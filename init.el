@@ -32,12 +32,14 @@
     (message (format "init.el: using nix emacs, set elpaca-core-date to %s" elpaca-core-date))))
 
 (require 'setup-elpaca)
-
 (require 'setup-theme)
+(elpaca-wait)
 (require 'setup-core)
 
-(if (file-exists-p custom-file)
-    (load custom-file))
+(when (file-exists-p custom-file)
+  (message "init.el: loading custom file")
+  (load custom-file))
+
 
 (use-package boxquote :defer t)
 (use-package cargo :defer t)

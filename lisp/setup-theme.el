@@ -3,7 +3,7 @@
 ;;; Code:
 
 ;; Consider all themes safe to load
-(setq custom-safe-themes t)
+(setopt custom-safe-themes t)
 
 (defun my/load-theme-via-hook (theme)
   (letrec ((*load-theme* (lambda (frame)
@@ -17,23 +17,15 @@
       (my/load-theme-via-hook theme)
     (load-theme theme t)))
 
-(use-package leuven-theme)
-(use-package gruvbox-theme)
+;; load a theme unless we have customized one
+(add-hook 'elpaca-after-init-hook
+          (lambda()
+            (when (not custom-enabled-themes)
+              (message "setup-theme.el: loading default theme")
+              (my/load-theme 'ef-day))))
 
-(use-package spacemacs-theme
-  ;; :config (my/load-theme 'spacemacs-dark)
-  :demand t)
-
-(use-package ef-themes
-  :config
-  ;;(my/load-theme 'ef-melissa-dark)
-  (my/load-theme 'ef-bio)
-  :demand t)
-
-(use-package zenburn-theme)
-(use-package anti-zenburn-theme)
-(use-package kaolin-themes)
-(use-package zerodark-theme)
+(dolist (th '(leuven-theme gruvbox-theme spacemacs-theme ef-themes zenburn-theme anti-zenburn-theme kaolin-themes zerodark-theme))
+  (eval `(elpaca ,th)))
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here
