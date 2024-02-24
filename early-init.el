@@ -59,6 +59,10 @@
   (if (fboundp 'horizontal-scroll-bar-mode)
       (horizontal-scroll-bar-mode -1)))
 
+(modify-all-frames-parameters
+ '((width . 130)
+   (height . 60)))
+
 ;; Disable X resources handling
 (advice-add #'x-apply-session-resources :override #'ignore)
 
