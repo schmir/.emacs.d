@@ -317,13 +317,23 @@
     (message "init.el: no eglot available in this emacs version")
   (use-builtin eglot
     :defer t
+    :init
+    (defun my/eglot-rename (newname)
+      "Rename the current symbol to NEWNAME. like eglot-rename but provides the old symbol as default."
+      (interactive
+       (list (read-from-minibuffer
+              (format "Rename `%s' to: " (or (thing-at-point 'symbol t)
+                                             "unknown symbol"))
+              (thing-at-point 'symbol t) nil nil nil
+              (symbol-name (symbol-at-point)))))
+      (eglot-rename newname))
     :custom
     (eglot-autoshutdown t)
     :bind (:map eglot-mode-map
                 ("C-c ." . #'xref-find-references)
                 ("C-c t" . #'eglot-find-typeDefinition)
                 ("C-c i" . #'eglot-find-implementation)
-                ("C-c r" . #'eglot-rename))))
+                ("C-c r" . #'my/eglot-rename))))
 
 (use-package treesit-auto
   :custom
