@@ -142,6 +142,11 @@
         shell-pop-term-shell (executable-find "zsh")
         shell-pop-window-size 40))
 
+(use-package eat
+  :ensure t
+  :config
+  (eat-eshell-mode)
+  (setq eshell-visual-commands '()))
 
 (use-package persistent-scratch :demand t
   :config
