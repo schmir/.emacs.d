@@ -15,7 +15,7 @@
 (defvar default-file-name-handler-alist file-name-handler-alist)
 
 (setq file-name-handler-alist nil
-      vc-handled-backends nil
+      vc-handled-backends '(Git) ;; need Git for package-vc-install
       gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 1)
 
@@ -31,8 +31,7 @@
   (let ((m (format "init.el: load time %.06f" (float-time (time-since my/start-time)))))
     (run-with-timer 5.0 nil (lambda () (message m)))))
 
-(with-eval-after-load 'elpaca
-  (add-hook 'elpaca-after-init-hook #'my/finish-init `t))
+(add-hook 'emacs-startup-hook #'my/finish-init)
 
 ;; increase some internal limits related to elisp execution
 (setq load-prefer-newer t

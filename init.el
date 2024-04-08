@@ -16,29 +16,48 @@
 
 
 (add-to-list 'load-path
-	     (expand-file-name "lisp" user-emacs-directory))
+             (expand-file-name "lisp" user-emacs-directory))
 
-;; Elpaca calls an external emacs process to compile packages. It concatenates the
-;; invocation-directory and invocation-name to determine the path to the emacs executable.  On nix
-;; with the emacsWithPackages package, this is different to what would be found on PATH.  This
-;; leads to problems during the build process. We help elpaca here a bit to find the right
-;; executable.
-(when (string-prefix-p "/nix/store" invocation-directory)
-  (setq
-   original-invocation-directory invocation-directory
-   invocation-directory (expand-file-name "bin/" "~/.nix-profile/"))
-  (when (string-match "/nix/store/.*-git-\\(\[0-9\]\\{8\\}\\)" original-invocation-directory)
-    (setq elpaca-core-date (list (string-to-number (match-string 1 original-invocation-directory))))
-    (message (format "init.el: using nix emacs, set elpaca-core-date to %s" elpaca-core-date))))
+(setopt package-user-dir (expand-file-name "var/elpa-packages" user-emacs-directory)
+        package-gnupghome-dir (expand-file-name "var/elpa-gnupg" user-emacs-directory)
+        package-archives
+        '(("org" . "https://orgmode.org/elpa/")
+          ("melpa" . "https://melpa.org/packages/")
+          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+          ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(defmacro use-builtin (name &rest args)
+  "`use-package' for a builtin package"
+  (declare (indent defun))
+  `(use-package ,name
+     :ensure nil
+     ,@args))
 
-(require 'setup-elpaca)
+
+;; Let imenu see `use-package' declarations
+(setq use-package-enable-imenu-support t)
+
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
+(use-package no-littering
+  :config
+  (no-littering-theme-backups)
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+  (when (file-exists-p custom-file)
+    (message "init.el: loading custom file %s" custom-file)
+    (load custom-file)))
+
+
 (require 'setup-theme)
-(elpaca-wait)
 (require 'setup-core)
+(use-package diminish)
+(use-package exec-path-from-shell
+  :config
+  (dolist (var '("DICPATH" "XDG_DATA_DIRS"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
 
-(when (file-exists-p custom-file)
-  (message "init.el: loading custom file")
-  (load custom-file))
 
 
 (use-package boxquote :defer t)
@@ -77,11 +96,10 @@
   :init
   (global-flycheck-inline-mode))
 
-(use-package adoc-mode :ensure t :defer t
+(use-package adoc-mode :defer t
   :mode "\\.adoc$")
 
 (use-package apheleia
-  :ensure '(apheleia :host github :repo "raxod502/apheleia")
   :init
   (apheleia-global-mode +1)
   :config
@@ -120,18 +138,16 @@
 
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 ;; dnf install libvterm-devel libtool cmake
-(eval
- `(use-package vterm
-    :ensure ,(not (featurep 'vterm-autoloads))
-    :init
-    (setq vterm-max-scrollback 10000
-          vterm-shell (executable-find "zsh"))
-    :config
-    (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
-    (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
-    :bind (:map vterm-mode-map
-                ("C-t" . #'shell-pop))
-    :after shell-pop))
+(use-package vterm
+  :init
+  (setq vterm-max-scrollback 10000
+        vterm-shell (executable-find "zsh"))
+  :config
+  (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
+  (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
+  :bind (:map vterm-mode-map
+              ("C-t" . #'shell-pop))
+  :after shell-pop)
 
 (use-package shell-pop
   :defer t
@@ -143,7 +159,6 @@
         shell-pop-window-size 40))
 
 (use-package eat
-  :ensure t
   :config
   (eat-eshell-mode)
   (setq eshell-visual-commands '()))
@@ -448,8 +463,10 @@
     (add-hook 'markdown-mode-hook #'writegood-mode))
   :bind (("C-c g" . #'writegood-mode)))
 
+
+(if (not (package-installed-p 'framemove))
+    (package-vc-install "https://github.com/emacsmirror/framemove"))
 (use-package framemove :demand t
-  :ensure (:host "github.com" :repo "emacsmirror/framemove")
   :config
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
