@@ -464,9 +464,10 @@
   :bind (("C-c g" . #'writegood-mode)))
 
 
-(if (not (package-installed-p 'framemove))
-    (package-vc-install "https://github.com/emacsmirror/framemove"))
-(use-package framemove :demand t
+(require 'framemove-autoloads nil t)
+(unless (featurep 'framemove-autoloads)
+  (package-vc-install "https://github.com/emacsmirror/framemove"))
+(use-package framemove :ensure nil :demand t
   :config
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
