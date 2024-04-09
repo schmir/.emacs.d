@@ -14,9 +14,7 @@
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
-
-(add-to-list 'load-path
-             (expand-file-name "lisp" user-emacs-directory))
+(setopt site-lisp-directory (expand-file-name "lisp" user-emacs-directory))
 
 (setopt package-user-dir (expand-file-name "var/elpa-packages" user-emacs-directory)
         package-gnupghome-dir (expand-file-name "var/elpa-gnupg" user-emacs-directory)
@@ -26,196 +24,146 @@
           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
-(defmacro use-builtin (name &rest args)
-  "`use-package' for a builtin package"
-  (declare (indent defun))
-  `(use-package ,name
-     :ensure nil
-     ,@args))
 
+;;; Install setup.el
+(unless (package-installed-p 'setup)
+  (unless (memq 'setup package-archive-contents)
+    (package-refresh-contents))
+  (package-install 'setup))
+(require 'setup)
+
+(setup (:package site-lisp)
+  (site-lisp-initialise))
 
 ;; Let imenu see `use-package' declarations
 (setq use-package-enable-imenu-support t)
 
+
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(use-package no-littering
-  :config
+(require 'setup-theme)
+(setup (:package no-littering)
+  ;; :autoload-this
+  (require 'no-littering)
   (no-littering-theme-backups)
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (when (file-exists-p custom-file)
     (message "init.el: loading custom file %s" custom-file)
     (load custom-file)))
 
-
-(require 'setup-theme)
 (require 'setup-core)
-(use-package diminish)
-(use-package exec-path-from-shell
-  :config
+(setup (:package diminish))
+
+(setup (:package exec-path-from-shell)
+  (require 'exec-path-from-shell)
   (dolist (var '("DICPATH" "XDG_DATA_DIRS"))
     (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
 
+(setup (:package boxquote cargo crux dockerfile-mode elixir-mode flymake-shellcheck htmlize leo lua-mode
+                 prodigy solidity-flycheck tldr yaml-mode just-mode))
 
+(setup (:package markdown-mode markdown-preview-mode)
+  (setq markdown-command "multimarkdown")
+  (add-to-list 'auto-mode-alist (cons "README\\.md\\'" #'gfm-mode)))
 
-(use-package boxquote :defer t)
-(use-package cargo :defer t)
-(use-package crux :defer t)
-(use-package dockerfile-mode :defer t)
-(use-package elixir-mode :defer t)
-(use-package flymake-shellcheck :defer t)
-(use-package htmlize :defer t)
-(use-package leo :defer t)
-(use-package lua-mode :defer t)
-(use-package prodigy :defer tsc--dir)
-(use-package solidity-flycheck :defer t)
-(use-package tldr :defer t)
-(use-package yaml-mode :defer t)
-(use-package just-mode :defer t)
+(setup (:package zoom)
+  (zoom-mode))
 
-(use-package markdown-mode
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init
-  (setq markdown-command "multimarkdown"))
-
-(use-package markdown-preview-mode :defer t)
-
-(use-package zoom
-  :init (zoom-mode)
-  :diminish)
-
-(use-package flycheck
-  :defer t
-  :init
-  (setq flycheck-check-syntax-automatically '(save new-line mode-enabled)))
-
-(use-package flycheck-inline
-  :defer t
-  :init
+(setup (:package flycheck flycheck-inline)
+  (setq flycheck-check-syntax-automatically '(save new-line mode-enabled))
   (global-flycheck-inline-mode))
 
-(use-package adoc-mode :defer t
-  :mode "\\.adoc$")
+(setup (:package adoc-mode)
+  (:file-match "\\.adoc$"))
 
-(use-package apheleia
-  :init
+(setup (:package apheleia)
+  (message "Executing apheleia init code")
   (apheleia-global-mode +1)
-  :config
-  (setf (alist-get 'blackzim apheleia-formatters)
-        '("blackzim"))
-  (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
-  (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
-  (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
-  (add-to-list 'apheleia-mode-alist '(conf-toml-mode . prettier))
+  (with-eval-after-load 'apheleia
+    (setf (alist-get 'blackzim apheleia-formatters)
+          '("blackzim"))
+    (when (executable-find "ruff")
+      (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
+      (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))
+    (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
+    (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
+    (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
+    (add-to-list 'apheleia-mode-alist '(conf-toml-mode . prettier)))
+  (:global "C-c b" #'apheleia-format-buffer))
 
-  :bind ("C-c b" . #'apheleia-format-buffer))
+(setup eldoc
+  (:hook-into emacs-list-mode clojure-mode))
 
-(use-builtin eldoc
-  :hook ((emacs-lisp-mode clojure-mode) . eldoc-mode))
+(setup (:package aggressive-indent)
+  (:hook-into emacs-lisp-mode clojure-mode))
 
-(use-package aggressive-indent
-  :defer t
-  :diminish
-  :hook ((emacs-lisp-mode clojure-mode) . aggressive-indent-mode))
+(setup (:package easy-kill)
+  (global-set-key [remap kill-ring-save] #'easy-kill))
 
-(use-package easy-kill
-  :config
-  (global-set-key [remap kill-ring-save] 'easy-kill))
-
-(use-builtin so-long
-  :config
+(setup so-long
   (setq so-long-max-lines nil
         so-long-threshold 500)
-  :init
   (global-so-long-mode +1))
 
-(use-builtin uniquify
-  :init
+(setup uniquify
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 4))
 
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 ;; dnf install libvterm-devel libtool cmake
-(use-package vterm
-  :init
+(setup (:package vterm)
   (setq vterm-max-scrollback 10000
         vterm-shell (executable-find "zsh"))
-  :config
-  (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window))
-  (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
-  :bind (:map vterm-mode-map
-              ("C-t" . #'shell-pop))
-  :after shell-pop)
+  (with-eval-after-load 'vterm
+    (add-to-list 'vterm-eval-cmds '("find-file-other-window" find-file-other-window)))
+  (:hook #'compilation-shell-minor-mode)
+  (:bind "C-t" #'shell-pop)
+  ;; :after shell-pop
+  )
 
-(use-package shell-pop
-  :defer t
-  :bind
-  ("C-t" . #'shell-pop)
-  :init
+(setup (:package shell-pop)
+  (:global "C-t"  #'shell-pop)
   (setq shell-pop-shell-type '("vterm" "*vterm*" #'vterm)
         shell-pop-term-shell (executable-find "zsh")
         shell-pop-window-size 40))
 
-(use-package eat
-  :config
-  (eat-eshell-mode)
+(setup (:package eat)
+  (with-eval-after-load 'eat
+    (eat-eshell-mode))
   (setq eshell-visual-commands '()))
 
-(use-package persistent-scratch :demand t
-  :config
+(setup (:package persistent-scratch)
   (persistent-scratch-setup-default))
 
-(use-package which-key :demand t
-  :diminish
-  :config
+(setup (:package which-key)
   (which-key-mode))
 
-(use-package projectile :demand t
-  :disabled
-  :diminish
-  :init
-  (setq-default projectile-completion-system 'default)
-
-  :config
-  (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
-  :bind
-  (("<f9>" . #'projectile-compile-project)))
-
-(use-package direnv :demand t
-  :if (executable-find "direnv")
-  :config
+(setup (:and (executable-find "direnv") (:package direnv))
   (direnv-mode))
 
-(use-package consult :demand t
-  :config
-  (consult-customize
-   consult-ripgrep consult-git-grep consult-grep consult-buffer
-   consult-bookmark consult-recent-file consult-xref
-   ;; consult--source-file
-   ;; consult--source-project-file
-   consult--source-bookmark
-   :preview-key "M-."))
+(setup (:package consult)
+  (with-eval-after-load 'consult
+    (consult-customize
+     consult-ripgrep consult-git-grep consult-grep consult-buffer
+     consult-bookmark consult-recent-file consult-xref
+     ;; consult--source-file
+     ;; consult--source-project-file
+     consult--source-bookmark
+     :preview-key "M-.")))
 
-(use-package marginalia :demand t
-  :init
+(setup (:package marginalia)
   ;; Prefer richer, more heavy, annotations over the lighter default variant.
   ;; E.g. M-x will show the documentation string additional to the keybinding.
   ;; By default only the keybinding is shown as annotation.
   ;; Note that there is the command `marginalia-cycle-annotators` to
   ;; switch between the annotators.
   (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
-
-  :config
   (marginalia-mode +1)
   (global-set-key [remap switch-to-buffer] 'consult-buffer))
 
-
-(use-package vertico
-  :init
+(setup (:package  vertico)
   (vertico-mode)
 
   ;; Different scroll margin
@@ -231,78 +179,65 @@
   ;; (setq vertico-cycle t)
   )
 
+(setup (:package  default-text-scale)
+  (:global
+   "C--"  #'default-text-scale-decrease
+   "C-="  #'default-text-scale-increase))
 
-(use-package default-text-scale
-  :bind
-  ("C--" . #'default-text-scale-decrease)
-  ("C-=" . #'default-text-scale-increase))
+(setup (:package prism)
+  (:hook-into emacs-lisp-mode clojure-mode))
 
-(use-package prism
-  :hook ((emacs-lisp-mode clojure-mode) . prism-mode))
-
-(use-package highlight-symbol
-  :diminish
-  :hook
-  (prog-mode . highlight-symbol-mode)
-  :config
+(setup (:package highlight-symbol)
+  (:hook-into prog-mode)
   (defadvice highlight-symbol-count (around turn-off-symbol-counting activate)
     (interactive))
-  :bind
-  ([(control f3)] . #'highlight-symbol)
-  ([f3] . #'highlight-symbol-next)
-  ([(shift f3)] . #'highlight-symbol-prev)
-  ([(meta f3)] . #'highlight-symbol-query-replace))
+  (:global
+   [(control f3)] #'highlight-symbol
+   [f3]           #'highlight-symbol-next
+   [(shift f3)]   #'highlight-symbol-prev
+   [(meta f3)]    #'highlight-symbol-query-replace))
 
-(use-package pulsar
-  :init
+(setup (:package  pulsar)
   (setq pulsar-pulse t
         pulsar-delay 0.045
         pulsar-iterations 10
         pulsar-face 'pulsar-magenta
         pulsar-highlight-face 'pulsar-yellow)
-  :config
   (pulsar-global-mode 1))
 
 
-(use-package smartscan
-  :init
-  (add-hook 'prog-mode-hook #'smartscan-mode))
+(setup (:package smartscan)
+  (:hook-into prog-mode-hook))
 
-(use-package denote
-  :bind
-  (("C-c n n" . denote)
-   ("C-c n i" . denote-link-or-create)
-   ("C-c n I" . denote-link)
-   ("C-c n b" . denote-link-backlinks)
-   ("C-c n a" . denote-add-front-matter)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n R" . denote-rename-file-using-front-matter))
-  :init
+(setup (:package denote)
+  (:global
+   "C-c n n"  denote
+   "C-c n i"  denote-link-or-create
+   "C-c n I"  denote-link
+   "C-c n b"  denote-link-backlinks
+   "C-c n a"  denote-add-front-matter
+   "C-c n r"  denote-rename-file
+   "C-c n R"  denote-rename-file-using-front-matter)
   (setq denote-directory (expand-file-name "~/m/notes")
         denote-known-keywords '("emacs" "cli" "dev" "linux" "git" "clojure" "python" "golang")))
 
-(use-package orderless
-  :demand t)
+(setup (:package orderless))
 
-(use-package consult-notes
-  :bind (("C-c n f" . #'my/consult-notes))
-  :config
+(setup (:package consult-notes)
+  (:global "C-c n f" #'my/consult-notes)
+  (:option consult-notes-denote-files-function (function denote-directory-text-only-files)
+           consult-notes-file-dir-sources
+           '(;; ("notes"             ?o "~/m//notes/")
+             ("deft"      ?r "~/m/deft/")))
   (defun my/consult-notes ()
     (interactive)
     (let ((completion-styles '(orderless)))
       (consult-notes)))
-  (setq consult-notes-file-dir-sources
-        '(;; ("notes"             ?o "~/m//notes/")
-          ("deft"      ?r "~/m/deft/")))
 
   ;; (setq consult-notes-file-dir-sources '(("Name"  ?key  "path/to/dir"))) ;; Set notes dir(s), see below
   ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
-  (consult-notes-denote-mode)
+  (consult-notes-denote-mode))
 
-  ;; search only for text files in denote dir
-  (setq consult-notes-denote-files-function (function denote-directory-text-only-files)))
-
-;; (use-package denote-menu)
 ;; --- setup typescript
 (defun setup-tide-mode ()
   (interactive)
@@ -313,68 +248,66 @@
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 
-(use-package tide
-  :init
-  (setq tide-completion-detailed 't
-        tide-always-show-documentation 't)
+(setup (:package tide)
+  (:option tide-completion-detailed 't
+           tide-always-show-documentation 't)
   (add-hook 'typescript-mode-hook #'setup-tide-mode))
 
-(use-package js2-mode
-  :mode "\\.js\\'"
-  :interpreter "node")
+(setup (:package js2-mode)
+  (:file-match "\\.js\\'")
+  (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))
 
-(use-package add-node-modules-path
-  :hook (js-mode . add-node-modules-path))
+(setup (:package add-node-modules-path)
+  (:with-mode (js-mode js2-mode)
+    (:hook #'add-node-modules-path)))
 
-(use-package flymake-eslint
-  :hook (js-mode . flymake-eslint-enable)
-  :init
-  ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
-  ;; work.
-  (setq flymake-eslint-defer-binary-check t))
+(setup (:package flymake-eslint)
+  (:with-mode (js-mode js2-mode)
+    (:hook #'flymake-eslint-enable))
 
-(if (version< emacs-version "29")
-    (message "init.el: no eglot available in this emacs version")
-  (use-builtin eglot
-    :defer t
-    :init
-    (defun my/eglot-rename (newname)
-      "Rename the current symbol to NEWNAME. like eglot-rename but provides the old symbol as default."
-      (interactive
-       (list (read-from-minibuffer
-              (format "Rename `%s' to: " (or (thing-at-point 'symbol t)
-                                             "unknown symbol"))
-              (thing-at-point 'symbol t) nil nil nil
-              (symbol-name (symbol-at-point)))))
-      (eglot-rename newname))
-    :custom
-    (eglot-autoshutdown t)
-    :bind (:map eglot-mode-map
-                ("C-c ." . #'xref-find-references)
-                ("C-c t" . #'eglot-find-typeDefinition)
-                ("C-c i" . #'eglot-find-implementation)
-                ("C-c r" . #'my/eglot-rename))))
+  (:option
+   ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
+   ;; work.
+   flymake-eslint-defer-binary-check t))
 
-(use-package treesit-auto
-  :custom
-  (treesit-auto-langs '(python go gomod bash yaml))
-  (treesit-auto-install 'prompt)
-  :config
+
+
+;; (if (version< emacs-version "29")
+;;     (message "init.el: no eglot available in this emacs version")
+;;   )
+
+(setup (:package eglot)
+  (defun my/eglot-rename (newname)
+    "Rename the current symbol to NEWNAME. like eglot-rename but provides the old symbol as default."
+    (interactive
+     (list (read-from-minibuffer
+            (format "Rename `%s' to: " (or (thing-at-point 'symbol t)
+                                           "unknown symbol"))
+            (thing-at-point 'symbol t) nil nil nil
+            (symbol-name (symbol-at-point)))))
+    (eglot-rename newname))
+  (:option eglot-autoshutdown t)
+  (:bind  "C-c ." #'xref-find-references
+          "C-c t" #'eglot-find-typeDefinition
+          "C-c i" #'eglot-find-implementation
+          "C-c r" #'my/eglot-rename))
+
+(setup (:package treesit-auto)
+  (:option treesit-auto-langs '(python go gomod bash yaml)
+           treesit-auto-install 'prompt)
+  (require 'treesit-auto)
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
-(use-package protobuf-mode
-  :defer t
-  :config
-  (progn
-    (defconst my-protobuf-style
-      '((c-basic-offset . 8)
-        (indent-tabs-mode . nil)))
+(setup (:package protobuf-mode)
+  (:hook #'setup-protobuf)
 
-    (defun setup-protobuf ()
-      (c-add-style "my-style" my-protobuf-style t))
+  (defconst my-protobuf-style
+    '((c-basic-offset . 8)
+      (indent-tabs-mode . nil)))
 
-    (add-hook 'protobuf-mode-hook #'setup-protobuf)))
+  (defun setup-protobuf ()
+    (c-add-style "my-style" my-protobuf-style t)))
 
 (defun with-project-root-as-default-directory
     (orig-fun &rest args)
@@ -393,103 +326,85 @@
   (setq-local c-basic-offset 4
               tab-width 8))
 
-(use-package company-solidity
-  :defer t
-  :after solidity-mode)
+(setup (:package solidity-mode company-solidity)
+  (:hook #'schmir/solidity-setup)
+  (with-eval-after-load 'solidity-mode
+    (require 'company-solidity)
+    (require 'cape)))
 
-(use-package solidity-mode
-  :defer t
-  :config
-  (require 'company-solidity)
-  (require 'cape)
-  (add-hook 'solidity-mode-hook #'schmir/solidity-setup))
+(setup sh-mode
+  (:hook #'flymake-shellcheck-load #'flymake-mode))
 
-(use-builtin sh-script
-  :defer t
-  :config
-  (progn
-    (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
-    (add-hook 'sh-mode-hook 'flymake-mode)))
+(setup (:package terraform-mode))
 
-(use-package terraform-mode :defer t)
-(use-package nix-mode
-  :defer t
-  :mode "\\.nix\\'")
+(setup (:package nix-mode)
+  (:file-match  "\\.nix\\'"))
 
 ;; configure tramp before saveplace, because it might use tramp
-(use-builtin tramp
-  :config
+(setup tramp
   ;; (customize-set-variable 'tramp-syntax 'simplified)
   (setq tramp-default-method "ssh")
-  (add-to-list 'tramp-methods
-               '("yadm"
-                 (tramp-login-program "yadm")
-                 (tramp-login-args (("enter")))
-                 (tramp-login-env (("SHELL") ("/bin/sh")))
-                 (tramp-remote-shell "/bin/sh")
-                 (tramp-remote-shell-args ("-c")))))
+  (with-eval-after-load 'tramp
+    (add-to-list 'tramp-methods
+                 '("yadm"
+                   (tramp-login-program "yadm")
+                   (tramp-login-args (("enter")))
+                   (tramp-login-env (("SHELL") ("/bin/sh")))
+                   (tramp-remote-shell "/bin/sh")
+                   (tramp-remote-shell-args ("-c"))))))
 
 ;; saveplace may need the yadm tramp method.
 ;; place cursor on same buffer position between editing sessions
-(use-builtin saveplace :demand t :after tramp
-  :config
+(setup saveplace
   (save-place-mode))
 
-(use-builtin recentf
-  :custom
-  (recentf-max-saved-items 200)
-  :config
+(setup recentf
+  (:option recentf-max-saved-items 200)
+  (recentf-mode t)
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
   (add-to-list 'recentf-exclude no-littering-var-directory)
-  (add-to-list 'recentf-exclude no-littering-etc-directory)  
-  (recentf-mode t))
+  (add-to-list 'recentf-exclude no-littering-etc-directory))
 
-(use-builtin compile
-  :defer t
-  :init
+(setup compile
   ;; scroll, but stop at first error
-  (setq compilation-scroll-output 'first-error)
-  :config
+  (setq compilation-scroll-output 'first-error)  
   ;; colorize compile mode output
   (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
-(use-package ninja-mode :defer t)
+(setup (:package ninja-mode))
 
-(use-package writegood-mode
-  :defer t
-  :init
-  (progn
-    (add-hook 'text-mode-hook #'writegood-mode)
-    (add-hook 'markdown-mode-hook #'writegood-mode))
-  :bind (("C-c g" . #'writegood-mode)))
-
+(setup (:package writegood-mode)
+  (:hook-into text-mode markdown-mode))
 
 (require 'framemove-autoloads nil t)
 (unless (featurep 'framemove-autoloads)
   (package-vc-install "https://github.com/emacsmirror/framemove"))
-(use-package framemove :ensure nil :demand t
-  :config
+(setup (:require framemove)
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
 
-(use-builtin server :demand t
-  :config
+(setup server
   (server-start))
 
-(use-package gcmh
-  :diminish) ;; early-init.el enables gcmh-mode
+(setup (:package  gcmh)) ;; early-init.el enables gcmh-mode
 
 (require 'setup-mail)
 (require 'setup-completion)
 (require 'setup-git)
-(require 'setup-cwc)
 (require 'setup-smartparens)
 (require 'setup-clojure)
 (require 'setup-go)
 (require 'setup-python)
 
-(autoload 'git-grep "git-grep")
-(global-set-key (kbd "<f5>") #'git-grep)
+(setup cwc
+  (global-highlight-changes-mode t)
+  (setq highlight-changes-visibility-initial-state nil)
+  (with-eval-after-load 'whitespace
+    (add-to-list 'whitespace-style 'trailing))
+  (add-hook 'before-save-hook #'changed-whitespace-cleanup))
+
+(setup git-grep
+  (:global "<f5>" #'git-grep))
 
 (dolist (mode '(eldoc-mode highlight-changes-mode))
   (diminish mode))

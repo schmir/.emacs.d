@@ -1,5 +1,7 @@
 ;; slightly modified vc-git-grep
 ;; Derived from `lgrep'.
+
+;;;###autoload
 (defun git-grep (regexp &optional files dir)
   "Run git grep, searching for REGEXP in FILES in directory DIR.
 The search is limited to file names matching shell pattern FILES.

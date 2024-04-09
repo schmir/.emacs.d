@@ -23,6 +23,8 @@
 ;;; Code:
 
 (require 'whitespace)
+
+;;;###autoload
 (defun changed-whitespace-cleanup()
   "Run whitespace-cleanup-region on all changed lines. The buffer has
 to be in highlight-changes-mode."
@@ -58,7 +60,9 @@ to be in highlight-changes-mode."
     (message "buffer %s is not in highlight-changes-mode" (buffer-name))))
 
 
-;; (setq show-trailing-whitespace (not show-trailing-whitespace))  
+;; (setq show-trailing-whitespace (not show-trailing-whitespace))
+
+;;;###autoload
 (defun clear-changes()
   (interactive)
   (if (highlight-changes-mode)

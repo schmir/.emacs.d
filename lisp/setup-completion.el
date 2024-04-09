@@ -1,50 +1,48 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
-(use-package company
-  :diminish
-  :init
-  (setq company-idle-delay 0.8
-        company-minimum-prefix-length 0
-        company-tooltip-align-annotations t
-        company-tooltip-flip-when-above t
-        company-show-numbers t))
 
-(use-package corfu
+(setup (:package company)
+  (:option company-idle-delay 0.8
+           company-minimum-prefix-length 0
+           company-tooltip-align-annotations t
+           company-tooltip-flip-when-above t
+           company-show-numbers t))
+
+(setup (:package corfu)
+  (global-corfu-mode)
+
   ;; Optional customizations
-  :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
-  (corfu-auto-delay 0.2)
-  (corfu-auto-prefix 1)
-  ;; (corfu-separator ?\s)          ;; Orderless field separator
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+  (:option
+   corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
+   corfu-auto t                 ;; Enable auto completion
+   corfu-auto-delay 0.2
+   corfu-auto-prefix 1
+   ;; (corfu-separator ?\s)          ;; Orderless field separator
+   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+   corfu-preselect 'prompt      ;; Preselect the prompt
+   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
 
-  ;; Enable Corfu only for certain modes.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
+   ;; Enable Corfu only for certain modes.
+   ;; :hook ((prog-mode . corfu-mode)
+   ;;        (shell-mode . corfu-mode)
+   ;;        (eshell-mode . corfu-mode))
 
-  ;; Recommended: Enable Corfu globally.
-  ;; This is recommended since Dabbrev can be used globally (M-/).
-  ;; See also `global-corfu-modes'.
-  :init
-  (global-corfu-mode))
+   ;; Recommended: Enable Corfu globally.
+   ;; This is recommended since Dabbrev can be used globally (M-/).
+   ;; See also `global-corfu-modes'.
+   ))
 
 ;; Configure Tempel
-(use-package tempel
+(setup (:package tempel tempel-collection)
   ;; Require trigger prefix before template name when completing.
   ;; :custom
   ;; (tempel-trigger-prefix "<")
 
-  :bind (:map tempel-map
-              ([S-left] . #'tempel-previous)
-              ([S-right] . #'tempel-next))
+  (:bind [S-left]  #'tempel-previous
+         [S-right] #'tempel-next)
 
-  :init
 
   ;; Setup completion at point
   (defun tempel-setup-capf ()
@@ -69,24 +67,20 @@
   ;; (global-tempel-abbrev-mode)
   )
 
-;; Optional: Add tempel-collection.
-;; The package is young and doesn't have comprehensive coverage.
-(use-package tempel-collection
-  :after tempel)
 
-(use-package cape
-  :hook
-  (eglot-managed-mode . (lambda ()
-                          (setq-local completion-at-point-functions
-                                      (list (cape-capf-super
-                                             #'eglot-completion-at-point
-                                             #'tempel-complete)
-                                            t))))
-  :config
-  (add-to-list 'completion-at-point-functions
-               (cape-capf-super
-                #'cape-file
-                (cape-capf-prefix-length #'cape-dabbrev 3))))
+(setup (:package cape)
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (setq-local completion-at-point-functions
+                          (list (cape-capf-super
+                                 #'eglot-completion-at-point
+                                 #'tempel-complete)
+                                t))))
+  (with-eval-after-load 'cape
+    (add-to-list 'completion-at-point-functions
+                 (cape-capf-super
+                  #'cape-file
+                  (cape-capf-prefix-length #'cape-dabbrev 3)))))
 
 
 (provide 'setup-completion)

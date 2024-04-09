@@ -1,24 +1,20 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
-(use-package ebdb
-  :after (:any gnus message)
-  :init
-  (setq ebdb-sources "~/.ebdb"
-        ebdb-permanent-ignores-file "~/.ebdb-permanent-ignores")
-  :config
-  ;; load code for GNUs for reading and message for sending
-  (require 'ebdb-gnus)
-  (require 'ebdb-message)
-  ;; use complete at point interface to select email from contacts
-  (setq ebdb-complete-mail 'capf
-        ebdb-mua-pop-up nil             ; don't show any pop ups
-        ;; when reading or sending with the "reader" in GNUS create contact if it does not exist
-        ebdb-gnus-auto-update-p 'query
-        ;; save on exit
-        ebdb-save-on-exit t))
+(setup (:package ebdb)
+  (:option ebdb-sources "~/.ebdb"
+           ebdb-permanent-ignores-file "~/.ebdb-permanent-ignores"
+           ebdb-complete-mail 'capf
+           ebdb-mua-pop-up nil             ; don't show any pop ups
+           ;; when reading or sending with the "reader" in GNUS create contact if it does not exist
+           ebdb-gnus-auto-update-p 'query
+           ;; save on exit
+           ebdb-save-on-exit t)
+  (with-eval-after-load 'gnus
+    (require 'ebdb-gnus))
+  (with-eval-after-load 'message
+    (require 'ebdb-message)))
 
-(use-builtin emacs
-  :init
+(setup emacs
   (setq send-mail-function 'message-send-mail-with-sendmail
         message-send-mail-function 'message-send-mail-with-sendmail
         mail-specify-envelope-from t

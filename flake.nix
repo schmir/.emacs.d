@@ -84,7 +84,9 @@
             protobuf-mode
             pulsar
             python-pytest
+            setup
             shell-pop
+            site-lisp
             smartparens
             smartscan
             solidity-flycheck
