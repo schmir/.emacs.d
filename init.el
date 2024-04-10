@@ -14,6 +14,8 @@
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
+;; make sure to set this before (package-initialize). Otherwise site-lisp will bail out with an
+;; error when we try to set the value.
 (setopt site-lisp-directory (expand-file-name "lisp" user-emacs-directory))
 
 (setopt package-user-dir (expand-file-name "var/elpa-packages" user-emacs-directory)
@@ -25,9 +27,8 @@
           ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
-(load-file (expand-file-name "sup.el" site-lisp-directory))
-
 ;;; Install setup.el
+(load-file (expand-file-name "sup.el" site-lisp-directory))
 (sup-package-install 'setup)
 (require 'setup)
 
@@ -42,12 +43,13 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package site-lisp)
   (site-lisp-initialise))
 
-;; Let imenu see `use-package' declarations
-(setq use-package-enable-imenu-support t)
-
-
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+;; let's keep use-package as it's useful when trying out package, so we can copy and paste the
+;; install instructions.
+(setup (:package use-package)
+  ;; Let imenu see `use-package' declarations
+  (setopt use-package-enable-imenu-support t
+          use-package-always-ensure t)
+  (require 'use-package-ensure))
 
 (require 'setup-theme)
 (setup (:package no-littering)
@@ -196,8 +198,7 @@ The first PACKAGE can be used to deduce the feature context."
 
 (setup (:package highlight-symbol)
   (:hook-into prog-mode)
-  (defadvice highlight-symbol-count (around turn-off-symbol-counting activate)
-    (interactive))
+  (:option highlight-symbol-occurrence-message '(explicit))
   (:global
    [(control f3)] #'highlight-symbol
    [f3]           #'highlight-symbol-next
@@ -218,13 +219,13 @@ The first PACKAGE can be used to deduce the feature context."
 
 (setup (:package denote)
   (:global
-   "C-c n n"  denote
-   "C-c n i"  denote-link-or-create
-   "C-c n I"  denote-link
-   "C-c n b"  denote-link-backlinks
-   "C-c n a"  denote-add-front-matter
-   "C-c n r"  denote-rename-file
-   "C-c n R"  denote-rename-file-using-front-matter)
+   "C-c n n"  #'denote
+   "C-c n i"  #'denote-link-or-create
+   "C-c n I"  #'denote-link
+   "C-c n b"  #'denote-link-backlinks
+   "C-c n a"  #'denote-add-front-matter
+   "C-c n r"  #'denote-rename-file
+   "C-c n R"  #'denote-rename-file-using-front-matter)
   (setq denote-directory (expand-file-name "~/m/notes")
         denote-known-keywords '("emacs" "cli" "dev" "linux" "git" "clojure" "python" "golang")))
 

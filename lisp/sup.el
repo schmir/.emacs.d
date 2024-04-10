@@ -27,9 +27,10 @@
 (defun sup-package-install (package)
   (unless (package-installed-p package)
     (sup-show-messages)
-    (message "Installing package %s" package)
-    (unless (assoc 'setup package-archive-contents)
+    (unless (assq package package-archive-contents)
+      (message "===========> Refreshing package archive")
       (package-refresh-contents))
+    (message "===========> Installing package %s" package)
     (package-install package)))
 
 (provide 'sup)
