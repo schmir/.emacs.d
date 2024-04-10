@@ -35,7 +35,7 @@
    ))
 
 ;; Configure Tempel
-(setup (:package tempel tempel-collection)
+(setup (:package tempel)
   ;; Require trigger prefix before template name when completing.
   ;; :custom
   ;; (tempel-trigger-prefix "<")
