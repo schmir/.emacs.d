@@ -10,7 +10,7 @@
 (add-hook 'after-make-frame-functions
           #'after-make-frame)
 
-(let ((minver "28.1"))
+(let ((minver "29.0"))
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
