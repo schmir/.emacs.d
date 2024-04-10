@@ -25,12 +25,19 @@
           ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
+(load-file (expand-file-name "sup.el" site-lisp-directory))
+
 ;;; Install setup.el
-(unless (package-installed-p 'setup)
-  (unless (memq 'setup package-archive-contents)
-    (package-refresh-contents))
-  (package-install 'setup))
+(sup-package-install 'setup)
 (require 'setup)
+
+(setup-define :package
+  (lambda (package)
+    `(sup-package-install ',package))
+  :documentation "Install PACKAGE if it hasn't been installed yet.
+The first PACKAGE can be used to deduce the feature context."
+  :repeatable t
+  :shorthand #'cadr)
 
 (setup (:package site-lisp)
   (site-lisp-initialise))
