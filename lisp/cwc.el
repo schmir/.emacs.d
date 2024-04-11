@@ -1,8 +1,8 @@
-;;; cwc.el --- whitespace-cleanup only for changed lines
+;;; cwc.el --- whitespace-cleanup only for changed lines -*- lexical-binding: t -*-
 ;;
 ;; Author: Ralf Schmitt <ralf@systemexit.de>
-;; Version: 0.1
-;; Last Changed: 2010-04-13 17:03:32 by ralf
+;; Time-stamp: <2024-04-11 12:38:26 ralf>
+;; Version: 0.2
 
 ;;; Commentary:
 ;;
@@ -15,10 +15,7 @@
 ;; emacs init file in order to cleanup whitespace when saving buffers:
 ;;
 ;;     (require 'cwc)
-;;     (global-highlight-changes-mode t)
-;;     (setq highlight-changes-visibility-initial-state nil)
-;;     (add-to-list 'whitespace-style 'trailing)
-;;     (add-hook 'before-save-hook 'changed-whitespace-cleanup)
+;;     (cwc-global-mode)
 ;;
 ;;; Code:
 
@@ -62,8 +59,7 @@ to be in highlight-changes-mode."
 
 ;; (setq show-trailing-whitespace (not show-trailing-whitespace))
 
-;;;###autoload
-(defun clear-changes()
+(defun cwc-clear-changes()
   (interactive)
   (if (highlight-changes-mode)
       (progn
@@ -71,6 +67,30 @@ to be in highlight-changes-mode."
 	(highlight-changes-mode -1)
 	(highlight-changes-mode 1))))
 
-(add-hook 'after-revert-hook 'clear-changes)
+(defvar cwc-lighter " CWC")
+
+(defvar cwc-mode)
+
+;; (setq highlight-changes-visibility-initial-state nil)
+;; (add-to-list 'whitespace-style 'trailing)
+
+;;;###autoload
+(define-minor-mode cwc-mode
+  "Minor mode for cleaning up whitespace only on changed lines dfg"
+  :lighter cwc-lighter
+  (if cwc-mode
+      (progn
+        (highlight-changes-mode +1)
+        (highlight-changes-visible-mode -1)
+        (add-hook 'before-save-hook #'changed-whitespace-cleanup nil 'local)
+        (add-hook 'after-revert-hook #'cwc-clear-changes nil 'local))
+    (highlight-changes-mode -1)
+    (remove-hook 'before-save-hook #'changed-whitespace-cleanup 'local)
+    (remove-hook 'after-revert-hook #'cwc-clear-changes 'local)))
+
+;;;###autoload
+(define-globalized-minor-mode cwc-global-mode
+  cwc-mode cwc-mode)
 
 (provide 'cwc)
+;;; cwc.el ends here

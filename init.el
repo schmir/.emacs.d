@@ -88,7 +88,6 @@ The first PACKAGE can be used to deduce the feature context."
   (:file-match "\\.adoc$"))
 
 (setup (:package apheleia)
-  (message "Executing apheleia init code")
   (apheleia-global-mode +1)
   (with-eval-after-load 'apheleia
     (setf (alist-get 'blackzim apheleia-formatters)
@@ -405,11 +404,7 @@ The first PACKAGE can be used to deduce the feature context."
 (require 'setup-python)
 
 (setup cwc
-  (global-highlight-changes-mode t)
-  (setq highlight-changes-visibility-initial-state nil)
-  (with-eval-after-load 'whitespace
-    (add-to-list 'whitespace-style 'trailing))
-  (add-hook 'before-save-hook #'changed-whitespace-cleanup))
+  (cwc-global-mode +1))
 
 (setup git-grep
   (:global "<f5>" #'git-grep))
