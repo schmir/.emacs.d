@@ -1,7 +1,7 @@
 ;;; cwc.el --- whitespace-cleanup only for changed lines -*- lexical-binding: t -*-
 ;;
 ;; Author: Ralf Schmitt <ralf@systemexit.de>
-;; Time-stamp: <2024-04-11 12:38:26 ralf>
+;; Time-stamp: <2024-04-11 23:23:57 ralf>
 ;; Version: 0.2
 
 ;;; Commentary:
@@ -20,6 +20,7 @@
 ;;; Code:
 
 (require 'whitespace)
+(require 'hilit-chg)
 
 ;;;###autoload
 (defun changed-whitespace-cleanup()
@@ -54,7 +55,7 @@ to be in highlight-changes-mode."
 		(end-of-line)
 		(whitespace-cleanup-region start (point))
 		(goto-char (+ 1 (point))))))))
-    (message "buffer %s is not in highlight-changes-mode" (buffer-name))))
+    (message "cwc.el: buffer %s is not in highlight-changes-mode" (buffer-name))))
 
 
 ;; (setq show-trailing-whitespace (not show-trailing-whitespace))
@@ -63,7 +64,7 @@ to be in highlight-changes-mode."
   (interactive)
   (if (highlight-changes-mode)
       (progn
-	(message "clearing changes")
+        (message "cwc.el: clearing changes")
 	(highlight-changes-mode -1)
 	(highlight-changes-mode 1))))
 
@@ -80,10 +81,18 @@ to be in highlight-changes-mode."
   :lighter cwc-lighter
   (if cwc-mode
       (progn
-        (highlight-changes-mode +1)
-        (highlight-changes-visible-mode -1)
-        (add-hook 'before-save-hook #'changed-whitespace-cleanup nil 'local)
-        (add-hook 'after-revert-hook #'cwc-clear-changes nil 'local))
+        ;; only enable cwc-mode when global-highlight-changes-mode would also turn on
+        ;; highlight-changes-mode
+        (highlight-changes-mode-turn-on)
+        (if highlight-changes-mode
+            (progn
+              (highlight-changes-mode +1)
+              (highlight-changes-visible-mode -1)
+              (add-hook 'before-save-hook #'changed-whitespace-cleanup nil 'local)
+              (add-hook 'after-revert-hook #'cwc-clear-changes nil 'local))
+          (progn
+            ;;(message "cwc.el: cannot turn on highlight-changes-mode in buffer %s" (buffer-name))
+            (setq cwc-mode nil))))
     (highlight-changes-mode -1)
     (remove-hook 'before-save-hook #'changed-whitespace-cleanup 'local)
     (remove-hook 'after-revert-hook #'cwc-clear-changes 'local)))
