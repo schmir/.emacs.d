@@ -8,7 +8,7 @@
   (when sup-previous-buffer
     (switch-to-buffer sup-previous-buffer)
     (setq sup-previous-buffer nil)
-    (advice-remove 'messafe #'sup-redisplay)))
+    (advice-remove 'message #'sup-redisplay)))
 
 (defun sup-redisplay (&rest args)
   (redisplay))
