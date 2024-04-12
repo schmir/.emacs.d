@@ -71,7 +71,7 @@ The first PACKAGE can be used to deduce the feature context."
   (exec-path-from-shell-initialize))
 
 (setup (:package boxquote cargo crux dockerfile-mode elixir-mode flymake-shellcheck htmlize leo lua-mode
-                 prodigy solidity-flycheck tldr yaml-mode just-mode))
+                 prodigy solidity-flycheck tldr yaml-mode just-mode package-lint))
 
 (setup (:package markdown-mode markdown-preview-mode)
   (setq markdown-command "multimarkdown")
@@ -80,7 +80,7 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package zoom)
   (zoom-mode))
 
-(setup (:package flycheck flycheck-inline)
+(setup (:package flycheck flycheck-inline flycheck-package)
   (setq flycheck-check-syntax-automatically '(save new-line mode-enabled))
   (global-flycheck-inline-mode))
 

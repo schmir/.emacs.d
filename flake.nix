@@ -52,6 +52,7 @@
             flycheck
             flycheck-clj-kondo
             flycheck-inline
+            flycheck-package
             flymake-eslint
             flymake-shellcheck
             gcmh
@@ -77,6 +78,7 @@
             nix-mode
             no-littering
             orderless
+            package-lint
             persistent-scratch
             prism
             prodigy
