@@ -55,7 +55,8 @@
 
 (setq-default fill-column 80)
 
-(add-hook 'prog-mode-hook #'time-stamp)
+(add-hook 'before-save-hook #'time-stamp)
+
 (add-hook 'prog-mode-hook (lambda()
                             (setq fill-column 99)))
 (add-hook 'prog-mode-hook #'hl-line-mode)
