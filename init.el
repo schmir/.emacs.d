@@ -14,15 +14,14 @@
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
-;; make sure to set this before (package-initialize). Otherwise site-lisp will bail out with an
-;; error when we try to set the value.
+;; make sure to set this before we call (package-initialize). Otherwise site-lisp will bail out
+;; with an error when we try to set the value.
 (setopt site-lisp-directory (expand-file-name "lisp" user-emacs-directory))
 
 (setopt package-user-dir (expand-file-name "var/elpa-packages" user-emacs-directory)
         package-gnupghome-dir (expand-file-name "var/elpa-gnupg" user-emacs-directory)
         package-archives
-        '(("org" . "https://orgmode.org/elpa/")
-          ("melpa" . "https://melpa.org/packages/")
+        '(("melpa" . "https://melpa.org/packages/")
           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
