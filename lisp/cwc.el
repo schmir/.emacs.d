@@ -1,18 +1,20 @@
-;;; cwc.el --- whitespace-cleanup only for changed lines -*- lexical-binding: t -*-
+;;; cwc.el --- Run whitespace-cleanup only for changed lines -*- lexical-binding: t -*-
 ;;
+;; URL: https://github.com/schmir/.emacs.d/blob/main/lisp/cwc.el
 ;; Author: Ralf Schmitt <ralf@systemexit.de>
-;; Time-stamp: <2024-04-11 23:23:57 ralf>
+;; Time-stamp: <2024-04-12 07:44:13 ralf>
 ;; Version: 0.2
+;; Package-Requires: ((emacs "26.1"))
 
 ;;; Commentary:
 ;;
-;; run whitespace-cleanup only on changed lines in a buffer. needs
+;; Run 'whitespace-cleanup' only on changed lines in a buffer.  Needs
 ;; highlight-changes mode to do it's work.
 
 ;;; Installation
 ;;
-;; put this file into your load-path and add the following to your
-;; emacs init file in order to cleanup whitespace when saving buffers:
+;; Put this file into your load-path and add the following to your
+;; Emacs init file in order to cleanup whitespace when saving buffers:
 ;;
 ;;     (require 'cwc)
 ;;     (cwc-global-mode)
@@ -23,9 +25,11 @@
 (require 'hilit-chg)
 
 ;;;###autoload
-(defun changed-whitespace-cleanup()
-  "Run whitespace-cleanup-region on all changed lines. The buffer has
-to be in highlight-changes-mode."
+(defun cwc-cleanup()
+  "Cleanup whitespace in current buffer.
+
+This function runs `whitespace-cleanup-region' on all changed lines.  The buffer
+has to be in `highlight-changes-mode'."
   (interactive)
   (if highlight-changes-mode
       (save-excursion
@@ -61,7 +65,7 @@ to be in highlight-changes-mode."
 ;; (setq show-trailing-whitespace (not show-trailing-whitespace))
 
 (defun cwc-clear-changes()
-  (interactive)
+  "Clear text properties stored by `highlight-changes-mode'."
   (if (highlight-changes-mode)
       (progn
         (message "cwc.el: clearing changes")
@@ -77,7 +81,7 @@ to be in highlight-changes-mode."
 
 ;;;###autoload
 (define-minor-mode cwc-mode
-  "Minor mode for cleaning up whitespace only on changed lines dfg"
+  "Minor mode for cleaning up whitespace only on changed lines."
   :lighter cwc-lighter
   (if cwc-mode
       (progn
@@ -88,13 +92,13 @@ to be in highlight-changes-mode."
             (progn
               (highlight-changes-mode +1)
               (highlight-changes-visible-mode -1)
-              (add-hook 'before-save-hook #'changed-whitespace-cleanup nil 'local)
+              (add-hook 'before-save-hook #'cwc-cleanup nil 'local)
               (add-hook 'after-revert-hook #'cwc-clear-changes nil 'local))
           (progn
             ;;(message "cwc.el: cannot turn on highlight-changes-mode in buffer %s" (buffer-name))
             (setq cwc-mode nil))))
     (highlight-changes-mode -1)
-    (remove-hook 'before-save-hook #'changed-whitespace-cleanup 'local)
+    (remove-hook 'before-save-hook #'cwc-cleanup 'local)
     (remove-hook 'after-revert-hook #'cwc-clear-changes 'local)))
 
 ;;;###autoload
