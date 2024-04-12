@@ -10,30 +10,36 @@
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
-;; make sure to set this before we call (package-initialize). Otherwise site-lisp will bail out
-;; with an error when we try to set the value.
-(setopt site-lisp-directory (expand-file-name "lisp" user-emacs-directory))
-
-(setopt package-user-dir (expand-file-name "var/elpa-packages" user-emacs-directory)
-        package-gnupghome-dir (expand-file-name "var/elpa-gnupg" user-emacs-directory)
-        package-archives
-        '(("melpa" . "https://melpa.org/packages/")
-          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-          ("gnu" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
+;;; Initialize package.el
+(progn
+  ;; make sure to set this before we call (package-initialize). Otherwise site-lisp will bail out
+  ;; with an error when we try to set the value.
+  (setopt site-lisp-directory (expand-file-name "lisp" user-emacs-directory))
+  (setopt package-user-dir (expand-file-name "var/elpa-packages" user-emacs-directory)
+          package-gnupghome-dir (expand-file-name "var/elpa-gnupg" user-emacs-directory)
+          package-archives
+          '(("melpa" . "https://melpa.org/packages/")
+            ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+            ("gnu" . "https://elpa.gnu.org/packages/")))
+  (package-initialize))
 
 ;;; Install setup.el
-(load-file (expand-file-name "sup.el" site-lisp-directory))
-(sup-package-install 'setup)
-(require 'setup)
+(progn
+  (load-file (expand-file-name "sup.el" site-lisp-directory))
+  (sup-package-install 'setup)
+  (require 'setup)
 
-(setup-define :package
-  (lambda (package)
-    `(sup-package-install ',package))
-  :documentation "Install PACKAGE if it hasn't been installed yet.
+  (setup-define :package
+    (lambda (package)
+      `(sup-package-install ',package))
+    :documentation "Install PACKAGE if it hasn't been installed yet.
 The first PACKAGE can be used to deduce the feature context."
-  :repeatable t
-  :shorthand #'cadr)
+    :repeatable t
+    :shorthand #'cadr))
+
+(setup (:package no-littering)
+  (require 'no-littering)
+  (no-littering-theme-backups))
 
 (setup (:package site-lisp)
   (site-lisp-initialise))
@@ -51,13 +57,8 @@ The first PACKAGE can be used to deduce the feature context."
   ;; Consider all themes safe to load
   (setq custom-safe-themes t))
 
-(setup (:package no-littering)
-  ;; :autoload-this
-  (require 'no-littering)
-  (no-littering-theme-backups)
-  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
-
 (setup emacs
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (when (file-exists-p custom-file)
     (message "init.el: loading custom file %s" custom-file)
     (load custom-file))
@@ -67,9 +68,6 @@ The first PACKAGE can be used to deduce the feature context."
     (my/load-theme 'ef-day)))
 
 (require 'setup-core)
-;; (setup (:package diminish)
-;;   (dolist (mode '(#'eldoc-mode #'highlight-changes-mode))
-;;     (diminish mode)))
 
 (setup (:package exec-path-from-shell)
   (require 'exec-path-from-shell)
@@ -284,12 +282,6 @@ The first PACKAGE can be used to deduce the feature context."
    ;; work.
    flymake-eslint-defer-binary-check t))
 
-
-
-;; (if (version< emacs-version "29")
-;;     (message "init.el: no eglot available in this emacs version")
-;;   )
-
 (setup (:package eglot)
   (defun my/eglot-rename (newname)
     "Rename the current symbol to NEWNAME. like eglot-rename but provides the old symbol as default."
@@ -330,17 +322,16 @@ The first PACKAGE can be used to deduce the feature context."
                                default-directory)))
     (apply orig-fun args)))
 
-(defun schmir/solidity-setup ()
-  ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
-  (setq-local completion-at-point-functions
-              (list (cape-capf-super
-                     (cape-company-to-capf #'company-solidity)
-                     #'cape-dabbrev)))
-  (c-set-offset 'arglist-intro '+)
-  (setq-local c-basic-offset 4
-              tab-width 8))
-
 (setup (:package solidity-mode company-solidity)
+  (defun schmir/solidity-setup ()
+    ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super
+                       (cape-company-to-capf #'company-solidity)
+                       #'cape-dabbrev)))
+    (c-set-offset 'arglist-intro '+)
+    (setq-local c-basic-offset 4
+                tab-width 8))
   (:hook #'schmir/solidity-setup)
   (with-eval-after-load 'solidity-mode
     (require 'company-solidity)
@@ -418,28 +409,28 @@ The first PACKAGE can be used to deduce the feature context."
 
 
 ;; --- Configure display-buffer-alist
+(setup emacs
+  (setq display-buffer-alist
+        '(("\\`\\*e?shell\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
+           (display-buffer-reuse-window
+            display-buffer-in-side-window)
+           (reusable-frames . visible)
+           (side . bottom)
+           (window-height . 0.4))
+          ("\\`\\*cider-repl\\|.*.clj"
+           (display-buffer-reuse-window
+            display-buffer-pop-up-window)
+           (reusable-frames . t)
+           (inhibit-switch-frames . nil))))
 
-(setq display-buffer-alist
-      '(("\\`\\*e?shell\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
-         (display-buffer-reuse-window
-          display-buffer-in-side-window)
-         (reusable-frames . visible)
-         (side . bottom)
-         (window-height . 0.4))
-        ("\\`\\*cider-repl\\|.*.clj"
-         (display-buffer-reuse-window
-          display-buffer-pop-up-window)
-         (reusable-frames . t)
-         (inhibit-switch-frames . nil))))
+  (defun lunaryorn-quit-bottom-side-windows ()
+    "Quit side windows of the current frame."
+    (interactive)
+    (dolist (window (window-at-side-list))
+      (quit-window nil window)))
 
-(defun lunaryorn-quit-bottom-side-windows ()
-  "Quit side windows of the current frame."
-  (interactive)
-  (dolist (window (window-at-side-list))
-    (quit-window nil window)))
-
-(global-set-key (kbd "C-c q") #'lunaryorn-quit-bottom-side-windows)
-(global-set-key (kbd "C-c C-q") #'lunaryorn-quit-bottom-side-windows)
+  (:global "C-c q" #'lunaryorn-quit-bottom-side-windows
+           "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
 
 
 ;;; init.el ends here
