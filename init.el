@@ -1,14 +1,10 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 ;; on lexical-binding: https://nullprogram.com/blog/2016/12/22/
 
+;; focus initial frame, need this for macos
 (if (eq 'ns (window-system))
     (x-focus-frame nil))
-
-(defun after-make-frame (f)
-  (x-focus-frame f))
-
-(add-hook 'after-make-frame-functions
-          #'after-make-frame)
+(add-hook 'after-make-frame-functions #'x-focus-frame)
 
 (let ((minver "29.0"))
   (when (version< emacs-version minver)
