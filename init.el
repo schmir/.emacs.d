@@ -51,18 +51,30 @@ The first PACKAGE can be used to deduce the feature context."
           use-package-always-ensure t)
   (require 'use-package-ensure))
 
-(require 'setup-theme)
+(setup (:package leuven-theme gruvbox-theme spacemacs-theme ef-themes zenburn-theme
+                 anti-zenburn-theme kaolin-themes zerodark-theme)
+  ;; Consider all themes safe to load
+  (setq custom-safe-themes t))
+
 (setup (:package no-littering)
   ;; :autoload-this
   (require 'no-littering)
   (no-littering-theme-backups)
-  (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
+
+(setup emacs
   (when (file-exists-p custom-file)
     (message "init.el: loading custom file %s" custom-file)
-    (load custom-file)))
+    (load custom-file))
+  ;; load a theme unless we have customized one
+  (when (not custom-enabled-themes)
+    (message "setup-theme.el: loading default theme")
+    (my/load-theme 'ef-day)))
 
 (require 'setup-core)
-(setup (:package diminish))
+;; (setup (:package diminish)
+;;   (dolist (mode '(#'eldoc-mode #'highlight-changes-mode))
+;;     (diminish mode)))
 
 (setup (:package exec-path-from-shell)
   (require 'exec-path-from-shell)
@@ -169,7 +181,7 @@ The first PACKAGE can be used to deduce the feature context."
   ;; switch between the annotators.
   (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
   (marginalia-mode +1)
-  (global-set-key [remap switch-to-buffer] 'consult-buffer))
+  (global-set-key [remap switch-to-buffer] #'consult-buffer))
 
 (setup (:package  vertico)
   (vertico-mode)
@@ -409,8 +421,6 @@ The first PACKAGE can be used to deduce the feature context."
 (setup git-grep
   (:global "<f5>" #'git-grep))
 
-(dolist (mode '(eldoc-mode highlight-changes-mode))
-  (diminish mode))
 
 ;; --- Configure display-buffer-alist
 
