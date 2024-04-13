@@ -35,7 +35,11 @@
     :documentation "Install PACKAGE if it hasn't been installed yet.
 The first PACKAGE can be used to deduce the feature context."
     :repeatable t
-    :shorthand #'cadr))
+    :shorthand (lambda (form)
+                 (let ((pkg-desc (cadr form)))
+                   (if (consp pkg-desc)
+                       (car pkg-desc)
+                     pkg-desc)))))
 
 (setup (:package no-littering)
   (require 'no-littering)
@@ -381,10 +385,7 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package writegood-mode)
   (:hook-into text-mode markdown-mode))
 
-(require 'framemove-autoloads nil t)
-(unless (featurep 'framemove-autoloads)
-  (package-vc-install "https://github.com/emacsmirror/framemove"))
-(setup (:require framemove)
+(setup (:package (framemove :url "https://github.com/emacsmirror/framemove"))
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
 
