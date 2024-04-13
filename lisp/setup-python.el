@@ -12,9 +12,8 @@
 (setup python
   (:also-load python-pytest)
   (:option python-shell-interpreter "python3")
-  (when (fboundp #'eglot-ensure)
-    (add-hook 'python-mode-hook #'eglot-ensure)
-    (add-hook 'python-ts-mode-hook #'eglot-ensure))
+  (:with-mode (python-mode python-ts-mode)
+    (:hook #'eglot-ensure))
   (advice-add 'run-python :around #'with-project-root-as-default-directory))
 
 (provide 'setup-python)
