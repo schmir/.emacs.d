@@ -40,9 +40,9 @@
   ;; :custom
   ;; (tempel-trigger-prefix "<")
 
-  (:bind [S-left]  #'tempel-previous
-         [S-right] #'tempel-next)
-
+  (:bind-into tempel-map
+    [S-left]  #'tempel-previous
+    [S-right] #'tempel-next)
 
   ;; Setup completion at point
   (defun tempel-setup-capf ()
