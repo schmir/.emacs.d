@@ -386,6 +386,7 @@ The first PACKAGE can be used to deduce the feature context."
   (:hook-into text-mode markdown-mode))
 
 (setup (:package (framemove :url "https://github.com/emacsmirror/framemove"))
+  (require 'framemove)
   (windmove-default-keybindings)
   (setq framemove-hook-into-windmove t))
 
