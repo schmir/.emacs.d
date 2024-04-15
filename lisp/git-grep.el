@@ -34,7 +34,7 @@ This command shares argument histories with \\[rgrep] and \\[grep]."
   (require 'grep)
   (when (and (stringp regexp) (> (length regexp) 0))
     (let ((command regexp))
-      (progn 
+      (progn
 	(setq dir (file-name-as-directory (expand-file-name dir)))
 	(setq command
 	      (grep-expand-template "git grep --no-color -n -e <R> -- <F>" regexp files))
