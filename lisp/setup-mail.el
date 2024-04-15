@@ -27,4 +27,15 @@
     (when msmtp
       (setq sendmail-program msmtp))))
 
+(when-let ((viewer (cond
+                    ((eq system-type 'darwin)
+                     "open %s 2>/dev/null")
+                    ((eq system-type 'gnu/linux)
+                     "xdg-open %s 2>/dev/null"))))
+  (message "Using '%s' as external PDF viewer" viewer)
+  (push `((viewer . ,viewer)
+          (type . "application/pdf")
+          (test . window-system))
+        mailcap-user-mime-data))
+
 (provide 'setup-mail)

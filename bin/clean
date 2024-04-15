@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && git rev-parse --show-toplevel)
+cd -- "${root}"
+rm -rf var/elpa-gnupg var/elpa-packages
+exec git clean -e etc -e var -xfdi
