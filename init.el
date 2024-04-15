@@ -152,7 +152,9 @@ The first PACKAGE can be used to deduce the feature context."
   (setq eshell-visual-commands '()))
 
 (setup (:package persistent-scratch)
-  (persistent-scratch-setup-default))
+  (persistent-scratch-setup-default)
+  (with-current-buffer "*scratch*"
+    (persistent-scratch-mode +1)))
 
 (setup (:package which-key)
   (which-key-mode))
@@ -376,7 +378,7 @@ The first PACKAGE can be used to deduce the feature context."
 
 (setup compile
   ;; scroll, but stop at first error
-  (setq compilation-scroll-output 'first-error)  
+  (setq compilation-scroll-output 'first-error)
   ;; colorize compile mode output
   (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
