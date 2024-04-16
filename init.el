@@ -111,10 +111,13 @@ The first PACKAGE can be used to deduce the feature context."
   (:global "C-c b" #'apheleia-format-buffer))
 
 (setup eldoc
-  (:hook-into emacs-list-mode clojure-mode))
+  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
 
 (setup (:package aggressive-indent)
-  (:hook-into emacs-lisp-mode clojure-mode))
+  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
+
+(setup (:package prism)
+  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
 
 (setup (:package easy-kill)
   (global-set-key [remap kill-ring-save] #'easy-kill))
@@ -204,9 +207,6 @@ The first PACKAGE can be used to deduce the feature context."
   (:global
    "C--"  #'default-text-scale-decrease
    "C-="  #'default-text-scale-increase))
-
-(setup (:package prism)
-  (:hook-into emacs-lisp-mode clojure-mode))
 
 (setup (:package highlight-symbol)
   (:hook-into prog-mode)
