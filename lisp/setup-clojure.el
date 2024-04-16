@@ -1,15 +1,13 @@
 ;;; setup-clojure  --- setup clojure with cider     -*- lexical-binding: t -*-
 
 ;;; Code:
-(setup (:package clojure-mode clojure-mode-extra-font-locking flycheck-clj-kondo)
+(setup (:package clojure-mode clojure-mode-extra-font-locking flymake-kondor)
   (:bind-into clojure-mode-map
     "<f10>"  #'cider-connect)
-  (:hook #'flycheck-mode)
+  (:hook #'flymake-kondor-setup #'flymake-mode)
 
   (with-eval-after-load 'clojure-mode
     (require 'clojure-mode-extra-font-locking)
-    (require 'flycheck-clj-kondo)
-
     (define-clojure-indent
      (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond)))
