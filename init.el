@@ -159,8 +159,10 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package which-key)
   (which-key-mode))
 
-(setup (:and (executable-find "direnv") (:package direnv))
-  (direnv-mode))
+(setup (:and (executable-find "direnv") (:package envrc))
+  (require 'envrc)
+  (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
+  (add-hook 'after-init-hook #'envrc-global-mode))
 
 (setup (:package consult)
   (with-eval-after-load 'consult
