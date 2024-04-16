@@ -12,6 +12,16 @@
      (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond)))
 
+(setup (:package clojure-ts-mode)
+  (setopt clojure-ts-ensure-grammars nil)
+  (:hook #'flymake-kondor-setup #'flymake-mode)
+  (with-eval-after-load 'clojure-ts-mode
+    (define-clojure-indent
+     (event-handler 'defun))
+    (put-clojure-indent 'cond #'schmir/indent-cond))
+  (when (treesit-ready-p 'clojure)
+    (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))))
+
 (setup (:package cider)
   (:hook #'eldoc-mode)
 
