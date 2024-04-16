@@ -57,6 +57,7 @@
             flycheck-package
             flymake-eslint
             flymake-kondor
+            flymake-ruff
             flymake-shellcheck
             gcmh
             git-gutter
