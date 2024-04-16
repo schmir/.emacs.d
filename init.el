@@ -351,7 +351,15 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package terraform-mode))
 
 (setup (:package nix-mode)
-  (:file-match  "\\.nix\\'"))
+  (:file-match  "\\.nix\\'")
+  (:hook #'eglot-ensure)
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nil")))))
+
+(setup (:package nix-ts-mode)
+  (:hook #'eglot-ensure)
+  (when (treesit-ready-p 'nix)
+    (add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode))))
 
 ;; configure tramp before saveplace, because it might use tramp
 (setup tramp
