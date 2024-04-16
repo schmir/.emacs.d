@@ -32,6 +32,7 @@
             cider
             clojure-mode
             clojure-mode-extra-font-locking
+            clojure-ts-mode
             company
             company-solidity
             consult
@@ -48,12 +49,14 @@
             ebdb
             ef-themes
             elixir-mode
+            envrc
             exec-path-from-shell
             flycheck
             flycheck-clj-kondo
             flycheck-inline
             flycheck-package
             flymake-eslint
+            flymake-kondor
             flymake-shellcheck
             gcmh
             git-gutter
@@ -76,6 +79,7 @@
             markdown-preview-mode
             ninja-mode
             nix-mode
+            nix-ts-mode
             no-littering
             orderless
             package-lint
