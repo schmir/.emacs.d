@@ -122,6 +122,10 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package easy-kill)
   (global-set-key [remap kill-ring-save] #'easy-kill))
 
+(setup (:package macrostep)
+  (with-eval-after-load 'lisp-mode
+    (define-key emacs-lisp-mode-map (kbd "C-c x") 'macrostep-expand)))
+
 (setup so-long
   (setq so-long-max-lines nil
         so-long-threshold 500)
