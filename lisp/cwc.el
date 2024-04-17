@@ -2,7 +2,7 @@
 ;;
 ;; URL: https://github.com/schmir/.emacs.d/blob/main/lisp/cwc.el
 ;; Author: Ralf Schmitt <ralf@systemexit.de>
-;; Time-stamp: <2024-04-12 07:44:13 ralf>
+;; Time-stamp: <2024-04-17 11:02:01 ralf>
 ;; Version: 0.2
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -70,7 +70,8 @@ has to be in `highlight-changes-mode'."
       (progn
         (message "cwc.el: clearing changes")
 	(highlight-changes-mode -1)
-	(highlight-changes-mode 1))))
+        (highlight-changes-mode 1)
+        (highlight-changes-visible-mode -1))))
 
 (defvar cwc-lighter " CWC")
 
