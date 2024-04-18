@@ -304,7 +304,16 @@ The first PACKAGE can be used to deduce the feature context."
             (thing-at-point 'symbol t) nil nil nil
             (symbol-name (symbol-at-point)))))
     (eglot-rename newname))
-  (:option eglot-autoshutdown t)
+
+  (defun my/setup-eglot-flymake-backend ()
+    "Enable eglot's flymake backend manually."
+    (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t))
+
+  (with-eval-after-load 'eglot
+    (setopt eglot-autoshutdown t)
+    ;; let me manage flymake on my own
+    (add-to-list 'eglot-stay-out-of 'flymake))
+
   (:bind  "C-c ." #'xref-find-references
           "C-c t" #'eglot-find-typeDefinition
           "C-c i" #'eglot-find-implementation

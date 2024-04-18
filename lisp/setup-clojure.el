@@ -2,9 +2,16 @@
 
 ;;; Code:
 (setup (:package clojure-mode clojure-mode-extra-font-locking flymake-kondor)
+  (defun my/setup-clojure-mode ()
+    (flymake-kondor-setup)
+    (flymake-mode)
+    (when (executable-find "clojure-lsp")
+      (eglot-ensure)))
+
   (:bind-into clojure-mode-map
     "<f10>"  #'cider-connect)
-  (:hook #'flymake-kondor-setup #'flymake-mode)
+
+  (:hook #'my/setup-clojure-mode)
 
   (with-eval-after-load 'clojure-mode
     (require 'clojure-mode-extra-font-locking)
@@ -14,7 +21,7 @@
 
 (setup (:package clojure-ts-mode)
   (setopt clojure-ts-ensure-grammars nil)
-  (:hook #'flymake-kondor-setup #'flymake-mode)
+  (:hook #'my/setup-clojure-mode)
   (with-eval-after-load 'clojure-ts-mode
     (define-clojure-indent
      (event-handler 'defun))

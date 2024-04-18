@@ -14,11 +14,7 @@
   (:also-load python-pytest)
   (setopt python-shell-interpreter "python3")
   (:with-mode (python-mode python-ts-mode)
-    (:hook #'eglot-ensure))
-  (add-hook 'eglot-managed-mode-hook
-            (lambda()
-              (when (derived-mode-p 'python-base-mode)
-                (flymake-ruff-load))))
+    (:hook #'flymake-ruff-load #'my/setup-eglot-flymake-backend #'flymake-mode #'eglot-ensure))
   (when (treesit-ready-p 'python)
     (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
   (advice-add 'run-python :around #'with-project-root-as-default-directory))

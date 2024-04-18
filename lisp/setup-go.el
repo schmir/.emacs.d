@@ -9,6 +9,8 @@
                 gofmt-command "gofumports")
     (add-hook 'before-save-hook #'eglot-format-buffer -10 t)
     (add-hook 'before-save-hook #'my/fix-go-imports nil t)
+    (my/setup-eglot-flymake-backend)
+    (flymake-mode)
     (eglot-ensure))
 
   (:with-mode (go-mode go-ts-mode)
