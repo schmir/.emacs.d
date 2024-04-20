@@ -399,6 +399,9 @@ The first PACKAGE can be used to deduce the feature context."
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
+(setup project
+  (setopt project-vc-extra-root-markers '(".project" ".projectile")))
+
 (setup (:and (executable-find "zoxide")
              (:package zoxide))
   (defun my/zoxide-add
