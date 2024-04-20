@@ -200,6 +200,47 @@ The first PACKAGE can be used to deduce the feature context."
   (with-eval-after-load 'consult-dir
     (add-to-list 'consult-dir-sources #'my/consult-dir-source-zoxide)))
 
+(setup eshell
+  (defvar my/consult-dir-source-eshell
+    `(:name "Eshell"
+            :narrow ?e
+            :category file
+            :face consult-file
+            :enabled ,(lambda () (and (boundp 'eshell-last-dir-ring)
+                                      eshell-last-dir-ring))
+            :items ,(lambda()
+                      (delete-dups
+                       (mapcar 'abbreviate-file-name
+                               (ring-elements eshell-last-dir-ring)))))
+    "Eshell directory source for `consult-dir--pick'.")
+
+  (with-eval-after-load 'consult-dir
+    (add-to-list 'consult-dir-sources my/consult-dir-source-eshell))
+
+  (defun my/zoxide-eshell-directory-changed
+      ()
+    (zoxide-add default-directory))
+
+  (with-eval-after-load 'eshell
+    (add-hook 'eshell-directory-change-hook #'my/zoxide-eshell-directory-changed))
+
+  (defun my/zoxide-query
+      (s)
+    (let ((r (zoxide-run nil "query" s)))
+      (if (stringp r)
+          (car (split-string r "\n" t))
+        nil)))
+
+  (defun eshell/z (&optional regexp)
+    "Navigate to a previously visited directory in eshell, or to
+any directory proferred by `consult-dir'."
+    (let ((dir (if regexp
+                   (or (my/zoxide-query regexp)
+                       (eshell-find-previous-directory regexp))
+                 (substring-no-properties
+                  (consult-dir--pick "Switch directory: ")))))
+      (eshell/cd dir))))
+
 (setup (:package marginalia)
   ;; Prefer richer, more heavy, annotations over the lighter default variant.
   ;; E.g. M-x will show the documentation string additional to the keybinding.
