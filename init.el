@@ -181,6 +181,25 @@ The first PACKAGE can be used to deduce the feature context."
      consult--source-bookmark
      :preview-key "M-.")))
 
+(setup (:package consult-dir)
+  (:global "C-x C-d" consult-dir)
+  (:bind-into vertico-map
+    "C-x C-d" #'consult-dir
+    "C-x C-j" #'consult-dir-jump-file)
+
+  (defvar my/consult-dir-source-zoxide
+    `(:name "Zoxide"
+            :narrow ?z
+            :category file
+            :face consult-file
+            :enabled ,(lambda () (fboundp #'zoxide-query))
+            :items ,(lambda()
+                      (zoxide-query)))
+    "Zoxide directory source for `consult-dir--pick'.")
+
+  (with-eval-after-load 'consult-dir
+    (add-to-list 'consult-dir-sources #'my/consult-dir-source-zoxide)))
+
 (setup (:package marginalia)
   ;; Prefer richer, more heavy, annotations over the lighter default variant.
   ;; E.g. M-x will show the documentation string additional to the keybinding.
