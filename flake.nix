@@ -114,6 +114,7 @@
             zenburn-theme
             zerodark-theme
             zoom
+            zoxide
             (callPackage ./framemove.nix {
               emacs = emacs;
               inherit (pkgs) fetchFromGitHub lib;

@@ -399,6 +399,19 @@ The first PACKAGE can be used to deduce the feature context."
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
+(setup (:and (executable-find "zoxide")
+             (:package zoxide))
+  (defun my/zoxide-add
+      ()
+    (zoxide-add)
+    (when-let ((proj (project-current))
+               (root (project-root proj))
+               (path (expand-file-name root)))
+      (message "add project-root %s to zoxide" path)
+      (zoxide-add path)))
+
+  (add-hook 'find-file-hook #'my/zoxide-add))
+
 (setup compile
   ;; scroll, but stop at first error
   (setq compilation-scroll-output 'first-error)
