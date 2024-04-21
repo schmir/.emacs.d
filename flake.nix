@@ -36,6 +36,7 @@
             company
             company-solidity
             consult
+            consult-dir
             consult-notes
             corfu
             crux
