@@ -209,6 +209,12 @@ The first PACKAGE can be used to deduce the feature context."
     (add-to-list 'consult-dir-sources #'my/consult-dir-source-zoxide)))
 
 (setup eshell
+  (defun my/insert-compile-command
+      ()
+    (interactive)
+    (goto-char (max-char))
+    (insert compile-command))
+
   (defvar my/consult-dir-source-eshell
     `(:name "Eshell"
             :narrow ?e
@@ -230,7 +236,11 @@ The first PACKAGE can be used to deduce the feature context."
     (zoxide-add default-directory))
 
   (with-eval-after-load 'eshell
-    (add-hook 'eshell-directory-change-hook #'my/zoxide-eshell-directory-changed))
+    (require 'esh-mode)
+    (define-key eshell-mode-map (kbd "<f9>") #'my/insert-compile-command)
+    (add-hook 'eshell-directory-change-hook #'my/zoxide-eshell-directory-changed)
+    (add-hook 'eshell-directory-change-hook #'hack-dir-local-variables-non-file-buffer))
+
 
   (defun my/zoxide-query
       (s)
@@ -528,7 +538,7 @@ any directory proferred by `consult-dir'."
 ;; --- Configure display-buffer-alist
 (setup emacs
   (setq display-buffer-alist
-        '(("*e?shell*\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
+        '(("*e?shell*\\|eat\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
            (display-buffer-reuse-window
             display-buffer-in-side-window)
            (reusable-frames . visible)
