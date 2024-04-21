@@ -341,24 +341,12 @@ any directory proferred by `consult-dir'."
   ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
   (consult-notes-denote-mode))
 
-;; --- setup typescript
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-
-(setup (:package tide)
-  (:option tide-completion-detailed 't
-           tide-always-show-documentation 't)
-  (add-hook 'typescript-mode-hook #'setup-tide-mode))
-
-(setup (:package js2-mode)
-  (:file-match "\\.js\\'")
-  (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))
+(setup js-mode
+  (:with-mode (js-mode js-ts-mode)
+    (:hook #'my/setup-eglot-flymake-backend #'flymake-mode #'eglot-ensure))
+  (require 'treesit)
+  (when (treesit-ready-p 'javascript)
+    (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))))
 
 (setup (:package add-node-modules-path)
   (:with-mode (js-mode js2-mode)

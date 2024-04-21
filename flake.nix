@@ -68,7 +68,6 @@
             gruvbox-theme
             highlight-symbol
             htmlize
-            js2-mode
             just-mode
             kaolin-themes
             leo
@@ -102,7 +101,6 @@
             tempel
             tempel-collection
             terraform-mode
-            tide
             tldr
             treesit-auto
             treesit-grammars.with-all-grammars
