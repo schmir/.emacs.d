@@ -88,7 +88,6 @@
             persistent-scratch
             prism
             prodigy
-            projectile
             protobuf-mode
             pulsar
             python-pytest
