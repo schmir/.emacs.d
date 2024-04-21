@@ -249,6 +249,7 @@ The first PACKAGE can be used to deduce the feature context."
           (car (split-string r "\n" t))
         nil)))
 
+  (autoload 'consult-dir--pick "consult-dir")
   (defun eshell/z (&optional regexp)
     "Navigate to a previously visited directory in eshell, or to
 any directory proferred by `consult-dir'."
