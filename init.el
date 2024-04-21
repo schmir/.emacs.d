@@ -176,6 +176,7 @@ The first PACKAGE can be used to deduce the feature context."
   (add-hook 'after-init-hook #'envrc-global-mode))
 
 (setup (:package consult)
+  (global-set-key [remap project-find-file] #'consult-project-extra-find)
   (with-eval-after-load 'consult
     (consult-customize
      consult-ripgrep consult-git-grep consult-grep consult-buffer
@@ -464,7 +465,9 @@ any directory proferred by `consult-dir'."
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
 (setup project
-  (setopt project-vc-extra-root-markers '(".project" ".projectile")))
+  (setopt project-vc-extra-root-markers '(".project" ".projectile"))
+  (:global "<f9>" #'project-compile
+           "<S-f9>" #'project-eshell))
 
 (setup (:and (executable-find "zoxide")
              (:package zoxide))
@@ -518,7 +521,7 @@ any directory proferred by `consult-dir'."
 ;; --- Configure display-buffer-alist
 (setup emacs
   (setq display-buffer-alist
-        '(("\\`\\*e?shell\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
+        '(("*e?shell*\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
            (display-buffer-reuse-window
             display-buffer-in-side-window)
            (reusable-frames . visible)
