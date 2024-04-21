@@ -121,7 +121,10 @@ The first PACKAGE can be used to deduce the feature context."
   (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
 
 (setup (:package prism)
-  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
+  (my/run-when-display-initialized
+   (lambda()
+     (message "init.el: initializing prism mode hooks")
+     (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))))
 
 (setup (:package easy-kill)
   (global-set-key [remap kill-ring-save] #'easy-kill))
@@ -512,7 +515,10 @@ any directory proferred by `consult-dir'."
 (require 'setup-python)
 
 (setup cwc
-  (cwc-global-mode +1))
+  (my/run-when-display-initialized
+   (lambda()
+     (message "init.el: initializing cwc-global-mode")
+     (cwc-global-mode +1))))
 
 (setup git-grep
   (:global "<f5>" #'git-grep))

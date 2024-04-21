@@ -4,16 +4,22 @@
 ;;; Commentary:
 
 ;;;###autoload
-(defun my/load-theme (theme)
-  "Load the given `THEME' even when in daemon mode."
+(defun my/run-when-display-initialized
+    (f)
+  "Run the given function when the display is initialized"
   (if (daemonp)
-      ;; load theme via hook
       (letrec ((*load-theme* (lambda (frame)
                                (select-frame frame)
-                               (load-theme theme t)
+                               (funcall f)
                                (remove-hook 'after-make-frame-functions *load-theme*))))
         (add-hook 'after-make-frame-functions *load-theme*))
-    (load-theme theme t)))
+    (funcall f)))
+
+;;;###autoload
+(defun my/load-theme (theme)
+  "Load the given `THEME' even when in daemon mode."
+  (my/run-when-display-initialized (lambda()
+                                     (load-theme theme t))))
 
 (provide 'my-lib)
 ;;; my-lib.el ends here
