@@ -72,6 +72,10 @@ The first PACKAGE can be used to deduce the feature context."
     (my/load-theme 'ef-day)))
 
 (require 'setup-core)
+(let* ((home "/home")
+       (truename (file-truename home)))
+  (when (not (string= home truename))
+    (add-to-list 'directory-abbrev-alist (cons (concat "\\`" truename)  home))))
 
 (setup (:package exec-path-from-shell)
   (require 'exec-path-from-shell)
