@@ -194,7 +194,7 @@ The first PACKAGE can be used to deduce the feature context."
             :face consult-file
             :enabled ,(lambda () (fboundp #'zoxide-query))
             :items ,(lambda()
-                      (zoxide-query)))
+                      (delete-dups (mapcar #'abbreviate-file-name (zoxide-query)))))
     "Zoxide directory source for `consult-dir--pick'.")
 
   (with-eval-after-load 'consult-dir
