@@ -161,8 +161,8 @@ The first PACKAGE can be used to deduce the feature context."
         shell-pop-window-size 40))
 
 (setup (:package eat)
-  (with-eval-after-load 'eat
-    (eat-eshell-mode))
+  (add-hook 'eshell-load-hook #'eat-eshell-mode)
+  ;; (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
   (setq eshell-visual-commands '()))
 
 (setup (:package persistent-scratch)
