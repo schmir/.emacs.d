@@ -237,6 +237,9 @@ The first PACKAGE can be used to deduce the feature context."
 
   (with-eval-after-load 'eshell
     (require 'esh-mode)
+
+    (add-hook 'eshell-mode-hook #'my/zoxide-eshell-directory-changed)
+    (add-hook 'eshell-mode-hook #'hack-dir-local-variables-non-file-buffer)
     (define-key eshell-mode-map (kbd "<f9>") #'my/insert-compile-command)
     (add-hook 'eshell-directory-change-hook #'my/zoxide-eshell-directory-changed)
     (add-hook 'eshell-directory-change-hook #'hack-dir-local-variables-non-file-buffer))
@@ -467,6 +470,20 @@ any directory proferred by `consult-dir'."
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
+(setup fix-project-try-vc
+  (defun my/fix-project-try-vc (orig-fun dir)
+    "Advice for project-try-vc.
+project-try-fc recursively calls itself with project-vc-extra-root-markers set to nil and wrongly
+caches the result of those calls via vc-file-setprop.
+"
+    (let ((res (cl-letf (((symbol-function 'vc-file-setprop) #'ignore))
+                 (funcall orig-fun dir))))
+      (when res
+        (vc-file-setprop dir 'project-vc res))
+      res))
+  (with-eval-after-load 'project
+    (advice-add 'project-try-vc :around #'my/fix-project-try-vc)))
+
 (setup project
   (setopt project-vc-extra-root-markers '(".project" ".projectile"))
   (:global "<f9>" #'project-compile
@@ -527,7 +544,7 @@ any directory proferred by `consult-dir'."
 ;; --- Configure display-buffer-alist
 (setup emacs
   (setq display-buffer-alist
-        '(("*e?shell*\\|eat\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
+        '(("e?shell*\\|ielm\\|eat\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
            (display-buffer-reuse-window
             display-buffer-in-side-window)
            (reusable-frames . visible)
