@@ -74,7 +74,6 @@
             leo
             leuven-theme
             lua-mode
-            lua-mode
             macrostep
             magit
             marginalia
