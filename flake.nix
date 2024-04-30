@@ -38,6 +38,7 @@
             consult
             consult-dir
             consult-notes
+            consult-project-extra
             corfu
             crux
             default-text-scale

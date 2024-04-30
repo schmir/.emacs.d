@@ -179,6 +179,7 @@ The first PACKAGE can be used to deduce the feature context."
   (add-hook 'after-init-hook #'envrc-global-mode))
 
 (setup (:package consult)
+  (:package consult-project-extra)
   (global-set-key [remap project-find-file] #'consult-project-extra-find)
   (with-eval-after-load 'consult
     (consult-customize
