@@ -470,6 +470,9 @@ any directory proferred by `consult-dir'."
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
+(setup (:package super-save)
+  (super-save-mode +1))
+
 (setup fix-project-try-vc
   (defun my/fix-project-try-vc (orig-fun dir)
     "Advice for project-try-vc.

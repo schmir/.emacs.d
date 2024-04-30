@@ -98,6 +98,7 @@
             smartscan
             solidity-flycheck
             spacemacs-theme
+            super-save
             tempel
             tempel-collection
             terraform-mode
