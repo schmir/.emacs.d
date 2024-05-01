@@ -20,14 +20,12 @@
     (put-clojure-indent 'cond #'schmir/indent-cond)))
 
 (setup (:package clojure-ts-mode)
+  ;; aggressive-indent doesn't seem to work in clojure-ts-mode as expected. So, for now let's use
+  ;; the old clojure mode.
+  ;; (when (treesit-ready-p 'clojure)
+  ;;   (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode)))
   (setopt clojure-ts-ensure-grammars nil)
-  (:hook #'my/setup-clojure-mode)
-  (with-eval-after-load 'clojure-ts-mode
-    (define-clojure-indent
-     (event-handler 'defun))
-    (put-clojure-indent 'cond #'schmir/indent-cond))
-  (when (treesit-ready-p 'clojure)
-    (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))))
+  (:hook #'my/setup-clojure-mode))
 
 (setup (:package cider)
   (:hook #'eldoc-mode)
