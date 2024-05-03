@@ -29,6 +29,14 @@
   (sup-package-install 'setup)
   (require 'setup)
 
+  (setup-define :bind-now
+    (lambda (key command)
+      `(define-key ,(setup-get 'map) ,key ,command))
+    :documentation "Bind KEY to COMMAND in current map."
+    :debug '(form sexp)
+    :ensure '(kbd func)
+    :repeatable t)
+
   (setup-define :package
     (lambda (package)
       `(sup-package-install ',package))
@@ -530,10 +538,25 @@ caches the result of those calls via vc-file-setprop.
 (require 'setup-mail)
 (require 'setup-completion)
 (require 'setup-git)
-(require 'setup-smartparens)
 (require 'setup-clojure)
 (require 'setup-go)
 (require 'setup-python)
+
+;; (require 'setup-smartparens)
+(setup (:package puni)
+  (electric-pair-mode +1)
+  (puni-global-mode)
+  (add-hook 'term-mode-hook #'puni-disable-puni-mode)
+
+  (:bind-now "<M-right>" #'puni-slurp-forward
+             "<M-left>"  #'puni-barf-forward
+             "<M-up>"    #'puni-splice
+
+             "<C-S-right>"  #'puni-forward-sexp
+             "<C-S-left>"   #'puni-backward-sexp))
+
+(setup (:package eros)
+  (eros-mode +1))
 
 (setup cwc
   (my/run-when-display-initialized

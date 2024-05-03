@@ -52,6 +52,7 @@
             ef-themes
             elixir-mode
             envrc
+            eros
             exec-path-from-shell
             flycheck
             flycheck-clj-kondo
@@ -90,6 +91,7 @@
             prodigy
             protobuf-mode
             pulsar
+            puni
             python-pytest
             setup
             shell-pop
