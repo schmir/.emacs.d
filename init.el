@@ -111,6 +111,11 @@ The first PACKAGE can be used to deduce the feature context."
 (setup (:package apheleia)
   (apheleia-global-mode +1)
   (with-eval-after-load 'apheleia
+    (when (executable-find "zprint")
+      (setf (alist-get 'zprint apheleia-formatters) '("zprint"))
+      (add-to-list 'apheleia-mode-alist '(clojure-mode . zprint))
+      (add-to-list 'apheleia-mode-alist '(clojure-ts-mode . zprint)))
+
     (setf (alist-get 'blackzim apheleia-formatters)
           '("blackzim"))
     (when (executable-find "ruff")
