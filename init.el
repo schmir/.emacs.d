@@ -131,7 +131,7 @@ The first PACKAGE can be used to deduce the feature context."
   (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
 
 (setup (:package aggressive-indent)
-  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
+  (:hook-into emacs-lisp-mode))
 
 (setup (:package prism)
   (my/run-when-display-initialized
