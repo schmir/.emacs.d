@@ -96,7 +96,6 @@
             setup
             shell-pop
             site-lisp
-            smartparens
             smartscan
             solidity-flycheck
             spacemacs-theme
