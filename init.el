@@ -118,6 +118,10 @@ The first PACKAGE can be used to deduce the feature context."
 
     (setf (alist-get 'blackzim apheleia-formatters)
           '("blackzim"))
+
+    (setf (alist-get 'latexindent apheleia-formatters)
+          '("latexindent" "--logfile=/dev/null" "-y" "defaultIndent: \"    \""))
+
     (when (executable-find "ruff")
       (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
       (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))
