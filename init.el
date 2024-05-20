@@ -540,6 +540,9 @@ caches the result of those calls via vc-file-setprop.
 
 (setup (:package  gcmh)) ;; early-init.el enables gcmh-mode
 
+(setup (:package pdf-tools)
+  (add-hook 'doc-view-mode-hook #'pdf-tools-install))
+
 (require 'setup-mail)
 (require 'setup-completion)
 (require 'setup-git)

@@ -86,6 +86,7 @@
             no-littering
             orderless
             package-lint
+            pdf-tools
             persistent-scratch
             prism
             prodigy
