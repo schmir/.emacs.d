@@ -40,9 +40,10 @@
   ;; :custom
   ;; (tempel-trigger-prefix "<")
 
-  (:bind-into tempel-map
-    [S-left]  #'tempel-previous
-    [S-right] #'tempel-next)
+
+  (with-eval-after-load 'tempel
+    (keymap-set tempel-map "S-<left>"  #'tempel-previous)
+    (keymap-set tempel-map "S-<right>" #'tempel-next))
 
   ;; Setup completion at point
   (defun tempel-setup-capf ()

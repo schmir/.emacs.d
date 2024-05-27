@@ -8,8 +8,7 @@
     (when (executable-find "clojure-lsp")
       (eglot-ensure)))
 
-  (:bind-into clojure-mode-map
-    "<f10>"  #'cider-connect)
+  ;; (:bind "<f10>"  #'cider-connect)
 
   (:hook #'my/setup-clojure-mode)
 
@@ -49,20 +48,24 @@
         nrepl-hide-special-buffers t
         nrepl-buffer-name-show-port t ;; use port in repl buffer name
         cider-auto-select-error-buffer nil)
+  (with-eval-after-load 'cider
+    (keymap-set cider-mode-map
+                "<f10>" #'schmir/cider-load-buffer-in-repl)
+    (keymap-set cider-mode-map
+                "H-h" #'cider-doc)
 
-  (:bind-into cider-mode-map
-    "<f10>" #'schmir/cider-load-buffer-in-repl
-    "H-h" #'cider-doc)
-  (:bind-into cider-repl-mode-map
-    "<f10>" #'cider-switch-to-last-clojure-buffer
-    "C-c C-w" #'cider-eval-last-sexp-and-replace
-    "H-h"  #'cider-doc)
-  (:bind-into cider-docview-mode-map
-    "<f10>" #'cider-popup-buffer-quit-function
-    "H-h" #'cider-popup-buffer-quit-function)
-
-  (:bind-into cider-stacktrace-mode-map
-    "<f10>" #'cider-popup-buffer-quit-function))
+    (keymap-set cider-repl-mode-map
+                "<f10>" #'cider-switch-to-last-clojure-buffer)
+    (keymap-set cider-repl-mode-map
+                "C-c C-w" #'cider-eval-last-sexp-and-replace)
+    (keymap-set cider-repl-mode-map
+                "H-h"  #'cider-doc)
+    (keymap-set cider-docview-mode-map
+                "<f10>" #'cider-popup-buffer-quit-function)
+    (keymap-set cider-docview-mode-map
+                "H-h" #'cider-popup-buffer-quit-function)
+    (keymap-set cider-stacktrace-mode-map
+                "<f10>" #'cider-popup-buffer-quit-function)))
 
 (provide 'setup-clojure)
 ;;; setup-clojure ends here

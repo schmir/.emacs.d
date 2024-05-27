@@ -29,14 +29,6 @@
   (sup-package-install 'setup)
   (require 'setup)
 
-  (setup-define :bind-now
-    (lambda (key command)
-      `(define-key ,(setup-get 'map) ,key ,command))
-    :documentation "Bind KEY to COMMAND in current map."
-    :debug '(form sexp)
-    :ensure '(kbd func)
-    :repeatable t)
-
   (setup-define :package
     (lambda (package)
       `(sup-package-install ',package))
@@ -209,9 +201,9 @@ The first PACKAGE can be used to deduce the feature context."
 
 (setup (:package consult-dir)
   (:global "C-x C-d" consult-dir)
-  (:bind-into vertico-map
-    "C-x C-d" #'consult-dir
-    "C-x C-j" #'consult-dir-jump-file)
+  (with-eval-after-load 'vertico
+    (keymap-set vertico-map "C-x C-d" #'consult-dir)
+    (keymap-set vertico-map "C-x C-j" #'consult-dir-jump-file))
 
   (defvar my/consult-dir-source-zoxide
     `(:name "Zoxide"
@@ -560,12 +552,11 @@ caches the result of those calls via vc-file-setprop.
   (puni-global-mode)
   (add-hook 'term-mode-hook #'puni-disable-puni-mode)
 
-  (:bind-now "<M-right>" #'puni-slurp-forward
-             "<M-left>"  #'puni-barf-forward
-             "<M-up>"    #'puni-splice
-
-             "<C-S-right>"  #'puni-forward-sexp
-             "<C-S-left>"   #'puni-backward-sexp))
+  (keymap-global-set "M-<right>"   #'puni-slurp-forward)
+  (keymap-global-set "M-<left>"    #'puni-barf-forward)
+  (keymap-global-set "M-<up>"      #'puni-splice)
+  (keymap-global-set "C-S-<right>" #'puni-forward-sexp)
+  (keymap-global-set "C-S-<left>"  #'puni-backward-sexp))
 
 (setup (:package eros)
   (eros-mode +1))
