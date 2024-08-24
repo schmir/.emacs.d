@@ -461,7 +461,8 @@ any directory proferred by `consult-dir'."
 ;; configure tramp before saveplace, because it might use tramp
 (setup tramp
   ;; (customize-set-variable 'tramp-syntax 'simplified)
-  (setq tramp-default-method "ssh")
+  (setq tramp-default-method "ssh"
+        password-cache-expiry (* 90 60))
   (with-eval-after-load 'tramp
     (add-to-list 'tramp-methods
                  '("yadm"
