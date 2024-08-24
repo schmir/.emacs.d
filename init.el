@@ -105,6 +105,7 @@ The first PACKAGE can be used to deduce the feature context."
   (with-eval-after-load 'apheleia
     ;; apheleia currently does not configure a formatter for nix-ts-mode
     ;; see https://github.com/radian-software/apheleia/issues/298
+    (setq apheleia-remote-algorithm 'local)
     (add-to-list 'apheleia-mode-alist '(nix-ts-mode . nixfmt))
     (when (executable-find "zprint")
       (setf (alist-get 'zprint apheleia-formatters) '("zprint"))
