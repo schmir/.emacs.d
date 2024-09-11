@@ -503,7 +503,8 @@ caches the result of those calls via vc-file-setprop.
     (advice-add 'project-try-vc :around #'my/fix-project-try-vc)))
 
 (setup project
-  (setopt project-vc-extra-root-markers '(".project" ".projectile"))
+  (setopt project-vc-extra-root-markers '(".project" ".projectile")
+          project-vc-merge-submodules nil)
   (:global "<f9>" #'project-compile
            "<S-f9>" #'project-eshell))
 
