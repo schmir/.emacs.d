@@ -398,6 +398,9 @@ any directory proferred by `consult-dir'."
     ;; let me manage flymake on my own
     (add-to-list 'eglot-stay-out-of 'flymake))
 
+  (setq-default eglot-workspace-configuration
+                '(:python\.analysis (:ignore ["**"])))
+
   (:bind  "C-c ." #'xref-find-references
           "C-c t" #'eglot-find-typeDefinition
           "C-c i" #'eglot-find-implementation
