@@ -426,9 +426,9 @@ any directory proferred by `consult-dir'."
 (defun with-project-root-as-default-directory
     (orig-fun &rest args)
   "Run orig-fun with default-directory set to project's root directory"
-  (let ((root (when (project-current)
-                (project-root (project-current))))
-        (default-directory (or root default-directory)))
+  (let* ((root (when (project-current)
+                 (project-root (project-current))))
+         (default-directory (or root default-directory)))
     (apply orig-fun args)))
 
 (setup (:package solidity-mode company-solidity)
