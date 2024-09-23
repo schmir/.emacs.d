@@ -119,8 +119,8 @@ The first PACKAGE can be used to deduce the feature context."
           '("latexindent" "--logfile=/dev/null" "-y" "defaultIndent: \"    \""))
 
     (when (executable-find "ruff")
-      (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
-      (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))
+      (add-to-list 'apheleia-mode-alist '(python-mode . (ruff-isort ruff)))
+      (add-to-list 'apheleia-mode-alist '(python-ts-mode . (ruff-isort ruff))))
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
     (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
     (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
