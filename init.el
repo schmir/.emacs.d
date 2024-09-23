@@ -378,6 +378,9 @@ any directory proferred by `consult-dir'."
    ;; work.
    flymake-eslint-defer-binary-check t))
 
+(setup (:package (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git"))
+  (require 'eglot-booster))
+
 (setup (:package eglot)
   (defun my/eglot-rename (newname)
     "Rename the current symbol to NEWNAME. like eglot-rename but provides the old symbol as default."
@@ -394,6 +397,8 @@ any directory proferred by `consult-dir'."
     (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t))
 
   (with-eval-after-load 'eglot
+    (when (executable-find "emacs-lsp-booster")
+      (eglot-booster-mode))
     (setopt eglot-autoshutdown t)
     ;; let me manage flymake on my own
     (add-to-list 'eglot-stay-out-of 'flymake))

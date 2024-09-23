@@ -120,6 +120,11 @@
               inherit (pkgs) fetchFromGitHub lib;
               inherit (epkgs) trivialBuild;
             })
+            (callPackage ./eglot-booster.nix {
+              emacs = emacs;
+              inherit (pkgs) fetchFromGitHub lib;
+              inherit (epkgs) trivialBuild;
+            })
           ];
         emacs-with-packages = (pkgs.emacsPackagesFor emacs).emacsWithPackages (emacs-packages);
         emacs-nox = (pkgs.emacsPackagesFor pkgs.emacs-nox).emacsWithPackages (emacs-packages);
