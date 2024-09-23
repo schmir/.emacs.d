@@ -36,6 +36,7 @@
 
 ;; Configure Tempel
 (setup (:package tempel)
+  (setopt tempel-path (no-littering-expand-etc-file-name "tempel-templates.eld"))
   ;; Require trigger prefix before template name when completing.
   ;; :custom
   ;; (tempel-trigger-prefix "<")
