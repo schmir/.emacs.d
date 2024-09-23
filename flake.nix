@@ -102,7 +102,6 @@
             spacemacs-theme
             super-save
             tempel
-            tempel-collection
             terraform-mode
             tldr
             treesit-auto
