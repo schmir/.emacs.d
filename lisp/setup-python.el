@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(setup (:package (fm-ruff :url "https://github.com/schmir/fm-ruff")))
+
 (setup (:package python-pytest))
 
 (setup python
