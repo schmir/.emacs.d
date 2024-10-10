@@ -317,6 +317,9 @@ any directory proferred by `consult-dir'."
    [(shift f3)]   #'highlight-symbol-prev
    [(meta f3)]    #'highlight-symbol-query-replace))
 
+(setup goto-address-mode
+  (:hook-into prog-mode))
+
 (setup (:package  pulsar)
   (setq pulsar-pulse t
         pulsar-delay 0.045
