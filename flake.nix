@@ -85,6 +85,7 @@
             no-littering
             orderless
             package-lint
+            rust-mode
             pdf-tools
             persistent-scratch
             prism
