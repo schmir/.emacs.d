@@ -58,6 +58,7 @@
             flycheck-clj-kondo
             flycheck-inline
             flycheck-package
+            flymake-clippy
             flymake-eslint
             flymake-kondor
             flymake-shellcheck

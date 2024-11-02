@@ -475,7 +475,16 @@ any directory proferred by `consult-dir'."
   (when (treesit-ready-p 'nix)
     (add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode))))
 
-(setup (:package rust-mode))
+(setup (:package flymake-clippy))
+
+(setup (:package rust-mode)
+  (defun my/setup-rust ()
+    (eglot-ensure)
+    (require 'flymake-clippy)
+    (flymake-clippy-setup-backend)
+    (flymake-mode))
+  (:hook #'my/setup-rust))
+
 ;; configure tramp before saveplace, because it might use tramp
 (setup tramp
   ;; (customize-set-variable 'tramp-syntax 'simplified)
