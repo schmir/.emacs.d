@@ -39,7 +39,6 @@ emacs-lisp-mode
                 ";;; " (s file) ".el ends here")
 
 python-base-mode
-(from "from " p " import " q)
 
 
 sh-base-mode

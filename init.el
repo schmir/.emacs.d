@@ -468,7 +468,7 @@ any directory proferred by `consult-dir'."
   (:file-match  "\\.nix\\'")
   (:hook #'eglot-ensure)
   (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nil")))))
+    (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nixd")))))
 
 (setup (:package nix-ts-mode)
   (:hook #'eglot-ensure)
