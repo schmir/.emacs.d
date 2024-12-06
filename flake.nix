@@ -89,6 +89,7 @@
             rust-mode
             pdf-tools
             persistent-scratch
+            pet
             prism
             prodigy
             protobuf-mode

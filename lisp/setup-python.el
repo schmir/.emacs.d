@@ -8,6 +8,8 @@
 ;;; Code:
 
 (setup (:package (fm-ruff :url "https://github.com/schmir/fm-ruff")))
+(setup (:package pet)
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
 
 (setup (:package python-pytest))
 
