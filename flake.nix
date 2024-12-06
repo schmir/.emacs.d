@@ -95,9 +95,9 @@
             pulsar
             puni
             python-pytest
-            setup
+            #setup
             shell-pop
-            site-lisp
+            #site-lisp
             smartscan
             solidity-flycheck
             spacemacs-theme
