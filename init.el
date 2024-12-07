@@ -405,15 +405,11 @@ any directory proferred by `consult-dir'."
     (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t))
 
   (with-eval-after-load 'eglot
-    ;; eglot-booster breaks pet.el, so disable it for now
-    ;; (when (executable-find "emacs-lsp-booster")
-    ;;   (eglot-booster-mode))
+    (when (executable-find "emacs-lsp-booster")
+      (eglot-booster-mode))
     (setopt eglot-autoshutdown t)
     ;; let me manage flymake on my own
     (add-to-list 'eglot-stay-out-of 'flymake))
-
-  (setq-default eglot-workspace-configuration
-                '(:python\.analysis (:ignore ["**"])))
 
   (:bind  "C-c ." #'xref-find-references
           "C-c t" #'eglot-find-typeDefinition
