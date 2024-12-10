@@ -5,4 +5,4 @@ root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && git rev-parse --
 cd -- "${root}"
 rm -f lisp/.auto-site.el \#*\# .\#*
 rm -rf var/elpa-gnupg var/elpa-packages auto-save-list
-exec git clean -e etc -e var -xfdi
+exec git clean -e etc -e var -e .jj -xfdi
