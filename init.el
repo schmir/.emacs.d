@@ -508,6 +508,12 @@ any directory proferred by `consult-dir'."
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
+(setup savehist
+  (setq history-length 10000
+        history-delete-duplicates t
+        savehist-save-minibuffer-history t)
+  (add-hook 'after-init-hook #'savehist-mode))
+
 (setup (:package super-save)
   (super-save-mode +1))
 
