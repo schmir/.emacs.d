@@ -1,9 +1,9 @@
 {
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.emacs-overlay = {
-    url = "github:nix-community/emacs-overlay";
-    inputs.nixpkgs.follows = "nixpkgs";
+  inputs = {
+    sync.url = "github:schmir/sync-flake";
+    nixpkgs.follows = "sync/nixpkgs";
+    flake-utils.follows = "sync/flake-utils";
+    emacs-overlay.follows = "sync/emacs-overlay";
   };
 
   outputs =
