@@ -1,5 +1,5 @@
 # List available recipes
-default:
+@_default:
     just --list
 
 # Update flake inputs
