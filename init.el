@@ -337,6 +337,12 @@ any directory proferred by `consult-dir'."
 (setup (:package smartscan)
   (:hook-into prog-mode-hook))
 
+(setup (:package howm)
+  (require 'howm)
+  (setq howm-history-file (expand-file-name ".howm-history" howm-directory))
+  (setq howm-keyword-file (expand-file-name ".howm-keys" howm-directory)))
+
+
 (setup (:package denote)
   (:global
    "C-c n n"  #'denote
@@ -558,8 +564,6 @@ caches the result of those calls via vc-file-setprop.
 
 (setup (:package ninja-mode))
 
-(setup (:package writegood-mode)
-  (:hook-into text-mode markdown-mode))
 
 (setup (:package (framemove :url "https://github.com/emacsmirror/framemove"))
   (require 'framemove)
