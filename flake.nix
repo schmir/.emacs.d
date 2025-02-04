@@ -69,6 +69,7 @@
             go-mode
             gruvbox-theme
             highlight-symbol
+            howm
             htmlize
             just-mode
             kaolin-themes
@@ -111,7 +112,6 @@
             vertico
             vterm
             which-key
-            writegood-mode
             yaml-mode
             zenburn-theme
             zerodark-theme
