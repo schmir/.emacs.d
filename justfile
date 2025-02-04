@@ -1,3 +1,5 @@
+set positional-arguments
+
 # List available recipes
 @_default:
     just --list
@@ -11,5 +13,5 @@ build:
     nix build -L .
 
 # Run emacs
-run: build
-    nix run .
+run *ARGS: build
+    nix run . -- {{ARGS}}
