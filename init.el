@@ -355,18 +355,6 @@ any directory proferred by `consult-dir'."
   (add-hook 'after-save-hook 'howm-mode-set-buffer-name))
 
 
-(setup (:package denote)
-  (:global
-   "C-c n n"  #'denote
-   "C-c n i"  #'denote-link-or-create
-   "C-c n I"  #'denote-link
-   "C-c n b"  #'denote-link-backlinks
-   "C-c n a"  #'denote-add-front-matter
-   "C-c n r"  #'denote-rename-file
-   "C-c n R"  #'denote-rename-file-using-front-matter)
-  (setq denote-directory (expand-file-name "~/m/notes")
-        denote-known-keywords '("emacs" "cli" "dev" "linux" "git" "clojure" "python" "golang")))
-
 (setup (:package orderless))
 
 (setup (:package consult-notes)
