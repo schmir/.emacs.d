@@ -66,6 +66,7 @@
             git-gutter
             git-link
             git-messenger
+            gleam-ts-mode
             go-mode
             gruvbox-theme
             highlight-symbol
