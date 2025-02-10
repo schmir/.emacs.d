@@ -340,7 +340,11 @@ any directory proferred by `consult-dir'."
 (setup (:package howm)
   (require 'howm)
   (setq howm-history-file (expand-file-name ".howm-history" howm-directory))
-  (setq howm-keyword-file (expand-file-name ".howm-keys" howm-directory)))
+  (setq howm-keyword-file (expand-file-name ".howm-keys" howm-directory))
+
+  ;; Rename buffers to their title
+  (add-hook 'howm-mode-hook 'howm-mode-set-buffer-name)
+  (add-hook 'after-save-hook 'howm-mode-set-buffer-name))
 
 
 (setup (:package denote)
