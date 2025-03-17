@@ -5,9 +5,22 @@
 ;; Configure python mode
 
 
+(defvar show-pyright-errors (make-hash-table :test 'equal))
+
+(defun toggle-pyright-show-errors ()
+  "Toggle showing pyright errors"
+  (interactive)
+  (let ((server (eglot--current-server-or-lose))
+        (dir (file-truename (project-root (project-current)))))
+    (puthash dir
+             (not (gethash dir show-pyright-errors 't))
+             show-pyright-errors)
+    (eglot-signal-didChangeConfiguration server)))
+
 ;;; Code:
 (defun my/eglot-workspace-config (server)
-  (let ((config `(:python.analysis (:ignore ["**"]))))
+  (let* ((show? (gethash (file-truename default-directory) show-pyright-errors 't))
+         (config `(:python.analysis (:ignore ,(if show? [] ["**"])))))
     (when-let ((venv (pet-virtualenv-root)))
       (nconc config (list :python
                           `( :venvPath ,venv
