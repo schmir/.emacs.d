@@ -125,13 +125,19 @@ The first PACKAGE can be used to deduce the feature context."
     (setf (alist-get 'latexindent apheleia-formatters)
           '("latexindent" "--logfile=/dev/null" "-y" "defaultIndent: \"    \""))
 
+    ;; toml
+    (progn
+      (setf (alist-get 'taplo apheleia-formatters)
+            '("taplo" "format"))
+      (add-to-list 'apheleia-mode-alist '(conf-toml-mode . taplo)))
+
     (when (executable-find "ruff")
       (add-to-list 'apheleia-mode-alist '(python-mode . (ruff-isort ruff)))
       (add-to-list 'apheleia-mode-alist '(python-ts-mode . (ruff-isort ruff))))
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
     (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
-    (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))
-    (add-to-list 'apheleia-mode-alist '(conf-toml-mode . prettier)))
+    (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier)))
+
   (:global "C-c b" #'apheleia-format-buffer))
 
 (setup eldoc
