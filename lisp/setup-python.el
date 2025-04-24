@@ -4,6 +4,13 @@
 ;;
 ;; Configure python mode
 
+;; Enable parsing of pyright errors in compilation mode
+;; from https://robbmann.io/posts/006_emacs_2_python/
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(pyright "^[[:blank:]]+\\(.+\\):\\([0-9]+\\):\\([0-9]+\\).*$" 1 2 3))
+(add-to-list 'compilation-error-regexp-alist 'pyright)
+
 
 (defvar show-pyright-errors (make-hash-table :test 'equal))
 
