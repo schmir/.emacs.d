@@ -114,11 +114,6 @@ The first PACKAGE can be used to deduce the feature context."
       (add-to-list 'apheleia-mode-alist '(clojure-mode . zprint))
       (add-to-list 'apheleia-mode-alist '(clojure-ts-mode . zprint)))
 
-    ;; pretty-format-yaml exits with non-zero exit code even if it succeeds; apheleia reads the
-    ;; formatted file from stdout, so be need a bit of shell magic here
-    (setf (alist-get 'macisamuele/pretty-format-yaml apheleia-formatters)
-          '("bash" "-c" "input=$1; shift; pretty-format-yaml 1>&2 $@ ${input}; cat ${input}" "--" input "--autofix" "--indent" "2" "--offset" "2"))
-
     (setf (alist-get 'blackzim apheleia-formatters)
           '("blackzim"))
 
