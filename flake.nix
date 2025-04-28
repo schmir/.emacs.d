@@ -18,7 +18,7 @@
       let
         overlays = [ (import emacs-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
-        emacs = pkgs.emacs-pgtk;
+        emacs = pkgs.emacs-git-pgtk;
         emacs-packages =
           epkgs: with epkgs; [
             add-node-modules-path
