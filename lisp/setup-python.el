@@ -11,6 +11,11 @@
              '(pyright "^[[:blank:]]+\\(.+\\):\\([0-9]+\\):\\([0-9]+\\).*$" 1 2 3))
 (add-to-list 'compilation-error-regexp-alist 'pyright)
 
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(ty "^[[:blank:]]+--> \\(.*\\):\\([0-9]+\\):\\([0-9]+\\).*$" 1 2 3))
+(add-to-list 'compilation-error-regexp-alist 'ty)
+
+
 
 (defvar show-pyright-errors (make-hash-table :test 'equal))
 
