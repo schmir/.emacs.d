@@ -367,6 +367,13 @@ any directory proferred by `consult-dir'."
   ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
   (consult-notes-denote-mode))
 
+(when (executable-find "taplo")
+  (setup conf-toml-mode
+    (:hook #'eglot-ensure)
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs
+                   '(conf-toml-mode . ("taplo" "lsp" "stdio"))))))
+
 (setup js-mode
   (:with-mode (js-mode js-ts-mode)
     (:hook #'my/setup-eglot-flymake-backend #'flymake-mode #'eglot-ensure))
