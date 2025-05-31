@@ -1,19 +1,5 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
-(setup (:package ebdb)
-  (:option ebdb-sources "~/.ebdb"
-           ebdb-permanent-ignores-file "~/.ebdb-permanent-ignores"
-           ebdb-complete-mail 'capf
-           ebdb-mua-pop-up nil             ; don't show any pop ups
-           ;; when reading or sending with the "reader" in GNUS create contact if it does not exist
-           ebdb-gnus-auto-update-p 'query
-           ;; save on exit
-           ebdb-save-on-exit t)
-  (with-eval-after-load 'gnus
-    (require 'ebdb-gnus))
-  (with-eval-after-load 'message
-    (require 'ebdb-message)))
-
 (setup emacs
   (setq send-mail-function 'message-send-mail-with-sendmail
         message-send-mail-function 'message-send-mail-with-sendmail
@@ -23,9 +9,22 @@
         gnus-init-file (expand-file-name "~/.gnus-init.el"))
 
   ;; we substitute sendmail with msmtp if it's installed
-  (let ((msmtp (executable-find "msmtp")))
-    (when msmtp
-      (setq sendmail-program msmtp))))
+  (when-let* ((msmtp (executable-find "msmtp")))
+    (setq sendmail-program msmtp))
+
+  ;; ecomplete setup, see
+  ;; https://www.reddit.com/r/emacs/comments/sl33w6/ecomplete_the_emacs_contact_manager_you_were/
+  (require 'ecomplete)
+  (require 'ecomplete-extras)
+  (ecomplete-setup)
+  (setq message-mail-alias-type 'ecomplete
+        message-self-insert-commands nil
+        message-expand-name-standard-ui t)
+
+  (add-hook 'message-sent-hook 'message-put-addresses-in-ecomplete)
+  ;; end ecomplete setup
+
+  )
 
 (when-let ((viewer (cond
                     ((eq system-type 'darwin)

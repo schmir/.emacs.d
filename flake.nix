@@ -54,7 +54,6 @@
             dockerfile-mode
             easy-kill
             eat
-            ebdb
             ef-themes
             elixir-mode
             envrc
