@@ -16,6 +16,7 @@
   ;; https://www.reddit.com/r/emacs/comments/sl33w6/ecomplete_the_emacs_contact_manager_you_were/
   (require 'ecomplete)
   (require 'ecomplete-extras)
+  (setq ecomplete-database-file (expand-file-name "~/.config/ecomplete/ecomplete-database.el"))
   (ecomplete-setup)
   (setq message-mail-alias-type 'ecomplete
         message-self-insert-commands nil
