@@ -123,7 +123,7 @@ The first PACKAGE can be used to deduce the feature context."
     ;; toml
     (progn
       (setf (alist-get 'taplo apheleia-formatters)
-            '("taplo" "format"))
+            '("taplo" "format" "-"))
       (add-to-list 'apheleia-mode-alist '(conf-toml-mode . taplo)))
 
     (when (executable-find "ruff")
