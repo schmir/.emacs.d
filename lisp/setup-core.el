@@ -2,6 +2,10 @@
 
 ;;; Code:
 
+;; Show lisp names in customzize interface
+(setq custom-unlispify-tag-names nil)
+
+
 ;; silence warnings, especially from native compilation
 (setq warning-minimum-level :error)
 
