@@ -29,6 +29,7 @@
           epkgs: with epkgs; [
             add-node-modules-path
             adoc-mode
+            age
             aggressive-indent
             anti-zenburn-theme
             apheleia
@@ -93,7 +94,6 @@
             no-littering
             orderless
             package-lint
-            rust-mode
             pdf-tools
             persistent-scratch
             pet
@@ -103,6 +103,7 @@
             pulsar
             puni
             python-pytest
+            rust-mode
             #setup
             shell-pop
             #site-lisp

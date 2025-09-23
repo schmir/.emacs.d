@@ -566,6 +566,20 @@ caches the result of those calls via vc-file-setprop.
 
 (setup (:package ninja-mode))
 
+(setup (:package age)
+  (setq age-program "rage")
+  (setq age-default-identity "~/.passage/identities")
+  (setq age-default-recipient
+        '("~/.ssh/age_yubikey.pub"
+          "~/.ssh/age_recovery.pub"))
+  ;; My early-init.el resets the file-handler-alist variable in the emacs-startup-hook.  Make sure
+  ;; we run after the hook installed by early-init.el
+  (add-hook 'emacs-startup-hook #'age-file-enable 10)
+  (setenv "PINENTRY_PROGRAM" (or (executable-find "pinentry-mac")
+                                 (executable-find "pinentry-gnome3"))))
+
+(setup (:package (passage :url "https://github.com/anticomputer/passage.el"))
+  (auth-source-passage-enable))
 
 (setup (:package (framemove :url "https://github.com/emacsmirror/framemove"))
   (require 'framemove)
