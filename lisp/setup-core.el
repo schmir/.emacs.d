@@ -36,7 +36,7 @@
 
 
 (setq auth-source-debug 'trivia)
-(auth-source-pass-enable)
+;; (auth-source-pass-enable)
 
 
 (when-let ((exe (executable-find "hunspell")))
