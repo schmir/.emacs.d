@@ -100,7 +100,7 @@ The first PACKAGE can be used to deduce the feature context."
   (global-flycheck-inline-mode))
 
 (setup (:package adoc-mode)
-  (:file-match "\\.adoc$"))
+  (:match-file "\\.adoc$"))
 
 (setup (:package apheleia)
   (apheleia-global-mode +1)
@@ -132,8 +132,7 @@ The first PACKAGE can be used to deduce the feature context."
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
     (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
     (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier)))
-
-  (:global "C-c b" #'apheleia-format-buffer))
+  (keymap-global-set "C-c b" #'apheleia-format-buffer))
 
 (setup eldoc
   (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
@@ -176,7 +175,7 @@ The first PACKAGE can be used to deduce the feature context."
   )
 
 (setup (:package shell-pop)
-  (:global "C-t"  #'shell-pop)
+  (keymap-global-set "C-t" #'shell-pop)
   (setq shell-pop-shell-type '("vterm" "*vterm*" #'vterm)
         shell-pop-term-shell (executable-find "zsh")
         shell-pop-window-size 40))
@@ -212,7 +211,7 @@ The first PACKAGE can be used to deduce the feature context."
      :preview-key "M-.")))
 
 (setup (:package consult-dir)
-  (:global "C-x C-d" consult-dir)
+  (keymap-global-set "C-x C-d" #'consult-dir)
   (with-eval-after-load 'vertico
     (keymap-set vertico-map "C-x C-d" #'consult-dir)
     (keymap-set vertico-map "C-x C-j" #'consult-dir-jump-file))
@@ -312,18 +311,16 @@ any directory proferred by `consult-dir'."
   )
 
 (setup (:package  default-text-scale)
-  (:global
-   "C--"  #'default-text-scale-decrease
-   "C-="  #'default-text-scale-increase))
+  (keymap-global-set "C--"  #'default-text-scale-decrease)
+  (keymap-global-set "C-="  #'default-text-scale-increase))
 
 (setup (:package highlight-symbol)
   (:hook-into prog-mode)
   (:option highlight-symbol-occurrence-message '(explicit))
-  (:global
-   [(control f3)] #'highlight-symbol
-   [f3]           #'highlight-symbol-next
-   [(shift f3)]   #'highlight-symbol-prev
-   [(meta f3)]    #'highlight-symbol-query-replace))
+  (global-set-key [(control f3)] #'highlight-symbol)
+  (global-set-key [f3]           #'highlight-symbol-next)
+  (global-set-key [(shift f3)]   #'highlight-symbol-prev)
+  (global-set-key [(meta f3)]    #'highlight-symbol-query-replace))
 
 (setup goto-address-mode
   (:hook-into prog-mode))
@@ -353,7 +350,7 @@ any directory proferred by `consult-dir'."
 (setup (:package orderless))
 
 (setup (:package consult-notes)
-  (:global "C-c n f" #'my/consult-notes)
+  (keymap-global-set "C-c n f" #'my/consult-notes)
   (:option consult-notes-denote-files-function (function denote-directory-text-only-files)
            consult-notes-file-dir-sources
            '(;; ("notes"             ?o "~/m//notes/")
@@ -470,7 +467,7 @@ any directory proferred by `consult-dir'."
 (setup (:package terraform-mode))
 
 (setup (:package nix-mode)
-  (:file-match  "\\.nix\\'")
+  (:match-file  "\\.nix\\'")
   (:hook #'eglot-ensure)
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nixd")))))
@@ -542,8 +539,8 @@ caches the result of those calls via vc-file-setprop.
 (setup project
   (setopt project-vc-extra-root-markers '(".project" ".projectile")
           project-vc-merge-submodules nil)
-  (:global "<f9>" #'project-compile
-           "<S-f9>" #'project-eshell))
+  (keymap-global-set "<f9>" #'project-compile)
+  (keymap-global-set "S-<f9>" #'project-eshell))
 
 (setup (:and (executable-find "zoxide")
              (:package zoxide))
@@ -606,7 +603,6 @@ caches the result of those calls via vc-file-setprop.
   (electric-pair-mode +1)
   (puni-global-mode)
   (add-hook 'term-mode-hook #'puni-disable-puni-mode)
-
   (keymap-global-set "M-<right>"   #'puni-slurp-forward)
   (keymap-global-set "M-<left>"    #'puni-barf-forward)
   (keymap-global-set "M-<up>"      #'puni-splice)
@@ -623,7 +619,7 @@ caches the result of those calls via vc-file-setprop.
      (cwc-global-mode +1))))
 
 (setup git-grep
-  (:global "<f5>" #'git-grep))
+  (keymap-global-set "<f5>" #'git-grep))
 
 
 ;; --- Configure display-buffer-alist
@@ -647,8 +643,8 @@ caches the result of those calls via vc-file-setprop.
     (dolist (window (window-at-side-list))
       (quit-window nil window)))
 
-  (:global "C-c q" #'lunaryorn-quit-bottom-side-windows
-           "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
+  (keymap-global-set "C-c q" #'lunaryorn-quit-bottom-side-windows)
+  (keymap-global-set "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
 
 
 ;;; init.el ends here

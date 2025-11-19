@@ -7,7 +7,7 @@
 (setup (:package git-messenger)
   (:option git-messenger:show-detail t
            git-messenger:use-magit-popup t)
-  (:global "C-x v p" git-messenger:popup-message))
+  (keymap-global-set "C-x v p" #'git-messenger:popup-message))
 
 (setup (:package git-gutter)) ;; (global-git-gutter-mode +1)
 
@@ -29,8 +29,8 @@
   (magit-status "/yadm::"))
 
 (setup (:package magit)
-  (:global "C-c s"  #'magit-status
-           "C-c y"  #'yadm-status)
+  (keymap-global-set "C-c s"  #'magit-status)
+  (keymap-global-set "C-c y"  #'yadm-status)
   (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
 
 (setup (:package git-link)
