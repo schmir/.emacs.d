@@ -45,8 +45,21 @@ The first PACKAGE can be used to deduce the feature context."
   (require 'no-littering)
   (no-littering-theme-backups))
 
-(setup (:package site-lisp)
-  (site-lisp-initialise))
+(defun update-all-autoloads ()
+  (interactive)  
+  (let ((generated-autoload-file
+         (expand-file-name "loaddefs.el" site-lisp-directory)))
+    (when (not (file-exists-p generated-autoload-file))
+      (with-current-buffer (find-file-noselect
+                            generated-autoload-file)
+        (insert ";;")
+        (save-buffer)))
+    (update-directory-autoloads site-lisp-directory)))
+
+(require 'autoload)
+(add-to-list 'load-path site-lisp-directory)
+(update-all-autoloads)
+(load (expand-file-name "loaddefs.el" site-lisp-directory) nil t)
 
 ;; let's keep use-package as it's useful when trying out package, so we can copy and paste the
 ;; install instructions.

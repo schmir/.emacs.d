@@ -3,6 +3,6 @@
 set -euo pipefail
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && git rev-parse --show-toplevel)
 cd -- "${root}"
-rm -f lisp/.auto-site.el \#*\# .\#*
+rm -f lisp/loaddefs.el lisp/.auto-site.el \#*\# .\#*
 rm -rf var/elpa-gnupg var/elpa-packages auto-save-list
 exec git clean -e etc -e var -e .jj -xfdi

@@ -5,4 +5,5 @@
 [#]*[#]
 etc/
 lisp/.auto-site.el
+lisp/loaddefs.el
 var/
