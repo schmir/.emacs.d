@@ -26,7 +26,7 @@
 ;;; Install setup.el
 (progn
   (load-file (expand-file-name "sup.el" site-lisp-directory))
-  (sup-package-install 'setup)
+  (sup-package-install '(setup :url "https://codeberg.org/pkal/setup.el.git"))
   (require 'setup)
 
   (setup-define :package
