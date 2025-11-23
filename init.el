@@ -394,8 +394,7 @@ any directory proferred by `consult-dir'."
    ;; work.
    flymake-eslint-defer-binary-check t))
 
-(setup (:package (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git"))
-  (require 'eglot-booster))
+(setup (:package (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git")))
 
 (setup (:package eglot)
   (defun my/eglot-rename (newname)
@@ -412,10 +411,16 @@ any directory proferred by `consult-dir'."
     "Enable eglot's flymake backend manually."
     (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t))
 
+  (:option eglot-autoshutdown t
+           eglot-events-buffer-config '(:size 0 :format short) ;; didn't ever look at the log
+           eglot-extend-to-xref t
+           eglot-report-progress nil
+           eglot-sync-connect 0)
+
   (with-eval-after-load 'eglot
     (when (executable-find "emacs-lsp-booster")
+      ;; (require 'eglot-booster)
       (eglot-booster-mode))
-    (setopt eglot-autoshutdown t)
     ;; let me manage flymake on my own
     (add-to-list 'eglot-stay-out-of 'flymake))
 
