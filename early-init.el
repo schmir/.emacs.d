@@ -13,15 +13,19 @@
 
 ;; Improves startup time, we reset this later
 (defvar default-file-name-handler-alist file-name-handler-alist)
-
-(setq file-name-handler-alist nil
-      vc-handled-backends '(Git) ;; need Git for package-vc-install
+(set-default-toplevel-value 'file-name-handler-alist nil)
+(setq vc-handled-backends '(Git) ;; need Git for package-vc-install
       gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 1)
+      gc-cons-percentage 1.0)
 
 (defun my/finish-init ()
-  (setq file-name-handler-alist default-file-name-handler-alist
-        vc-handled-backends '(Git)
+  (set-default-toplevel-value
+   'file-name-handler-alist
+   ;; Merge instead of overwrite to preserve any changes made since startup.
+   (delete-dups (append file-name-handler-alist
+                        default-file-name-handler-alist)))
+
+  (setq vc-handled-backends '(Git)
         gc-cons-percentage 0.1
         gc-cons-threshold 100000000)
   (if (fboundp #'gcmh-mode)
