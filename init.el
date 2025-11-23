@@ -74,8 +74,8 @@ The first PACKAGE can be used to deduce the feature context."
           use-package-always-ensure t)
   (require 'use-package-ensure))
 
-(setup (:package leuven-theme gruvbox-theme spacemacs-theme ef-themes zenburn-theme
-                 anti-zenburn-theme kaolin-themes zerodark-theme)
+(setup (:package anti-zenburn-theme doom-themes ef-themes gruvbox-theme kaolin-themes leuven-theme
+                 spacemacs-theme zenburn-theme zerodark-theme)
   ;; Consider all themes safe to load
   (setq custom-safe-themes t))
 

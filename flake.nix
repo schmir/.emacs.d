@@ -50,6 +50,7 @@
             diminish
             direnv
             dockerfile-mode
+            doom-themes
             easy-kill
             eat
             ef-themes
