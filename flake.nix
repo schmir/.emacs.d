@@ -58,6 +58,7 @@
             envrc
             eros
             exec-path-from-shell
+            expreg
             flycheck
             flycheck-clj-kondo
             flycheck-inline

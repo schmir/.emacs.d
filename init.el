@@ -639,6 +639,8 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "C-c q" #'lunaryorn-quit-bottom-side-windows)
   (keymap-global-set "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
 
+(setup (:package expreg))
+
 (setup (:package region-bindings-mode)
   (require 'region-bindings-mode)
   (region-bindings-mode-enable)
@@ -653,6 +655,7 @@ caches the result of those calls via vc-file-setprop.
          ">" #'my/shift-right
          "." #'my/shift-right
          ";" #'comment-dwim
+         (kbd "SPC") #'expreg-expand
          "z" (lambda()
                (interactive)
                (let ((deactivate-mark nil))
