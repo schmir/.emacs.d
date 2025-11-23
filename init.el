@@ -367,21 +367,6 @@ any directory proferred by `consult-dir'."
 
 (setup (:package orderless))
 
-(setup (:package consult-notes)
-  (keymap-global-set "C-c n f" #'my/consult-notes)
-  (:option consult-notes-denote-files-function (function denote-directory-text-only-files)
-           consult-notes-file-dir-sources
-           '(;; ("notes"             ?o "~/m//notes/")
-             ("deft"      ?r "~/m/deft/")))
-  (defun my/consult-notes ()
-    (interactive)
-    (let ((completion-styles '(orderless)))
-      (consult-notes)))
-
-  ;; (setq consult-notes-file-dir-sources '(("Name"  ?key  "path/to/dir"))) ;; Set notes dir(s), see below
-  ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
-  (consult-notes-denote-mode))
-
 (when (executable-find "taplo")
   (setup conf-toml-mode
     (:hook #'eglot-ensure)

@@ -44,12 +44,10 @@
             company-solidity
             consult
             consult-dir
-            consult-notes
             consult-project-extra
             corfu
             crux
             default-text-scale
-            denote
             diminish
             direnv
             dockerfile-mode
