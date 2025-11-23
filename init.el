@@ -6,7 +6,7 @@
     (x-focus-frame nil))
 (add-hook 'after-make-frame-functions #'x-focus-frame)
 
-(let ((minver "29.0"))
+(let ((minver "29.1"))
   (when (version< emacs-version minver)
     (error "init.el: Emacs too old -- this config requires at least v%s" minver)))
 
@@ -46,7 +46,6 @@
 (progn
   (setq custom-file (expand-file-name "etc/custom.el" user-emacs-directory))
   (sup-package-install 'no-littering)
-  (require 'no-littering)
   (no-littering-theme-backups))
 
 ;;; Install setup.el
@@ -122,6 +121,7 @@ The first PACKAGE can be used to deduce the feature context."
 
 (setup (:package apheleia)
   (apheleia-global-mode +1)
+  (keymap-global-set "C-c b" #'apheleia-format-buffer)
   (with-eval-after-load 'apheleia
     ;; apheleia currently does not configure a formatter for nix-ts-mode
     ;; see https://github.com/radian-software/apheleia/issues/298
@@ -149,8 +149,7 @@ The first PACKAGE can be used to deduce the feature context."
       (add-to-list 'apheleia-mode-alist '(python-ts-mode . (ruff-isort ruff))))
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
     (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
-    (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier)))
-  (keymap-global-set "C-c b" #'apheleia-format-buffer))
+    (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))))
 
 (setup eldoc
   (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
@@ -367,12 +366,12 @@ any directory proferred by `consult-dir'."
 
 (setup (:package orderless))
 
-(when (executable-find "taplo")
-  (setup conf-toml-mode
-    (:hook #'eglot-ensure)
-    (with-eval-after-load 'eglot
-      (add-to-list 'eglot-server-programs
-                   '(conf-toml-mode . ("taplo" "lsp" "stdio"))))))
+(setup (:and (executable-find "taplo")
+             conf-toml-mode)
+  (:hook #'eglot-ensure)
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '(conf-toml-mode . ("taplo" "lsp" "stdio")))))
 
 (setup js-mode
   (:with-mode (js-mode js-ts-mode)
@@ -589,7 +588,7 @@ caches the result of those calls via vc-file-setprop.
 (setup server
   (server-start))
 
-(setup (:package  gcmh)) ;; early-init.el enables gcmh-mode
+(setup (:package gcmh)) ;; early-init.el enables gcmh-mode
 
 (setup (:package pdf-tools)
   (add-hook 'doc-view-mode-hook #'pdf-tools-install))
