@@ -102,11 +102,9 @@
             pulsar
             puni
             python-pytest
-            region-bindings-mode
             rust-mode
-            #setup
+            selected
             shell-pop
-            #site-lisp
             smartscan
             solidity-flycheck
             spacemacs-theme

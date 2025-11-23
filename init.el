@@ -641,25 +641,26 @@ caches the result of those calls via vc-file-setprop.
 
 (setup (:package expreg))
 
-(setup (:package region-bindings-mode)
-  (require 'region-bindings-mode)
-  (region-bindings-mode-enable)
-  (:bind "g" #'region-bindings-mode-off
-         "q" #'fill-paragraph
-         "c" #'kill-ring-save
-         "x" #'kill-region
-         "s" #'sort-lines
-         "S" #'my/sort-words-in-region
-         "<" #'my/shift-left
-         "," #'my/shift-left
-         ">" #'my/shift-right
-         "." #'my/shift-right
-         ";" #'comment-dwim
-         (kbd "SPC") #'expreg-expand
-         "z" (lambda()
-               (interactive)
-               (let ((deactivate-mark nil))
-                 (undo)))))
+;; modern replacement for region-bindings-mode
+(setup (:package selected)
+  (selected-global-mode)
+  (:with-map selected-keymap
+    (:bind "g" #'selected-off
+           "q" #'fill-paragraph
+           "c" #'kill-ring-save
+           "x" #'kill-region
+           "s" #'sort-lines
+           "S" #'my/sort-words-in-region
+           "<" #'my/shift-left
+           "," #'my/shift-left
+           ">" #'my/shift-right
+           "." #'my/shift-right
+           ";" #'comment-dwim
+           (kbd "SPC") #'expreg-expand
+           "z" (lambda()
+                 (interactive)
+                 (let ((deactivate-mark nil))
+                   (undo))))))
 
 (setup (:package age)
   (setq age-program "rage")
