@@ -46,7 +46,8 @@
 
 ;; get rid of visual clutter
 (progn
-  (setq inhibit-splash-screen t
+  (setq inhibit-startup-screen t
+        inhibit-startup-echo-area-message user-login-name
         initial-scratch-message nil
         frame-inhibit-implied-resize t)
   (if (fboundp 'menu-bar-mode)
@@ -57,6 +58,13 @@
       (scroll-bar-mode -1))
   (if (fboundp 'horizontal-scroll-bar-mode)
       (horizontal-scroll-bar-mode -1)))
+
+;; Disable bidirectional text scanning for a modest performance boost.
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+
+;; Give up some bidirectional functionality for slightly faster re-display.
+(setq bidi-inhibit-bpa t)
 
 (modify-all-frames-parameters
  '((width . 130)
