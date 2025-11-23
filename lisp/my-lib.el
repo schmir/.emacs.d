@@ -21,5 +21,27 @@
   (my/run-when-display-initialized (lambda()
                                      (load-theme theme t))))
 
+;;; Copied from https://pkaznowski.gitlab.io/blog/post/sort-words-in-region/
+;;;###autoload
+(defun my/sort-words-in-region (beg end &optional reversed)
+  "In active region sort words alphabetically in ascending order.
+With prefix argument REVERSED use descending order.
+Don't use this function on regions with nested brackets."
+  (interactive "r\nP")
+  (unless (region-active-p) (user-error "No active region to sort!"))
+  (let* ((str (s-trim (buffer-substring-no-properties beg end)))
+         (com (string-match-p "," str))
+         (cln (replace-regexp-in-string "[\]\[(){}\']+\\|\\.$" "" str))
+         (wrd (split-string cln (if com "," " ") t " "))
+         (new (s-join (if com ", " " ")
+                      (sort wrd (if reversed #'string> #'string<)))))
+    (save-excursion
+      (goto-char beg)
+      (delete-region beg end)
+      (when (and (looking-back "[^ ]") (not (s-starts-with? " " str)))
+        (insert " "))
+      (insert
+       (replace-regexp-in-string "[^\]\[(){}\'\.]+" new str)))))
+
 (provide 'my-lib)
 ;;; my-lib.el ends here
