@@ -327,9 +327,10 @@ any directory proferred by `consult-dir'."
   ;; (setq vertico-cycle t)
   )
 
-(setup (:package  default-text-scale)
-  (keymap-global-set "C--"  #'default-text-scale-decrease)
-  (keymap-global-set "C-="  #'default-text-scale-increase))
+(setup text-scaling
+  (keymap-global-set "C--"  #'text-scale-decrease)
+  (keymap-global-set "C-="  #'text-scale-increase)
+  (setq global-text-scale-adjust-resizes-frames nil))
 
 (setup (:package highlight-symbol)
   (:hook-into prog-mode)

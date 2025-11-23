@@ -47,7 +47,6 @@
             consult-project-extra
             corfu
             crux
-            default-text-scale
             diminish
             direnv
             dockerfile-mode
