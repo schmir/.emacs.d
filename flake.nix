@@ -101,6 +101,7 @@
             pulsar
             puni
             python-pytest
+            region-bindings-mode
             rust-mode
             #setup
             shell-pop

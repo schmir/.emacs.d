@@ -639,6 +639,25 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "C-c q" #'lunaryorn-quit-bottom-side-windows)
   (keymap-global-set "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
 
+(setup (:package region-bindings-mode)
+  (require 'region-bindings-mode)
+  (region-bindings-mode-enable)
+  (:bind "g" #'region-bindings-mode-off
+         "q" #'fill-paragraph
+         "c" #'kill-ring-save
+         "x" #'kill-region
+         "s" #'sort-lines
+         "S" #'my/sort-words-in-region
+         "<" #'my/shift-left
+         "," #'my/shift-left
+         ">" #'my/shift-right
+         "." #'my/shift-right
+         ";" #'comment-dwim
+         "z" (lambda()
+               (interactive)
+               (let ((deactivate-mark nil))
+                 (undo)))))
+
 (setup (:package age)
   (setq age-program "rage")
   (setq age-default-identity "~/.passage/identities")

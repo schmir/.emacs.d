@@ -43,5 +43,19 @@ Don't use this function on regions with nested brackets."
       (insert
        (replace-regexp-in-string "[^\]\[(){}\'\.]+" new str)))))
 
+;;;###autoload
+(defun my/shift-left ()
+  (interactive)
+  (when mark-active
+    (let ((deactivate-mark nil))
+      (indent-rigidly (region-beginning) (region-end) (- standard-indent)))))
+
+;;;###autoload
+(defun my/shift-right ()
+  (interactive)
+  (when mark-active
+    (let ((deactivate-mark nil))
+      (indent-rigidly (region-beginning) (region-end) standard-indent))))
+
 (provide 'my-lib)
 ;;; my-lib.el ends here
