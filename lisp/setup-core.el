@@ -5,6 +5,7 @@
 ;; Show lisp names in customzize interface
 (setq custom-unlispify-tag-names nil)
 
+(setq mouse-yank-at-point t)
 
 ;; silence warnings, especially from native compilation
 (setq warning-minimum-level :error)
