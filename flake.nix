@@ -18,13 +18,7 @@
       let
         overlays = [ (import emacs-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
-        emacs =
-          if pkgs.stdenv.hostPlatform.isDarwin then
-            # See https://github.com/NixOS/nixpkgs/issues/395169
-            pkgs.emacs-git-pgtk.override { withNativeCompilation = false; }
-          else
-            pkgs.emacs-git-pgtk;
-
+        emacs = pkgs.emacs-git-pgtk.override { withNativeCompilation = true; };
         emacs-packages =
           epkgs: with epkgs; [
             add-node-modules-path
