@@ -16,7 +16,6 @@
 (set-language-environment "utf-8")
 (global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
 (setq make-backup-files nil)
-(defalias 'yes-or-no-p 'y-or-n-p)
 (setq-default indent-tabs-mode nil)
 
 (setq explicit-shell-file-name (executable-find "zsh"))
@@ -112,14 +111,6 @@
       woman-use-own-frame nil			;; don't create new frame for manpages
       vc-follow-symlinks t			;; follow symlinks and don't ask
       enable-recursive-minibuffers t)
-
-
-(defalias 'br 'boxquote-region)
-(defalias 'cc 'cider-connect)
-(defalias 'sbke 'save-buffers-kill-emacs)
-(defalias 'g 'gnus)
-(defalias 'ee 'eval-expression)
-(defalias 'rb 'revert-buffer)
 
 (defun untabify-buffer ()
   (interactive)

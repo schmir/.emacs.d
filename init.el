@@ -94,6 +94,16 @@ The first PACKAGE can be used to deduce the feature context."
   (when (not (string= home truename))
     (add-to-list 'directory-abbrev-alist (cons (concat "\\`" truename)  home))))
 
+(defalias 'yes-or-no-p 'y-or-n-p)  ;; y/n is enough
+
+;; some aliases for interactive use with M-x
+(defalias 'br 'boxquote-region)
+(defalias 'cc 'cider-connect)
+(defalias 'sbke 'save-buffers-kill-emacs)
+(defalias 'g 'gnus)
+(defalias 'ee 'eval-expression)
+(defalias 'rb 'revert-buffer)
+
 (setup (:package exec-path-from-shell)
   (require 'exec-path-from-shell)
   (dolist (var '("DICPATH" "XDG_DATA_DIRS"))
