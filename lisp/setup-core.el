@@ -72,7 +72,7 @@
     (if (region-active-p)
         nil
       (cons (line-beginning-position) (line-beginning-position 2))))
-  (setq hl-line-range-function #'my/hl-line-range)
+  (setq hl-line-range-function #'my/hl-line-hightlight-unless-region-active)
   (add-hook 'prog-mode-hook #'hl-line-mode)
   (add-hook 'text-mode-hook #'hl-line-mode))
 
