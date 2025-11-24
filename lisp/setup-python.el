@@ -32,7 +32,7 @@
 (defun my/eglot-workspace-config (server)
   (let* ((show? (gethash (file-truename default-directory) show-pyright-errors 't))
          (config `(:python.analysis (:ignore ,(if show? [] ["**"])))))
-    (when-let ((venv (pet-virtualenv-root)))
+    (when-let* ((venv (pet-virtualenv-root)))
       (nconc config (list :python
                           `( :venvPath ,venv
                              :pythonPath ,(pet-executable-find "python") ))))

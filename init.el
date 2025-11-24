@@ -548,9 +548,9 @@ caches the result of those calls via vc-file-setprop.
   (defun my/zoxide-add
       ()
     (zoxide-add)
-    (when-let ((proj (project-current))
-               (root (project-root proj))
-               (path (expand-file-name root)))
+    (when-let* ((proj (project-current))
+                (root (project-root proj))
+                (path (expand-file-name root)))
       (message "add project-root %s to zoxide" path)
       (zoxide-add path)))
 
