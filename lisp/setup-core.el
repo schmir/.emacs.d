@@ -62,24 +62,23 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (global-set-key (kbd "C-z") #'undo)
 
-(setq-default fill-column 80)
+(setup display-fill-column-indicator-mode
+  (setq-default fill-column 80)
+  (add-hook 'prog-mode-hook (lambda()
+                              (setq-local fill-column 99)))
+  (:hook-into prog-mode text-mode))
+
 
 (add-hook 'before-save-hook #'time-stamp)
 
-(setup hl-line
+(setup hl-line-mode
   (defun my/hl-line-hightlight-unless-region-active
       ()
     (if (region-active-p)
         nil
       (cons (line-beginning-position) (line-beginning-position 2))))
   (setq hl-line-range-function #'my/hl-line-hightlight-unless-region-active)
-  (add-hook 'prog-mode-hook #'hl-line-mode)
-  (add-hook 'text-mode-hook #'hl-line-mode))
-
-(add-hook 'prog-mode-hook (lambda()
-                            (setq fill-column 99)))
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-(add-hook 'text-mode-hook #'display-fill-column-indicator-mode)
+  (:hook-into prog-mode text-mode))
 
 (global-auto-revert-mode 1)
 (auto-image-file-mode 1)
@@ -98,19 +97,19 @@
 (setq read-process-output-max (* 1024 1024))
 (setq change-major-mode-with-file-name t
       create-lockfiles nil
-      x-select-enable-primary t  ;; after mouse selection in X11, you can paste by `yank' in emacs
+      x-select-enable-primary t                 ;; after mouse selection in X11, you can paste by `yank' in emacs
       save-interprogram-paste-before-kill t
       ;; Filename completion ignores these.
       completion-ignored-extensions (append completion-ignored-extensions
                                             '(".pyc" ".o" ".so" ".os" ".cmi" ".cmx" ".rsm" ".rsr"))
       backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
-      font-lock-maximum-decoration t			;; maximum decoration
-      next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
+      font-lock-maximum-decoration t		;; maximum decoration
+      next-line-add-newlines nil		;; don´t add newlines when trying to move cursor behind eof
       default-indicate-empty-lines t
       line-number-display-limit-width 100000
       kill-whole-line t				;; make kill-line at beginning of line kill the whole line
-      woman-use-own-frame nil				;; don't create new frame for manpages
-      vc-follow-symlinks t				;; follow symlinks and don't ask
+      woman-use-own-frame nil			;; don't create new frame for manpages
+      vc-follow-symlinks t			;; follow symlinks and don't ask
       enable-recursive-minibuffers t)
 
 
@@ -136,6 +135,7 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 ;; mouse avoidance mode is buggy, see
 ;; https://groups.google.com/g/gnu.emacs.help/c/W_1VhwJrelE
