@@ -4,7 +4,14 @@
 
 (setq debug-on-error t)
 
-(defconst my/start-time (current-time))
+(defun display-startup-time ()
+  "Display the startup time and number of garbage collections."
+  (message "Emacs init loaded in %.2f seconds (Full emacs-startup: %.2fs) with %d garbage collections."
+           (float-time (time-subtract after-init-time before-init-time))
+           (time-to-seconds (time-since before-init-time))
+           gcs-done))
+(add-hook 'emacs-startup-hook #'display-startup-time 100)
+
 (when (and (native-comp-available-p)
            (fboundp 'startup-redirect-eln-cache))
   (startup-redirect-eln-cache
@@ -31,9 +38,7 @@
   (if (fboundp #'gcmh-mode)
       (gcmh-mode 1))
   (garbage-collect)
-  (setq debug-on-error nil)
-  (let ((m (format "init.el: load time %.06f" (float-time (time-since my/start-time)))))
-    (run-with-timer 1.0 nil (lambda () (message m)))))
+  (setq debug-on-error nil))
 
 (add-hook 'emacs-startup-hook #'my/finish-init)
 
