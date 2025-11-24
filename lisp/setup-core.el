@@ -21,14 +21,15 @@
 
 (setq explicit-shell-file-name (executable-find "zsh"))
 
-(if (fboundp #'pixel-scroll-precision-mode)
-    (progn
-      (setq pixel-scroll-precision-interpolate-page t
-            ;; pixel-scroll-precision-large-scroll-height 5
-            pixel-scroll-precision-use-momentum t)
-      ;; (global-set-key [remap mwheel-scroll] 'pixel-scroll-precision)
+(setup (:and (fboundp #'pixel-scroll-precision-mode)
+             pixel-scroll-precision-mode)
+  (setq pixel-scroll-precision-interpolate-page t
+        ;; pixel-scroll-precision-large-scroll-height 5
+        pixel-scroll-precision-use-momentum t)
+  ;; (global-set-key [remap mwheel-scroll] 'pixel-scroll-precision)
 
-      (pixel-scroll-precision-mode)))
+  (pixel-scroll-precision-mode))
+
 
 (setq echo-keystrokes 0.1
       use-dialog-box nil
