@@ -648,7 +648,8 @@ caches the result of those calls via vc-file-setprop.
 (setup (:package selected)
   (selected-global-mode)
   (:with-map selected-keymap
-    (:bind "g" #'selected-off
+    (:bind "b" #'boxquote-region
+           "g" #'selected-off
            "q" #'fill-paragraph
            "c" #'kill-ring-save
            "x" #'kill-region
