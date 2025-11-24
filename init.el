@@ -656,6 +656,7 @@ caches the result of those calls via vc-file-setprop.
            ">" #'my/shift-right
            "." #'my/shift-right
            ";" #'comment-dwim
+           "l" #'git-link
            (kbd "SPC") #'expreg-expand
            "z" (lambda()
                  (interactive)
