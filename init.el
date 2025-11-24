@@ -429,13 +429,6 @@ any directory proferred by `consult-dir'."
           "C-c i" #'eglot-find-implementation
           "C-c r" #'my/eglot-rename))
 
-(setup (:package treesit-auto)
-  (:option treesit-auto-langs '(python go gomod bash yaml)
-           treesit-auto-install 'prompt)
-  (require 'treesit-auto)
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
-
 (setup (:package protobuf-mode)
   (:hook #'setup-protobuf)
 
