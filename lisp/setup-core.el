@@ -33,7 +33,11 @@
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t)
-(show-paren-mode t)
+
+(setup show-paren
+  (setq show-paren-style 'parenthesis
+        show-paren-context-when-offscreen t)
+  (show-paren-mode t))
 
 
 (setq auth-source-debug 'trivia)
@@ -102,7 +106,6 @@
       backward-delete-char-untabify-method 'nil	;; don´t untabify, just delete one char
       font-lock-maximum-decoration t			;; maximum decoration
       next-line-add-newlines nil			;; don´t add newlines when trying to move cursor behind eof
-      show-paren-style 'expression
       default-indicate-empty-lines t
       line-number-display-limit-width 100000
       kill-whole-line t				;; make kill-line at beginning of line kill the whole line
