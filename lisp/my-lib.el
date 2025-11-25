@@ -29,6 +29,7 @@ With prefix argument REVERSED use descending order.
 Don't use this function on regions with nested brackets."
   (interactive "r\nP")
   (unless (region-active-p) (user-error "No active region to sort!"))
+  (require 's)
   (let* ((str (s-trim (buffer-substring-no-properties beg end)))
          (com (string-match-p "," str))
          (cln (replace-regexp-in-string "[\]\[(){}\']+\\|\\.$" "" str))
