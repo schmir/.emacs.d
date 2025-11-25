@@ -5,7 +5,6 @@
 ;; Show lisp names in customzize interface
 (setq custom-unlispify-tag-names nil)
 
-(setq mouse-yank-at-point t)
 
 ;; silence warnings, especially from native compilation
 (setq warning-minimum-level :error)
@@ -14,35 +13,14 @@
 
 ;; prevent emacs from asking for coding-system...
 (set-language-environment "utf-8")
-(global-set-key (kbd "<f12>") 'toggle-menu-bar-mode-from-frame)
 (setq make-backup-files nil)
 (setq-default indent-tabs-mode nil)
 
 (setq explicit-shell-file-name (executable-find "zsh"))
 
-(setup (:and (fboundp #'pixel-scroll-precision-mode)
-             pixel-scroll-precision-mode)
-  (setq pixel-scroll-precision-interpolate-page t
-        ;; pixel-scroll-precision-large-scroll-height 5
-        pixel-scroll-precision-use-momentum t)
-  ;; (global-set-key [remap mwheel-scroll] 'pixel-scroll-precision)
-
-  (pixel-scroll-precision-mode))
-
-
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t)
-
-(setup show-paren
-  (setq show-paren-style 'parenthesis
-        show-paren-context-when-offscreen t)
-  (show-paren-mode t))
-
-
-(setq auth-source-debug 'trivia)
-;; (auth-source-pass-enable)
-
 
 (when-let* ((exe (executable-find "hunspell")))
   (setq ispell-program-name exe)
@@ -57,28 +35,14 @@
 (setq ispell-complete-word-dict
       (expand-file-name "google-10000-english-no-swears.txt" user-emacs-directory))
 
-;; when on a tab, make the cursor the tab length
-(setq-default x-stretch-cursor t)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-(global-set-key (kbd "C-z") #'undo)
 
-(setup display-fill-column-indicator-mode
-  (setq-default fill-column 80)
-  (add-hook 'prog-mode-hook (lambda()
-                              (setq-local fill-column 99)))
-  (:hook-into prog-mode text-mode))
+
 
 
 (add-hook 'before-save-hook #'time-stamp)
 
-(setup hl-line-mode
-  (defun my/hl-line-hightlight-unless-region-active
-      ()
-    (if (region-active-p)
-        nil
-      (cons (line-beginning-position) (line-beginning-position 2))))
-  (setq hl-line-range-function #'my/hl-line-hightlight-unless-region-active)
-  (:hook-into prog-mode text-mode))
+
 
 (global-auto-revert-mode 1)
 (auto-image-file-mode 1)
@@ -114,49 +78,23 @@
 
 (setq epg-pinentry-mode 'loopback)
 
-;; let me use windmove keybindings even in org-mode
-(setq org-replace-disputed-keys t)
 
-(global-set-key (kbd "S-SPC") (lambda() (interactive) (cycle-spacing -1)))
+(keymap-global-set "<backtab>" (lambda() (interactive) (cycle-spacing -1)))
 
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-;; mouse avoidance mode is buggy, see
-;; https://groups.google.com/g/gnu.emacs.help/c/W_1VhwJrelE
-;; (mouse-avoidance-mode 'banish)
-
-;; (setq make-pointer-invisible nil)
-
-;; Configure hippie-expand
-(defun try-complete-abbrev (old)
-  (if (expand-abbrev) t nil))
-
-(setq hippie-expand-try-functions-list
-      '(try-complete-abbrev
-        try-expand-dabbrev-visible
-        try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
-(global-set-key (kbd "<C-tab>") #'hippie-expand)
-
-
-;; let me tyoe umlauts with right option + u and do not mess with the left option key
+;; let me type umlauts with right option + u and do not mess with the left option key
 (if (boundp 'ns-alternate-modifier)
     (setq ns-alternate-modifier 'meta
           ns-right-alternate-modifier 'none))
 
-(define-key global-map (kbd "C-g") #'prot/keyboard-quit-dwim)
-
+(setup some-global-keybindings
+  (keymap-global-set "C-z" #'undo)
+  (keymap-global-set "<f12>" #'toggle-menu-bar-mode-from-frame)
+  (keymap-global-set "C-g" #'prot/keyboard-quit-dwim))
 
 (provide 'setup-core)
 ;;; setup-core.el ends here
