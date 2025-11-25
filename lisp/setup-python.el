@@ -16,6 +16,8 @@
   (add-to-list 'compilation-error-regexp-alist 'ty))
 
 
+
+
 (defvar show-pyright-errors (make-hash-table :test 'equal))
 
 (defun toggle-pyright-show-errors ()
@@ -38,8 +40,15 @@
                              :pythonPath ,(pet-executable-find "python") ))))
     config))
 
+;; We must set eglot-workspace-configuration as directory local variable. We do this by defining a
+;; directory class and registering the project root directory with that class.
+
+(add-to-list 'safe-local-variable-values '(eglot-workspace-configuration . my/eglot-workspace-config))
+(dir-locals-set-class-variables 'use-my/eglot-workspace-config
+                                '((python-base-mode . ((eglot-workspace-configuration . my/eglot-workspace-config)))))
 (defun setup-eglot-workspace-configuration()
-  (setq-default eglot-workspace-configuration #'my/eglot-workspace-config))
+  (dir-locals-set-directory-class (file-truename (project-root (project-current)))
+                                  'use-my/eglot-workspace-config))
 
 
 (setup (:package (fm-ruff :url "https://github.com/schmir/fm-ruff")))
