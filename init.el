@@ -377,36 +377,26 @@ any directory proferred by `consult-dir'."
 
 (setup (:package orderless))
 
-(setup (:and (executable-find "taplo")
-             conf-toml-mode)
-  (:hook #'eglot-ensure)
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-                 '(conf-toml-mode . ("taplo" "lsp" "stdio")))))
-
 (setup js-mode
+  (:package add-node-modules-path flymake-eslint)
   (:with-mode (js-mode js-ts-mode)
-    (:hook #'my/setup-eglot-flymake-backend #'flymake-mode #'eglot-ensure))
+    (:hook #'my/setup-eglot-flymake-backend
+           #'flymake-mode
+           #'eglot-ensure
+           #'add-node-modules-path
+           #'flymake-eslint-enable))
+  (:option
+   ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
+   ;; work.
+   flymake-eslint-defer-binary-check t)
+
   (require 'treesit)
   (when (treesit-ready-p 'javascript)
     (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))))
 
-(setup (:package add-node-modules-path)
-  (:with-mode (js-mode js2-mode)
-    (:hook #'add-node-modules-path)))
 
-(setup (:package flymake-eslint)
-  (:with-mode (js-mode js2-mode)
-    (:hook #'flymake-eslint-enable))
-
-  (:option
-   ;; If we don't defer the binary check, the hook will fail and dir-local.el variables will not
-   ;; work.
-   flymake-eslint-defer-binary-check t))
-
-(setup (:package (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git")))
-
-(setup (:package eglot)
+(setup (:package eglot
+                 (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git"))
   (defun my/eglot-rename (newname)
     "Rename the current symbol to NEWNAME. like eglot-rename but provides the old symbol as default."
     (interactive
@@ -421,6 +411,12 @@ any directory proferred by `consult-dir'."
     "Enable eglot's flymake backend manually."
     (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t))
 
+  (when (executable-find "taplo")
+    (add-hook 'conf-toml-mode-hook #'eglot-ensure)
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs
+                   '(conf-toml-mode . ("taplo" "lsp" "stdio")))))
+
   (:option eglot-autoshutdown t
            eglot-events-buffer-config '(:size 0 :format short) ;; didn't ever look at the log
            eglot-extend-to-xref t
@@ -428,8 +424,7 @@ any directory proferred by `consult-dir'."
            eglot-sync-connect 0)
 
   (with-eval-after-load 'eglot
-    (when (executable-find "emacs-lsp-booster")
-      ;; (require 'eglot-booster)
+    (when (executable-find "emacs-lsp-booster")      
       (eglot-booster-mode))
     ;; let me manage flymake on my own
     (add-to-list 'eglot-stay-out-of 'flymake))
@@ -477,16 +472,15 @@ any directory proferred by `consult-dir'."
 
 (setup (:package terraform-mode))
 
-(setup (:package nix-mode)
+(setup (:package nix-mode nix-ts-mode)
+  (:with-mode (nix-mode nix-ts-mode)
+    (:hook #'eglot-ensure))
   (:match-file  "\\.nix\\'")
-  (:hook #'eglot-ensure)
+  (when (treesit-ready-p 'nix)
+    (add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode)))
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nixd")))))
 
-(setup (:package nix-ts-mode)
-  (:hook #'eglot-ensure)
-  (when (treesit-ready-p 'nix)
-    (add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode))))
 
 (setup (:package flymake-clippy))
 
@@ -642,10 +636,8 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "C-c q" #'lunaryorn-quit-bottom-side-windows)
   (keymap-global-set "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
 
-(setup (:package expreg))
-
 ;; modern replacement for region-bindings-mode
-(setup (:package selected)
+(setup (:package selected expreg)
   (selected-global-mode)
   (:with-map selected-keymap
     (:bind "b" #'boxquote-region
@@ -667,7 +659,8 @@ caches the result of those calls via vc-file-setprop.
                  (let ((deactivate-mark nil))
                    (undo))))))
 
-(setup (:package age)
+(setup (:package age
+                 (passage :url "https://github.com/anticomputer/passage.el"))
   (setq age-program "rage")
   (setq age-default-identity "~/.passage/identities")
   (setq age-default-recipient
@@ -676,9 +669,8 @@ caches the result of those calls via vc-file-setprop.
 
   (setenv "PINENTRY_PROGRAM" (or (executable-find "pinentry-mac")
                                  (executable-find "pinentry-gnome3")))
-  (age-file-enable))
-
-(setup (:package (passage :url "https://github.com/anticomputer/passage.el"))
+  (age-file-enable)
   (auth-source-passage-enable))
+
 
 ;;; init.el ends here
