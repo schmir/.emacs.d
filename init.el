@@ -42,6 +42,7 @@
     (add-to-list 'exec-path-from-shell-variables var))
   (dolist (var '("DIRENV_DIFF" "DIRENV_DIR" "DIRENV_FILE" "DIRENV_WATCHES"))
     (setenv var))
+  (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize))
 
 (setup (:package boxquote cargo crux dockerfile-mode elixir-mode flymake-shellcheck htmlize just-mode leo lua-mode
