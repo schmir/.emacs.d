@@ -29,7 +29,7 @@
   (magit-status "/yadm::"))
 
 (setup (:package magit)
-  (keymap-global-set "C-c s"  #'magit-status)
+  (keymap-global-set "C-c m"  #'magit-status)
   (keymap-global-set "C-c y"  #'yadm-status)
   (advice-add 'magit-process-filter :after #'magit-display-ansi-colors))
 

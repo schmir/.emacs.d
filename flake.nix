@@ -96,6 +96,7 @@
             pulsar
             puni
             python-pytest
+            rg
             rust-mode
             selected
             shell-pop

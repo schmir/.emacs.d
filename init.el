@@ -530,8 +530,12 @@ caches the result of those calls via vc-file-setprop.
      (message "init.el: initializing cwc-global-mode")
      (cwc-global-mode +1))))
 
-(setup git-grep
-  (keymap-global-set "<f5>" #'git-grep))
+
+;; rg.el - Emacs frontend for ripgrep, a fast grep alternative
+;; https://github.com/dajva/rg.el
+(setup (:package rg)
+  (require 'rg)
+  (rg-enable-default-bindings))
 
 
 ;; modern replacement for region-bindings-mode
