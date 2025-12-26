@@ -111,7 +111,7 @@
 
 (setup (:package macrostep)
   (with-eval-after-load 'lisp-mode
-    (define-key emacs-lisp-mode-map (kbd "C-c x") 'macrostep-expand)))
+    (keymap-set emacs-lisp-mode-map "C-c x" #'macrostep-expand)))
 
 (setup so-long
   (setq so-long-max-lines nil
@@ -155,7 +155,7 @@
 
 (setup (:and (executable-find "direnv") (:package envrc))
   (require 'envrc)
-  (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
+  (keymap-set envrc-mode-map "C-c e" #'envrc-command-map)
   (add-hook 'after-init-hook #'envrc-global-mode))
 
 (setup (:package consult)
@@ -221,7 +221,7 @@
 
     (add-hook 'eshell-mode-hook #'my/zoxide-eshell-directory-changed)
     (add-hook 'eshell-mode-hook #'hack-dir-local-variables-non-file-buffer)
-    (define-key eshell-mode-map (kbd "<f9>") #'my/insert-compile-command)
+    (keymap-set eshell-mode-map "<f9>" #'my/insert-compile-command)
     (add-hook 'eshell-directory-change-hook #'my/zoxide-eshell-directory-changed)
     (add-hook 'eshell-directory-change-hook #'hack-dir-local-variables-non-file-buffer))
 
