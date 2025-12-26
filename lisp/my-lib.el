@@ -90,5 +90,14 @@ The DWIM behaviour of this command is as follows:
   (save-excursion
     (untabify (point-min) (point-max))))
 
+;;;###autoload
+(defun with-project-root-as-default-directory
+    (orig-fun &rest args)
+  "Run orig-fun with default-directory set to project's root directory"
+  (let* ((root (when (project-current)
+                 (project-root (project-current))))
+         (default-directory (or root default-directory)))
+    (apply orig-fun args)))
+
 (provide 'my-lib)
 ;;; my-lib.el ends here
