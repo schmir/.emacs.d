@@ -1,6 +1,34 @@
-;;; setup-clojure  --- setup clojure with cider     -*- lexical-binding: t -*-
+;;; setup-lisp.el --- Lisp-like languages (Elisp, Clojure)  -*- lexical-binding: t -*-
 
 ;;; Code:
+
+;;;; Emacs Lisp
+
+;; eldoc: Show function signatures in echo area
+(setup eldoc
+  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
+
+;; aggressive-indent: Keep code indented automatically
+(setup (:package aggressive-indent)
+  (:hook-into emacs-lisp-mode))
+
+;; prism: Colorize code by depth for lisp modes
+(setup (:package prism)
+  (my/run-when-display-initialized
+   (lambda()
+     (message "init.el: initializing prism mode hooks")
+     (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))))
+
+;; macrostep: Interactively expand macros in elisp
+(setup (:package macrostep)
+  (with-eval-after-load 'lisp-mode
+    (keymap-set emacs-lisp-mode-map "C-c x" #'macrostep-expand)))
+
+;; eros: Overlay elisp evaluation results near point
+(setup (:package eros)
+  (eros-mode +1))
+
+;;;; Clojure
 
 ;; clojure-mode: Clojure editing with eglot and kondor linting
 (setup (:package clojure-mode clojure-mode-extra-font-locking flymake-kondor)
@@ -71,5 +99,5 @@
     (keymap-set cider-stacktrace-mode-map
                 "<f10>" #'cider-popup-buffer-quit-function)))
 
-(provide 'setup-clojure)
-;;; setup-clojure ends here
+(provide 'setup-lisp)
+;;; setup-lisp.el ends here

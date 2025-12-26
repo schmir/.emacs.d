@@ -101,29 +101,9 @@
     (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
     (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))))
 
-;; eldoc: Show function signatures in echo area
-(setup eldoc
-  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
-
-;; aggressive-indent: Keep code indented automatically
-(setup (:package aggressive-indent)
-  (:hook-into emacs-lisp-mode))
-
-;; prism: Colorize code by depth for lisp modes
-(setup (:package prism)
-  (my/run-when-display-initialized
-   (lambda()
-     (message "init.el: initializing prism mode hooks")
-     (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))))
-
 ;; easy-kill: Better kill-ring-save with expandable selection
 (setup (:package easy-kill)
   (keymap-global-set "<remap> <kill-ring-save>" #'easy-kill))
-
-;; macrostep: Interactively expand macros in elisp
-(setup (:package macrostep)
-  (with-eval-after-load 'lisp-mode
-    (keymap-set emacs-lisp-mode-map "C-c x" #'macrostep-expand)))
 
 ;; so-long: Handle files with very long lines gracefully
 (setup so-long
@@ -411,7 +391,7 @@ caches the result of those calls via vc-file-setprop.
 (require 'setup-mail)
 (require 'setup-completion)
 (require 'setup-git)
-(require 'setup-clojure)
+(require 'setup-lisp)
 (require 'setup-go)
 (require 'setup-python)
 (require 'setup-shell)
@@ -426,10 +406,6 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "M-<up>"      #'puni-splice)
   (keymap-global-set "C-S-<right>" #'puni-forward-sexp)
   (keymap-global-set "C-S-<left>"  #'puni-backward-sexp))
-
-;; eros: Overlay elisp evaluation results near point
-(setup (:package eros)
-  (eros-mode +1))
 
 ;; cwc: Run whitespace-cleanup only for changed lines
 (setup cwc
