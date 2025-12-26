@@ -107,7 +107,7 @@
      (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))))
 
 (setup (:package easy-kill)
-  (global-set-key [remap kill-ring-save] #'easy-kill))
+  (keymap-global-set "<remap> <kill-ring-save>" #'easy-kill))
 
 (setup (:package macrostep)
   (with-eval-after-load 'lisp-mode
@@ -160,7 +160,7 @@
 
 (setup (:package consult)
   (:package consult-project-extra)
-  (global-set-key [remap project-find-file] #'consult-project-extra-find)
+  (keymap-global-set "<remap> <project-find-file>" #'consult-project-extra-find)
   (with-eval-after-load 'consult
     (consult-customize
      consult-ripgrep consult-git-grep consult-grep consult-buffer
@@ -252,7 +252,7 @@ any directory proferred by `consult-dir'."
   ;; switch between the annotators.
   (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
   (marginalia-mode +1)
-  (global-set-key [remap switch-to-buffer] #'consult-buffer))
+  (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer))
 
 (setup (:package vertico)
   ;; Different scroll margin
@@ -276,10 +276,10 @@ any directory proferred by `consult-dir'."
 (setup (:package highlight-symbol)
   (:hook-into prog-mode)
   (:option highlight-symbol-occurrence-message '(explicit))
-  (global-set-key [(control f3)] #'highlight-symbol)
-  (global-set-key [f3]           #'highlight-symbol-next)
-  (global-set-key [(shift f3)]   #'highlight-symbol-prev)
-  (global-set-key [(meta f3)]    #'highlight-symbol-query-replace))
+  (keymap-global-set "C-<f3>" #'highlight-symbol)
+  (keymap-global-set "<f3>"   #'highlight-symbol-next)
+  (keymap-global-set "S-<f3>" #'highlight-symbol-prev)
+  (keymap-global-set "M-<f3>" #'highlight-symbol-query-replace))
 
 (setup goto-address-mode
   (:hook-into prog-mode))
