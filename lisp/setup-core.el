@@ -97,5 +97,55 @@
   (keymap-global-set "<f12>" #'toggle-menu-bar-mode-from-frame)
   (keymap-global-set "C-g" #'prot/keyboard-quit-dwim))
 
+;; so-long: Handle files with very long lines gracefully
+(setup so-long
+  (setq so-long-max-lines nil
+        so-long-threshold 500)
+  (global-so-long-mode +1))
+
+;; uniquify: Disambiguate buffer names with path prefixes
+(setup uniquify
+  (setq uniquify-buffer-name-style 'forward
+        uniquify-min-dir-content 4))
+
+;; tramp: Remote file editing with yadm support
+(setup tramp
+  ;; (customize-set-variable 'tramp-syntax 'simplified)
+  (setq tramp-default-method "ssh"
+        password-cache-expiry (* 90 60))
+  (with-eval-after-load 'tramp
+    (add-to-list 'tramp-methods
+                 '("yadm"
+                   (tramp-login-program "yadm")
+                   (tramp-login-args (("enter")))
+                   (tramp-login-env (("SHELL") ("/bin/sh")))
+                   (tramp-remote-shell "/bin/sh")
+                   (tramp-remote-shell-args ("-c"))))))
+
+;; saveplace: Restore cursor position when reopening files
+;; saveplace may need the yadm tramp method.
+;; place cursor on same buffer position between editing sessions
+(setup saveplace
+  (save-place-mode))
+
+;; recentf: Track recently opened files
+(setup recentf
+  (:option recentf-max-saved-items 200)
+  (recentf-mode t)
+  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|yadm\\|su\\|sudo\\)?:")
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory))
+
+;; savehist: Persist minibuffer history across sessions
+(setup savehist
+  (setq history-length 10000
+        history-delete-duplicates t
+        savehist-save-minibuffer-history t)
+  (add-hook 'after-init-hook #'savehist-mode))
+
+;; server: Enable emacsclient connections
+(setup server
+  (server-start))
+
 (provide 'setup-core)
 ;;; setup-core.el ends here
