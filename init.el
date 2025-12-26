@@ -152,65 +152,6 @@
   (keymap-set envrc-mode-map "C-c e" #'envrc-command-map)
   (add-hook 'after-init-hook #'envrc-global-mode))
 
-;; consult: Enhanced search and navigation commands
-(setup (:package consult)
-  (:package consult-project-extra)
-  (keymap-global-set "<remap> <project-find-file>" #'consult-project-extra-find)
-  (with-eval-after-load 'consult
-    (consult-customize
-     consult-ripgrep consult-git-grep consult-grep consult-buffer
-     consult-bookmark consult-recent-file consult-xref
-     ;; consult--source-file
-     ;; consult--source-project-file
-     consult--source-bookmark
-     :preview-key "M-.")))
-
-;; consult-dir: Quick directory switching with zoxide integration
-(setup (:package consult-dir)
-  (keymap-global-set "C-x C-d" #'consult-dir)
-  (with-eval-after-load 'vertico
-    (keymap-set vertico-map "C-x C-d" #'consult-dir)
-    (keymap-set vertico-map "C-x C-j" #'consult-dir-jump-file))
-
-  (defvar my/consult-dir-source-zoxide
-    `(:name "Zoxide"
-            :narrow ?z
-            :category file
-            :face consult-file
-            :enabled ,(lambda () (fboundp #'zoxide-query))
-            :items ,(lambda()
-                      (delete-dups (mapcar #'abbreviate-file-name (zoxide-query)))))
-    "Zoxide directory source for `consult-dir--pick'.")
-
-  (with-eval-after-load 'consult-dir
-    (add-to-list 'consult-dir-sources #'my/consult-dir-source-zoxide)))
-
-;; marginalia: Rich annotations in minibuffer completions
-(setup (:package marginalia)
-  ;; Prefer richer, more heavy, annotations over the lighter default variant.
-  ;; E.g. M-x will show the documentation string additional to the keybinding.
-  ;; By default only the keybinding is shown as annotation.
-  ;; Note that there is the command `marginalia-cycle-annotators` to
-  ;; switch between the annotators.
-  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
-  (marginalia-mode +1)
-  (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer))
-
-;; vertico: Vertical completion UI in minibuffer
-(setup (:package vertico)
-  ;; Different scroll margin
-  ;; (setq vertico-scroll-margin 0)
-
-  ;; Show more candidates
-  (setq vertico-count 20)
-  (setq completion-styles '(basic substring))
-  ;; Grow and shrink the Vertico minibuffer
-  ;; (setq vertico-resize t)
-
-  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  (vertico-mode))
-
 ;; text-scaling: Keybindings for adjusting font size
 (setup text-scaling
   (keymap-global-set "C--"  #'text-scale-decrease)
@@ -254,9 +195,6 @@
   (add-hook 'howm-mode-hook 'howm-mode-set-buffer-name)
   (add-hook 'after-save-hook 'howm-mode-set-buffer-name))
 
-
-;; orderless: Space-separated completion matching
-(setup (:package orderless))
 
 ;; js-mode: JavaScript with eglot, eslint, and treesit support
 (setup js-mode
