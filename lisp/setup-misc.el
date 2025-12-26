@@ -149,6 +149,17 @@ caches the result of those calls via vc-file-setprop.
   (auth-source-passage-enable)
   (setq auth-source-debug nil))
 
+
+
+;; Helpful is an alternative to the built-in Emacs help that provides more contextual information.
+(setup (:package helpful)
+  (keymap-global-set  "C-h f" #'helpful-callable)
+  (keymap-global-set "C-h v" #'helpful-variable)
+  (keymap-global-set "C-h k" #'helpful-key)
+  (keymap-global-set  "C-h x" #'helpful-command)
+  (keymap-global-set "C-c C-d" #'helpful-at-point)
+  (keymap-global-set "C-h F" #'helpful-function))
+
 (provide 'setup-misc)
 
 ;;; setup-misc.el ends here

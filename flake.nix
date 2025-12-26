@@ -68,6 +68,7 @@
             gleam-ts-mode
             go-mode
             gruvbox-theme
+            helpful
             highlight-symbol
             howm
             htmlize
