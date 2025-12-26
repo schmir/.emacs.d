@@ -2,6 +2,7 @@
 
 ;;; Code:
 
+;; themes: Load and configure color themes
 (setup (:package anti-zenburn-theme doom-themes ef-themes gruvbox-theme kaolin-themes leuven-theme
                  spacemacs-theme zenburn-theme zerodark-theme)
   ;; Consider all themes safe to load
@@ -14,6 +15,7 @@
     (message "setup-theme.el: loading default theme")
     (my/load-theme 'ef-day)))
 
+;; emacs: Mouse and cursor behavior settings
 (setup emacs
   ;; mouse avoidance mode is buggy, see
   ;; https://groups.google.com/g/gnu.emacs.help/c/W_1VhwJrelE
@@ -26,6 +28,7 @@
   (setq-default x-stretch-cursor t))
 
 
+;; pixel-scroll: Smooth scrolling with momentum
 (setup (:and (fboundp #'pixel-scroll-precision-mode)
              pixel-scroll-precision-mode)
   (setq pixel-scroll-precision-interpolate-page t
@@ -34,17 +37,20 @@
   ;; (global-set-key [remap mwheel-scroll] 'pixel-scroll-precision)
   (pixel-scroll-precision-mode))
 
+;; show-paren: Highlight matching parentheses
 (setup show-paren
   (setq show-paren-style 'parenthesis
         show-paren-context-when-offscreen t)
   (show-paren-mode t))
 
+;; display-fill-column-indicator: Show vertical line at fill-column
 (setup display-fill-column-indicator-mode
   (setq-default fill-column 76)
   (add-hook 'prog-mode-hook (lambda()
                               (setq-local fill-column 99)))
   (:hook-into prog-mode text-mode))
 
+;; hl-line-mode: Highlight current line except when region active
 (setup hl-line-mode
   (defun my/hl-line-hightlight-unless-region-active
       ()
@@ -57,6 +63,7 @@
 
 
 
+;; framemove: Navigate between frames with windmove keys
 (setup (:package (framemove :url "https://github.com/emacsmirror/framemove"))
   (require 'framemove)
   (windmove-default-keybindings)
@@ -64,7 +71,7 @@
   ;; let me use windmove keybindings even in org-mode
   (setq org-replace-disputed-keys t))
 
-;; --- Configure display-buffer-alist
+;; display-buffer-alist: Configure window placement for shells and REPLs
 (setup emacs
   (setq display-buffer-alist
         '(("e?shell*\\|ielm\\|eat\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"

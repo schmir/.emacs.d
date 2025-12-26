@@ -7,8 +7,8 @@
 
 ;;; Code:
 
+;; pyright-compilation: Parse pyright errors in compilation mode
 (setup
-    ;; Enable parsing of pyright errors in compilation mode
     ;; from https://robbmann.io/posts/006_emacs_2_python/
     (with-eval-after-load 'compile
       (add-to-list 'compilation-error-regexp-alist-alist
@@ -21,6 +21,7 @@
 
 
 
+;; toggle-pyright-errors: Toggle pyright diagnostics visibility
 (setup toggle-pyright-errors
   (defvar show-pyright-errors (make-hash-table :test 'equal))
 
@@ -58,6 +59,7 @@
   (:with-mode (python-mode python-ts-mode)
     (:hook #'setup-eglot-workspace-configuration)))
 
+;; python: Python with eglot, ruff, and pet for virtualenvs
 (setup python
   (:package (fm-ruff :url "https://github.com/schmir/fm-ruff")
             pet

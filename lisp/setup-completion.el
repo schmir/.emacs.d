@@ -1,5 +1,6 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
+;; company: Text completion framework (used for some modes)
 (setup (:package company)
   (:option company-idle-delay 0.8
            company-minimum-prefix-length 0
@@ -7,6 +8,7 @@
            company-tooltip-flip-when-above t
            company-show-numbers t))
 
+;; corfu: Popup completion UI at point
 (setup (:package corfu)
   (global-corfu-mode)
 
@@ -34,7 +36,7 @@
    ;; See also `global-corfu-modes'.
    ))
 
-;; Configure Tempel
+;; tempel: Modern template/snippet system
 (setup (:package tempel)
   (setopt tempel-path (no-littering-expand-etc-file-name "tempel-templates.eld"))
   ;; Require trigger prefix before template name when completing.
@@ -70,6 +72,7 @@
   )
 
 
+;; cape: Completion at point extensions for eglot and dabbrev
 (setup (:package cape)
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
@@ -84,8 +87,8 @@
                   #'cape-file
                   (cape-capf-prefix-length #'cape-dabbrev 3)))))
 
+;; hippie-expand: Extensible text expansion with C-<tab>
 (setup hippie-expand
-  ;; Configure hippie-expand
   (defun try-complete-abbrev (old)
     (if (expand-abbrev) t nil))
   (setq hippie-expand-try-functions-list

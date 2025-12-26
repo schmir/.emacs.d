@@ -1,4 +1,6 @@
 ;;; setup-smartparens.el --- setup smartparens     -*- lexical-binding: t -*-
+
+;; smartparens: Structured editing (replaced by puni)
 (setup (:package smartparens)
   (require 'smartparens-config)
   (show-smartparens-global-mode +1)

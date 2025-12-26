@@ -37,6 +37,7 @@ The first PACKAGE can be used to deduce the feature context."
                        (car pkg-desc)
                      pkg-desc)))))
 
+;; use-package: Useful for trying out packages with copy-paste install instructions
 ;; let's keep use-package as it's useful when trying out package, so we can copy and paste the
 ;; install instructions.
 (setup (:package use-package)

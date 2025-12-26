@@ -1,6 +1,8 @@
 ;;; setup-clojure  --- setup clojure with cider     -*- lexical-binding: t -*-
 
 ;;; Code:
+
+;; clojure-mode: Clojure editing with eglot and kondor linting
 (setup (:package clojure-mode clojure-mode-extra-font-locking flymake-kondor)
   (defun my/setup-clojure-mode ()
     (flymake-kondor-setup)
@@ -18,12 +20,14 @@
      (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond)))
 
+;; clojure-ts-mode: Treesit-based Clojure mode
 (setup (:package clojure-ts-mode)
   (when (treesit-ready-p 'clojure)
     (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode)))
   (setopt clojure-ts-ensure-grammars nil)
   (:hook #'my/setup-clojure-mode))
 
+;; cider: Clojure Interactive Development Environment
 (setup (:package cider)
   (:hook #'eldoc-mode)
 

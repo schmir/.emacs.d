@@ -2,6 +2,7 @@
 
 ;;; Code:
 
+;; vterm: Full-featured terminal emulator using libvterm
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 ;; dnf install libvterm-devel libtool cmake
 (setup (:package vterm)
@@ -14,17 +15,20 @@
   ;; :after shell-pop
   )
 
+;; shell-pop: Toggle a shell window with C-t
 (setup (:package shell-pop)
   (keymap-global-set "C-t" #'shell-pop)
   (setq shell-pop-shell-type '("vterm" "*vterm*" #'vterm)
         shell-pop-term-shell (executable-find "zsh")
         shell-pop-window-size 40))
 
+;; eat: Terminal emulation for eshell, handles curses applications
 (setup (:package eat)
   (add-hook 'eshell-load-hook #'eat-eshell-mode)
   ;; (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
   (setq eshell-visual-commands '()))
 
+;; eshell: Emacs shell with zoxide integration and custom z command
 (setup eshell
   (defun my/insert-compile-command
       ()

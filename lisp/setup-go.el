@@ -1,5 +1,6 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
+;; go-mode: Go with eglot, gofumports, and auto-format on save
 (setup go-mode
   (defun my/fix-go-imports()
     (with-demoted-errors "Error: %s" (call-interactively #'eglot-code-action-organize-imports)))

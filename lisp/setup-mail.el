@@ -2,6 +2,7 @@
 
 ;;; Code
 
+;; emacs-mail: Configure mail sending with msmtp and ecomplete
 (setup emacs-mail
   (setq send-mail-function #'message-send-mail-with-sendmail
         message-send-mail-function #'message-send-mail-with-sendmail

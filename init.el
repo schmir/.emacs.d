@@ -36,6 +36,7 @@
 (defalias 'ee 'eval-expression)
 (defalias 'rb 'revert-buffer)
 
+;; exec-path-from-shell: Inherit environment variables from shell
 (setup (:package exec-path-from-shell)
   (require 'exec-path-from-shell)
   (dolist (var '("DICPATH" "XDG_DATA_DIRS"))
@@ -45,23 +46,29 @@
   (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize))
 
+;; Various packages without additional configuration
 (setup (:package boxquote cargo crux dockerfile-mode elixir-mode flymake-shellcheck htmlize just-mode leo lua-mode
                  ninja-mode package-lint prodigy s solidity-flycheck terraform-mode tldr yaml-mode))
 
+;; markdown-mode: Editing and previewing markdown files
 (setup (:package markdown-mode markdown-preview-mode)
   (setq markdown-command "multimarkdown")
   (add-to-list 'auto-mode-alist (cons "README\\.md\\'" #'gfm-mode)))
 
+;; zoom: Auto-resize windows to golden ratio
 (setup (:package zoom)
   (zoom-mode))
 
+;; flycheck: On-the-fly syntax checking with inline error display
 (setup (:package flycheck flycheck-inline flycheck-package)
   (setq flycheck-check-syntax-automatically '(save new-line mode-enabled))
   (global-flycheck-inline-mode))
 
+;; adoc-mode: Editing AsciiDoc files
 (setup (:package adoc-mode)
   (:match-file "\\.adoc$"))
 
+;; apheleia: Auto-format code on save without moving point
 (setup (:package apheleia)
   (apheleia-global-mode +1)
   (keymap-global-set "C-c b" #'apheleia-format-buffer)
@@ -94,47 +101,58 @@
     (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
     (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))))
 
+;; eldoc: Show function signatures in echo area
 (setup eldoc
   (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
 
+;; aggressive-indent: Keep code indented automatically
 (setup (:package aggressive-indent)
   (:hook-into emacs-lisp-mode))
 
+;; prism: Colorize code by depth for lisp modes
 (setup (:package prism)
   (my/run-when-display-initialized
    (lambda()
      (message "init.el: initializing prism mode hooks")
      (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))))
 
+;; easy-kill: Better kill-ring-save with expandable selection
 (setup (:package easy-kill)
   (keymap-global-set "<remap> <kill-ring-save>" #'easy-kill))
 
+;; macrostep: Interactively expand macros in elisp
 (setup (:package macrostep)
   (with-eval-after-load 'lisp-mode
     (keymap-set emacs-lisp-mode-map "C-c x" #'macrostep-expand)))
 
+;; so-long: Handle files with very long lines gracefully
 (setup so-long
   (setq so-long-max-lines nil
         so-long-threshold 500)
   (global-so-long-mode +1))
 
+;; uniquify: Disambiguate buffer names with path prefixes
 (setup uniquify
   (setq uniquify-buffer-name-style 'forward
         uniquify-min-dir-content 4))
 
+;; persistent-scratch: Preserve scratch buffer across sessions
 (setup (:package persistent-scratch)
   (persistent-scratch-setup-default)
   (with-current-buffer "*scratch*"
     (persistent-scratch-mode +1)))
 
+;; which-key: Show available keybindings in popup
 (setup (:package which-key)
   (which-key-mode))
 
+;; envrc: Direnv integration for per-directory environments
 (setup (:and (executable-find "direnv") (:package envrc))
   (require 'envrc)
   (keymap-set envrc-mode-map "C-c e" #'envrc-command-map)
   (add-hook 'after-init-hook #'envrc-global-mode))
 
+;; consult: Enhanced search and navigation commands
 (setup (:package consult)
   (:package consult-project-extra)
   (keymap-global-set "<remap> <project-find-file>" #'consult-project-extra-find)
@@ -147,6 +165,7 @@
      consult--source-bookmark
      :preview-key "M-.")))
 
+;; consult-dir: Quick directory switching with zoxide integration
 (setup (:package consult-dir)
   (keymap-global-set "C-x C-d" #'consult-dir)
   (with-eval-after-load 'vertico
@@ -166,6 +185,7 @@
   (with-eval-after-load 'consult-dir
     (add-to-list 'consult-dir-sources #'my/consult-dir-source-zoxide)))
 
+;; marginalia: Rich annotations in minibuffer completions
 (setup (:package marginalia)
   ;; Prefer richer, more heavy, annotations over the lighter default variant.
   ;; E.g. M-x will show the documentation string additional to the keybinding.
@@ -176,6 +196,7 @@
   (marginalia-mode +1)
   (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer))
 
+;; vertico: Vertical completion UI in minibuffer
 (setup (:package vertico)
   ;; Different scroll margin
   ;; (setq vertico-scroll-margin 0)
@@ -190,11 +211,13 @@
   ;; (setq vertico-cycle t)
   (vertico-mode))
 
+;; text-scaling: Keybindings for adjusting font size
 (setup text-scaling
   (keymap-global-set "C--"  #'text-scale-decrease)
   (keymap-global-set "C-="  #'text-scale-increase)
   (setq global-text-scale-adjust-resizes-frames nil))
 
+;; highlight-symbol: Highlight and navigate symbols with F3
 (setup (:package highlight-symbol)
   (:hook-into prog-mode)
   (:option highlight-symbol-occurrence-message '(explicit))
@@ -203,9 +226,11 @@
   (keymap-global-set "S-<f3>" #'highlight-symbol-prev)
   (keymap-global-set "M-<f3>" #'highlight-symbol-query-replace))
 
+;; goto-address-mode: Make URLs clickable in code
 (setup goto-address-mode
   (:hook-into prog-mode))
 
+;; pulsar: Pulse highlight line after navigation
 (setup (:package pulsar)
   (setq pulsar-pulse t
         pulsar-delay 0.045
@@ -215,9 +240,11 @@
   (pulsar-global-mode 1))
 
 
+;; smartscan: Jump between symbols with M-n/M-p
 (setup (:package smartscan)
   (:hook-into prog-mode-hook))
 
+;; howm: Personal wiki and note-taking system
 (setup (:package howm)
   (require 'howm)
   (setq howm-history-file (expand-file-name ".howm-history" howm-directory))
@@ -228,8 +255,10 @@
   (add-hook 'after-save-hook 'howm-mode-set-buffer-name))
 
 
+;; orderless: Space-separated completion matching
 (setup (:package orderless))
 
+;; js-mode: JavaScript with eglot, eslint, and treesit support
 (setup js-mode
   (:package add-node-modules-path flymake-eslint)
   (:with-mode (js-mode js-ts-mode)
@@ -249,6 +278,7 @@
 
 
 
+;; eglot: LSP client with booster for improved performance
 (setup (:package eglot
                  (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git"))
   (defun my/eglot-rename (newname)
@@ -288,6 +318,7 @@
           "C-c i" #'eglot-find-implementation
           "C-c r" #'my/eglot-rename))
 
+;; protobuf-mode: Editing protocol buffer files
 (setup (:package protobuf-mode)
   (:hook #'setup-protobuf)
 
@@ -306,6 +337,7 @@
          (default-directory (or root default-directory)))
     (apply orig-fun args)))
 
+;; solidity-mode: Ethereum smart contract development
 (setup (:package solidity-mode company-solidity)
   (defun schmir/solidity-setup ()
     ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
@@ -321,9 +353,11 @@
     (require 'company-solidity)
     (require 'cape)))
 
+;; sh-mode: Shell scripts with shellcheck linting
 (setup sh-mode
   (:hook #'flymake-shellcheck-load #'flymake-mode))
 
+;; nix-mode: Nix expressions with eglot and treesit support
 (setup (:package nix-mode nix-ts-mode)
   (:with-mode (nix-mode nix-ts-mode)
     (:hook #'eglot-ensure))
@@ -334,6 +368,7 @@
     (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nixd")))))
 
 
+;; rust-mode: Rust with eglot and clippy linting
 (setup (:package rust-mode flymake-clippy)
   (defun my/setup-rust ()
     (eglot-ensure)
@@ -342,7 +377,7 @@
     (flymake-mode))
   (:hook #'my/setup-rust))
 
-;; configure tramp before saveplace, because it might use tramp
+;; tramp: Remote file editing with yadm support
 (setup tramp
   ;; (customize-set-variable 'tramp-syntax 'simplified)
   (setq tramp-default-method "ssh"
@@ -356,11 +391,13 @@
                    (tramp-remote-shell "/bin/sh")
                    (tramp-remote-shell-args ("-c"))))))
 
+;; saveplace: Restore cursor position when reopening files
 ;; saveplace may need the yadm tramp method.
 ;; place cursor on same buffer position between editing sessions
 (setup saveplace
   (save-place-mode))
 
+;; recentf: Track recently opened files
 (setup recentf
   (:option recentf-max-saved-items 200)
   (recentf-mode t)
@@ -368,15 +405,18 @@
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))
 
+;; savehist: Persist minibuffer history across sessions
 (setup savehist
   (setq history-length 10000
         history-delete-duplicates t
         savehist-save-minibuffer-history t)
   (add-hook 'after-init-hook #'savehist-mode))
 
+;; super-save: Auto-save buffers on focus loss
 (setup (:package super-save)
   (super-save-mode +1))
 
+;; fix-project-try-vc: Workaround for project.el caching bug
 (setup fix-project-try-vc
   (defun my/fix-project-try-vc (orig-fun dir)
     "Advice for project-try-vc.
@@ -391,12 +431,14 @@ caches the result of those calls via vc-file-setprop.
   (with-eval-after-load 'project
     (advice-add 'project-try-vc :around #'my/fix-project-try-vc)))
 
+;; project: Project management with compile and eshell bindings
 (setup project
   (setopt project-vc-extra-root-markers '(".project" ".projectile")
           project-vc-merge-submodules nil)
   (keymap-global-set "<f9>" #'project-compile)
   (keymap-global-set "S-<f9>" #'project-eshell))
 
+;; zoxide: Smart directory tracking and jumping
 (setup (:and (executable-find "zoxide")
              (:package zoxide))
   (defun my/zoxide-add
@@ -410,18 +452,21 @@ caches the result of those calls via vc-file-setprop.
 
   (add-hook 'find-file-hook #'my/zoxide-add))
 
+;; compile: Compilation buffer with ANSI colors
 (setup compile
-  ;; scroll, but stop at first error
   (setq compilation-scroll-output 'first-error)
   ;; colorize compile mode output
   (add-hook 'compilation-filter-hook #'display-ansi-colors))
 
 
+;; server: Enable emacsclient connections
 (setup server
   (server-start))
 
+;; gcmh: Garbage collector magic hack for better performance
 (setup (:package gcmh)) ;; early-init.el enables gcmh-mode
 
+;; pdf-tools: Enhanced PDF viewing and annotation
 (setup (:package pdf-tools)
   (add-hook 'doc-view-mode-hook #'pdf-tools-install))
 
@@ -433,7 +478,7 @@ caches the result of those calls via vc-file-setprop.
 (require 'setup-python)
 (require 'setup-shell)
 
-;; (require 'setup-smartparens)
+;; puni: Structured editing with slurp/barf/splice
 (setup (:package puni)
   (electric-pair-mode +1)
   (puni-global-mode)
@@ -444,9 +489,11 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "C-S-<right>" #'puni-forward-sexp)
   (keymap-global-set "C-S-<left>"  #'puni-backward-sexp))
 
+;; eros: Overlay elisp evaluation results near point
 (setup (:package eros)
   (eros-mode +1))
 
+;; cwc: Run whitespace-cleanup only for changed lines
 (setup cwc
   (my/run-when-display-initialized
    (lambda()
@@ -454,14 +501,13 @@ caches the result of those calls via vc-file-setprop.
      (cwc-global-mode +1))))
 
 
-;; rg.el - Emacs frontend for ripgrep, a fast grep alternative
-;; https://github.com/dajva/rg.el
+;; rg: Ripgrep frontend for fast code searching
 (setup (:package rg)
   (require 'rg)
   (rg-enable-default-bindings))
 
 
-;; modern replacement for region-bindings-mode
+;; selected: Keybindings active only when region is selected
 (setup (:package selected expreg)
   (selected-global-mode)
   (:with-map selected-keymap
@@ -484,6 +530,7 @@ caches the result of those calls via vc-file-setprop.
                  (let ((deactivate-mark nil))
                    (undo))))))
 
+;; age: Age encryption with passage for auth-source
 (setup (:package age
                  (passage :url "https://github.com/anticomputer/passage.el"))
   (setq age-program "rage"
