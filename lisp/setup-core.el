@@ -7,7 +7,7 @@
   (when (not (string= home truename))
     (add-to-list 'directory-abbrev-alist (cons (concat "\\`" truename)  home))))
 
-(defalias 'yes-or-no-p 'y-or-n-p)  ;; y/n is enough
+(setopt use-short-answers t) ;; y/n is enough
 
 ;; Show lisp names in customzize interface
 (setq custom-unlispify-tag-names nil)
