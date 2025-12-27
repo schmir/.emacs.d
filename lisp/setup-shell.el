@@ -2,6 +2,26 @@
 
 ;;; Code:
 
+;; zoxide: Smart directory tracking and jumping
+(setup (:and (executable-find "zoxide")
+             (:package zoxide))
+  (defun my/zoxide-add
+      ()
+    (zoxide-add)
+    (when-let* ((proj (project-current))
+                (root (project-root proj))
+                (path (expand-file-name root)))
+      (message "add project-root %s to zoxide" path)
+      (zoxide-add path)))
+
+  (add-hook 'find-file-hook #'my/zoxide-add))
+
+;; envrc: Direnv integration for per-directory environments
+(setup (:and (executable-find "direnv") (:package envrc))
+  (require 'envrc)
+  (keymap-set envrc-mode-map "C-c e" #'envrc-command-map)
+  (add-hook 'after-init-hook #'envrc-global-mode))
+
 ;; vterm: Full-featured terminal emulator using libvterm
 ;; apt install libvterm-dev libvterm-bin libtool-bin cmake
 ;; dnf install libvterm-devel libtool cmake

@@ -84,6 +84,17 @@
                  (let ((deactivate-mark nil))
                    (undo))))))
 
+;; cwc: Run whitespace-cleanup only for changed lines
+(setup cwc
+  (my/run-when-display-initialized
+   (lambda()
+     (message "init.el: initializing cwc-global-mode")
+     (cwc-global-mode +1))))
+
+;; super-save: Auto-save buffers on focus loss
+(setup (:package super-save)
+  (super-save-mode +1))
+
 (provide 'setup-editing)
 
 ;;; setup-editing.el ends here

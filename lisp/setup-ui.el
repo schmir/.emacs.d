@@ -95,5 +95,28 @@
   (keymap-global-set "C-c q" #'lunaryorn-quit-bottom-side-windows)
   (keymap-global-set "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
 
+;; pulsar: Pulse highlight line after navigation
+(setup (:package pulsar)
+  (setq pulsar-pulse t
+        pulsar-delay 0.045
+        pulsar-iterations 10
+        pulsar-face 'pulsar-magenta
+        pulsar-highlight-face 'pulsar-yellow)
+  (pulsar-global-mode 1))
+
+;; text-scaling: Keybindings for adjusting font size
+(setup text-scaling
+  (keymap-global-set "C--"  #'text-scale-decrease)
+  (keymap-global-set "C-="  #'text-scale-increase)
+  (setq global-text-scale-adjust-resizes-frames nil))
+
+;; zoom: Auto-resize windows to golden ratio
+(setup (:package zoom)
+  (zoom-mode))
+
+;; which-key: Show available keybindings in popup
+(setup (:package which-key)
+  (which-key-mode))
+
 (provide 'setup-ui)
 ;;; setup-ui.el ends here
