@@ -6,13 +6,13 @@
 }:
 trivialBuild rec {
   pname = "eglot-booster";
-  version = "0.0.2";
+  version = "0.1.0";
 
   src = fetchFromGitHub {
     owner = "jdtsmith";
     repo = "eglot-booster";
-    rev = "3f9159a8b7fe87e2f01280a2c4c98ca6dab49d13";
-    hash = "sha256-yRZci0foZUw2Thx1SwSoY0iPf2DmkAnRp6U+rdx1Bas=";
+    rev = "cab7803c4f0adc7fff9da6680f90110674bb7a22";
+    hash = "sha256-xUBQrQpw+JZxcqT1fy/8C2tjKwa7sLFHXamBm45Fa4Y=";
   };
 
   meta = with lib; {
