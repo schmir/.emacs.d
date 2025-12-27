@@ -43,6 +43,7 @@
             crux
             diminish
             direnv
+            disproject
             dockerfile-mode
             doom-themes
             easy-kill

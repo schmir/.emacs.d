@@ -55,6 +55,9 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "<f9>" #'project-compile)
   (keymap-global-set "S-<f9>" #'project-eshell))
 
+;; disproject provides transient menus for managing and interacting with project files.
+(setup (:package disproject)
+  (keymap-set ctl-x-map "p" #'disproject-dispatch))
 
 ;; compile: Compilation buffer with ANSI colors
 (setup compile
