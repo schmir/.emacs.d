@@ -30,17 +30,21 @@
 
 ;;;; Clojure
 
-;; clojure-mode: Clojure editing with eglot and kondor linting
-(setup (:package clojure-mode clojure-mode-extra-font-locking flymake-kondor)
+;; clojure-mode/clojure-ts-mode: Clojure editing with eglot and kondor linting
+(setup (:package clojure-mode clojure-ts-mode clojure-mode-extra-font-locking flymake-kondor)
   (defun my/setup-clojure-mode ()
     (flymake-kondor-setup)
     (flymake-mode)
     (when (executable-find "clojure-lsp")
       (eglot-ensure)))
 
-  ;; (:bind "<f10>"  #'cider-connect)
+  (:with-mode (clojure-mode clojure-ts-mode)
+    (:hook #'my/setup-clojure-mode))
+  (setopt clojure-ts-ensure-grammars nil)
 
-  (:hook #'my/setup-clojure-mode)
+  ;;; XXX Disable clojure-ts-mode as it seem to be broken currently
+  ;; (when (treesit-ready-p 'clojure)
+  ;;   (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode)))
 
   (with-eval-after-load 'clojure-mode
     (require 'clojure-mode-extra-font-locking)
@@ -48,12 +52,6 @@
      (event-handler 'defun))
     (put-clojure-indent 'cond #'schmir/indent-cond)))
 
-;; clojure-ts-mode: Treesit-based Clojure mode
-(setup (:package clojure-ts-mode)
-  (when (treesit-ready-p 'clojure)
-    (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode)))
-  (setopt clojure-ts-ensure-grammars nil)
-  (:hook #'my/setup-clojure-mode))
 
 ;; cider: Clojure Interactive Development Environment
 (setup (:package cider)
