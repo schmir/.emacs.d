@@ -51,7 +51,7 @@
 
 ;; period + one space is enough to end a sentence
 (setq sentence-end-double-space nil)
-
+(context-menu-mode)
 (global-auto-revert-mode 1)
 (auto-image-file-mode 1)
 (column-number-mode 1)
