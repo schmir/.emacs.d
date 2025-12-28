@@ -50,6 +50,8 @@
             eat
             ef-themes
             elixir-mode
+            embark
+            embark-consult
             envrc
             eros
             exec-path-from-shell

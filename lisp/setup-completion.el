@@ -169,5 +169,14 @@
   (with-eval-after-load 'consult-dir
     (add-to-list 'consult-dir-sources #'my/consult-dir-source-zoxide)))
 
+(setup (:package embark embark-consult)
+  (keymap-global-set "C-." #'embark-act)
+  (add-hook 'context-menu-functions #'embark-context-menu 100)
+  ;; (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
+
+  (with-eval-after-load 'embark
+    (keymap-set embark-symbol-map "<remap> <describe-symbol>" #'helpful-symbol)
+    (keymap-set embark-variable-map "<remap> <describe-symbol>" #'helpful-variable)))
+
 (provide 'setup-completion)
 ;;; setup-completion.el ends here
