@@ -13,6 +13,7 @@
 ;;; Initialize lisp directory
 (progn
   (setopt site-lisp-directory (expand-file-name "lisp" user-emacs-directory))
+  (add-to-list 'load-path (expand-file-name "setup" user-emacs-directory))
   (add-to-list 'load-path site-lisp-directory)
   (require 'setup-lisp-directory)
   (setup-lisp-directory))
