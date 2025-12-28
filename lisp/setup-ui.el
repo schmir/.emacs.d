@@ -110,9 +110,10 @@
   (keymap-global-set "C-="  #'text-scale-increase)
   (setq global-text-scale-adjust-resizes-frames nil))
 
-;; zoom: Auto-resize windows to golden ratio
+zoom: Auto-resize windows to golden ratio
 (setup (:package zoom)
-  (zoom-mode))
+  ;; (zoom-mode)
+  )
 
 ;; which-key: Show available keybindings in popup
 (setup (:package which-key)
