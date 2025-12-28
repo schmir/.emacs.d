@@ -52,12 +52,12 @@
 
 ;; hl-line-mode: Highlight current line except when region active
 (setup hl-line-mode
-  (defun my/hl-line-hightlight-unless-region-active
+  (defun my/hl-line-highlight-unless-region-active
       ()
     (if (region-active-p)
         nil
       (cons (line-beginning-position) (line-beginning-position 2))))
-  (setq hl-line-range-function #'my/hl-line-hightlight-unless-region-active)
+  (setq hl-line-range-function #'my/hl-line-highlight-unless-region-active)
   (:hook-into prog-mode text-mode))
 
 
