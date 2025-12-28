@@ -37,15 +37,6 @@
 (setup (:package easy-kill)
   (keymap-global-set "<remap> <kill-ring-save>" #'easy-kill))
 
-;; highlight-symbol: Highlight and navigate symbols with F3
-(setup (:package highlight-symbol)
-  (:hook-into prog-mode)
-  (:option highlight-symbol-occurrence-message '(explicit))
-  (keymap-global-set "C-<f3>" #'highlight-symbol)
-  (keymap-global-set "<f3>"   #'highlight-symbol-next)
-  (keymap-global-set "S-<f3>" #'highlight-symbol-prev)
-  (keymap-global-set "M-<f3>" #'highlight-symbol-query-replace))
-
 ;; smartscan: Jump between symbols with M-n/M-p
 (setup (:package smartscan)
   (:hook-into prog-mode-hook))

@@ -72,7 +72,6 @@
             go-mode
             gruvbox-theme
             helpful
-            highlight-symbol
             howm
             htmlize
             just-mode
