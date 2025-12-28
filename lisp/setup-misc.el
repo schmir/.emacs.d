@@ -50,6 +50,7 @@ caches the result of those calls via vc-file-setprop.
 
 ;; project: Project management with compile and eshell bindings
 (setup project
+  (setq project-compilation-buffer-name-function #'project-prefixed-buffer-name)
   (setopt project-vc-extra-root-markers '(".project" ".projectile")
           project-vc-merge-submodules nil)
   (keymap-global-set "<f9>" #'project-compile)
