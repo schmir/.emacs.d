@@ -4,6 +4,7 @@
 
 (setq debug-on-error t)
 
+
 ;;; Startup time measurement
 
 (defun display-startup-time ()
@@ -15,6 +16,14 @@
 (add-hook 'emacs-startup-hook #'display-startup-time 100)
 
 ;;; Native compilation
+
+;; Ensure Emacs loads the most recent byte-compiled files.
+(setq load-prefer-newer t)
+
+;; Make Emacs Native-compile .elc files asynchronously by setting
+;; `native-comp-jit-compilation' to t.
+(setq native-comp-jit-compilation t)
+(setq native-comp-deferred-compilation native-comp-jit-compilation)  ; Deprecated
 
 (when (and (native-comp-available-p)
            (fboundp 'startup-redirect-eln-cache))
