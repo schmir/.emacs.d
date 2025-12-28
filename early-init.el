@@ -85,7 +85,7 @@
 
 (modify-all-frames-parameters
  '((width . 130)
-   (height . 60)))
+   (height . 56)))
 
 ;;; X resources
 ;; Disable X resources handling
