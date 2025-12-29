@@ -119,5 +119,9 @@
 (setup (:package which-key)
   (which-key-mode))
 
+;; minions: consolidate minor modes in modeline into a single menu
+(setup (:package minions)
+  (minions-mode))
+
 (provide 'setup-ui)
 ;;; setup-ui.el ends here

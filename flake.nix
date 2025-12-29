@@ -84,6 +84,7 @@
             marginalia
             markdown-mode
             markdown-preview-mode
+            minions
             ninja-mode
             nix-mode
             nix-ts-mode
