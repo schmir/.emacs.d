@@ -74,6 +74,7 @@
             helpful
             howm
             htmlize
+            jinx
             just-mode
             kaolin-themes
             leo
