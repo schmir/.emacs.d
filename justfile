@@ -5,7 +5,7 @@ set positional-arguments
     just --list
 
 # Update flake inputs
-update: 
+update:
     nix flake update
 
 # Build flake
