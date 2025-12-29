@@ -118,7 +118,6 @@
             vterm
             vundo
             which-key
-            yaml-mode
             zenburn-theme
             zerodark-theme
             zoom

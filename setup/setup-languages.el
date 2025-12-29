@@ -2,7 +2,7 @@
 
 ;; Various packages without additional configuration
 (setup (:package cargo elixir-mode flymake-shellcheck htmlize just-mode lua-mode
-                 ninja-mode solidity-flycheck terraform-mode yaml-mode))
+                 ninja-mode solidity-flycheck terraform-mode))
 
 ;; flycheck: On-the-fly syntax checking with inline error display
 (setup (:package flycheck flycheck-inline flycheck-package)
