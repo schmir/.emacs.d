@@ -113,8 +113,11 @@
             tldr
             treesit-auto
             treesit-grammars.with-all-grammars
+            undo-fu
+            undo-fu-session
             vertico
             vterm
+            vundo
             which-key
             yaml-mode
             zenburn-theme

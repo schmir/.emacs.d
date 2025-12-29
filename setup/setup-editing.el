@@ -52,6 +52,20 @@
   (keymap-global-set "C-S-<right>" #'puni-forward-sexp)
   (keymap-global-set "C-S-<left>"  #'puni-backward-sexp))
 
+;; undo-fu: Simple undo/redo while keeping access to the full non-linear undo history.
+;; undo-fu-session: Save & restore undo/redo information between sessions.
+;; vundo:Visualize the undo tree (just call M-x vundo)
+(setup (:package undo-fu undo-fu-session vundo)
+  ;; Increase internal undo limits
+  ;; See https://codeberg.org/ideasman42/emacs-undo-fu#undo-limits
+  (:option undo-limit 67108864          ; 64mb.
+           undo-strong-limit 100663296  ; 96mb.
+           undo-outer-limit 1006632960) ; 960mb.
+  (:option undo-fu-allow-undo-in-region t)
+  (keymap-global-set "C-z" #'undo-fu-only-undo)
+  (keymap-global-set "C-S-z"  #'undo-fu-only-redo)
+  (undo-fu-session-global-mode))
+
 ;; selected: Keybindings active only when region is selected
 (setup (:package selected expreg)
   (selected-global-mode)

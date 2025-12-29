@@ -101,7 +101,6 @@
 
 ;; some-global-keybindings: Common key overrides
 (setup some-global-keybindings
-  (keymap-global-set "C-z" #'undo)
   (keymap-global-set "<f12>" #'toggle-menu-bar-mode-from-frame)
   (keymap-global-set "C-g" #'prot/keyboard-quit-dwim))
 
