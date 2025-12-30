@@ -37,6 +37,24 @@
 (setup (:package easy-kill)
   (keymap-global-set "<remap> <kill-ring-save>" #'easy-kill))
 
+;; avy: Jump to things in Emacs tree-style
+(setup (:package avy)
+  (defun avy-action-embark (pt)
+    (unwind-protect
+        (save-excursion
+          (goto-char pt)
+          (embark-act))
+      (select-window
+       (cdr (ring-ref avy-ring 0))))
+    t)
+  (with-eval-after-load 'avy
+    (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark))
+
+  (keymap-global-set "C-," #'avy-goto-word-1)
+  (keymap-set isearch-mode-map "M-j" #'avy-isearch))
+
+
+
 ;; smartscan: Jump between symbols with M-n/M-p
 (setup (:package smartscan)
   (:hook-into prog-mode-hook))

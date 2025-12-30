@@ -27,6 +27,7 @@
             aggressive-indent
             anti-zenburn-theme
             apheleia
+            avy
             boxquote
             cape
             cargo
