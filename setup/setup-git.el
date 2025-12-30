@@ -4,6 +4,9 @@
 
 ;; (setup (:package gitignore-mode))
 
+;; git-timemachine: browse historic versions of a file with p (previous) and n (next)
+(setup (:package git-timemachine))
+
 ;; git-messenger: Show git blame info in popup
 (setup (:package git-messenger)
   (:option git-messenger:show-detail t

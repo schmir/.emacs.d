@@ -68,6 +68,7 @@
             git-gutter
             git-link
             git-messenger
+            git-timemachine
             gleam-ts-mode
             go-mode
             gruvbox-theme
