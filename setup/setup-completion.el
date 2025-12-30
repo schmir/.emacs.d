@@ -1,32 +1,25 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
 ;; corfu: Popup completion UI at point
-(setup (:package corfu)
-  (global-corfu-mode)
+(setup (:package corfu)  
+  (setopt tab-always-indent 'complete
+          tab-first-completion nil
+          corfu-cycle nil
+          corfu-preselect 'first
+          corfu-on-exact-match 'show
+          corfu-scroll-margin 2
+          corfu-quit-at-boundary nil
+          corfu-preview-current t)
+  (add-hook 'after-init-hook #'global-corfu-mode))
 
-  ;; Optional customizations
-  (:option
-   corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
-   corfu-auto t                 ;; Enable auto completion
-   corfu-auto-delay 0.2
-   corfu-auto-prefix 1
-   ;; (corfu-separator ?\s)          ;; Orderless field separator
-   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-   corfu-preselect 'prompt      ;; Preselect the prompt
-   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
-
-   ;; Enable Corfu only for certain modes.
-   ;; :hook ((prog-mode . corfu-mode)
-   ;;        (shell-mode . corfu-mode)
-   ;;        (eshell-mode . corfu-mode))
-
-   ;; Recommended: Enable Corfu globally.
-   ;; This is recommended since Dabbrev can be used globally (M-/).
-   ;; See also `global-corfu-modes'.
-   ))
+;; completion-preview: show one completion candidate
+(setup (:and (fboundp #'completion-preview-mode)
+             completion-preview)
+  (with-eval-after-load 'completion-preview
+    (keymap-unset completion-preview-active-mode-map "<TAB>" t)
+    (keymap-set completion-preview-active-mode-map "<right>" #'completion-preview-insert))
+  (add-hook 'prog-mode-hook #'completion-preview-mode)
+  (add-hook 'text-mode-hook #'completion-preview-mode))
 
 ;; tempel: Modern template/snippet system
 (setup (:package tempel)
@@ -99,47 +92,48 @@
 
   (keymap-global-set "C-<tab>" #'hippie-expand))
 
-;; orderless: Space-separated completion matching
-(setup (:package orderless))
+
+;; ignore case when completing
+(setq read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      completion-ignore-case t)
 
 ;; vertico: Vertical completion UI in minibuffer
-(setup (:package vertico)
-  ;; Different scroll margin
-  ;; (setq vertico-scroll-margin 0)
-
+;; orderless: Space-separated completion matching
+(setup (:package vertico vertico-prescient prescient orderless)
   ;; Show more candidates
+  (:option vertico-prescient-enable-sorting t
+           vertico-prescient-override-sorting nil
+           vertico-prescient-enable-filtering nil)
   (setq vertico-count 20)
-  (setq completion-styles '(basic substring))
-  ;; Grow and shrink the Vertico minibuffer
-  ;; (setq vertico-resize t)
+  (setq completion-styles '(orderless basic substring))
 
-  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  (vertico-mode))
+  (with-eval-after-load 'prescient
+    (prescient-persist-mode 1))
+
+  (with-eval-after-load 'vertico
+    (vertico-prescient-mode 1)
+    ;; Replace `vertico-insert' to enable TAB prefix expansion.
+    (keymap-set vertico-map "TAB" #'minibuffer-complete))
+  (add-hook 'after-init-hook #'vertico-mode))
 
 ;; marginalia: Rich annotations in minibuffer completions
 (setup (:package marginalia)
-  ;; Prefer richer, more heavy, annotations over the lighter default variant.
-  ;; E.g. M-x will show the documentation string additional to the keybinding.
-  ;; By default only the keybinding is shown as annotation.
-  ;; Note that there is the command `marginalia-cycle-annotators` to
-  ;; switch between the annotators.
-  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
-  (marginalia-mode +1)
-  (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer))
+  (marginalia-mode +1))
 
 ;; consult: Enhanced search and navigation commands
-(setup (:package consult)
-  (:package consult-project-extra)
+(setup (:package consult consult-project-extra)
   (keymap-global-set "<remap> <project-find-file>" #'consult-project-extra-find)
+  (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer)
+
   (with-eval-after-load 'consult
     (consult-customize
-     consult-ripgrep consult-git-grep consult-grep consult-buffer
+     consult-ripgrep consult-git-grep consult-grep consult-man
      consult-bookmark consult-recent-file consult-xref
-     ;; consult--source-file
-     ;; consult--source-project-file
-     consult--source-bookmark
-     :preview-key "M-.")))
+     consult-source-bookmark consult-source-file-register
+     consult-source-recent-file consult-source-project-recent-file
+     consult-theme
+     :preview-key '(:debounce 0.5 any))))
 
 ;; consult-dir: Quick directory switching with zoxide integration
 (setup (:package consult-dir)

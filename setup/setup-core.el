@@ -56,7 +56,6 @@
 (auto-image-file-mode 1)
 (column-number-mode 1)
 
-(setq read-file-name-completion-ignore-case t)
 
 (setq mark-even-if-inactive t)
 (transient-mark-mode 1)

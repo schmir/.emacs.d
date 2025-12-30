@@ -95,6 +95,7 @@
             pdf-tools
             persistent-scratch
             pet
+            prescient
             prism
             prodigy
             protobuf-mode
@@ -116,6 +117,7 @@
             undo-fu
             undo-fu-session
             vertico
+            vertico-prescient
             vterm
             vundo
             which-key
