@@ -74,6 +74,7 @@
             helpful
             howm
             htmlize
+            idle-highlight-mode
             jinx
             just-mode
             kaolin-themes

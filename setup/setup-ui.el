@@ -61,6 +61,12 @@
   (:hook-into prog-mode text-mode))
 
 
+;; idle-highlight-mode: Highlight the symbol at the cursor when idle
+(setup (:package idle-highlight-mode)
+  (:option idle-highlight-before-point t
+           idle-highlight-exclude-point t
+           idle-highlight-idle-time 0.2)
+  (idle-highlight-global-mode))
 
 
 ;; framemove: Navigate between frames with windmove keys
