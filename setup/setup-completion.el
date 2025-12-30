@@ -1,13 +1,5 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
-;; company: Text completion framework (used for some modes)
-(setup (:package company)
-  (:option company-idle-delay 0.8
-           company-minimum-prefix-length 0
-           company-tooltip-align-annotations t
-           company-tooltip-flip-when-above t
-           company-show-numbers t))
-
 ;; corfu: Popup completion UI at point
 (setup (:package corfu)
   (global-corfu-mode)

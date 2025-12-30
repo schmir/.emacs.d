@@ -2,7 +2,7 @@
 
 ;; Various packages without additional configuration
 (setup (:package cargo elixir-mode flymake-shellcheck htmlize just-mode lua-mode
-                 ninja-mode solidity-flycheck terraform-mode))
+                 ninja-mode terraform-mode))
 
 ;; flycheck: On-the-fly syntax checking with inline error display
 (setup (:package flycheck flycheck-inline flycheck-package)
@@ -86,22 +86,6 @@
 
   (defun setup-protobuf ()
     (c-add-style "my-style" my-protobuf-style t)))
-
-;; solidity-mode: Ethereum smart contract development
-(setup (:package solidity-mode company-solidity)
-  (defun schmir/solidity-setup ()
-    ;; https://stackoverflow.com/questions/6952369/java-mode-argument-indenting-in-emacs
-    (setq-local completion-at-point-functions
-                (list (cape-capf-super
-                       (cape-company-to-capf #'company-solidity)
-                       #'cape-dabbrev)))
-    (c-set-offset 'arglist-intro '+)
-    (setq-local c-basic-offset 4
-                tab-width 8))
-  (:hook #'schmir/solidity-setup)
-  (with-eval-after-load 'solidity-mode
-    (require 'company-solidity)
-    (require 'cape)))
 
 ;; sh-mode: Shell scripts with shellcheck linting
 (setup sh-mode

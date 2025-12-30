@@ -35,8 +35,6 @@
             clojure-mode
             clojure-mode-extra-font-locking
             clojure-ts-mode
-            company
-            company-solidity
             consult
             consult-dir
             consult-project-extra
@@ -108,7 +106,6 @@
             selected
             shell-pop
             smartscan
-            solidity-flycheck
             spacemacs-theme
             super-save
             tempel

@@ -30,8 +30,7 @@
       (add-to-list 'apheleia-mode-alist '(python-mode . (ruff-isort ruff)))
       (add-to-list 'apheleia-mode-alist '(python-ts-mode . (ruff-isort ruff))))
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
-    (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))
-    (add-to-list 'apheleia-mode-alist '(solidity-mode . prettier))))
+    (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))))
 
 ;; easy-kill: Better kill-ring-save with expandable selection
 (setup (:package easy-kill)
