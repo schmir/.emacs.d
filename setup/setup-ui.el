@@ -29,13 +29,20 @@
 
 
 ;; pixel-scroll: Smooth scrolling with momentum
+;; (setup (:and (fboundp #'pixel-scroll-precision-mode)
+;;              pixel-scroll-precision-mode)
+;;   (setq pixel-scroll-precision-interpolate-page t
+;;         ;; pixel-scroll-precision-large-scroll-height 5
+;;         pixel-scroll-precision-use-momentum t)
+;;   ;; (global-set-key [remap mwheel-scroll] 'pixel-scroll-precision)
+;;   (pixel-scroll-precision-mode))
+
+;; ultra-scroll: Smooth scrolling
 (setup (:and (fboundp #'pixel-scroll-precision-mode)
-             pixel-scroll-precision-mode)
-  (setq pixel-scroll-precision-interpolate-page t
-        ;; pixel-scroll-precision-large-scroll-height 5
-        pixel-scroll-precision-use-momentum t)
-  ;; (global-set-key [remap mwheel-scroll] 'pixel-scroll-precision)
-  (pixel-scroll-precision-mode))
+             (:package ultra-scroll))
+  (setq scroll-conservatively 101 ; or whatever value you prefer, since v0.4
+        scroll-margin 0)        ; important: scroll-margin>0 not yet supported
+  (add-hook 'after-init-hook #'ultra-scroll-mode))
 
 ;; show-paren: Highlight matching parentheses
 (setup show-paren

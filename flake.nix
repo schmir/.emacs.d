@@ -115,6 +115,7 @@
             tldr
             treesit-auto
             treesit-grammars.with-all-grammars
+            ultra-scroll
             undo-fu
             undo-fu-session
             vertico
