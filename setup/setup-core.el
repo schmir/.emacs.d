@@ -18,8 +18,6 @@
 
 (advice-add 'risky-local-variable-p :override #'ignore)
 
-;; prevent emacs from asking for coding-system...
-(set-language-environment "utf-8")
 (setq make-backup-files nil)
 (setq-default indent-tabs-mode nil)
 

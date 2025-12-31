@@ -60,7 +60,6 @@
   (setq hl-line-range-function #'my/hl-line-highlight-unless-region-active)
   (:hook-into prog-mode text-mode))
 
-
 ;; idle-highlight-mode: Highlight the symbol at the cursor when idle
 (setup (:package idle-highlight-mode)
   (:option idle-highlight-before-point t

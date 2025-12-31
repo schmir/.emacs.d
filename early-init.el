@@ -22,6 +22,11 @@
    (convert-standard-filename
     (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
+;;; prevent emacs from asking for coding-system.
+(set-language-environment "utf-8")
+;; set-language-environment sets default-input-method, which is unwanted.
+(setq default-input-method nil)
+
 ;;; Startup performance
 ;; Improves startup time, we reset this later
 (defvar default-file-name-handler-alist file-name-handler-alist)
