@@ -60,6 +60,10 @@
   (setq hl-line-range-function #'my/hl-line-highlight-unless-region-active)
   (:hook-into prog-mode text-mode))
 
+;; page-break-lines: display ugly ^L page breaks as tidy horizontal lines
+(setup (:package page-break-lines)
+  (global-page-break-lines-mode))
+
 ;; idle-highlight-mode: Highlight the symbol at the cursor when idle
 (setup (:package idle-highlight-mode)
   (:option idle-highlight-before-point t

@@ -92,6 +92,7 @@
             no-littering
             orderless
             package-lint
+            page-break-lines
             pdf-tools
             persistent-scratch
             pet
