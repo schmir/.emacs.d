@@ -97,5 +97,14 @@
     (keymap-set cider-stacktrace-mode-map
                 "<f10>" #'cider-popup-buffer-quit-function)))
 
+;; Use lisp-interaction-mode in *scratch* buffer.
+;; early-init.el sets the initial-major-mode to fundamental-mode. This also makes sure all hooks
+;; are being run!
+(add-hook 'after-init-hook
+          (lambda ()
+            (when-let ((scratch (get-buffer "*scratch*")))
+              (with-current-buffer scratch
+                (lisp-interaction-mode)))))
+
 (provide 'setup-lisp)
 ;;; setup-lisp.el ends here

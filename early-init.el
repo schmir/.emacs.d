@@ -27,6 +27,11 @@
 ;; set-language-environment sets default-input-method, which is unwanted.
 (setq default-input-method nil)
 
+;;; Use fundamental-mode as initial mode instead of lisp-interaction-mode. This will also be used
+;;; for the scratch buffer initially, but we set the scratch buffer mode to lisp-interaction-mode
+;;; in setup-lisp.el.
+(setq initial-major-mode 'fundamental-mode)
+
 ;;; Startup performance
 ;; Improves startup time, we reset this later
 (defvar default-file-name-handler-alist file-name-handler-alist)
