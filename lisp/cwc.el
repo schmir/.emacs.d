@@ -2,7 +2,7 @@
 ;;
 ;; URL: https://github.com/schmir/.emacs.d/blob/main/lisp/cwc.el
 ;; Author: Ralf Schmitt <ralf@systemexit.de>
-;; Time-stamp: <2024-04-17 11:02:01 ralf>
+;; Time-stamp: <2026-01-05 00:37:43 ralf>
 ;; Version: 0.2
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -20,6 +20,8 @@
 ;;     (cwc-global-mode)
 ;;
 ;;; Code:
+;; (eval-when-compile
+;;   (require 'easy-mode))
 
 (require 'whitespace)
 (require 'hilit-chg)
@@ -102,9 +104,16 @@ has to be in `highlight-changes-mode'."
     (remove-hook 'before-save-hook #'cwc-cleanup 'local)
     (remove-hook 'after-revert-hook #'cwc-clear-changes 'local)))
 
+
+
+(defgroup checkbox nil
+  "Quick manipulation of textual checkboxes."
+  :group 'convenience)
+
 ;;;###autoload
 (define-globalized-minor-mode cwc-global-mode
-  cwc-mode cwc-mode)
+  cwc-mode cwc-mode
+  :group 'checkbox)
 
 (provide 'cwc)
 ;;; cwc.el ends here
