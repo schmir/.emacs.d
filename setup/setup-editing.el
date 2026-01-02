@@ -69,6 +69,17 @@
   (keymap-global-set "C-S-<right>" #'puni-forward-sexp)
   (keymap-global-set "C-S-<left>"  #'puni-backward-sexp))
 
+(setup repeat
+  (add-hook 'after-init-hook #'repeat-mode))
+
+(defvar-keymap my-undo-map
+  :repeat (:exit #'vundo)
+  "u" #'undo-fu-only-undo
+  "z" #'undo-fu-only-undo
+  "x" #'undo-fu-only-redo
+  "r" #'undo-fu-only-redo
+  "v" #'vundo)
+
 ;; undo-fu: Simple undo/redo while keeping access to the full non-linear undo history.
 ;; undo-fu-session: Save & restore undo/redo information between sessions.
 ;; vundo:Visualize the undo tree (just call M-x vundo)
@@ -79,6 +90,7 @@
            undo-strong-limit 100663296  ; 96mb.
            undo-outer-limit 1006632960) ; 960mb.
   (:option undo-fu-allow-undo-in-region t)
+  (keymap-global-set "<remap> <undo>" #'undo-fu-only-undo)
   (keymap-global-set "C-z" #'undo-fu-only-undo)
   (keymap-global-set "C-S-z"  #'undo-fu-only-redo)
   (undo-fu-session-global-mode))

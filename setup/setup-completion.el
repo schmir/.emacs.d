@@ -125,8 +125,10 @@
 (setup (:package consult consult-project-extra)
   (keymap-global-set "<remap> <project-find-file>" #'consult-project-extra-find)
   (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer)
-
+  (keymap-global-set "<remap> <repeat-complex-command>" #'consult-complex-command)
   (with-eval-after-load 'consult
+
+
     (consult-customize
      consult-ripgrep consult-git-grep consult-grep consult-man
      consult-bookmark consult-recent-file consult-xref
