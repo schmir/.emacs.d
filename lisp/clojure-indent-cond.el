@@ -1,5 +1,7 @@
-;; fix indentation of cond expressions
+;; fix indentation of cond expressions -*- lexical-binding: t -*-
 ;; see https://github.com/clojure-emacs/clojure-mode/issues/337
+
+(require 'clojure-mode)
 
 ;;;###autoload
 (defun schmir/indent-cond (indent-point state)

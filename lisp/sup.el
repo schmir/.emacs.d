@@ -2,7 +2,10 @@
 
 ;;; Code:
 
-(setq sup-previous-buffer nil)
+(eval-when-compile
+  (require 'package))
+
+(defvar sup-previous-buffer nil)
 
 (defun sup-reset()
   (when sup-previous-buffer
@@ -10,7 +13,7 @@
     (setq sup-previous-buffer nil)
     (advice-remove 'message #'sup-redisplay)))
 
-(defun sup-redisplay (&rest args)
+(defun sup-redisplay (&rest _args)
   (redisplay))
 
 ;;;###autoload

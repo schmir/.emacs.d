@@ -1,6 +1,10 @@
 ;;; my-lib --- a small library with helper functions     -*- lexical-binding: t -*-
 ;;; Code:
 
+
+(require 'project)
+(require 's)
+
 ;;; Commentary:
 
 ;;;###autoload
@@ -39,7 +43,7 @@ Don't use this function on regions with nested brackets."
     (save-excursion
       (goto-char beg)
       (delete-region beg end)
-      (when (and (looking-back "[^ ]") (not (s-starts-with? " " str)))
+      (when (and (looking-back "[^ ]" nil) (not (s-starts-with? " " str)))
         (insert " "))
       (insert
        (replace-regexp-in-string "[^\]\[(){}\'\.]+" new str)))))
