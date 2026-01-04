@@ -19,7 +19,8 @@
     (keymap-unset completion-preview-active-mode-map "<TAB>" t)
     (keymap-set completion-preview-active-mode-map "<right>" #'completion-preview-insert))
   (add-hook 'prog-mode-hook #'completion-preview-mode)
-  (add-hook 'text-mode-hook #'completion-preview-mode))
+  (add-hook 'text-mode-hook #'completion-preview-mode)
+  (add-hook 'inferior-emacs-lisp-mode-hook #'completion-preview-mode))
 
 ;; tempel: Modern template/snippet system
 (setup (:package tempel)
