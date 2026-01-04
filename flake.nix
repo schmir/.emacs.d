@@ -41,6 +41,9 @@
             corfu
             crux
             diminish
+            diredfl
+            dired-open
+            dired-subtree
             direnv
             disproject
             doom-themes
@@ -94,6 +97,7 @@
             package-lint
             page-break-lines
             pdf-tools
+            peep-dired
             persistent-scratch
             pet
             prescient

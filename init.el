@@ -21,6 +21,7 @@
 (require 'setup-setup)
 (require 'setup-ui)
 (require 'setup-core)
+(require 'setup-dired)
 (require 'setup-editing)
 (require 'setup-languages)
 (require 'setup-misc)
