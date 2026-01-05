@@ -2,6 +2,14 @@
 
 ;;; Code:
 
+;; native-complete: Completion in shell buffers using native mechanisms
+(setup (:package native-complete)
+  (add-hook 'comint-output-filter-functions #'comint-osc-process-output)
+  (add-hook 'shell-mode-hook
+            (lambda()
+              (add-to-list 'completion-at-point-functions #'native-complete-at-point)))
+  )
+
 ;; zoxide: Smart directory tracking and jumping
 (setup (:and (executable-find "zoxide")
              (:package zoxide))
