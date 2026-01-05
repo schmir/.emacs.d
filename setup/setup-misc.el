@@ -64,7 +64,9 @@ caches the result of those calls via vc-file-setprop.
 (setup compile
   (setq compilation-scroll-output 'first-error)
   ;; colorize compile mode output
-  (add-hook 'compilation-filter-hook #'display-ansi-colors))
+  (add-hook 'compilation-filter-hook #'display-ansi-colors)
+  ;; remove osc sequences (e.g. from ruff)
+  (add-hook 'compilation-filter-hook #'ansi-osc-compilation-filter))
 
 ;; gcmh: Garbage collector magic hack for better performance
 (setup (:package gcmh)) ;; early-init.el enables gcmh-mode
