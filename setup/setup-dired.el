@@ -2,15 +2,18 @@
 
 ;;; Code:
 
-
+;; (dired "~/repos/lulu/upp/tools/platform/")
 (setup dired (:package diredfl dired-open dired-subtree peep-dired)
 
        (autoload 'dired-open-xdg "dired-open")
-       (setopt dired-omit-files
-               (rx (or (seq bol (? ".") "#")         ;; emacs autosave files
-                       (seq bol "." (not (any "."))) ;; dot-files
-                       (seq "~" eol)                 ;; backup-files
-                       )))
+       (with-eval-after-load 'dired-x
+         (add-to-list 'dired-omit-extensions ".zwc")
+         (setopt dired-omit-verbose nil
+                 dired-omit-files (rx (or (seq bol (? ".") "#")         ;; emacs autosave files
+                                          (seq bol "." (not (any "."))) ;; dot-files
+                                          (seq "~" eol)                 ;; backup-files
+                                          ))))
+       
        (add-hook 'dired-mode-hook #'dired-hide-details-mode)
        (add-hook 'dired-mode-hook #'hl-line-mode)
        (add-hook 'dired-mode-hook #'dired-omit-mode)
