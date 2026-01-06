@@ -13,7 +13,8 @@
   ;;   (setq-local comint-process-echoes t))
   ;; (add-hook 'shell-mode-hook #'zsh-shell-mode-setup)
 
-  )
+  ;; Use error parsing of compilation mode
+  (add-hook 'shell-mode-hook #'compilation-shell-minor-mode))
 
 ;; zoxide: Smart directory tracking and jumping
 (setup (:and (executable-find "zoxide")
