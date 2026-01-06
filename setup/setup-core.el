@@ -21,8 +21,6 @@
 (setq make-backup-files nil)
 (setq-default indent-tabs-mode nil)
 
-(setq explicit-shell-file-name (executable-find "zsh"))
-
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t)

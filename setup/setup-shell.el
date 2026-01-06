@@ -2,6 +2,19 @@
 
 ;;; Code:
 
+(setup emacs
+  ;; handle osc output in shell
+  (add-hook 'comint-output-filter-functions #'comint-osc-process-output)
+  (setopt explicit-shell-file-name (executable-find "zsh")
+          shell-file-name "zsh"
+          explicit-zsh-args '("--login" "--interactive"))
+
+  ;; (defun zsh-shell-mode-setup ()
+  ;;   (setq-local comint-process-echoes t))
+  ;; (add-hook 'shell-mode-hook #'zsh-shell-mode-setup)
+
+  )
+
 ;; zoxide: Smart directory tracking and jumping
 (setup (:and (executable-find "zoxide")
              (:package zoxide))
