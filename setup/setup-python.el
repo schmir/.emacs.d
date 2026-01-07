@@ -68,11 +68,15 @@
   (add-hook 'python-base-mode-hook 'pet-mode -10)
   (:also-load python-pytest)
   (setopt python-shell-interpreter "python3")
+
+  (defun my/setup-python-mode ()
+    (fm-ruff-setup)
+    (my/setup-eglot-flymake-backend)
+    (flymake-mode)
+    (my/eglot-ensure-when-project))
+
   (:with-mode (python-mode python-ts-mode)
-    (:hook #'fm-ruff-setup
-           #'my/setup-eglot-flymake-backend
-           #'flymake-mode
-           #'eglot-ensure))
+    (:hook #'my/setup-python-mode))
   (when (treesit-ready-p 'python)
     (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
   (advice-add 'run-python :around #'with-project-root-as-default-directory))

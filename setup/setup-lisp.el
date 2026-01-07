@@ -36,7 +36,7 @@
     (flymake-kondor-setup)
     (flymake-mode)
     (when (executable-find "clojure-lsp")
-      (eglot-ensure)))
+      (my/eglot-ensure-when-project)))
 
   (:with-mode (clojure-mode clojure-ts-mode)
     (:hook #'my/setup-clojure-mode))

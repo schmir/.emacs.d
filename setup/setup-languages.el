@@ -24,7 +24,7 @@
   (:with-mode (js-mode js-ts-mode)
     (:hook #'my/setup-eglot-flymake-backend
            #'flymake-mode
-           #'eglot-ensure
+           #'my/eglot-ensure-when-project
            #'add-node-modules-path
            #'flymake-eslint-enable))
   (:option
@@ -49,12 +49,23 @@
             (symbol-name (symbol-at-point)))))
     (eglot-rename newname))
 
+  (defun my/eglot-ensure-when-project ()
+    "Enable eglot when in a project
+
+If not in a project, emacs may otherwise hang [1]
+
+[1] https://lists.nongnu.org/archive/html/bug-gnu-emacs/2023-01/msg00423.html
+"
+    (if (project-current)
+        (eglot-ensure)
+      (message "not in a project, not starting eglot")))
+
   (defun my/setup-eglot-flymake-backend ()
     "Enable eglot's flymake backend manually."
     (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t))
 
   (when (executable-find "taplo")
-    (add-hook 'conf-toml-mode-hook #'eglot-ensure)
+    (add-hook 'conf-toml-mode-hook #'my/eglot-ensure-when-project)
     (with-eval-after-load 'eglot
       (add-to-list 'eglot-server-programs
                    '(conf-toml-mode . ("taplo" "lsp" "stdio")))))
@@ -94,7 +105,7 @@
 ;; nix-mode: Nix expressions with eglot and treesit support
 (setup (:package nix-mode nix-ts-mode)
   (:with-mode (nix-mode nix-ts-mode)
-    (:hook #'eglot-ensure))
+    (:hook #'my/eglot-ensure-when-project))
   (:match-file  "\\.nix\\'")
   (when (treesit-ready-p 'nix)
     (add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode)))
@@ -104,7 +115,7 @@
 ;; rust-mode: Rust with eglot and clippy linting
 (setup (:package rust-mode flymake-clippy)
   (defun my/setup-rust ()
-    (eglot-ensure)
+    (my/eglot-ensure-when-project)
     (require 'flymake-clippy)
     (flymake-clippy-setup-backend)
     (flymake-mode))

@@ -12,7 +12,7 @@
     (add-hook 'before-save-hook #'my/fix-go-imports nil t)
     (my/setup-eglot-flymake-backend)
     (flymake-mode)
-    (eglot-ensure))
+    (my/eglot-ensure-when-project))
 
   (:with-mode (go-mode go-ts-mode)
     (:hook #'my/setup-go-mode))
