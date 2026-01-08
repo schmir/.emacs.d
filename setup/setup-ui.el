@@ -75,7 +75,7 @@
   (setq display-buffer-alist
         '(("e?shell*\\|ielm\\|eat\\|compilation\\|vterm\\|Help\\*\\(?:<[[:digit:]]+>\\)?\\'"
            (display-buffer-reuse-window
-            display-buffer-in-side-window)
+            display-buffer-pop-up-window)
            (reusable-frames . visible)
            (side . bottom)
            (window-height . 0.4))
@@ -83,16 +83,7 @@
            (display-buffer-reuse-window
             display-buffer-pop-up-window)
            (reusable-frames . t)
-           (inhibit-switch-frames . nil))))
-
-  (defun lunaryorn-quit-bottom-side-windows ()
-    "Quit side windows of the current frame."
-    (interactive)
-    (dolist (window (window-at-side-list))
-      (quit-window nil window)))
-
-  (keymap-global-set "C-c q" #'lunaryorn-quit-bottom-side-windows)
-  (keymap-global-set "C-c C-q" #'lunaryorn-quit-bottom-side-windows))
+           (inhibit-switch-frames . nil)))))
 
 ;; pulsar: Pulse highlight line after navigation
 (setup (:package pulsar)
