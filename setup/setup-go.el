@@ -21,3 +21,4 @@
     (add-to-list 'safe-local-variable-values `(gofmt-command . ,cmd))))
 
 (provide 'setup-go)
+;;; setup-go.el ends here

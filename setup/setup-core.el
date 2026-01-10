@@ -1,4 +1,4 @@
-;;; setup-core --- configure core setttings     -*- lexical-binding: t -*-
+;;; setup-core --- configure core settings     -*- lexical-binding: t -*-
 
 ;;; Code:
 

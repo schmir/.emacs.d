@@ -15,3 +15,4 @@
           " \e\eh"       #'sp-splice-sexp))
 
 (provide 'setup-smartparens)
+;;; setup-smartparens.el ends here

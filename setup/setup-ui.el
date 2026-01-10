@@ -1,4 +1,4 @@
-;;; setup-ui --- configure ui setttings     -*- lexical-binding: t -*-
+;;; setup-ui --- configure ui settings     -*- lexical-binding: t -*-
 
 ;;; Code:
 
