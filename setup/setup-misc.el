@@ -78,6 +78,7 @@ caches the result of those calls via vc-file-setprop.
 ;; rg: Ripgrep frontend for fast code searching
 (setup (:package rg)
   (require 'rg)
+  (setopt rg-keymap-prefix "\C-cS")
   (rg-enable-default-bindings))
 
 ;; age: Age encryption with passage for auth-source
