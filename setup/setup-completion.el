@@ -129,6 +129,7 @@
   (keymap-global-set "<remap> <repeat-complex-command>" #'consult-complex-command)
   (keymap-global-set "C-c s" #'consult-ripgrep)
   (with-eval-after-load 'consult
+    (setopt consult-ripgrep-args "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --with-filename --line-number --search-zip --hidden --glob \"\!{**/.git/*,**/.jj/*}\" ")
     (consult-customize
      consult-ripgrep consult-git-grep consult-grep consult-man
      consult-bookmark consult-recent-file consult-xref
