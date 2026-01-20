@@ -42,4 +42,11 @@
 (defalias 'ee 'eval-expression)
 (defalias 'rb 'revert-buffer)
 
+(setup (:package (claude-code-ide :url "https://github.com/manzaltu/claude-code-ide.el"))
+  (keymap-global-set "C-c c" #'claude-code-ide-menu)
+  (setopt claude-code-ide-use-side-window nil
+          claude-code-ide-terminal-backend 'eat)
+  ;;(claude-code-ide-emacs-tools-setup)
+  ) ; Optionally enable Emacs MCP tools
+
 ;;; init.el ends here
