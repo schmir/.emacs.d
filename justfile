@@ -15,3 +15,7 @@ build:
 # Run emacs
 run *ARGS: build
     nix run . -- {{ARGS}}
+
+# Run integration tests
+test: build
+    nix run . -- --batch -l test/test-init.el -f ert-run-tests-batch-and-exit
