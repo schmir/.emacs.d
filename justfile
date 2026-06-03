@@ -15,3 +15,8 @@ build:
 # Run emacs
 run *ARGS: build
     nix run . -- {{ARGS}}
+
+# Remove generated/temp files, cached/package dirs, and interactively git clean
+clean:
+    bin/clean
+
