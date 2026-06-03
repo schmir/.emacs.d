@@ -11,7 +11,7 @@
   (exec-path-from-shell-initialize))
 
 ;; Misc packages without additional configuration
-(setup (:package boxquote crux htmlize leo package-lint prodigy s tldr))
+(setup (:package crux htmlize leo package-lint prodigy s tldr))
 
 ;; persistent-scratch: Preserve scratch buffer across sessions
 (setup (:package persistent-scratch)

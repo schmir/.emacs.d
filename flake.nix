@@ -28,7 +28,7 @@
             anti-zenburn-theme
             apheleia
             avy
-            boxquote
+            # boxquote
             cape
             cargo
             cider
