@@ -121,6 +121,22 @@ If not in a project, emacs may otherwise hang [1]
     (flymake-mode))
   (:hook #'my/setup-rust))
 
+;; yaml-ts-mode: tree-sitter YAML editing
+(setup yaml-ts-mode
+  ;; yaml-ts-mode defines no tree-sitter indentation rules, so it falls
+  ;; back to `indent-relative', which always inserts whitespace and moves
+  ;; point.  That defeats `tab-always-indent' = complete, because
+  ;; `indent-for-tab-command' only reaches its completion branch when
+  ;; indenting leaves both point and the buffer unchanged.  Indent only
+  ;; when point is within the leading whitespace; otherwise return
+  ;; `noindent' so TAB falls through to `completion-at-point'.
+  (defun my/yaml-ts-indent-line ()
+    (if (<= (current-column) (current-indentation))
+        (indent-relative)
+      'noindent))
+  (:hook (lambda ()
+           (setq-local indent-line-function #'my/yaml-ts-indent-line))))
+
 (provide 'setup-languages)
 
 ;;; setup-languages.el ends here
