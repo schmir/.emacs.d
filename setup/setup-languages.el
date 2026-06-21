@@ -1,5 +1,7 @@
 ;;; setup-languages.el --- Programming language configurations   -*- lexical-binding: t -*-
 
+(require 'treesit)
+
 ;; Various packages without additional configuration
 (setup (:package cargo elixir-mode flymake-shellcheck htmlize just-mode lua-mode
                  ninja-mode terraform-mode))
@@ -12,7 +14,10 @@
 ;; markdown-mode: Editing and previewing markdown files
 (setup (:package markdown-mode markdown-preview-mode)
   (setq markdown-command "multimarkdown")
-  (add-to-list 'auto-mode-alist (cons "README\\.md\\'" #'gfm-mode)))
+
+  (if (treesit-ready-p 'markdown)
+      (add-to-list 'major-mode-remap-alist '(markdown-mode . markdown-ts-mode))
+    (add-to-list 'auto-mode-alist (cons "README\\.md\\'" #'gfm-mode))))
 
 ;; adoc-mode: Editing AsciiDoc files
 (setup (:package adoc-mode)
@@ -32,7 +37,6 @@
    ;; work.
    flymake-eslint-defer-binary-check t)
 
-  (require 'treesit)
   (when (treesit-ready-p 'javascript)
     (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))))
 
