@@ -68,7 +68,9 @@
   (add-hook 'python-base-mode-hook 'pet-mode -10)
   (:also-load python-pytest)
   (setopt python-shell-interpreter "python3")
-
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((python-base-mode :language-id "python") . ("uvx" "ty" "server"))))
   (defun my/setup-python-mode ()
     (fm-ruff-setup)
     (my/setup-eglot-flymake-backend)
