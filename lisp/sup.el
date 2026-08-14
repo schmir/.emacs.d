@@ -10,7 +10,8 @@
     (setq sup-previous-buffer nil)
     (advice-remove 'message #'sup-redisplay)))
 
-(defun sup-redisplay (&rest args)
+(defun sup-redisplay (&rest _args)
+  "Redisplay so that startup messages appear as they are logged."
   (redisplay))
 
 ;;;###autoload
