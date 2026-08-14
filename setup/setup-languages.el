@@ -6,10 +6,10 @@
 (setup (:package cargo elixir-mode flymake-shellcheck htmlize just-mode lua-mode
                  ninja-mode terraform-mode))
 
-;; flycheck: On-the-fly syntax checking with inline error display
-(setup (:package flycheck flycheck-inline flycheck-package)
-  (setq flycheck-check-syntax-automatically '(save new-line mode-enabled))
-  (global-flycheck-inline-mode))
+;; flymake: every checker in this configuration is a flymake backend, so show
+;; its diagnostics inline rather than only in the fringe and echo area.
+(setup flymake
+  (setopt flymake-show-diagnostics-at-end-of-line 'short))
 
 ;; markdown-mode: Editing and previewing markdown files
 (setup (:package markdown-mode markdown-preview-mode)
