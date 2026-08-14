@@ -60,7 +60,6 @@
 ;;; Elisp execution limits
 
 (setq load-prefer-newer t
-      max-specpdl-size 5000
       max-lisp-eval-depth 6000)
 
 ;;; Package initialization

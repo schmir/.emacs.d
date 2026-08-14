@@ -72,12 +72,14 @@
       backward-delete-char-untabify-method 'nil ;; don´t untabify, just delete one char
       font-lock-maximum-decoration t            ;; maximum decoration
       next-line-add-newlines nil                ;; don´t add newlines when trying to move cursor behind eof
-      default-indicate-empty-lines t
       line-number-display-limit-width 100000
       kill-whole-line t                         ;; make kill-line at beginning of line kill the whole line
       woman-use-own-frame nil                   ;; don't create new frame for manpages
       vc-follow-symlinks t                      ;; follow symlinks and don't ask
       enable-recursive-minibuffers t)
+
+;; `indicate-empty-lines' becomes buffer-local as soon as it is set.
+(setq-default indicate-empty-lines t)
 
 (setq epg-pinentry-mode 'loopback)
 
