@@ -39,7 +39,8 @@ Don't use this function on regions with nested brackets."
     (save-excursion
       (goto-char beg)
       (delete-region beg end)
-      (when (and (looking-back "[^ ]") (not (s-starts-with? " " str)))
+      (when (and (looking-back "[^ ]" (max (point-min) (1- (point))))
+                 (not (s-starts-with? " " str)))
         (insert " "))
       (insert
        (replace-regexp-in-string "[^\]\[(){}\'\.]+" new str)))))
