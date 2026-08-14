@@ -46,13 +46,14 @@
 
 ;; cape: Completion at point extensions for eglot and dabbrev
 (setup (:package cape)
-  (add-hook 'eglot-managed-mode-hook
-            (lambda ()
-              (setq-local completion-at-point-functions
-                          (list (cape-capf-super
-                                 #'eglot-completion-at-point
-                                 #'tempel-complete)
-                                t))))
+  (defun my/set-eglot-capf ()
+    "Offer eglot's completions and tempel's templates together."
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super
+                       #'eglot-completion-at-point
+                       #'tempel-complete)
+                      t)))
+  (add-hook 'eglot-managed-mode-hook #'my/set-eglot-capf)
   (with-eval-after-load 'cape
     (add-to-list 'completion-at-point-functions
                  (cape-capf-super
