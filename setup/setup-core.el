@@ -146,7 +146,9 @@
 
 ;; server: Enable emacsclient connections
 (setup server
-  (server-start))
+  (require 'server)
+  (unless (server-running-p)
+    (server-start)))
 
 (provide 'setup-core)
 ;;; setup-core.el ends here
