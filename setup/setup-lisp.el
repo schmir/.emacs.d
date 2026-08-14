@@ -102,7 +102,7 @@
 ;; are being run!
 (add-hook 'after-init-hook
           (lambda ()
-            (when-let ((scratch (get-buffer "*scratch*")))
+            (when-let* ((scratch (get-buffer "*scratch*")))
               (with-current-buffer scratch
                 (lisp-interaction-mode)))))
 
