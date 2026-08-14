@@ -23,11 +23,32 @@
   (let ((inhibit-read-only t))
     (ansi-color-apply-on-region (point-min) (point-max))))
 
+(defvar-local magit-ansi-colors-applied-to nil
+  "Position up to which ANSI escapes have been interpreted in this buffer.")
+
 (defun magit-display-ansi-colors
     (proc &rest _args)
-  "Colorize the ANSI escapes in PROC's buffer.  Advises `magit-process-filter'."
-  (with-current-buffer (process-buffer proc)
-    (display-ansi-colors)))
+  "Colorize the ANSI escapes PROC just wrote.  Advises `magit-process-filter'.
+
+Only the newly arrived output is scanned; re-reading the whole buffer on
+every chunk makes a long-running process quadratic in its own output.
+When the previous chunk ended midway through an escape sequence,
+`ansi-color-apply-on-region' resumes from it via
+`ansi-color-context-region' and ignores the start given here."
+  (let ((buffer (process-buffer proc)))
+    (when (buffer-live-p buffer)
+      (with-current-buffer buffer
+        (let ((inhibit-read-only t)
+              (start (or magit-ansi-colors-applied-to (point-min))))
+          (when (< start (point-max))
+            (ansi-color-apply-on-region start (point-max))
+            ;; Move the existing marker rather than making a new one each
+            ;; time: every insertion has to adjust every marker in the
+            ;; buffer, so accumulating them costs more than it saves.
+            (setq magit-ansi-colors-applied-to
+                  (if magit-ansi-colors-applied-to
+                      (set-marker magit-ansi-colors-applied-to (point-max))
+                    (copy-marker (point-max))))))))))
 
 (defun yadm-status ()
   (interactive)
