@@ -24,6 +24,11 @@
 (require 'whitespace)
 (require 'hilit-chg)
 
+(defgroup cwc nil
+  "Run `whitespace-cleanup' only on changed lines."
+  :group 'whitespace
+  :prefix "cwc-")
+
 ;;;###autoload
 (defun cwc-cleanup()
   "Cleanup whitespace in current buffer.
@@ -34,31 +39,28 @@ has to be in `highlight-changes-mode'."
   (if highlight-changes-mode
       (save-excursion
         (goto-char (point-min))
-        ;; strange: why doesn't whitespace.el use indent-tabs-mode and
-        ;; instead uses whitespace-indent-tabs-mode? the following let
-        ;; fixes that
-        (let ((whitespace-indent-tabs-mode indent-tabs-mode)
-              (whitespace-tab-width tab-width))
-          (catch 'break
-            (let (start end)
-              (while t
-                (setq start
-                      (if (get-text-property (point) 'hilit-chg)
-                          (point)
-                        (next-single-property-change (point) 'hilit-chg)))
-                (unless start (throw 'break nil))
+        ;; `whitespace-cleanup-region' honours `indent-tabs-mode' and
+        ;; `tab-width' directly, so nothing needs rebinding here.
+        (catch 'break
+          (let (start end)
+            (while t
+              (setq start
+                    (if (get-text-property (point) 'hilit-chg)
+                        (point)
+                      (next-single-property-change (point) 'hilit-chg)))
+              (unless start (throw 'break nil))
 
-                (goto-char start)
-                (setq end (or (next-single-property-change (point) 'hilit-chg) (point-max)))
+              (goto-char start)
+              (setq end (or (next-single-property-change (point) 'hilit-chg) (point-max)))
 
-                ;; (message "changed %s-%s // %s" start end (point-max))
+              ;; (message "changed %s-%s // %s" start end (point-max))
 
-                (beginning-of-line)
-                (setq start (point))
-                (goto-char end)
-                (end-of-line)
-                (whitespace-cleanup-region start (point))
-                (goto-char (+ 1 (point))))))))
+              (beginning-of-line)
+              (setq start (point))
+              (goto-char end)
+              (end-of-line)
+              (whitespace-cleanup-region start (point))
+              (goto-char (+ 1 (point)))))))
     (message "cwc.el: buffer %s is not in highlight-changes-mode" (buffer-name))))
 
 
@@ -84,6 +86,7 @@ has to be in `highlight-changes-mode'."
 (define-minor-mode cwc-mode
   "Minor mode for cleaning up whitespace only on changed lines."
   :lighter cwc-lighter
+  :group 'cwc
   (if cwc-mode
       (progn
         ;; only enable cwc-mode when global-highlight-changes-mode would also turn on
@@ -104,7 +107,8 @@ has to be in `highlight-changes-mode'."
 
 ;;;###autoload
 (define-globalized-minor-mode cwc-global-mode
-  cwc-mode cwc-mode)
+  cwc-mode cwc-mode
+  :group 'cwc)
 
 (provide 'cwc)
 ;;; cwc.el ends here
