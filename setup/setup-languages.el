@@ -138,8 +138,9 @@ If not in a project, emacs may otherwise hang [1]
     (if (<= (current-column) (current-indentation))
         (indent-relative)
       'noindent))
-  (:hook (lambda ()
-           (setq-local indent-line-function #'my/yaml-ts-indent-line))))
+  (defun my/setup-yaml-ts-indent ()
+    (setq-local indent-line-function #'my/yaml-ts-indent-line))
+  (:hook #'my/setup-yaml-ts-indent))
 
 (provide 'setup-languages)
 

@@ -36,8 +36,9 @@
 ;; display-fill-column-indicator: Show vertical line at fill-column
 (setup display-fill-column-indicator-mode
   (setq-default fill-column 76)
-  (add-hook 'prog-mode-hook (lambda()
-                              (setq-local fill-column 99)))
+  (defun my/set-prog-mode-fill-column ()
+    (setq-local fill-column 99))
+  (add-hook 'prog-mode-hook #'my/set-prog-mode-fill-column)
   (:hook-into prog-mode text-mode))
 
 ;; hl-line-mode: Highlight current line except when region active
