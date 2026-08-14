@@ -34,22 +34,8 @@
     (keymap-set tempel-map "S-<left>"  #'tempel-previous)
     (keymap-set tempel-map "S-<right>" #'tempel-next))
 
-  ;; Setup completion at point
-  (defun tempel-setup-capf ()
-    ;; Add the Tempel Capf to `completion-at-point-functions'.
-    ;; `tempel-expand' only triggers on exact matches. Alternatively use
-    ;; `tempel-complete' if you want to see all matches, but then you
-    ;; should also configure `tempel-trigger-prefix', such that Tempel
-    ;; does not trigger too often when you don't expect it. NOTE: We add
-    ;; `tempel-expand' *before* the main programming mode Capf, such
-    ;; that it will be tried first.
-    (setq-local completion-at-point-functions
-                (cons #'tempel-expand
-                      completion-at-point-functions)))
-
-  ;;(add-hook 'conf-mode-hook 'tempel-setup-capf)
-  ;;(add-hook 'prog-mode-hook 'tempel-setup-capf)
-  ;;(add-hook 'text-mode-hook 'tempel-setup-capf)
+  ;; Tempel reaches `completion-at-point-functions' through the cape block
+  ;; below, which folds `tempel-complete' into the eglot capf.
 
   ;; Optionally make the Tempel templates available to Abbrev,
   ;; either locally or globally. `expand-abbrev' is bound to C-x '.
