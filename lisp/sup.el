@@ -2,7 +2,8 @@
 
 ;;; Code:
 
-(setq sup-previous-buffer nil)
+(defvar sup-previous-buffer nil
+  "Buffer that was current before the messages buffer replaced it.")
 
 (defun sup-reset()
   (when sup-previous-buffer
