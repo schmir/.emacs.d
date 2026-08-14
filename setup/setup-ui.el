@@ -87,8 +87,7 @@
 
 ;; pulsar: Pulse highlight line after navigation
 (setup (:package pulsar)
-  (setq pulsar-pulse t
-        pulsar-delay 0.045
+  (setq pulsar-delay 0.045
         pulsar-iterations 10
         pulsar-face 'pulsar-magenta
         pulsar-highlight-face 'pulsar-yellow)
