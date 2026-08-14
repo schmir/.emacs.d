@@ -3,7 +3,7 @@
 (require 'treesit)
 
 ;; Various packages without additional configuration
-(setup (:package cargo elixir-mode flymake-shellcheck htmlize just-mode lua-mode
+(setup (:package cargo elixir-mode flymake-shellcheck just-mode lua-mode
                  ninja-mode terraform-mode))
 
 ;; flymake: every checker in this configuration is a flymake backend, so show
