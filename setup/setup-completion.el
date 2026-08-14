@@ -75,7 +75,8 @@
 
 ;; hippie-expand: Extensible text expansion with C-<tab>
 (setup hippie-expand
-  (defun try-complete-abbrev (old)
+  (defun try-complete-abbrev (_old)
+    "Try to expand an abbrev.  A `hippie-expand' try function."
     (if (expand-abbrev) t nil))
   (setq hippie-expand-try-functions-list
         '(try-complete-abbrev
