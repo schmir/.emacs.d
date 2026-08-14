@@ -1,3 +1,5 @@
+;;; clojure-indent-cond.el --- Indent cond expressions  -*- lexical-binding: t -*-
+
 ;; fix indentation of cond expressions
 ;; see https://github.com/clojure-emacs/clojure-mode/issues/337
 
