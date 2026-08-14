@@ -24,8 +24,8 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 
 (defun magit-display-ansi-colors
-    (proc &rest args)
-  (interactive)
+    (proc &rest _args)
+  "Colorize the ANSI escapes in PROC's buffer.  Advises `magit-process-filter'."
   (with-current-buffer (process-buffer proc)
     (display-ansi-colors)))
 
