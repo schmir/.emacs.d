@@ -64,7 +64,7 @@
 (setq read-process-output-max (* 1024 1024))
 (setq change-major-mode-with-file-name t
       create-lockfiles nil
-      x-select-enable-primary t                 ;; after mouse selection in X11, you can paste by `yank' in emacs
+      select-enable-primary t                   ;; after mouse selection in X11, you can paste by `yank' in emacs
       save-interprogram-paste-before-kill t
       ;; Filename completion ignores these.
       completion-ignored-extensions (append completion-ignored-extensions
