@@ -29,9 +29,14 @@
   (setq howm-history-file (expand-file-name ".howm-history" howm-directory))
   (setq howm-keyword-file (expand-file-name ".howm-keys" howm-directory))
 
-  ;; Rename buffers to their title
-  (add-hook 'howm-mode-hook 'howm-mode-set-buffer-name)
-  (add-hook 'after-save-hook 'howm-mode-set-buffer-name))
+  ;; Rename buffers to their title, and keep the name in step with the title
+  ;; as it is edited.  The save hook is buffer-local: as a global hook it ran
+  ;; in every buffer in the session.
+  (defun my/howm-rename-buffer-on-save ()
+    (add-hook 'after-save-hook #'howm-mode-set-buffer-name nil t))
+
+  (add-hook 'howm-mode-hook #'howm-mode-set-buffer-name)
+  (add-hook 'howm-mode-hook #'my/howm-rename-buffer-on-save))
 
 ;; fix-project-try-vc: Workaround for project.el caching bug
 (setup fix-project-try-vc
