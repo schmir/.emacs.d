@@ -13,8 +13,10 @@
 (setq custom-unlispify-tag-names nil)
 
 
-;; silence warnings, especially from native compilation
-(setq warning-minimum-level :error)
+;; `warning-minimum-level' is left at its default so that warnings actually
+;; surface.  Native compilation, the reason it used to be raised to :error, is
+;; silenced on its own terms in early-init.el via `warning-suppress-log-types'
+;; and `native-comp-async-report-warnings-errors'.
 
 (advice-add 'risky-local-variable-p :override #'ignore)
 
