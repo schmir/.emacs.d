@@ -9,7 +9,15 @@
 ;; flymake: every checker in this configuration is a flymake backend, so show
 ;; its diagnostics inline rather than only in the fringe and echo area.
 (setup flymake
-  (setopt flymake-show-diagnostics-at-end-of-line 'short))
+  (setopt flymake-show-diagnostics-at-end-of-line 'short)
+
+  ;; Wait longer after the last edit before rechecking, so diagnostics do not
+  ;; appear mid-word.  This governs the backends flymake runs itself: ruff,
+  ;; shellcheck, clj-kondo, clippy, eslint.  Diagnostics that a language
+  ;; server pushes still arrive when the server sends them, since
+  ;; `eglot-flymake-backend' reports as they are published.  Setting this to
+  ;; nil would delay those too, at the cost of only ever checking on save.
+  (setopt flymake-no-changes-timeout 2.0))
 
 ;; markdown-mode: Editing and previewing markdown files
 (setup (:package markdown-mode markdown-preview-mode)
