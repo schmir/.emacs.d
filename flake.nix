@@ -37,6 +37,7 @@
             clojure-ts-mode
             consult
             consult-dir
+            consult-eglot
             consult-project-extra
             corfu
             crux

@@ -99,6 +99,14 @@ If not in a project, emacs may otherwise hang [1]
           "C-c i" #'eglot-find-implementation
           "C-c r" #'my/eglot-rename))
 
+;; consult-eglot: search the workspace symbols the server knows about.
+(setup (:package consult-eglot)
+  ;; `xref-find-apropos' already means "find symbols matching a pattern across
+  ;; the project", so let the server answer it where one is attached.
+  (with-eval-after-load 'eglot
+    (keymap-set eglot-mode-map "<remap> <xref-find-apropos>"
+                #'consult-eglot-symbols)))
+
 ;; protobuf-mode: Editing protocol buffer files
 (setup (:package protobuf-mode)
   (:hook #'setup-protobuf)
