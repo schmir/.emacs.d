@@ -67,7 +67,26 @@
   (keymap-global-set "M-<left>"    #'puni-barf-forward)
   (keymap-global-set "M-<up>"      #'puni-splice)
   (keymap-global-set "C-S-<right>" #'puni-forward-sexp)
-  (keymap-global-set "C-S-<left>"  #'puni-backward-sexp))
+  (keymap-global-set "C-S-<left>"  #'puni-backward-sexp)
+
+  (defun my/puni-syntax-sexp (fn &rest args)
+    "Call FN with the syntax scanner instead of the major mode's `forward-sexp'.
+
+Puni slurps whatever `forward-sexp' reports as the next expression.  Both
+python-mode and python-ts-mode move over whole statements, so slurping
+inside a call swallows the line below it.  Scanning by syntax instead
+takes the next expression, which is what slurping means here.
+
+Only slurp and barf are redirected; `forward-sexp' itself keeps moving by
+statement, which is what makes it useful for navigation."
+    (let ((forward-sexp-function (if (derived-mode-p 'python-base-mode)
+                                     nil
+                                   forward-sexp-function)))
+      (apply fn args)))
+
+  (dolist (cmd '(puni-slurp-forward puni-barf-forward
+                 puni-slurp-backward puni-barf-backward))
+    (advice-add cmd :around #'my/puni-syntax-sexp)))
 
 (setup repeat
   (add-hook 'after-init-hook #'repeat-mode))
