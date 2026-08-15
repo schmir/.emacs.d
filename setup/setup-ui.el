@@ -105,8 +105,10 @@
   ;; (zoom-mode)
   )
 
-;; which-key: Show available keybindings in popup
-(setup (:package which-key)
+;; which-key: Show available keybindings in popup.  Part of Emacs since 30.1,
+;; so there is nothing to install; the standalone package stopped where the
+;; in-tree version took over.
+(setup which-key
   (which-key-mode))
 
 ;; minions: consolidate minor modes in modeline into a single menu

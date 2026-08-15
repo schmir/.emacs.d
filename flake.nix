@@ -118,7 +118,6 @@
             vertico-prescient
             vterm
             vundo
-            which-key
             zenburn-theme
             zerodark-theme
             zoom
