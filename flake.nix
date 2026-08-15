@@ -40,11 +40,9 @@
             consult-project-extra
             corfu
             crux
-            diminish
             diredfl
             dired-open
             dired-subtree
-            direnv
             disproject
             doom-themes
             easy-kill
@@ -57,10 +55,6 @@
             eros
             exec-path-from-shell
             expreg
-            flycheck
-            flycheck-clj-kondo
-            flycheck-inline
-            flycheck-package
             flymake-clippy
             flymake-eslint
             flymake-kondor
@@ -117,7 +111,6 @@
             tempel
             terraform-mode
             tldr
-            treesit-auto
             treesit-grammars.with-all-grammars
             undo-fu
             undo-fu-session
