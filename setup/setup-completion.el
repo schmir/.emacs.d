@@ -10,7 +10,15 @@
           corfu-scroll-margin 2
           corfu-quit-at-boundary nil
           corfu-preview-current t)
-  (add-hook 'after-init-hook #'global-corfu-mode))
+  (add-hook 'after-init-hook #'global-corfu-mode)
+
+  ;; corfu-popupinfo: show the documentation of the current candidate beside
+  ;; the completion list.  Ships with corfu.  M-t toggles it, and the default
+  ;; delay of two seconds means it only appears once you pause on a candidate
+  ;; rather than while cycling through them.
+  (with-eval-after-load 'corfu
+    (require 'corfu-popupinfo)
+    (corfu-popupinfo-mode 1)))
 
 ;; completion-preview: show one completion candidate
 (setup (:and (fboundp #'completion-preview-mode)
@@ -103,7 +111,18 @@
   (with-eval-after-load 'vertico
     (vertico-prescient-mode 1)
     ;; Replace `vertico-insert' to enable TAB prefix expansion.
-    (keymap-set vertico-map "TAB" #'minibuffer-complete))
+    (keymap-set vertico-map "TAB" #'minibuffer-complete)
+
+    ;; vertico-directory: treat file names as paths rather than as text, so
+    ;; RET descends into a directory and DEL erases a whole component.  Ships
+    ;; with vertico.
+    (require 'vertico-directory)
+    (keymap-set vertico-map "RET"   #'vertico-directory-enter)
+    (keymap-set vertico-map "DEL"   #'vertico-directory-delete-char)
+    (keymap-set vertico-map "M-DEL" #'vertico-directory-delete-word)
+    ;; Drop the shadowed prefix when an absolute path or ~ is typed part-way
+    ;; through an existing one.
+    (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
   (add-hook 'after-init-hook #'vertico-mode))
 
 ;; marginalia: Rich annotations in minibuffer completions
