@@ -129,6 +129,22 @@
 (setup (:package super-save)
   (super-save-mode +1))
 
+;; jinx: Highlight misspellings while typing, via enchant
+(setup (:package jinx)
+  ;; Both dictionaries are consulted for every word, so prose that mixes the
+  ;; two languages checks without switching anything.  enchant serves both of
+  ;; these through the same hunspell that `ispell-program-name' uses.
+  (setopt jinx-languages "en_US de_DE")
+
+  ;; M-$ is `ispell-word' out of the box; send it to the checker that is
+  ;; actually running.  C-M-$ changes the languages for the current buffer.
+  (keymap-global-set "<remap> <ispell-word>" #'jinx-correct)
+  (keymap-global-set "C-M-$" #'jinx-languages)
+
+  ;; `global-jinx-mode' restricts itself to text, prog and conf modes, so it
+  ;; stays out of dired and magit without further help.
+  (add-hook 'after-init-hook #'global-jinx-mode))
+
 (provide 'setup-editing)
 
 ;;; setup-editing.el ends here
