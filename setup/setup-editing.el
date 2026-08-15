@@ -63,6 +63,12 @@
   (electric-pair-mode +1)
   (puni-global-mode)
   (add-hook 'term-mode-hook #'puni-disable-puni-mode)
+  ;; `puni-global-mode' has no predicate, so it reaches the minibuffer too,
+  ;; where its map outranks the local one vertico installs.  That silently
+  ;; took over DEL and M-DEL from `vertico-directory', and replaced C-d, C-k
+  ;; and C-w with their soft-deletion versions.  Balanced deletion buys
+  ;; little when editing a one-line path or expression.
+  (add-hook 'minibuffer-setup-hook #'puni-disable-puni-mode)
   (keymap-global-set "M-<right>"   #'puni-slurp-forward)
   (keymap-global-set "M-<left>"    #'puni-barf-forward)
   (keymap-global-set "M-<up>"      #'puni-splice)
