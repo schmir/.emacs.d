@@ -54,9 +54,10 @@ The first PACKAGE can be used to deduce the feature context."
 
 ;; use-package: Useful for trying out packages with copy-paste install instructions
 ;; let's keep use-package as it's useful when trying out package, so we can copy and paste the
-;; install instructions.
-(setup (:package use-package)
-  ;; Let imenu see `use-package' declarations
+;; install instructions.  Part of Emacs since 29.1, so there is nothing to install.
+(setup use-package
+  ;; Let imenu see `use-package' declarations.  This has to be set before
+  ;; use-package is loaded, since the macro consults it as it is defined.
   (setopt use-package-enable-imenu-support t
           use-package-always-ensure t)
   (require 'use-package-ensure))
