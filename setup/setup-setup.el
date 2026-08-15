@@ -2,6 +2,21 @@
 
 ;;; Code:
 
+;;; Work around boxquote's autoloads
+;; boxquote.el puts an autoload cookie on a `transient-define-prefix' form, so
+;; the macro call is copied verbatim into boxquote-autoloads.el.  That file
+;; never requires transient, and boxquote declares no dependency on it, so
+;; `package-initialize' below signals void-function while loading it.
+;;
+;; Standing in for the macro lets the autoloads load.  Nothing is lost: the
+;; transient is defined for real when boxquote.el itself is loaded, since that
+;; file does require transient.  boxquote is the only package here that
+;; autoloads a transient prefix.
+(unless (fboundp 'transient-define-prefix)
+  (defmacro transient-define-prefix (&rest _)
+    "Placeholder until the real macro arrives with transient."
+    nil))
+
 ;;; Initialize package.el
 (progn
   ;; make sure to set this before we call (package-initialize). Otherwise site-lisp will bail out
