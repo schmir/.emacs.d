@@ -69,7 +69,6 @@
             go-mode
             gruvbox-theme
             helpful
-            howm
             htmlize
             idle-highlight-mode
             janet-mode
