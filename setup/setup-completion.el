@@ -139,10 +139,19 @@
   (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer)
   (keymap-global-set "<remap> <repeat-complex-command>" #'consult-complex-command)
   (keymap-global-set "C-c s" #'consult-ripgrep)
+
+  (defun my/search-notes (&optional initial)
+    "Search the notes below `~/howm/' with `consult-ripgrep'.
+INITIAL is the initial search string, as for `consult-ripgrep'."
+    (interactive)
+    (consult-ripgrep (expand-file-name "~/howm/") initial))
+  (keymap-global-set "C-c h" #'my/search-notes)
+
   (with-eval-after-load 'consult
     (setopt consult-ripgrep-args "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --with-filename --line-number --search-zip --hidden --glob \"\!{**/.git/*,**/.jj/*}\" ")
     (consult-customize
      consult-ripgrep consult-git-grep consult-grep consult-man
+     my/search-notes
      consult-bookmark consult-recent-file consult-xref
      consult-source-bookmark consult-source-file-register
      consult-source-recent-file consult-source-project-recent-file
