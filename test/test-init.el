@@ -93,6 +93,7 @@
                  magit
                  apheleia
                  eglot
+                 janet-mode
                  puni
                  which-key))
     (should (require pkg nil t))))
@@ -360,6 +361,29 @@ Resolves the `t' sentinel that defers to the global value."
   "JavaScript buffers should activate Flymake diagnostics."
   (with-mode-buffer js-mode
     (should (bound-and-true-p flymake-mode))))
+
+(ert-deftest test-janet-profile-selects-mode ()
+  "Janet source files should select Janet mode."
+  (with-temp-buffer
+    (setq buffer-file-name "/tmp/example.janet")
+    (set-auto-mode)
+    (should (eq major-mode 'janet-mode))))
+
+(ert-deftest test-janet-profile-activates-available-tooling ()
+  "Janet buffers should use available language-server tooling in a project."
+  (let ((starts 0))
+    (cl-letf (((symbol-function 'executable-find)
+               (lambda (command)
+                 (and (equal command "janet-lsp") command)))
+              ((symbol-function 'project-current)
+               (lambda (&optional _prompt) t))
+              ((symbol-function 'eglot-ensure)
+               (lambda () (setq starts (1+ starts)))))
+      (with-mode-buffer janet-mode
+        (should (bound-and-true-p flymake-mode))
+        (should (memq #'eglot-flymake-backend
+                      flymake-diagnostic-functions))))
+    (should (= starts 1))))
 
 (ert-deftest test-shell-profile-activates-diagnostics ()
   "Shell buffers should activate Flymake diagnostics."

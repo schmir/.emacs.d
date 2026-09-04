@@ -72,6 +72,7 @@
             howm
             htmlize
             idle-highlight-mode
+            janet-mode
             jinx
             just-mode
             kaolin-themes

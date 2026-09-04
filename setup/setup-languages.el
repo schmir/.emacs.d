@@ -13,6 +13,7 @@
                  flymake-clippy
                  flymake-eslint
                  flymake-shellcheck
+                 janet-mode
                  just-mode
                  lua-mode
                  ninja-mode

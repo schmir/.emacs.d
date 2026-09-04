@@ -14,6 +14,7 @@
     my/language-profiles--install-protobuf
     my/language-profiles--install-markdown
     my/language-profiles--install-javascript
+    my/language-profiles--install-janet
     my/language-profiles--install-toml
     my/language-profiles--install-shell
     my/language-profiles--install-nix
@@ -182,6 +183,21 @@ the first frame is made."
   (setopt flymake-eslint-defer-binary-check t)
   (when (treesit-ready-p 'javascript)
     (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))))
+
+(defun my/language-profiles--setup-janet ()
+  "Activate Janet language-server tooling when janet-lsp is available."
+  (when (executable-find "janet-lsp")
+    (my/language-profiles--add-eglot-flymake-backend)
+    (flymake-mode)
+    (my/language-profiles--ensure-eglot-in-project)))
+
+(defun my/language-profiles--install-janet ()
+  "Install the Janet language profile."
+  (add-to-list 'auto-mode-alist '("\\.janet\\'" . janet-mode))
+  (add-hook 'janet-mode-hook #'my/language-profiles--setup-janet)
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '(janet-mode . ("janet-lsp")))))
 
 (defun my/language-profiles--install-toml ()
   "Install the TOML language profile."
