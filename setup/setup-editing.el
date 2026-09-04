@@ -5,32 +5,11 @@
   (apheleia-global-mode +1)
   (keymap-global-set "C-c b" #'apheleia-format-buffer)
   (with-eval-after-load 'apheleia
-    ;; apheleia currently does not configure a formatter for nix-ts-mode
-    ;; see https://github.com/radian-software/apheleia/issues/298
     (setq apheleia-remote-algorithm 'local)
-    (add-to-list 'apheleia-mode-alist '(nix-ts-mode . nixfmt))
-    (when (executable-find "zprint")
-      (setf (alist-get 'zprint apheleia-formatters) '("zprint"))
-      (add-to-list 'apheleia-mode-alist '(clojure-mode . zprint))
-      (add-to-list 'apheleia-mode-alist '(clojure-ts-mode . zprint)))
-
     (setf (alist-get 'blackzim apheleia-formatters)
           '("blackzim"))
-
     (setf (alist-get 'latexindent apheleia-formatters)
-          '("latexindent" "--logfile=/dev/null" "-y" "defaultIndent: \"    \""))
-
-    ;; toml
-    (progn
-      (setf (alist-get 'taplo apheleia-formatters)
-            '("taplo" "format" "-"))
-      (add-to-list 'apheleia-mode-alist '(conf-toml-mode . taplo)))
-
-    (when (executable-find "ruff")
-      (add-to-list 'apheleia-mode-alist '(python-mode . (ruff-isort ruff)))
-      (add-to-list 'apheleia-mode-alist '(python-ts-mode . (ruff-isort ruff))))
-    (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))
-    (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))))
+          '("latexindent" "--logfile=/dev/null" "-y" "defaultIndent: \"    \""))))
 
 ;; easy-kill: Better kill-ring-save with expandable selection
 (setup (:package easy-kill)

@@ -29,9 +29,9 @@
 (require 'setup-completion)
 (require 'setup-git)
 (require 'setup-lisp)
-(require 'setup-go)
-(require 'setup-python)
 (require 'setup-shell)
+(require 'language-profiles)
+(my/language-profiles-install)
 
 
 ;; some aliases for interactive use with M-x

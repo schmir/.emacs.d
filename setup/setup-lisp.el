@@ -2,44 +2,12 @@
 
 ;;; Code:
 
-;;;; Emacs Lisp
-
-;; eldoc: Show function signatures in echo area
-(setup eldoc
-  (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))
-
-;; aggressive-indent: Keep code indented automatically
-(setup (:package aggressive-indent)
-  (:hook-into emacs-lisp-mode))
-
-;; prism: Colorize code by depth for lisp modes
-(setup (:package prism)
-  (my/run-when-display-initialized
-   (lambda()
-     (message "init.el: initializing prism mode hooks")
-     (:hook-into emacs-lisp-mode clojure-mode clojure-ts-mode))))
-
-;; macrostep: Interactively expand macros in elisp
-(setup (:package macrostep)
-  (with-eval-after-load 'lisp-mode
-    (keymap-set emacs-lisp-mode-map "C-c x" #'macrostep-expand)))
-
-;; eros: Overlay elisp evaluation results near point
-(setup (:package eros)
-  (eros-mode +1))
+(setup (:package aggressive-indent eros macrostep prism))
 
 ;;;; Clojure
 
 ;; clojure-mode/clojure-ts-mode: Clojure editing with eglot and kondor linting
 (setup (:package clojure-mode clojure-ts-mode clojure-mode-extra-font-locking flymake-kondor)
-  (defun my/setup-clojure-mode ()
-    (flymake-kondor-setup)
-    (flymake-mode)
-    (when (executable-find "clojure-lsp")
-      (my/eglot-ensure-when-project)))
-
-  (:with-mode (clojure-mode clojure-ts-mode)
-    (:hook #'my/setup-clojure-mode))
   (setopt clojure-ts-ensure-grammars nil)
 
   ;;; XXX Disable clojure-ts-mode as it seem to be broken currently
@@ -96,15 +64,6 @@
                 "H-h" #'cider-popup-buffer-quit-function)
     (keymap-set cider-stacktrace-mode-map
                 "<f10>" #'cider-popup-buffer-quit-function)))
-
-;; Use lisp-interaction-mode in *scratch* buffer.
-;; early-init.el sets the initial-major-mode to fundamental-mode. This also makes sure all hooks
-;; are being run!
-(add-hook 'after-init-hook
-          (lambda ()
-            (when-let* ((scratch (get-buffer "*scratch*")))
-              (with-current-buffer scratch
-                (lisp-interaction-mode)))))
 
 (provide 'setup-lisp)
 ;;; setup-lisp.el ends here

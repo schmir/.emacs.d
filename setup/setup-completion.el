@@ -1,7 +1,7 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: t -*-
 
 ;; corfu: Popup completion UI at point
-(setup (:package corfu)  
+(setup (:package corfu)
   (setopt tab-always-indent 'complete
           tab-first-completion nil
           corfu-cycle nil
@@ -54,19 +54,23 @@
 
 ;; cape: Completion at point extensions for eglot and dabbrev
 (setup (:package cape)
-  (defun my/set-eglot-capf ()
-    "Offer eglot's completions and tempel's templates together."
-    (setq-local completion-at-point-functions
-                (list (cape-capf-super
-                       #'eglot-completion-at-point
-                       #'tempel-complete)
-                      t)))
-  (add-hook 'eglot-managed-mode-hook #'my/set-eglot-capf)
-  (with-eval-after-load 'cape
-    (add-to-list 'completion-at-point-functions
-                 (cape-capf-super
-                  #'cape-file
-                  (cape-capf-prefix-length #'cape-dabbrev 3)))))
+  (require 'cape)
+
+  (defvar my/cape-file-dabbrev-capf
+    (cape-capf-super
+     #'cape-file
+     (cape-capf-prefix-length #'cape-dabbrev 3))
+    "CAPF that completes file names and words from open buffers.")
+
+  (defun my/register-cape-file-dabbrev-capf ()
+    "Register the shared Cape CAPF once in the global default."
+    (set-default 'completion-at-point-functions
+                 (cons my/cape-file-dabbrev-capf
+                       (delq my/cape-file-dabbrev-capf
+                             (default-value
+                              'completion-at-point-functions)))))
+
+  (my/register-cape-file-dabbrev-capf))
 
 ;; hippie-expand: Extensible text expansion with C-<tab>
 (setup hippie-expand

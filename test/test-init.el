@@ -45,10 +45,37 @@
                      setup-completion
                      setup-git
                      setup-lisp
-                     setup-go
-                     setup-python
-                     setup-shell))
+                     setup-shell
+                     language-profiles))
     (should (featurep feature))))
+
+(ert-deftest test-language-profiles-installed-once ()
+  "Installing twice should run each installation step once."
+  (let ((my/language-profiles--installed nil)
+        (my/language-profiles--installers '(test--install-language-profile))
+        (shared-installs 0)
+        (profile-installs 0))
+    (cl-letf (((symbol-function
+                'my/language-profiles--install-shared-policy)
+               (lambda () (setq shared-installs (1+ shared-installs))))
+              ((symbol-function 'test--install-language-profile)
+               (lambda () (setq profile-installs (1+ profile-installs)))))
+      (my/language-profiles-install)
+      (my/language-profiles-install))
+    (should my/language-profiles--installed)
+    (should (= shared-installs 1))
+    (should (= profile-installs 1))))
+
+(ert-deftest test-language-profile-remaps-follow-grammar-availability ()
+  "Language profiles should prefer only available tree-sitter modes."
+  (dolist (entry '((javascript js-mode . js-ts-mode)
+                   (nix nix-mode . nix-ts-mode)
+                   (python python-mode . python-ts-mode)
+                   (markdown markdown-mode . markdown-ts-mode)))
+    (let ((grammar (car entry))
+          (remap (cdr entry)))
+      (should (eq (not (null (member remap major-mode-remap-alist)))
+                  (not (null (treesit-ready-p grammar))))))))
 
 ;;; --- Core Packages Available ---
 
@@ -108,15 +135,13 @@
   (should (eq read-buffer-completion-ignore-case t))
   (should (eq completion-ignore-case t)))
 
-(ert-deftest test-cape-in-completion-at-point-functions ()
-  "Global completion-at-point-functions should have cape-based entries."
-  (require 'cape)
-  ;; Cape wraps capfs as closures. Check that the global value is non-trivial
-  ;; (has functions beyond the default) after cape setup.
-  (let ((capfs (default-value 'completion-at-point-functions)))
-    (should (> (length capfs) 0))
-    ;; At least one non-symbol function (cape-capf-super returns closures)
-    (should (cl-some (lambda (f) (and (functionp f) (not (symbolp f)))) capfs))))
+(ert-deftest test-cape-registration-is-reload-safe ()
+  "Registering the shared Cape CAPF twice should keep one entry."
+  (my/register-cape-file-dabbrev-capf)
+  (my/register-cape-file-dabbrev-capf)
+  (should (= 1 (seq-count
+                (lambda (capf) (eq capf my/cape-file-dabbrev-capf))
+                (default-value 'completion-at-point-functions)))))
 
 ;;; --- Eglot Configuration ---
 
@@ -130,6 +155,17 @@
   (require 'eglot)
   (should (member 'flymake eglot-stay-out-of)))
 
+(ert-deftest test-eglot-keybindings-are-mode-local ()
+  "Eglot commands should not replace global keybindings."
+  (require 'eglot)
+  (dolist (binding '(("C-c ." . xref-find-references)
+                     ("C-c t" . eglot-find-typeDefinition)
+                     ("C-c i" . eglot-find-implementation)
+                     ("C-c r" . my/eglot-rename)))
+    (should-not (lookup-key (current-global-map) (kbd (car binding))))
+    (should (eq (lookup-key eglot-mode-map (kbd (car binding)))
+                (cdr binding)))))
+
 ;;; --- Python Mode ---
 
 (ert-deftest test-python-mode-activates ()
@@ -141,9 +177,26 @@
   "python-shell-interpreter should be python3."
   (should (equal python-shell-interpreter "python3")))
 
-(ert-deftest test-python-pet-mode-hook ()
-  "pet-mode should be hooked into python-base-mode."
-  (should (memq 'pet-mode (default-value 'python-base-mode-hook))))
+(ert-deftest test-python-profile-activates-pet ()
+  "Python buffers should activate Pet environment discovery."
+  (with-mode-buffer python-ts-mode
+    (should (bound-and-true-p pet-mode))))
+
+(ert-deftest test-python-server-is-ty ()
+  "Python should use ty, which reads none of pyright's settings.
+
+The profile sends no `eglot-workspace-configuration' because ty discards
+it.  Should this ever point at a pyright-family server again, that
+decision has to be revisited."
+  (require 'eglot)
+  (let ((entry (seq-find (lambda (e)
+                           (let ((key (car e)))
+                             (and (consp key)
+                                  (eq (car key) 'python-base-mode))))
+                         eglot-server-programs)))
+    (should entry)
+    (should (member "ty" (cdr entry)))
+    (should-not (default-value 'eglot-workspace-configuration))))
 
 (ert-deftest test-python-completion-at-point ()
   "Python buffers should have completion-at-point-functions."
@@ -157,10 +210,12 @@
     (should (assq 'python-mode apheleia-mode-alist))
     (should (assq 'python-ts-mode apheleia-mode-alist))))
 
-(ert-deftest test-python-setup-hook-configured ()
-  "my/setup-python-mode should be hooked into python modes."
-  (should (or (memq #'my/setup-python-mode (default-value 'python-mode-hook))
-              (memq #'my/setup-python-mode (default-value 'python-ts-mode-hook)))))
+(ert-deftest test-python-profile-activates-diagnostics ()
+  "Python buffers should activate Flymake with Eglot diagnostics."
+  (with-mode-buffer python-ts-mode
+    (should (bound-and-true-p flymake-mode))
+    (should (memq #'eglot-flymake-backend
+                  flymake-diagnostic-functions))))
 
 (ert-deftest test-python-actual-completion ()
   "Typing a prefix in python-ts-mode should yield dabbrev completion candidates."
@@ -177,16 +232,33 @@
   (with-mode-buffer go-mode
     (should (derived-mode-p 'go-mode))))
 
-(ert-deftest test-go-mode-hooks-configured ()
-  "Go mode hooks should include my/setup-go-mode."
-  (should (or (memq #'my/setup-go-mode (default-value 'go-mode-hook))
-              (memq #'my/setup-go-mode (default-value 'go-ts-mode-hook)))))
+(ert-deftest test-go-profile-activates-diagnostics ()
+  "Go buffers should activate Flymake with Eglot diagnostics."
+  (with-mode-buffer go-mode
+    (should (bound-and-true-p flymake-mode))
+    (should (memq #'eglot-flymake-backend
+                  flymake-diagnostic-functions))))
 
 (ert-deftest test-go-mode-gofmt-command ()
   "gofmt-command should be set to gofumports in go buffers."
   (with-mode-buffer go-mode
-    (run-hooks 'go-mode-hook)
     (should (equal gofmt-command "gofumports"))))
+
+(ert-deftest test-go-profile-preserves-save-order ()
+  "Go buffers should format before they organize imports."
+  (let (events)
+    (cl-letf (((symbol-function 'eglot-format-buffer)
+               (lambda ()
+                 (interactive)
+                 (push 'format events)))
+              ((symbol-function 'eglot-code-action-organize-imports)
+               (lambda ()
+                 (interactive)
+                 (push 'imports events)
+                 (error "test import failure"))))
+      (with-mode-buffer go-mode
+        (run-hooks 'before-save-hook)))
+    (should (equal (nreverse events) '(format imports)))))
 
 (ert-deftest test-go-mode-completion-at-point ()
   "Go buffers should have completion-at-point-functions."
@@ -212,16 +284,15 @@
   "cider should be loadable."
   (should (require 'cider nil t)))
 
-(ert-deftest test-clojure-mode-hooks-configured ()
-  "Clojure mode hooks should include my/setup-clojure-mode."
-  (should (or (memq #'my/setup-clojure-mode (default-value 'clojure-mode-hook))
-              (memq #'my/setup-clojure-mode (default-value 'clojure-ts-mode-hook)))))
+(ert-deftest test-clojure-profile-activates-diagnostics ()
+  "Clojure buffers should activate Flymake diagnostics."
+  (with-mode-buffer clojure-mode
+    (should (bound-and-true-p flymake-mode))))
 
-(ert-deftest test-clojure-eldoc-hook ()
-  "eldoc-mode should be configured for clojure."
-  (require 'clojure-mode)
-  (should (or (memq #'eldoc-mode (default-value 'clojure-mode-hook))
-              (memq #'eldoc-mode (default-value 'clojure-ts-mode-hook)))))
+(ert-deftest test-clojure-profile-activates-eldoc ()
+  "Clojure buffers should activate Eldoc."
+  (with-mode-buffer clojure-mode
+    (should (bound-and-true-p eldoc-mode))))
 
 (ert-deftest test-clojure-completion-at-point ()
   "Clojure buffers should have completion-at-point-functions."
@@ -262,6 +333,49 @@ Resolves the `t' sentinel that defers to the global value."
     (let ((candidates (test--capf-candidates)))
       (should candidates)
       (should (member "my-test-fn-alpha" candidates)))))
+
+;;; --- Other Language Profiles ---
+
+(ert-deftest test-emacs-lisp-profile-activates-editing-modes ()
+  "Emacs Lisp buffers should activate Eldoc and aggressive indentation."
+  (with-mode-buffer emacs-lisp-mode
+    (should (bound-and-true-p eldoc-mode))
+    (should (bound-and-true-p aggressive-indent-mode))))
+
+(ert-deftest test-protobuf-profile-applies-style ()
+  "Protocol Buffer buffers should use the configured editing style."
+  (with-mode-buffer protobuf-mode
+    (should (= c-basic-offset 8))
+    (should-not indent-tabs-mode)))
+
+(ert-deftest test-yaml-profile-installs-completion-aware-indentation ()
+  "YAML buffers should let TAB complete after content."
+  (with-mode-buffer yaml-ts-mode
+    (should (eq indent-line-function
+                #'my/language-profiles--yaml-indent-line))
+    (insert "key: value")
+    (should (eq (funcall indent-line-function) 'noindent))))
+
+(ert-deftest test-javascript-profile-activates-diagnostics ()
+  "JavaScript buffers should activate Flymake diagnostics."
+  (with-mode-buffer js-mode
+    (should (bound-and-true-p flymake-mode))))
+
+(ert-deftest test-shell-profile-activates-diagnostics ()
+  "Shell buffers should activate Flymake diagnostics."
+  (with-mode-buffer sh-mode
+    (should (bound-and-true-p flymake-mode))))
+
+(ert-deftest test-non-project-profile-does-not-start-eglot ()
+  "A language profile should not start Eglot outside a project."
+  (let ((starts 0))
+    (cl-letf (((symbol-function 'project-current)
+               (lambda (&optional _prompt) nil))
+              ((symbol-function 'eglot-ensure)
+               (lambda () (setq starts (1+ starts)))))
+      (with-mode-buffer nix-mode
+        (should-not (bound-and-true-p eglot-managed-mode))))
+    (should (zerop starts))))
 
 ;;; --- Corfu in prog-mode ---
 
