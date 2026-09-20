@@ -363,11 +363,20 @@ Resolves the `t' sentinel that defers to the global value."
     (should (bound-and-true-p flymake-mode))))
 
 (ert-deftest test-janet-profile-selects-mode ()
-  "Janet source files should select Janet mode."
-  (with-temp-buffer
-    (setq buffer-file-name "/tmp/example.janet")
-    (set-auto-mode)
-    (should (eq major-mode 'janet-mode))))
+  "Janet source and data files should select Janet mode."
+  (dolist (file '("/tmp/example.janet" "/tmp/example.jdn"))
+    (with-temp-buffer
+      (setq buffer-file-name file)
+      (set-auto-mode)
+      (should (eq major-mode 'janet-mode)))))
+
+(ert-deftest test-janet-apheleia-janet-format ()
+  "Apheleia should configure janet-format for Janet mode when available."
+  (require 'apheleia)
+  (when (executable-find "janet-format")
+    (should (eq (alist-get 'janet-mode apheleia-mode-alist) 'janet-format))
+    (should (equal (alist-get 'janet-format apheleia-formatters)
+                   '("janet-format")))))
 
 (ert-deftest test-janet-profile-activates-available-tooling ()
   "Janet buffers should use available language-server tooling in a project."

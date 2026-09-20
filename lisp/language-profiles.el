@@ -194,10 +194,16 @@ the first frame is made."
 (defun my/language-profiles--install-janet ()
   "Install the Janet language profile."
   (add-to-list 'auto-mode-alist '("\\.janet\\'" . janet-mode))
+  ;; Janet data notation uses the same reader, mode and formatter.
+  (add-to-list 'auto-mode-alist '("\\.jdn\\'" . janet-mode))
   (add-hook 'janet-mode-hook #'my/language-profiles--setup-janet)
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
-                 '(janet-mode . ("janet-lsp")))))
+                 '(janet-mode . ("janet-lsp"))))
+  (with-eval-after-load 'apheleia
+    (when (executable-find "janet-format")
+      (setf (alist-get 'janet-format apheleia-formatters) '("janet-format"))
+      (add-to-list 'apheleia-mode-alist '(janet-mode . janet-format)))))
 
 (defun my/language-profiles--install-toml ()
   "Install the TOML language profile."
