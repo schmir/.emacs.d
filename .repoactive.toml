@@ -4,7 +4,7 @@
 branch_prefix = "repoactive/"
 
 [job.update-flake]
-command = "./update-flake.sh"
+command = "just flake-update-diff"
 title = "build: update flake inputs"
 cooldown_period = "3d"
-timeout = "15m"
+timeout = "30m"
