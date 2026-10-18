@@ -13,7 +13,7 @@
                                           (seq bol "." (not (any "."))) ;; dot-files
                                           (seq "~" eol)                 ;; backup-files
                                           ))))
-       
+
        (add-hook 'dired-mode-hook #'dired-hide-details-mode)
        (add-hook 'dired-mode-hook #'hl-line-mode)
        (add-hook 'dired-mode-hook #'dired-omit-mode)

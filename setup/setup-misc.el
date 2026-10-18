@@ -83,6 +83,7 @@ caches the result of those calls via vc-file-setprop.
                                  (executable-find "pinentry-gnome3")))
 
   (age-file-enable)
+  (require 'auth-source-passage)
   ;; (auth-source-pass-enable)
   (auth-source-passage-enable)
   (setq auth-source-debug nil))

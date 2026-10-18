@@ -128,6 +128,21 @@
               inherit (pkgs) fetchFromGitHub lib;
               inherit (epkgs) trivialBuild;
             })
+            (callPackage ./fm-ruff.nix {
+              emacs = emacs;
+              inherit (pkgs) fetchFromGitHub lib;
+              inherit (epkgs) trivialBuild;
+            })
+            (callPackage ./passage.nix {
+              emacs = emacs;
+              inherit (pkgs) fetchFromGitHub lib;
+              inherit (epkgs) trivialBuild age f with-editor;
+            })
+            (callPackage ./setup.nix {
+              emacs = emacs;
+              inherit (pkgs) fetchgit lib;
+              inherit (epkgs) trivialBuild;
+            })
             (callPackage ./eglot-booster.nix {
               emacs = emacs;
               inherit (pkgs) fetchFromGitHub lib;
