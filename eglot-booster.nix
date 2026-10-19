@@ -2,9 +2,9 @@
   lib,
   fetchFromGitHub,
   emacs,
-  trivialBuild,
+  melpaBuild,
 }:
-trivialBuild rec {
+melpaBuild rec {
   pname = "eglot-booster";
   version = "0.1.0";
 

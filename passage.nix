@@ -1,21 +1,21 @@
 {
   lib,
-  fetchFromGitHub,
   emacs,
-  trivialBuild,
+  melpaBuild,
   age,
   f,
   with-editor,
 }:
-trivialBuild rec {
+melpaBuild rec {
   pname = "passage";
-  version = "0-unstable-2026-10-18";
+  version = "0.${builtins.substring 0 8 src.lastModifiedDate}";
 
-  src = fetchFromGitHub {
+  src = builtins.fetchTree {
+    type = "github";
     owner = "anticomputer";
     repo = "passage.el";
     rev = "e7385ecbb6aa857a799424d7838bd93624fa2d9c";
-    hash = "sha256-x73D5BXdDgIMQFSatv/4v5Ld9NdQx4cANblNs6RarzE=";
+    narHash = "sha256-x73D5BXdDgIMQFSatv/4v5Ld9NdQx4cANblNs6RarzE=";
   };
 
   packageRequires = [

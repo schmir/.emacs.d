@@ -2,9 +2,9 @@
   lib,
   fetchFromGitHub,
   emacs,
-  trivialBuild,
+  melpaBuild,
 }:
-trivialBuild rec {
+melpaBuild rec {
   pname = "framemove";
   version = "0.10";
 

@@ -126,27 +126,27 @@
             (callPackage ./framemove.nix {
               emacs = emacs;
               inherit (pkgs) fetchFromGitHub lib;
-              inherit (epkgs) trivialBuild;
+              inherit (epkgs) melpaBuild;
             })
             (callPackage ./fm-ruff.nix {
               emacs = emacs;
-              inherit (pkgs) fetchFromGitHub lib;
-              inherit (epkgs) trivialBuild;
+              inherit (pkgs) lib;
+              inherit (epkgs) melpaBuild;
             })
             (callPackage ./passage.nix {
               emacs = emacs;
-              inherit (pkgs) fetchFromGitHub lib;
-              inherit (epkgs) trivialBuild age f with-editor;
+              inherit (pkgs) lib;
+              inherit (epkgs) melpaBuild age f with-editor;
             })
             (callPackage ./setup.nix {
               emacs = emacs;
-              inherit (pkgs) fetchgit lib;
-              inherit (epkgs) trivialBuild;
+              inherit (pkgs) lib;
+              inherit (epkgs) melpaBuild;
             })
             (callPackage ./eglot-booster.nix {
               emacs = emacs;
               inherit (pkgs) fetchFromGitHub lib;
-              inherit (epkgs) trivialBuild;
+              inherit (epkgs) melpaBuild;
             })
           ];
         emacs-with-packages = (pkgs.emacsPackagesFor emacs).emacsWithPackages (emacs-packages);
