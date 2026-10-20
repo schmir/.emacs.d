@@ -97,6 +97,11 @@ caches the result of those calls via vc-file-setprop.
   (keymap-global-set "C-c C-d" #'helpful-at-point)
   (keymap-global-set "C-h F" #'helpful-function))
 
+;; org: task states for TODO items
+(setup org
+  (:option org-todo-keywords
+           '((sequence "TODO(t)" "IN-PROGRESS(i)" "BLOCKED(b)" "|" "DONE(d)"))))
+
 (provide 'setup-misc)
 
 ;;; setup-misc.el ends here
