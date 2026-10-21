@@ -6,7 +6,6 @@
 (setup (:package add-node-modules-path
                  cargo
                  consult-eglot
-                 eglot
                  (eglot-booster :url "https://github.com/jdtsmith/eglot-booster.git")
                  elixir-mode
                  (fm-ruff :url "https://github.com/schmir/fm-ruff")
@@ -14,7 +13,6 @@
                  flymake-eslint
                  janet-mode
                  just-mode
-                 lua-mode
                  ninja-mode
                  nix-mode
                  nix-ts-mode

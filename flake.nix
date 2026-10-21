@@ -76,7 +76,6 @@
             kaolin-themes
             leo
             leuven-theme
-            lua-mode
             macrostep
             magit
             marginalia
