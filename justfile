@@ -24,7 +24,7 @@ clean:
 test: build
     nix run . -- --batch -l test/test-init.el -f ert-run-tests-batch-and-exit
 
-# Byte-compile lisp/ and setup/, failing on any warning
+# Byte-compile user-lisp/ and setup/, failing on any warning
 check: build
     nix run . -- --batch -l test/byte-compile-check.el
 

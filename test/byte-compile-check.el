@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 ;;
-;; Byte-compile lisp/ and setup/ and exit non-zero if anything warns.
+;; Byte-compile user-lisp/ and setup/ and exit non-zero if anything warns.
 ;;
 ;; Run with: just check
 ;; Or manually: emacs --batch -l test/byte-compile-check.el
@@ -24,6 +24,9 @@
 
 (require 'bytecomp)
 
+;; Batch mode skips the startup step that processes `user-lisp-directory'.
+(prepare-user-lisp)
+
 ;; Load the configuration so that `setup' and its macros are defined.
 (load (expand-file-name "init.el" user-emacs-directory))
 
@@ -39,7 +42,7 @@
       warning-suppress-log-types nil
       warning-suppress-types nil)
 
-(defvar bcc-directories '("lisp" "setup")
+(defvar bcc-directories '("user-lisp" "setup")
   "Directories below `user-emacs-directory' to byte-compile.")
 
 (defun bcc-files ()
@@ -48,7 +51,7 @@
     (dolist (dir bcc-directories (nreverse files))
       (dolist (file (directory-files
                      (expand-file-name dir user-emacs-directory) t "\\.el\\'"))
-        (unless (equal (file-name-nondirectory file) "loaddefs.el")
+        (unless (equal (file-name-nondirectory file) ".user-lisp-autoloads.el")
           (push file files))))))
 
 (defun bcc-run ()

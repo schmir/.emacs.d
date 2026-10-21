@@ -9,6 +9,9 @@
 
 (require 'ert)
 
+;; Batch mode skips the startup step that processes `user-lisp-directory'.
+(prepare-user-lisp)
+
 ;; Load the full configuration
 (load (expand-file-name "init.el" user-emacs-directory))
 

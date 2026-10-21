@@ -4,7 +4,7 @@
 /result
 [#]*[#]
 etc/
-lisp/.auto-site.el
-lisp/loaddefs.el
+user-lisp/.user-lisp-autoloads.el
 var/
 *.elc
+*.eln

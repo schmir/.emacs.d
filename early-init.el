@@ -1,5 +1,11 @@
 ;;; early-init.el     -*- lexical-binding: t; -*-
 
+;;; Minimum version (user-lisp-directory needs Emacs 31)
+
+(let ((minver "31.1"))
+  (when (version< emacs-version minver)
+    (error "early-init.el: Emacs too old -- this config requires at least v%s" minver)))
+
 ;;; Debugging
 
 (setq debug-on-error t)
