@@ -252,7 +252,7 @@ the first frame is made."
   "Activate the Rust language profile in the current buffer."
   (my/language-profiles--ensure-eglot-in-project)
   (require 'flymake-clippy)
-  (flymake-clippy-setup-backend)
+  (flymake-clippy-setup)
   (flymake-mode))
 
 (defun my/language-profiles--install-rust ()

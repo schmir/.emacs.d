@@ -412,6 +412,13 @@ Resolves the `t' sentinel that defers to the global value."
     (with-mode-buffer sh-mode
       (should (bound-and-true-p flymake-mode)))))
 
+(ert-deftest test-rust-profile-activates-diagnostics ()
+  "Rust buffers should activate Flymake with the Clippy backend."
+  (cl-letf (((symbol-function 'project-current) (lambda (&rest _) nil)))
+    (with-mode-buffer rust-mode
+      (should (bound-and-true-p flymake-mode))
+      (should (memq #'flymake-clippy-backend flymake-diagnostic-functions)))))
+
 (ert-deftest test-non-project-profile-does-not-start-eglot ()
   "A language profile should not start Eglot outside a project."
   (let ((starts 0))
