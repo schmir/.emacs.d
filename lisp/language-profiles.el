@@ -217,11 +217,18 @@ the first frame is made."
       (add-to-list 'eglot-server-programs
                    '(conf-toml-mode . ("taplo" "lsp" "stdio"))))))
 
+(defun my/language-profiles--enable-shell-flymake ()
+  "Enable Flymake unless the buffer's shell is Zsh.
+`sh-mode' treats Zsh as a Ksh descendant and runs ShellCheck with
+`-s ksh', but ShellCheck does not support Zsh."
+  (unless (eq sh-shell 'zsh)
+    (flymake-mode)))
+
 (defun my/language-profiles--install-shell ()
   "Install the shell language profile."
   (my/language-profiles--add-hooks
    '(sh-mode-hook)
-   '(flymake-mode))
+   '(my/language-profiles--enable-shell-flymake))
   (with-eval-after-load 'apheleia
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))))
 

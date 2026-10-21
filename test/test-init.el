@@ -395,9 +395,22 @@ Resolves the `t' sentinel that defers to the global value."
     (should (= starts 1))))
 
 (ert-deftest test-shell-profile-activates-diagnostics ()
-  "Shell buffers should activate Flymake diagnostics."
-  (with-mode-buffer sh-mode
-    (should (bound-and-true-p flymake-mode))))
+  "Non-Zsh shell buffers should activate Flymake diagnostics."
+  (require 'sh-script)
+  (let ((sh-shell-file "/bin/bash"))
+    (with-mode-buffer sh-mode
+      (should (bound-and-true-p flymake-mode)))))
+
+(ert-deftest test-shell-profile-skips-flymake-for-zsh ()
+  "Zsh buffers should not enable Flymake, other shells should."
+  (require 'sh-script)
+  (let ((sh-shell-file "/bin/zsh"))
+    (with-mode-buffer sh-mode
+      (should (eq sh-shell 'zsh))
+      (should-not (bound-and-true-p flymake-mode))))
+  (let ((sh-shell-file "/bin/bash"))
+    (with-mode-buffer sh-mode
+      (should (bound-and-true-p flymake-mode)))))
 
 (ert-deftest test-non-project-profile-does-not-start-eglot ()
   "A language profile should not start Eglot outside a project."
