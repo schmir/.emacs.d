@@ -59,7 +59,9 @@ caches the result of those calls via vc-file-setprop.
   (add-hook 'compilation-filter-hook #'ansi-osc-compilation-filter))
 
 ;; gcmh: Garbage collector magic hack for better performance
-(setup (:package gcmh)) ;; early-init.el enables gcmh-mode
+;; Only used when `my/use-gcmh' is set in early-init.el, which also enables gcmh-mode.
+(when my/use-gcmh
+  (setup (:package gcmh)))
 
 ;; pdf-tools: Enhanced PDF viewing and annotation
 (setup (:package pdf-tools)
