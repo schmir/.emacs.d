@@ -221,7 +221,7 @@ the first frame is made."
   "Install the shell language profile."
   (my/language-profiles--add-hooks
    '(sh-mode-hook)
-   '(flymake-shellcheck-load flymake-mode))
+   '(flymake-mode))
   (with-eval-after-load 'apheleia
     (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))))
 

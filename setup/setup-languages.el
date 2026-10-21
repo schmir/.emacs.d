@@ -12,7 +12,6 @@
                  (fm-ruff :url "https://github.com/schmir/fm-ruff")
                  flymake-clippy
                  flymake-eslint
-                 flymake-shellcheck
                  janet-mode
                  just-mode
                  lua-mode

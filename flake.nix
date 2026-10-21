@@ -59,7 +59,6 @@
             flymake-clippy
             flymake-eslint
             flymake-kondor
-            flymake-shellcheck
             gcmh
             git-gutter
             git-link
