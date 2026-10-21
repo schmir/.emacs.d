@@ -39,6 +39,10 @@
 (setq initial-major-mode 'fundamental-mode)
 
 ;;; Startup performance
+(defvar my/use-gcmh t
+  "Non-nil means use `gcmh-mode' to manage the garbage collector.
+Must be set in early-init.el, it is checked there and in setup-misc.el.")
+
 ;; Improves startup time, we reset this later
 (defvar default-file-name-handler-alist file-name-handler-alist)
 (set-default-toplevel-value 'file-name-handler-alist nil)
@@ -56,8 +60,8 @@
   (setq vc-handled-backends '(Git)
         gc-cons-percentage 0.1
         gc-cons-threshold 100000000)
-  (if (fboundp #'gcmh-mode)
-      (gcmh-mode 1))
+  (when (and my/use-gcmh (fboundp #'gcmh-mode))
+    (gcmh-mode 1))
   (garbage-collect)
   (setq debug-on-error nil))
 
