@@ -337,7 +337,7 @@ the first frame is made."
   "Install the Clojure language profile."
   (my/language-profiles--add-hooks
    '(clojure-mode-hook clojure-ts-mode-hook)
-   '(eldoc-mode my/language-profiles--setup-clojure))
+   '(my/language-profiles--setup-clojure eldoc-mode))
   (my/language-profiles--enable-prism
    '(clojure-mode-hook clojure-ts-mode-hook))
   (with-eval-after-load 'apheleia
