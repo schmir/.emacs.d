@@ -20,7 +20,7 @@
         pkgs = import nixpkgs { inherit system overlays; };
         emacs = pkgs.emacs-git-pgtk.override { withNativeCompilation = true; };
         emacs-packages =
-          epkgs: with epkgs; [
+          emacs: epkgs: with epkgs; [
             add-node-modules-path
             adoc-mode
             age
@@ -147,8 +147,13 @@
               inherit (epkgs) melpaBuild;
             })
           ];
-        emacs-with-packages = (pkgs.emacsPackagesFor emacs).emacsWithPackages (emacs-packages);
-        emacs-nox = (pkgs.emacsPackagesFor pkgs.emacs-nox).emacsWithPackages (emacs-packages);
+        emacs-with-packages = (pkgs.emacsPackagesFor emacs).emacsWithPackages (emacs-packages emacs);
+        emacs-nox = (pkgs.emacsPackagesFor pkgs.emacs-nox).emacsWithPackages (emacs-packages emacs);
+        # The latest release, available from the binary cache, for machines where
+        # building emacs from git takes too long.
+        emacs-stable = (pkgs.emacsPackagesFor pkgs.emacs-pgtk).emacsWithPackages (
+          emacs-packages pkgs.emacs-pgtk
+        );
       in
       {
         apps.default = {
@@ -158,6 +163,7 @@
         defaultPackage = emacs-with-packages;
         packages.default = emacs-with-packages;
         packages.emacs-nox = emacs-nox;
+        packages.stable = emacs-stable;
         packages.naked = pkgs.emacs;
         packages.emacs28 = pkgs.emacs28;
       }
