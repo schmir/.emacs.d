@@ -2,6 +2,8 @@
 
 [job-defaults]
 branch_prefix = "repoactive/"
+mr_title_prefix = ""
+commit_title_prefix = ""
 
 [job.update-flake]
 command = "just flake-update-diff"
