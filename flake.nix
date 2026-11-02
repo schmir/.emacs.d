@@ -18,7 +18,9 @@
       let
         overlays = [ (import emacs-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
-        emacs = pkgs.emacs-git-pgtk.override { withNativeCompilation = true; };
+        # The latest release, available from the binary cache.
+        emacs = pkgs.emacs-pgtk;
+        emacs-git = pkgs.emacs-git-pgtk.override { withNativeCompilation = true; };
         emacs-packages =
           emacs: epkgs: with epkgs; [
             add-node-modules-path
@@ -149,10 +151,8 @@
           ];
         emacs-with-packages = (pkgs.emacsPackagesFor emacs).emacsWithPackages (emacs-packages emacs);
         emacs-nox = (pkgs.emacsPackagesFor pkgs.emacs-nox).emacsWithPackages (emacs-packages emacs);
-        # The latest release, available from the binary cache, for machines where
-        # building emacs from git takes too long.
-        emacs-stable = (pkgs.emacsPackagesFor pkgs.emacs-pgtk).emacsWithPackages (
-          emacs-packages pkgs.emacs-pgtk
+        emacs-git-with-packages = (pkgs.emacsPackagesFor emacs-git).emacsWithPackages (
+          emacs-packages emacs-git
         );
       in
       {
@@ -163,7 +163,7 @@
         defaultPackage = emacs-with-packages;
         packages.default = emacs-with-packages;
         packages.emacs-nox = emacs-nox;
-        packages.stable = emacs-stable;
+        packages.git = emacs-git-with-packages;
         packages.naked = pkgs.emacs;
         packages.emacs28 = pkgs.emacs28;
       }
